@@ -1,4 +1,4 @@
-# web
+# bravepeach_web
 BravePeach WebServer with Django
 
 ## Settings for Developers
@@ -6,7 +6,7 @@ BravePeach WebServer with Django
 ### Pre-requisites
 
 ```
-$ sudo apt install python3-dev python3-pip git-flow
+$ sudo apt install python3-dev python3-pip git git-flow
 ```
 
 ### Instructions
