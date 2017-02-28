@@ -4,19 +4,28 @@
 			<img src="image/icon/logo_bravepeach.png" alt="">
 		</a>
 	</div>
-
-	<!--<div class="profile_img">-->
-		<!--<a href="/mypage/mypage_main" title="">-->
-			<!--<img src="/assets/image/no_profile.png" alt="">-->
-		<!--</a>-->
-	<!--</div> -->
+{% if request.user.is_authenticated %}
+	<div class="profile_img">
+		<a href="#" title="">
+			<img src="/assets/image/no_profile.png" alt="프로필 이미지">
+		</a>
+        <span>환영합니다!
+            <a href="#" title="">{{request.user.first_name}} {{request.user.last_name}}님!</a>
+        </span>
+	</div>
+{% endif %}
+    
 	<div class="gnb">
 		<ul>
-			<li><a href="/help" title="도움말">도움말</a></li>
-			<li><a href="/login" title="로그인">로그인</a></li>
-			<li><a href="/sign_up" title="회원가입">회원가입</a></li>
-			<li><a href="/message_list" title="메세지">메세지</a></li>
-			<li><a href="/trip_list" title="여행">여행</a></li>
+			<li><a href="#" title="도움말">도움말</a></li>
+			{% if request.user.is_authenticated %}
+			<li><a href="/logout/?next={{request.path}}">로그아웃</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}" title="로그인">로그인</a></li>
+			<li><a href="{% url 'register' %}" title="회원가입">회원가입</a></li>
+            {% endif %}
+			<li><a href="#" title="메세지">메세지</a></li>
+			<li><a href="#" title="여행">여행</a></li>
 			<li><a href="#" title="가이드 찜 리스트">가이드 찜 리스트</a></li>
 			<li><a href="#" title="가이드 찾기">가이드 하기</a></li>
 		</ul>

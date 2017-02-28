@@ -26,10 +26,12 @@
         <div class="col-xs-5"><hr></div>
     </div>
 
-    <form class="regist-form-wrapper" action="{% url 'user_login' %}" method="post">
+    <form class="regist-form-wrapper" action="{% url 'login' %}" method="post">
         {{form.as_p}}
         {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}"/>
     <button type="submit" class="regist-submit">로그인</button>
+        <p><a href="{% url 'password_reset' %}">비밀번호를 잊으셨나요?</a></p>
     </form>
 
 </div>
