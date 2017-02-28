@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %} bravepeach login {% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <a class="regist-button facebook">
+        Facebook으로 가입하기
+    </a>
+    <a class="regist-button naver">
+        Naver로 가입하기
+    </a>
+    <a class="regist-button google">
+        Google로 가입하기
+    </a>
+    <a class="regist-button brave">
+        BravePeach로 가입하기
+    </a>
+
+    <div class="boundary">
+        <div class="col-xs-5"><hr></div>
+        <div class="col-xs-2">또는</div>
+        <div class="col-xs-5"><hr></div>
+    </div>
+
+    <form class="regist-form-wrapper">
+        이메일 주소
+        <input type="text" class="regist-input">
+        비밀번호
+        <input type="text" class="regist-input">
+    </form>
+
+    <button class="regist-submit">로그인</button>
+</div>
+
+{% endblock %}

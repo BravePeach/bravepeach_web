@@ -1,0 +1,87 @@
+/*
+ * http://getbootstrap.com/customize - 하려 했으나, 원본 소스와 차이가 있어 강제 선언으로 처리
+ * font-family:"돋움",Dotum,"굴림",Gulim,AppleGothic,Sans-serif; color:#383d41;
+ * */
+ @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+ @import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
+ @import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
+ @import url(//cdn.jsdelivr.net/nanumsquare/1.0/nanumsquare.css);
+ *{ font-family: 'NanumSquare', 'Nanum Gothic', sans-serif;
+ -moz-box-sizing: border-box;
+ -webkit-box-sizing: border-box;
+ box-sizing: border-box;
+}
+body {margin: 0;padding: 0; overflow-x: hidden;}
+ul, menu, dir { margin:0; padding:0;}
+a{cursor: pointer;}
+h1{font-size: 43px;}
+a{color:#000;}
+.pd0{padding:0 !important;}
+.datepicker table tr td.new, .datepicker table tr td.old {
+	color: #D4D4D4 !important;
+}
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
+	color: #D4D4D4 !important;
+}
+/* Color palette */
+
+:root {
+	--blush: #f2ad8a;
+	--pastel-red: #e64c47;
+	--greyish-brown: #404040;
+	--white: #dbdbdb;
+	--pale-red: #da4d44;
+	--white-70: rgba(255, 255, 255, 0.7);
+	--white-two: #ffffff;
+	--white-three: #f6f6f6;
+	--pastel-red-60: rgba(217, 104, 101, 0.6);
+	--dark-sky-blue: #4a90e2;
+	--greyish-brown-two: #4a4a4a;
+	--warm-grey: #9c9c9c;
+	--pale-grey: #ededef;
+}
+
+/* Text styles */
+
+.form-button-label {
+	font-family: NanumSquare;
+	font-size: 14px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	text-align: center;
+	color: #4a4a4a;
+	color: var(--greyish-brown-two);
+}
+.btn_splash_pink{
+	width: 300px;
+	height: 115px;
+	background-image: linear-gradient(to top, #f2ad8a, #e64c47);
+	background-image: linear-gradient(to top, var(--blush), var(--pastel-red));
+}
+.btn_splash_pink_left{
+	width: 300px;
+	height: 115px;
+	color: #fff;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 5px;
+	border:1px solid #ef9871;
+	text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
+    line-height: 50px;
+	background-image: linear-gradient(to right, #f2ad8a, #e64c47);
+	background-image: linear-gradient(to right, var(--blush), var(--pastel-red));
+}
+
+.brave_container{width:880px; margin:0 auto;min-height: 300px;}
+
+footer{background: #424242; margin-top:20px;}
+.footer_container{width:100%; margin:0 auto; height: 200px;}
+.footer_container .foot_menu{width:600px; margin:15px auto; margin-top:35px;}
+.footer_container .foot_menu ul{list-style: none; display: table; margin: 0 auto;}
+.footer_container .foot_menu ul li{float:left; margin:0 20px;}
+.footer_container .foot_menu ul li a{ color:#fff;}
+.footer_container .foot_menu ul li a:hover{text-decoration: none; color: #da4d44; color: var(--pale-red);}
+.footer_container .info{text-align: center; color:#ccc; font-size:15px;margin-top:20px;}

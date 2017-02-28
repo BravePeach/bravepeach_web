@@ -1,0 +1,236 @@
+.brave_head{position: absolute;    top: 0; width:100%;  height: 70px;  z-index: 100;}
+.main_brave_head{position: absolute; top:0; width:100%; height: 140px; z-index: 100; background: transparent;}
+.brave_fixed_head{position: fixed;    top: 0;  height: 70px;  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 1px 5px rgba(0,0,0,0.1);    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+	z-index: 10;    -webkit-animation: fadeInDown 0.5s;    -moz-animation: fadeInDown 0.5s;
+	-o-animation: fadeInDown 0.5s;    animation: fadeInDown 0.5s;	background: #fff;
+}
+.sub_title_area{}
+.sub_title_area h1{margin-top:0; color: #e64c47;}
+
+@keyframes fadeInDown{
+	from{
+		opacity:0;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";-webkit-transform:translateY(-75px);-moz-transform:translateY(-75px);-o-transform:translateY(-75px);transform:translateY(-75px)
+	}
+	to
+	{
+		opacity:1;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";-webkit-transform:translateY(0);-moz-transform:translateY(0);-o-transform:translateY(0);transform:translateY(0)
+	}
+}
+
+.brave_head .main_logo{float:left; margin-left:50px; margin-top: 4px;}
+.main_brave_head .main_logo {float:left; margin-left:50px; margin-top:40px; }
+.brave_fixed_head .main_logo{margin-top:4px;}
+.main_logo img{width:200px;}
+
+/*상단메뉴*/
+.brave_head .gnb{float:right; margin-top: 26px; margin-right: 50px;}
+.main_brave_head .gnb{margin-top: 60px;}
+.brave_fixed_head .gnb{margin-top:26px;}
+.brave_head .gnb ul{list-style: none;}
+.brave_head .gnb ul li{float:right; margin: 0 15px;}
+.brave_head .gnb ul li a{color:#000; text-shadow: rgba(255, 255, 255, 0.6) 1px 1px 1px; filter: shadow(color=#fff, direction=135, strength=4);}
+.brave_head .gnb ul li a:hover{text-decoration:none; color: #da4d44; color: var(--pale-red);}
+.brave_head .profile_img{float: right; margin-top:35px; margin-right: 65px;}
+
+/*헤더 배경화면*/
+.head_container{width:880px; margin:0 auto; min-height: 740px;}
+
+/*메인 헤더 부분*/
+.head_main_banner_bg{width:100%; height: 740px; background: url(/assets/image/travel_main.jpg) center no-repeat; background-size: cover; z-index: -1;
+}
+.head_main_text{ position: absolute; top:0; width: 880px; }
+.main_text{width:350px; margin-top: 230px;}
+.head_main_text h1{font-size: 45px; color:#fff; margin-top: 8px;
+	text-shadow: rgba(0, 0, 0, 0.6) 1px 1px 1px;
+	filter: shadow(color=#000, direction=135, strength=4);
+}
+.head_main_text h4{color:#fff; line-height: 28px;
+	text-shadow: rgba(0, 0, 0, 0.6) 1px 1px 1px;
+	filter: shadow(color=#000, direction=135, strength=4);
+}
+
+/*메인 검색 부분*/
+.main_search_area{width:100%; height: 80px; background-color: #fff; position: absolute; top:470px;}
+.SearchForm { border: 1px solid #dce0e0; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;
+	-webkit-box-shadow: 0 1px 3px 0 #dce0e0; -moz-box-shadow: 0 1px 3px 0 #dce0e0; box-shadow: 0 1px 3px 0 #dce0e0;
+	margin-left: 0; margin-right: 0;
+}
+.SearchForm_inputs_wrapper{display: table; table-layout: fixed; float: none; width: 100%; height: 100%; padding-left: 0; padding-right: 0;
+}
+.SearchForm_row{display: table-row; width: 100%;}
+.SearchForm_label{padding-top: 0; padding-bottom: 0;font-size: 15px;letter-spacing: -0.5px; white-space: nowrap;}
+.SearchForm_inputs_wrapper .SearchForm_location input,
+.SearchForm_inputs_wrapper .SearchForm_location select,
+.SearchForm_inputs_wrapper .SearchForm_dates input,
+.SearchForm_inputs_wrapper .SearchForm_dates select,
+.SearchForm_inputs_wrapper .SearchForm_guests input,
+.SearchForm_inputs_wrapper .SearchForm_guests select {
+	border-right: 0; -webkit-border-top-right-radius: 0; -moz-border-radius-topright: 0;
+	border-top-right-radius: 0; -webkit-border-bottom-right-radius: 0; -moz-border-radius-bottomright: 0;
+	border-bottom-right-radius: 0;
+}
+
+.SearchForm_inputs_wrapper .LocationInput{border-style: hidden;}
+.SearchForm_inputs_wrapper .LocationInput:focus{border-style: hidden;}
+.LocationInput{font-size: 19px; letter-spacing: -0.5px; line-height: 22px;}
+
+.SearchForm_location{width:30%; padding: 15px 16px 8px; display: table-cell; float: none; border:1px solid #ccc;}
+.SearchForm_dates{width:25%; padding: 15px 16px 8px; display: table-cell; float: none; border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
+.DateRangePicker{width: 100%; text-align: left; position: relative; display: inline-block;}
+.DateRangePickerInput{margin: 0 -10px; width: auto; display: block; border-style: hidden;background-color: #fff;
+	border: 1px solid #cacccd; display: inline-block;
+}
+.DateInput{width: 140px; font-size: 16px; font-weight: normal; line-height: normal; padding: 0; margin-left: 10px;
+	color: #767676; margin: 0; background: #fff; position: relative; display: inline-block;vertical-align: middle;
+}
+.DateInput_label{border: 0; clip: rect(0, 0, 0, 0); height: 1px; margin: -1px; overflow: hidden;
+	padding: 0; position: absolute; width: 1px;
+}
+
+.SearchForm_guests{width:20%; padding: 15px 16px 8px; display: table-cell; float: none; border:1px solid #ccc; border-right: 0;}
+
+.SearchForm_inputs_wrapper .SearchForm_submit button { line-height: 16px; padding: 16px 10px; -webkit-border-radius: 4px;
+	-moz-border-radius: 4px; border-radius: 4px; width: 100%;
+}
+
+.btn-primary { border-color: #ef9871 !important; background-color: #e64c47 !important; background-image: none !important; color: #fff;}
+.SearchForm_submit{width:15%; padding: 13px 16px 10px; display: table-cell; float: none; border:1px solid #ccc; border-left:0; vertical-align: middle;}
+.SearchForm_submit button{font-size: 15px; line-height: 24px !important; padding-top: 11px !important; padding-bottom: 11px !important; font-weight: normal;float: right;
+}
+.main_theme{margin-top:50px; }
+.main_theme .main_theme_over_bg:hover{background: rgba(0,0,0,0.6);}
+.main_theme .text_area{position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
+.main_theme .intro_text{position: relative; line-height: 300px; vertical-align: middle; display: block; margin: 0 auto; margin-top:120px;
+}
+.main_theme a{position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0;}
+.main_theme .text_area p{ position: relative;text-align: center; line-height: 1em; color: #fff;}
+.main_theme .text_area h2{ text-align: center; line-height: 1em; color: #fff;}
+
+/*로그인 헤더 부분*/
+.head_login_banner_bg{width:100%; height: 550px; background: url(/assets/image/friends.jpg); background-size: cover; background-position: center; z-index: -1;
+}
+.head_login_banner_bg_blind{position: absolute; width: 100%; height: 550px; background-color: rgba(255, 255, 255, 0.5);
+}
+.head_text{ position: absolute; top: 120px; left: 210px;}
+.head_text h1{color:#e64c47; font-size:50px; }
+.head_text h4{font-size: 25px; line-height: 33px;}
+
+/*로그인 헤더 회원가입*/
+/*.head_signup_frame{position: absolute; top: 540px; width: 880px;}
+.head_signup_area{width: 620px; margin: 0 auto 0 auto;}
+.head_signup_area .signup_btn{float:left; margin:0 5px; padding: 22px 0; border-radius: 5px;}
+.head_signup_area a{color:#fff;}
+.head_signup_area a:hover{text-decoration:none;color:#fff;}
+.head_signup_area .signup_btn .text{	font-family: NanumSquareR; font-size: 25px; font-weight: normal; font-style: normal; font-stretch: normal;
+	text-align: center; color: #ffffff; color: var(--white-two); border-radius: 5px; width: 100px; margin: 0 auto;
+	}*/
+
+	/*콘텐츠 회원가입*/
+	.main_signup_area{width:400px; margin:15px auto 0 auto; }
+	.main_signup_area .icon_area{float: left; width: 100px; height: 60px; padding:0 20px;}
+	.main_signup_area .facebook_icon{ width:40px; height: 40px; background:url(/assets/image/icon_facebook.png) center no-repeat; background-size: 40px; margin: 9px auto 0 auto;
+	}
+	.btn_signup{width:100%; height:60px; border: 1px solid #ccc;margin:10px 0; -webkit-box-shadow: 0 1px 3px 0 #dce0e0; -moz-box-shadow: 0 1px 3px 0 #dce0e0; box-shadow: 0 1px 3px 0 #dce0e0; cursor: pointer;
+	}
+	.btn_signup a{color:#000;}
+	.btn_signup:hover .text{color:#e64c47;}
+	.btn_signup .text{float: left; padding: 5px 20px; font-size: 23px; line-height: 50px; vertical-align: middle;}
+	.btn_signup .naver_icon{ width:40px; height: 40px; background:url(/assets/image/icon_naver.png) center no-repeat; background-size: 40px; margin: 9px auto 0 auto;
+	}
+	.main_signup_area .kakao_icon{width:40px; height: 40px; background:url(/assets/image/icon_kakao.png) center no-repeat; background-size: 40px; margin: 9px auto 0 auto;
+	}
+	.main_signup_area .brave_icon{width:40px; height: 40px; background:url(/assets/image/icon_brave.png) center no-repeat; background-size: 40px; margin: 9px auto 0 auto;
+	}
+	.main_signup_area .or_area{position: relative; width:100%;}
+	.main_signup_area .or_area .text{float:left; margin-left: 169px; font-size: 15px; padding:0 10px; background-color: #fff; text-align: center;
+	}
+	.main_signup_area .or_area .or_hr{position: absolute; width:100%; margin-top:10px; border-bottom: 1px solid #ccc; z-index: -1;}
+	.brave_form{margin:10px 0;}
+	.brave_form input{height: 45px; line-height: 45px; border-radius: 10px; background-color: #f6f6f6;}
+
+	/*sign_up form*/
+	.thumnail_area{float:left; width:170px; height: 145px; margin: 10px 0;}
+	.thumnail_area .thumnail_border{width:140px; height:140px; padding:15px; border:1px solid #ccc; border-radius: 20px; background: #f6f6f6;
+	}
+	.thumnail_area .thumnail_text{color:#ccc; font-size:18px; text-align: center; vertical-align: middle; line-height: 110px; cursor: pointer;
+	}
+
+	/*trip_list*/
+	.trip_tab_area{}
+	.trip_tab{height: 40px; background-color: #ccc; border-top-left-radius: 5px; border-top-right-radius: 5px;}
+	.trip_tab.active{background-color: #e64c47;}
+	.trip_tab .text{width:100%; line-height: 40px; vertical-align: middle; text-align: center; color: #fff; cursor: pointer;}
+
+	/*trip_list*/
+	.trip_list_area{padding:0px 0px 50px 0px !important; border-top-left-radius: 10px; border-top-right-radius: 10px; border:1px solid #ccc;}
+	.trip_list_object{width: 100%; height: 250px; border:1px solid #ccc; margin-top:50px;}
+	.trip_list_object .thumbnail_img{float: left; width: 170px; height: 250px; background: url(/assets/image/travel_main.jpg) center no-repeat; background-size: cover;
+	}
+	.trip_list_object .description{float: left; width:530px; height: 250px;}
+	.trip_list_object .description .chk_icons{padding-top:20px;}
+	.trip_list_object .description .chk_icons .chked_icon{float: left; background-color: #ccc; border-radius: 50%; width:20px; height: 20px;
+	}
+	.trip_list_object .description .chk_icons .chked_icon.active{background-color: #e64c47;}
+	.trip_list_object .description .chk_icons .icon_text{float: left; padding:0 20px;}
+	.trip_list_object .description .count_price_area .price{color: #e64c47;}
+	.trip_list_object .trip_chk_area{ display: table; float: right; width:170px; height: 250px; background-color: #e64c47;}
+	.trip_list_object .trip_chk_area .text{display: table-cell; height: 90px; color: #fff; vertical-align: middle; text-align: center;
+	}
+	.trip_list_object .trip_chk_area .close_btn{
+		width:20px; height: 20px; position: absolute; top:10px; right:10px; border-radius: 50%; background-color: #000; color: #fff; text-align: center; cursor: pointer;
+	}
+	/*guide_support_list*/
+	.guide_support_object{width: 100%; height: 250px; border:1px solid #ccc; margin-top:50px; border-radius: 20px;}
+	.guide_support_object .guide_thumbnail{float: left; width: 170px; height: 100%; background-color: #e64c47; border-top-left-radius: 20px; border-bottom-left-radius: 20px;
+	}
+	.guide_support_object .guide_thumbnail .license_area{position: absolute; top:30px; width:130px; height: 30px; background-color: #fff; border-bottom-right-radius: 20px; border-top-right-radius: 20px;
+	}
+	.guide_support_object .guide_thumbnail .license_area .text{line-height: 30px; text-align: center; color: #e64c47;}
+	.guide_support_object .guide_thumbnail .name_area{margin-top:80px; width:100%; display: table;}
+	.guide_support_object .guide_thumbnail .name_area .country_flag{float:left; width:30px; height: 30px; background: url(/assets/image/Flag_of_Italy.svg.png) center; background-size: cover; overflow: hidden; border-radius: 50%; margin-left:30px;
+	}
+	.guide_support_object .guide_thumbnail .name_area .name{float:left; line-height: 30px; vertical-align: middle; color: #fff; font-size: 23px; margin-left:20px;
+	}
+	.guide_support_object .guide_thumbnail .thumbnail_area{margin-top:15px; width:100%;}
+	.guide_support_object .guide_thumbnail .thumbnail_img{width:100px; height: 100px; background: url(/assets/image/thumnail_sample.jpg) center; background-size: cover; overflow: hidden; border-radius: 50%; margin:0 auto;}
+	.guide_support_object .description{float: left; width: 100%; position: absolute; padding-left: 170px; height: 250px;}
+	.guide_support_object .description .info{width:330px; float: right; font-size: 16px;
+	}
+	.guide_support_object .description .rating_icons{}
+	.guide_support_object .description .rating_icons .rating_icon{float: left; background-color: #ccc; border-radius: 50%; width:20px; height: 20px; margin:0 5px;
+	}
+	.guide_support_object .description_top_area{border-bottom: 1px solid #e64c47; padding:30px 0 10px 0;}
+	.guide_support_object .description .rating_icons .rating_icon.active{background-color: #e64c47;}
+	.guide_support_object .description .rating_icons .icon_text{float: left; padding:0 20px;}
+	.guide_support_object .description .guide_count{float: left; margin-left:30px;}
+	.guide_support_object .description .review_count{float: left;}
+	.guide_support_object .description .count_price_area .price{color: #e64c47;}
+	.guide_support_object .description .like{position: absolute; background-color: #ccc; border-radius: 50%; width: 30px;
+		height: 30px;bottom:20px; right: 25px;
+	}
+	.guide_support_object .description .like.active{background-color: #e64c47;}
+
+	/*message_list*/
+	.message_object{width: 100%; height: 250px; border:1px solid #ccc; margin-top:50px; border-radius: 10px;}
+	.message_object .message_thumbnail{float: left; display: table; width: 170px; height: 100%; background-color: #fff; border-top-left-radius: 10px; border-bottom-left-radius: 10px;
+	}
+	.message_object .message_thumbnail .thumbnail_area{display: table-cell; vertical-align: middle; margin-top:15px; width:100%;
+	}
+	.message_object .message_thumbnail .thumbnail_img{width:100px; height: 100px; background: url(/assets/image/thumnail_sample.jpg) center; background-size: cover; overflow: hidden; border-radius: 50%; margin:0 auto;}
+	.message_object .description{float: left; width: 100%; position: absolute; padding-left: 170px; height: 250px;}
+	.message_object .description .description_area{padding:0 20px; margin: 30px 0; height: 190px; border-left: 1px solid #ccc;
+	}
+	.message_object .description .description_area .name{font-size: 20px; font-weight: bold;}
+	.message_object .description .description_area .text{font-size: 18px; color:#aaa; padding-right: 100px;}
+	.message_object .description .date_time{position: absolute; bottom:10px; right: 25px; font-size: 18px; color:#aaa;}
+
+	@media (min-width: 768px){
+
+	}
+	@media (min-width: 992px){
+
+	}
+	@media (min-width: 1200px){
+
+	}
