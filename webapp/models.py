@@ -78,6 +78,7 @@ class UserRequest(models.Model):
     importance = models.IntegerField
     cost = models.IntegerField
     published = models.BooleanField(default=False)
+    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
 
 
 class Review(models.Model):
