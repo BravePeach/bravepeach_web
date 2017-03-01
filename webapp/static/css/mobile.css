@@ -1,0 +1,401 @@
+body{
+    overflow-x: hidden;
+    margin-bottom: 96px;
+}
+
+nav{
+    padding: 8px 0px;
+    height: auto;
+}
+
+.mobile-main{margin-top: 16px !important;}
+
+.nav-menubar{
+    display: inline;
+    width: 40px;
+    position: absolute;
+    top: 7px;
+    left: 9px;
+    padding: 10px;
+}
+
+.nav-guide-search-wrapper{
+    display: none;
+}
+
+.nav-bravepeach-logo{
+    display: block;
+    margin: auto;
+    width: 32%;
+    position: static;
+}
+
+.nav-guide-search-dropdown{
+    display: inline;
+    width: 40px;
+    padding: 10px;
+    position: absolute;
+    top: 6px;
+    right: 8px;
+}
+
+.nav-list{
+    display: none;
+}
+
+.main-header{
+    margin-bottom: 16px;
+}
+
+.main-header{
+    height: 390px;
+}
+
+.main-form-wrapper{
+    display: none;
+}
+
+.main-container{
+    margin-top: 60px;
+}
+
+.main-mobile-logo-wrapper{
+    display: block;
+    text-align: center;
+    margin-top: 70px;
+    margin-bottom: 105px;
+}
+
+.main-mobile-logo{
+    width: 284px;
+}
+
+.main-mobile-form-wrapper{
+    position: relative;
+    display: block;
+}
+
+.search-icon{
+    position: absolute;
+    top: 20px;
+    left: 15.77%;
+    width: 30px;
+}
+
+.main-mobile-form{
+    width: 100%;
+    height: 60px;
+    border-radius: 5px;
+    background-color: rgba(255,255,255,0.85);
+    border: solid 1px #c7c7cd;
+    font-size: 14px;
+    padding-left: 23.38%;
+}
+
+.main-thumbnail{
+    width: 100%;
+    height: 203px;
+    border-radius: 0px;
+}
+
+.main-thumbnail h4{
+    margin-top: 73px;
+    margin-bottom: 10.4px;
+}
+
+.main-message{
+    display: none;
+}
+
+.sup-title-peach{
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 0px;
+    margin-left: 4px;
+    line-height: 32px;
+    color: black;
+}
+
+.sub-title{
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-left: 4px;
+    line-height: 32px;
+    font-weight: 200;
+    color: #606060;
+}
+
+.gradation-bar{
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.icon{
+    top: 10px;
+    left: 3.3%;
+}
+
+.find-guide-form, .find-guide-form2{
+    width: 30%;
+    height: 30px;
+    top: 10px;
+    left: 18.6%;
+}
+
+.find-guide-form2{
+    left: 59.1%;
+}
+
+.arrow-down{
+    width: 15px;
+    top: 20px;
+    right: 3.7%;
+}
+
+.search-filter-list-wrapper{
+    margin-top: 17px;
+    position: relative;
+    width: 100%;
+    height: 36px;
+}
+
+.search-filter-result{
+    position:absolute;
+    left:3px;
+    line-height: 36px;
+    font-size: 16px;
+}
+
+.search-filter-list{
+    width: 118px;
+    height: 36px;
+    background-color: #e64c47;
+    border-radius: 6px;
+    border: 1px;
+    border-color: #DDD9D9;
+    border-style: solid;
+    position: absolute;
+    right: 0px;
+    font-size: 16px;
+    line-height: 36px;
+    color: white;
+    padding-left:17px;
+}
+
+.search-filter-button-wrapper{
+    width: 100%;
+    position: fixed;
+    bottom: 23px;
+    left: 0;
+}
+
+.search-filter-button{
+    margin: auto;
+    padding-top: 12px;
+    border-radius: 33px;
+    height: 43px;
+    border-style: none;
+    box-shadow: 0px 2px 4px #606060;
+    opacity: 1;
+    z-index: 1;
+}
+
+.guide-card-wrapper{
+    height: auto;
+}
+
+.guide-card, .guide-card2, .guide-card3{
+    display: block;
+    width: 100%;
+    height: 323px;
+    margin-bottom: 16px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.guide-background-image-wrapper{
+    height: 186px;
+}
+
+.pagination-wrapper{
+    margin-top: 28px;
+}
+
+.guide-text-wrapper{
+    height: 136px;
+}
+
+.guide-score-wrapper{
+    top: 12px;
+}
+
+.guide-review{
+    left:67.3%;
+}
+
+.guide-name{
+    top:0px;
+    margin-left:0px;
+}
+
+.guide-location{
+    top: 78px;
+}
+
+.guide-howmany{
+    top: 104px;
+}
+
+.page-up-button{
+    display: block;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 23px;
+    right: 14px;
+}
+
+.page-up-icon{
+    width:100%;
+}
+
+.white-bar{
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.way-of-travel-button img, .lodging-button img, .guide-button img{width: 50px;}
+.enroll-trip-button-name{font-size: 16px;}
+.peach-button-wrapper{height: auto; display: inline-block; width: 100%; padding-top:9px;}
+
+/* login.html */
+
+.regist-button{
+    display: block;
+    width: 294px;
+    height: 50px;
+    border-radius: 8px;
+    border: solid 1px #bbbbbb;
+    font-size: 16px;
+    letter-spacing: -0.4px;
+    color: white;
+    text-align: center;
+    padding-top: 15px;
+    line-height: 18px;
+    margin: 12px auto;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.boundary{
+    height: 16px;
+    margin: 34px 0px;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: -0.3;
+    text-align: center;
+}
+
+.boundary hr{
+    margin-top: 8px;
+    border-color: #bbbbbb;
+}
+
+.regist-form-wrapper{
+    font-size: 15px;
+}
+
+.regist-input{
+    width: 100%;
+    margin: 26.5px 0px;
+    border-style: none;
+    border-bottom: solid 1px #bbbbbb;
+}
+
+.regist-input:focus{
+    border-bottom: solid 1.5px #e64c47;
+}
+
+.regist-submit{
+    width: 100%;
+    height: 57px;
+    border-radius: 12px;
+    background-color: #e64c47;
+    font-size: 16px;
+    color: white;
+    border: none;
+}
+
+.facebook{background-color:#4990e2;}
+.facebook:hover{background-color: #0f498c; color: white;}
+.naver{background-color:#6ac601;}
+.naver:hover{background-color:#366600; color: white;}
+.google{background-color:#ff9600;}
+.google:hover{background-color:#8c5200; color: white;}
+.brave{background-color:#e64c47;}
+.brave:hover{background-color:#842b29; color:white;}
+
+/* welcom.html */
+
+.welcome-header{
+    display: none;
+}
+
+.welcome-container{
+    width: 294px;
+    margin: auto;
+}
+
+.welcome-image{
+    display: block;
+    width: 284px;
+}
+
+.welcome-message{
+    display: block;
+    font-size: 20px;
+    line-height: 32px;
+    margin-top: 35px;
+}
+
+.welcome-enroll-trip-button, .welcome-find-guide-button{
+    display: block;
+    width: 294px;
+    height: 59px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    border: solid 1px #bbbbbb;
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
+    padding-top: 17px;
+}
+
+.welcome-enroll-trip-button{background-color: #e64c47; position: fixed; bottom: 142px;}
+.welcome-find-guide-button{background-color: #606060; position: fixed; bottom: 72px;}
+
+/* login_side_menu.html */
+
+.side_menu_wrapper{width: 90%; margin: auto; margin-top: 21px; height: 100vh;}
+.menu-profile-pic{width: 60px; height: 60px; border-radius: 30px; box-shadow: 0px 0px 3px; float: left;}
+.menu-profile-name{font-size: 28px; margin-top: 14px; margin-left: 23px;}
+.menu-email{font-size: 15px; color: #606060; margin-left: 23px; margin-top: 8px;}
+.menu-list{padding: 0px; margin: 25px 27px 0px 80px; list-style: none; font-size: 20px}
+.menu-list li{padding-left: 7px;}
+.menu-list hr{margin: 13px 0px; border-width: 1px 0px 0px 0px; border-style: solid; border-color:#979797;}
+
+/* search-side-menu */
+
+.search_side_menu_wrapper{width: 90%; margin: auto; margin-top: 24px; height: 100vh; font-size: 15px; color: black; position: relative;}
+.search_side_menu_wrapper h1{font-size: 20px; line-height: 32px; padding: 0px; margin: 0px; display: block;}
+.search_side_menu_wrapper h2{font-size: 16px; line-height: 32px; padding: 0px; margin: 0px; display: block; color: #606060; margin-bottom: 27px;}
+.search_side_menu_wrapper input{display: block; margin: 30px 0px; border-width:0px 0px 1px; width: 100%;}
+.search_side_menu_wrapper button{width: 100%; height: 57px; color: white; font-size: 12px; border-radius: 12px; background-color: #e64c47; border: none; margin-top: 100px; margin-bottom: 100px;}
+
+/* footer */
+
+footer{font-size: 10px; }
+.foot_menu{width: 320px;  font-size: 10px; margin-top: 15px;}
+.foot_menu a{width: 50px;}
+footer .info{margin-top: 20px;}
+footer .info .row{width: 320px !important;}
+.copyright{margin: 15px 0px;}

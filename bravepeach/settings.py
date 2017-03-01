@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 from django.core.management.utils import get_random_secret_key
+from django.core.mail import backends
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,6 +27,7 @@ SECRET_KEY = 's+-6_#^s2^z=kox5!_0csa^z-r-1=cr%s+b&n-*q)65$g!d3)^'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -124,3 +126,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 HASHID_FIELD_SALT = get_random_secret_key()
+
+# Login info
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login'
+
+# Email backend
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
