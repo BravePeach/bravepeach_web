@@ -22,3 +22,9 @@ class UserRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password2']
+
+
+class GuideSearchForm(forms.Form):
+    location = forms.CharField(max_length=200, label='')
+    on_day = forms.CharField()
+    traveler_cnt = forms.IntegerField()

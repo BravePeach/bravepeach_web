@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block script %}
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&libraries=places"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="main-container">
+        <section name="top">
+            <h1 class="sup-title-peach">가이드 찾기</h1>
+            <h2 class="sub-title">자신에게 꼭 맞는 가이드를 찾아보세요!</h2>
+        </section>
+        <div class="gradation-bar">
+            <img class="icon" src=image/icon/where_white.png" alt="where?">
+            <input class="find-guide-form" id="location_form" type="text" name="" value="">
+
+          </div>
+        <div class="gradation-bar">
+            <img class="icon" src="assets/image/icon/when_white.png" alt="when?">
+            <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="" readonly>
+            <img class="arrow-right" src="">
+            <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="" readonly>
+        </div>
+        <div class="gradation-bar">
+            <img class="icon" src="assets/image/icon/howmany_white.png" alt="how many?">
+            <input class="find-guide-form" id="traveler_cnt_form" type="text" name="" value="" readonly>
+            <img class="arrow-down" src="assets/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+        </div>
+        <div class="search-filter-list-wrapper">
+            <span class="search-filter-result">124명의 가이드가 있습니다.</span>
+            <div class="search-filter-list">
+                인기순
+            </div>
+        </div>
+
+        <div class="search-filter-button-wrapper">
+            <div class="gradation-bar search-filter-button">
+                검색 필터
+            </div>
+        </div>
+            <div class=""></div>
+
+        <div class="guide-card-wrapper">
+            <div class="guide-card">
+                <div class="guide-background-image-wrapper">
+                    <img class="guide-background-image" src="assets/image/images/gathering.jpg" alt="가이드 사진">
+                </div>
+                <div class="guide-text-wrapper">
+                    <div class="guide-score-wrapper">
+                        <img class="guide-score" src="assets/image/icon/logo_full.png">
+                        <img class="guide-score" src="assets/image/icon/logo_full.png">
+                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
+                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
+                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
+                    </div>
+                    <span class="guide-review">
+                        가이드 40건 ㅣ 후기 23개
+                    </span>
+                    <div class="guide-image-and-name">
+                        <img class="guide-image" src="assets/image/images/jinwoong.jpg">
+                        <span class="guide-name">
+                            조진웅(Jinwoong Cho)
+                        </span>
+                    </div>
+                    <span class="guide-location">
+                        뉴욕 / 워싱턴 D.C / 시카고
+                    </span>
+                    <span class="guide-howmany">
+                        5명 가능
+                    </span>
+                </div>
+            </div>
+            <div class="guide-card2">
+                <div class="guide-background-image-wrapper">
+                    <img class="guide-background-image" src="assets/image/images/mountain3.jpg" alt="가이드 사진">
+                </div>
+                <div class="guide-text-wrapper">
+                    <div class="guide-score-wrapper">
+                        <img class="guide-score" src="assets/image/icon/logo_full.png">
+                        <img class="guide-score" src="assets/image/icon/logo_full.png">
+                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
+                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
+                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
+                    </div>
+                    <span class="guide-review">
+                        가이드 40건 ㅣ 후기 23개
+                    </span>
+                    <div class="guide-image-and-name">
+                        <img class="guide-image" src="assets/image/images/jihyo.jpg">
+                        <span class="guide-name">
+                            송지효(Jihyo Song)
+                        </span>
+                    </div>
+                    <span class="guide-location">
+                        뉴욕 / 워싱턴 D.C / 시카고
+                    </span>
+                    <span class="guide-howmany">
+                        5명 가능
+                    </span>
+                </div>
+            </div>
+            <div class="guide-card3">
+                <div class="guide-background-image-wrapper">
+                    <img class="guide-background-image" src="assets/image/images/red_sunset.jpg" alt="가이드 사진">
+                </div>
+                <div class="guide-text-wrapper">
+                    <div class="guide-score-wrapper">
+                        <img class="guide-score" src="assets/image/icon/logo_full.png">
+                        <img class="guide-score" src="assets/image/icon/logo_full.png">
+                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
+                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
+                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
+                    </div>
+                    <span class="guide-review">
+                        가이드 40건 ㅣ 후기 23개
+                    </span>
+                    <div class="guide-image-and-name">
+                        <img class="guide-image" src="assets/image/images/jinwoong.jpg">
+                        <span class="guide-name">
+                            김나영(Nayoung Kim)
+                        </span>
+                    </div>
+                    <span class="guide-location">
+                        뉴욕 / 워싱턴 D.C / 시카고
+                    </span>
+                    <span class="guide-howmany">
+                        5명 가능
+                    </span>
+                </div>
+            </div>
+        </div>
+          <div class="pagination-wrapper">
+            <ul class="pagination">
+                <li><a href="#">«</a></li>
+                <li><a href="#">1</a></li>
+                <li><a class="active" href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">»</a></li>
+            </ul>
+         </div>
+         <a class="page-up-button" href="#top"><img class="page-up-icon" src="assets/image/icon/go_up.png">
+         </a>
+      </div>
+
+{% endblock %}

@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # index page
-    url(r'^$', TemplateView.as_view(template_name="index.html")),
+    url(r'^$', views.index, name='index'),
 
     # log-in and log-out
     url(r'login/$', auth_views.login, name='login',
@@ -21,9 +21,13 @@ urlpatterns = [
         kwargs={'template_name': 'password_reset_done.html'}),
     url(r'^password_reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$', auth_views.password_reset_confirm, name="password_reset_confirm",
         kwargs={'template_name': 'password_reset_confirm.html'}),
-    url(r'^password_reset/complete$',auth_views.password_reset_complete,name="password_reset_complete",
+    url(r'^password_reset/complete$', auth_views.password_reset_complete, name="password_reset_complete",
         kwargs={'template_name': 'password_reset_complete.html'}),
 
     # user register
-    url(r'^register/$',views.register,name='register'),
+    url(r'^register/$', views.register, name='register'),
+
+    # guide search
+    url(r'^guide_search/$', views.guide_search, name='guide_search'),
+    url(r'^guide_search/filtering/$', views.filtering, name='filtering'),
 ]

@@ -421,6 +421,8 @@ body{
     left: 10.9%;
     border-style:none;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+    padding-left: 22px;
 }
 
 .find-guide-form2{
@@ -753,3 +755,9 @@ footer{background: #424242; margin-top:20px; width:100%; position: absolute; fon
 .ui-state-default{display: block; border-radius: 8px; width: 50px; height: 50px; margin: auto; padding-top: 10px;}
 a.ui-state-default:hover{background-color: #e64c47; color: white;}
 .ui-datepicker-unselectable{color: #d3d3d3;}
+
+.pac-container{margin-top: -100px; border-radius: 8px; size: 24px; width: 690px !important;}
+.pac-icon{display: none;}
+.pac-item{padding-left: 24px; height: 64px; padding-top: 22px; font-family: 'NanumSquare', 'Nanum Gothic', sans-serif; font-size: 24px;}
+.pac-matched{font-size: 24px;}
+.pac-item-query{font-size: 24px;}

@@ -62,7 +62,7 @@ class Notice(models.Model):
 
 class Guide(models.Model):
     id = HashidAutoField(primary_key=True)
-    user_id = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=0)
+#    user_id = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=0)
     pay_cnt = models.IntegerField(default=0)
     total_traveler_cnt = models.IntegerField(default=0)
     total_guide_day = models.IntegerField(default=0)
@@ -81,7 +81,7 @@ class Guide(models.Model):
 
 
 class UserRequest(models.Model):
-    user_id = models.ForeignKey('auth.User', on_delete=models.CASCADE,  default=0)
+#    user_id = models.ForeignKey('auth.User', on_delete=models.CASCADE,  default=0)
     city = JSONField
     travel_begin_at = models.DateField
     travel_end_at = models.DateField
