@@ -94,3 +94,6 @@ ENV/
 
 # Vim
 *~
+
+#media
+media/

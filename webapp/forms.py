@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import Profile
+from django.forms import extras
 
 
 class LoginForm(forms.Form):
@@ -28,3 +30,20 @@ class GuideSearchForm(forms.Form):
     location = forms.CharField(max_length=200, label='')
     on_day = forms.CharField()
     traveler_cnt = forms.IntegerField()
+
+
+# 회원정보 변경
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name','last_name','email')
+
+class ProfileEditForm(forms.ModelForm):
+    birthday = forms.DateField(widget=extras.SelectDateWidget(years=range(1950, 2017)))
+
+    class Meta:
+        model = Profile
+        fields = ('photo', 'phone_num', 'nationality', 'gender')
+
+

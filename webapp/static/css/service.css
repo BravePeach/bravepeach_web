@@ -32,6 +32,12 @@
 .brave_head .gnb ul li a{color:#000; text-shadow: rgba(255, 255, 255, 0.6) 1px 1px 1px; filter: shadow(color=#fff, direction=135, strength=4);}
 .brave_head .gnb ul li a:hover{text-decoration:none; color: #da4d44; color: var(--pale-red);}
 .brave_head .profile_img{float: right; margin-top:35px; margin-right: 65px;}
+.brave_head .profile_img a img{
+    width: 50px;
+    height: auto;
+    border-radius: 24px;
+
+}
 
 /*헤더 배경화면*/
 .head_container{width:880px; margin:0 auto; min-height: 740px;}
