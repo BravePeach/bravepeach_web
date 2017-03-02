@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 
 
+
 urlpatterns = [
     # index page
     url(r'^$', views.index, name='index'),
@@ -30,4 +31,7 @@ urlpatterns = [
     # guide search
     url(r'^guide_search/$', views.guide_search, name='guide_search'),
     url(r'^guide_search/filtering/$', views.filtering, name='filtering'),
+
+    # edit user profile
+    url(r'^edit/$',views.edit,name='edit'),
 ]

@@ -14,16 +14,18 @@ class Profile(models.Model):
     phone_num = models.CharField(max_length=11, null=True)
     is_guide = models.BooleanField(default=False)
     delete_reason = models.IntegerField(null= True)
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    rating = models.DecimalField(max_digits=2, decimal_places=1, null=True)
     nationality = models.CharField(max_length=40, null=True)
     birthday = models.DateField(blank=True, null=True)
-    gender = models.BooleanField()
-    profile_image = models.URLField(default='')
+    gender = models.NullBooleanField(null=True)
+    profile_image = models.URLField(default='',  null=True)
+    photo = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
     deleted_at = models.DateTimeField(null=True)
     delete_reason_optional = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return 'Profile for user {}'.format(self.user.username)
+
 
 
 @receiver(post_save,sender=settings.AUTH_USER_MODEL)

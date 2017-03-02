@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, UserRegistrationForm
-from .models import Guide
+from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
+from .models import Guide, Profile
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
+from dateutil import parser
 
 # def user_login(request):
 #     if request.method =="POST":
@@ -43,6 +45,8 @@ def register(request):
                 user_form.cleaned_data['password']
             )
             new_user.save()
+            #유저 프로파일 생성
+            profile = Profile.objects.create(user = new_user)
             this_user = authenticate(username=user_form.cleaned_data['username'],
                                     password=user_form.cleaned_data['password'],
                                     )
@@ -74,3 +78,26 @@ def filtering(request):
         data = serializers.serialize("json", guide_queryset)
         print(data)
     return HttpResponse()
+
+
+@login_required
+def edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance = request.user,
+                                 data = request.POST)
+        profile_form = ProfileEditForm(instance = request.user.profile,
+                                       data = request.POST,
+                                       files = request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            request.user.profile.birthday = profile_form.cleaned_data['birthday']
+            user_form.save()
+            profile_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(
+            instance = request.user.profile
+        )
+    return render(request,
+                  'views/edit_profile.html',
+                  {'user_form' : user_form,
+                   'profile_form' : profile_form})
