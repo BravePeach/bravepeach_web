@@ -3,7 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, UserRegistrationForm
 from .models import Guide
-from django.core import serializers
+from django.views.generic import ListView
+
 
 # def user_login(request):
 #     if request.method =="POST":
@@ -57,7 +58,20 @@ def guide_search(request):
     return render(request, 'views/guide_search.html', {})
 
 
+# class GuideSearch(ListView):
+#
+#     def get(self, request):
+#         location = request.GET.get('location')
+#         start_date = request.GET.get('start_date')
+#         end_date = request.GET.get('end_date')
+#         traveler_cnt = request.GET.get('traveler_cnt')
+#
+#     queryset = Guide.objects.all().filter(max_traveler_cnt__gte=)
+#     paginate_by = 9
+#     template_name = 'webapp/templates/views/guide_search.html'
+
 def filtering(request):
+    result = {}
     if request.method == 'GET':
         location = request.GET.get('location')
         start_date = request.GET.get('start_date')
@@ -71,6 +85,12 @@ def filtering(request):
         # 날짜 필터, 지역 필터 어떻게 하지?
         if bool(start_date) & bool(end_date):
             guide_queryset = guide_queryset.filter()
-        data = serializers.serialize("json", guide_queryset)
-        print(data)
-    return HttpResponse()
+
+        for guide in guide_queryset:
+            result['rating'] = guide.rating
+            result['pay_cnt'] = guide.pay_cnt
+            result['max_traveler_cnt'] = guide.max_traveler_cnt
+            result['guide_location'] = guide.guide_location
+            result['first_name'] = guide.user.first_name
+
+    return JsonResponse(result)

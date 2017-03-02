@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block script %}
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&libraries=places"></script>
 
 {% endblock %}
 
@@ -61,7 +60,8 @@
                     <div class="guide-image-and-name">
                         <img class="guide-image" src="assets/image/images/jinwoong.jpg">
                         <span class="guide-name">
-                            조진웅(Jinwoong Cho)
+                            {{ guide }}
+                            {{ guide.first_name }}
                         </span>
                     </div>
                     <span class="guide-location">
