@@ -1,54 +1,37 @@
 from django.db import models
 from django.contrib.auth.models import User
-from hashid_field import HashidAutoField
 from jsonfield import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-# from django.utils import timezone
+from django.conf import settings
 
 
-class User(models.Model):
-    pass
 
-#     # 유저 고유 아이디는 해쉬함수로
-#     id = HashidAutoField(primary_key=True)
-#     pw = models.CharField(max_length=20)
-#     first_name = models.CharField(max_length=20)
-#     last_name = models.CharField(max_length=30)
-#     phone_num = models.CharField(max_length=11, null=True)
-#     email = models.EmailField(max_length=50, null=True, unique=True)
-#     rating = models.DecimalField(max_digits=2, decimal_places=1)
-#     nationality = models.CharField(max_length=40, null=True)
-#     birthday = models.DateField()
-#     gender = models.BooleanField()
-#     # 디폴트 이미지 있어야함
-#     profile_image = models.URLField(default='')
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     deleted_at = models.DateTimeField(null=True)
-#     # delete_reason
-#     delete_reason_optional = models.CharField(max_length=100, null=True)
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete = models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
     phone_num = models.CharField(max_length=11, null=True)
     is_guide = models.BooleanField(default=False)
     delete_reason = models.IntegerField(null= True)
     rating = models.DecimalField(max_digits=2, decimal_places=1)
     nationality = models.CharField(max_length=40, null=True)
-    birthday = models.DateField()
+    birthday = models.DateField(blank=True, null=True)
     gender = models.BooleanField()
     profile_image = models.URLField(default='')
     deleted_at = models.DateTimeField(null=True)
     delete_reason_optional = models.CharField(max_length=100, null=True)
 
+    def __str__(self):
+        return 'Profile for user {}'.format(self.user.username)
 
-@receiver(post_save,sender=User)
+
+@receiver(post_save,sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender,instance,created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
-@receiver(post_save, sender =User)
+@receiver(post_save, sender =settings.AUTH_USER_MODEL)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
@@ -61,8 +44,8 @@ class Notice(models.Model):
 
 
 class Guide(models.Model):
-    id = HashidAutoField(primary_key=True)
-#    user_id = models.ForeignKey('auth.User', on_delete=models.CASCADE, default=0)
+    # id = HashidAutoField(primary_key=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     pay_cnt = models.IntegerField(default=0)
     total_traveler_cnt = models.IntegerField(default=0)
     total_guide_day = models.IntegerField(default=0)
@@ -81,7 +64,7 @@ class Guide(models.Model):
 
 
 class UserRequest(models.Model):
-#    user_id = models.ForeignKey('auth.User', on_delete=models.CASCADE,  default=0)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     city = JSONField
     travel_begin_at = models.DateField
     travel_end_at = models.DateField
@@ -103,24 +86,13 @@ class UserRequest(models.Model):
     importance = models.IntegerField
     cost = models.IntegerField
     published = models.BooleanField(default=False)
-    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
 
-
-class Review(models.Model):
-    # offer_id = models.ForeignKey('GuideOffer', on_delete=models.CASCADE)
-    writer = models.CharField(max_length=100)
-    receiver = models.CharField(max_length=100)
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
-    content = models.TextField
-    writer_id = models.IntegerField
-    receiver_id = models.IntegerField
-    location = models.CharField(max_length=100)
 
 
 class GuideOffer(models.Model):
     paid = models.BooleanField(default=False)
-    guide_id = models.ForeignKey('auth.User', on_delete=models.CASCADE,  default=0)
-    request_id = models.ForeignKey('UserRequest', on_delete=models.CASCADE)
+    guide = models.ForeignKey(Guide)
+    request = models.ForeignKey(UserRequest)
     etc = models.CharField(max_length=300)
     travel_period = JSONField
     trans_info = JSONField
@@ -135,9 +107,9 @@ class Like(models.Model):
 
 
 class CancelledOffer(models.Model):
-    offer_id = models.ForeignKey('GuideOffer', on_delete=models.CASCADE)
-    user_id = models.IntegerField
-    guide_id = models.IntegerField
+    offer = models.ForeignKey(GuideOffer)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    guide = models.IntegerField
     reason = models.CharField(max_length=500)
 
 
@@ -147,19 +119,29 @@ class AccomTemplate(models.Model):
     map = models.CharField(max_length=200)
     content = models.TextField
     pic_list = JSONField
-    guide_id = models.ForeignKey('Guide', on_delete=models.CASCADE)
+    guide = models.ForeignKey(Guide)
 
 
 class GuideTemplate(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField
     picture = models.CharField(max_length=200)
-    guide_id = models.ForeignKey('Guide', on_delete=models.CASCADE)
+    guide = models.ForeignKey(Guide)
 
 
 class Cost(models.Model):
     type = models.IntegerField
     price = models.IntegerField
     info = models.CharField(max_length=100)
-    offer_id = models.ForeignKey('GuideOffer', on_delete=models.CASCADE)
+    offer = models.ForeignKey(GuideOffer)
 
+
+class Review(models.Model):
+    offer = models.ForeignKey(GuideOffer)
+    writer = models.CharField(max_length=100)
+    receiver = models.CharField(max_length=100)
+    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    content = models.TextField
+    writer_id = models.IntegerField
+    receiver_id = models.IntegerField
+    location = models.CharField(max_length=100)
