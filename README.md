@@ -5,18 +5,18 @@ BravePeach WebServer with Django
 
 ### Pre-requisites
 
-```
-$ sudo apt install python3-dev python3-pip git git-flow
+```bash
+$ sudo apt install python3-dev python3-pip git git-flow libssl-dev libmysqlclient-dev
 ```
 
 ### Instructions
 
-```
+```bash
 $ git clone [this repo]
 $ cd web
 $ git flow init
 [Several Enters]
 $ virtualenv .venv
 $ . .venv/bin/activate
-(.venv)$ pip install -r requirements.txt
+(.venv) $ pip install -r requirements.txt
 ```
