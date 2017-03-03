@@ -45,13 +45,13 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
             this_user = authenticate(username=user_form.cleaned_data['username'],
-                                    password=user_form.cleaned_data['password'],
-                                    )
+                                     password=user_form.cleaned_data['password'],
+                                     )
             login(request, this_user)
-            return render(request, 'views/register_done.html',{'new_user' : new_user})
-    else :
+            return render(request, 'views/register_done.html', {'new_user': new_user})
+    else:
         user_form = UserRegistrationForm()
-    return render(request, 'views/register.html',{'user_form':user_form})
+    return render(request, 'views/register.html', {'user_form': user_form})
 
 
 def guide_search(request):
@@ -99,21 +99,18 @@ def filtering(request):
 @login_required
 def edit(request):
     if request.method == 'POST':
-        user_form = UserEditForm(instance = request.user,
-                                 data = request.POST)
-        profile_form = ProfileEditForm(instance = request.user.profile,
-                                       data = request.POST,
-                                       files = request.FILES)
+        user_form = UserEditForm(instance=request.user,
+                                 data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile,
+                                       data=request.POST,
+                                       files=request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             request.user.profile.birthday = profile_form.cleaned_data['birthday']
             user_form.save()
             profile_form.save()
     else:
         user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(
-            instance = request.user.profile
-        )
-    return render(request,
-                  'views/edit_profile.html',
-                  {'user_form' : user_form,
-                   'profile_form' : profile_form})
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'views/edit_profile.html',
+                  {'user_form': user_form, 'profile_form': profile_form}
+                  )
