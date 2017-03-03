@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
-from .models import Guide, Profile
+from .models import Guide
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from dateutil import parser
@@ -42,12 +42,8 @@ def register(request):
         user_form = UserRegistrationForm(request.POST)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
-            new_user.set_password(
-                user_form.cleaned_data['password']
-            )
+            new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
-            #유저 프로파일 생성
-            profile = Profile.objects.create(user = new_user)
             this_user = authenticate(username=user_form.cleaned_data['username'],
                                     password=user_form.cleaned_data['password'],
                                     )
