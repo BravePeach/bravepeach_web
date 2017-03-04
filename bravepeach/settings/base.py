@@ -120,3 +120,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# For Deploy
+APT_PACKAGE_LIST = ["git", "build-essential", "python3-dev", "python3-pip",
+                    "libmysqlclient-dev", "libssl-dev", "libffi-dev",
+                    ]
