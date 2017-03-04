@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'webapp',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -138,5 +139,24 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #media
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+
+
+AWS_S3_CUSTOM_DOMAIN = 'bravestatics.s3-website-northeast-1.amazonaws.com'
+
+# STATICFILES_LOCATION = 'static'
+# STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+# STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+#MEDIA FILE LOCATION
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+
+#AWS
+AWS_STORAGE_BUCKET_NAME = 'bravestatics'
+AWS_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'
+AWS_SECRET_ACCESS_KEY = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+

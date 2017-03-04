@@ -15,7 +15,7 @@ class Profile(models.Model):
     nationality = models.CharField(max_length=40, null=True)
     birthday = models.DateField(blank=True, null=True)
     gender = models.NullBooleanField(null=True)
-    profile_image = models.URLField(default='',  null=True)
+    # profile_image = models.URLField(default='',  null=True)
     photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
     deleted_at = models.DateTimeField(null=True)
     delete_reason_optional = models.CharField(max_length=100, null=True)
