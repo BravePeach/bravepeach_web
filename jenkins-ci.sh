@@ -9,7 +9,7 @@ function init_dir() {
 
 function setup_env() {
     echo "[Make Virtualenv]"
-    sudo virtualenv -p python3 $VENV_PATH
+    virtualenv -p python3 $VENV_PATH
     source $VENV_PATH/bin/activate
 }
 
@@ -35,8 +35,8 @@ function setup_venv() {
 case "$1" in
     unittest)
         echo "[Jenkins CI] Unittest"
-        setup_env
         init_dir
+        setup_env
         setup_package
         unittest_python
         ;;
