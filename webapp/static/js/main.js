@@ -68,8 +68,7 @@
                             filter_guide();
                         }
                     },
-
-                })
+    });
 
 
     $('#search_location1').click(function () {
@@ -80,7 +79,40 @@
 
     var input = document.getElementById('location_form');
     var options = {
+        types: ['(regions)'],
+
     };
 
     autocomplete = new google.maps.places.Autocomplete(input, options);
+
+     var input_main = document.getElementById('location_form_main');
+     var options_main = {
+     };
+
+     autocomplete_main = new google.maps.places.SearchBox(input_main, options_main);
+
+     // 인원 증가
+    var total_traveler = 0;
+    $('.increase_button').click(function(){
+        $('span:first-child', $(this).parent('div')).html(function (i, val) {
+            return parseInt(val.slice(0, -1))+1 +'명'
+        });
+        total_traveler ++;
+        $('#traveler_cnt_main').attr('value', total_traveler)
+    });
+
+    $('.decrease_button').click(function(){
+        $('span:first-child', $(this).parent('div')).html(function (i, val) {
+            if (val[0] == 0){
+                return
+            }
+            total_traveler --;
+            $('#traveler_cnt_main').attr('value', total_traveler);
+            return parseInt(val.slice(0, -1))-1 +'명'
+        });
+    });
+
+    $('#traveler_cnt_main').click(function() {
+        $('.traveler_cntpicker').slideToggle(200)
+    });
 

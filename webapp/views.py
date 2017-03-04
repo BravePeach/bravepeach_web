@@ -78,8 +78,8 @@ def filtering(request):
     result = {}
     if request.method == 'GET':
         location = request.GET.get('location')
-        start_date = request.GET.get('start_date')
-        end_date = request.GET.get('end_date')
+        # start_date = int(request.GET.get('start_date').replace('.',''))
+        # end_date = int(request.GET.get('end_date').replace('.',''))
         traveler_cnt = request.GET.get('traveler_cnt')
 
         guide_queryset = Guide.objects.all()
@@ -87,8 +87,10 @@ def filtering(request):
             guide_queryset = guide_queryset.filter(max_traveler_cnt__gte=traveler_cnt)
 
         # 날짜 필터, 지역 필터 어떻게 하지?
-        if bool(start_date) & bool(end_date):
-            guide_queryset = guide_queryset.filter()
+        # if bool(start_date) & bool(end_date):
+        #     travel_date = set({})
+        #     for i in range(start_date, end_date + 1):
+        #         travel_date.add(i)
 
         for guide in guide_queryset:
             result['rating'] = guide.rating

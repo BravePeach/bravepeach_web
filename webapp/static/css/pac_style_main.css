@@ -1,0 +1,5 @@
+.pac-container{width: 470px; border-radius: 8px; background-color: #ffffff; border: solid 1px #d4d4d4; margin-top: 8px; margin-left: -13px;}
+.pac-icon{display: none;}
+.pac-item{padding-left: 15px; height: 64px; padding-top: 22px; font-family: 'NanumSquare', 'Nanum Gothic', sans-serif; font-size: 20px;}
+.pac-matched{font-size: 20px;}
+.pac-item-query{font-size: 20px;}
