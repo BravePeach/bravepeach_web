@@ -17,7 +17,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name', 'email')
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -40,10 +40,17 @@ class UserEditForm(forms.ModelForm):
         fields = ('first_name','last_name','email')
 
 class ProfileEditForm(forms.ModelForm):
+    GENDER = (
+        (1, "남성"),
+        (2, "여성"),
+
+    )
+
     birthday = forms.DateField(widget=extras.SelectDateWidget(years=range(1950, 2017)))
+    gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
 
     class Meta:
         model = Profile
-        fields = ('photo', 'phone_num', 'nationality', 'gender')
+        fields = ('photo', 'phone_num', 'nationality')
 
 

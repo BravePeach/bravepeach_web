@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'webapp',
     'storages',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -157,6 +158,6 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 #AWS
 AWS_STORAGE_BUCKET_NAME = 'bravestatics'
-AWS_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'
-AWS_SECRET_ACCESS_KEY = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+AWS_ACCESS_KEY_ID = 'AKIAIHUY3S2H56VIEMQA'
+AWS_SECRET_ACCESS_KEY = '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'
 

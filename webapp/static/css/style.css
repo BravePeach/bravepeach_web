@@ -761,3 +761,20 @@ a.ui-state-default:hover{background-color: #e64c47; color: white;}
 .pac-item{padding-left: 24px; height: 64px; padding-top: 22px; font-family: 'NanumSquare', 'Nanum Gothic', sans-serif; font-size: 24px;}
 .pac-matched{font-size: 24px;}
 .pac-item-query{font-size: 24px;}
+
+div.user-regist{
+    padding : 200px 100px 100px 150px;
+}
+
+.user-regist-header{
+
+  font-family: NanumSquareOTFB;
+  font-size: 48px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+    color : #e64c47;
+}

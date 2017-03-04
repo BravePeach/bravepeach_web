@@ -40,7 +40,9 @@ def user_logout(request):
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
-        if user_form.is_valid():
+        profile_form = ProfileEditForm(request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            profile_form.save()
             new_user = user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
@@ -51,7 +53,9 @@ def register(request):
             return render(request, 'views/register_done.html', {'new_user': new_user})
     else:
         user_form = UserRegistrationForm()
-    return render(request, 'views/register.html', {'user_form': user_form})
+        profile_form = ProfileEditForm()
+    return render(request, 'views/register.html', {'user_form': user_form,
+                                                   'profile_form': profile_form})
 
 
 def guide_search(request):
