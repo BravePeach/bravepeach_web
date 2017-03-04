@@ -6,7 +6,7 @@ BravePeach WebServer with Django
 ### Pre-requisites
 
 ```bash
-$ sudo apt install python3-dev python3-pip git git-flow libssl-dev libmysqlclient-dev
+$ sudo apt install build-essential python3-dev python3-pip git git-flow libssl-dev libffi-dev libmysqlclient-dev
 ```
 
 ### Instructions
@@ -19,10 +19,4 @@ $ git flow init
 $ virtualenv .venv
 $ . .venv/bin/activate
 (.venv) $ pip install -r requirements.txt
-```
-### In case of Cryptography Error
-
-try in advance :
-```
-$ sudo apt install build-essential libffi-dev libssl-dev
 ```
