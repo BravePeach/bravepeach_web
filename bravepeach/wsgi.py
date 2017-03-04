@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bravepeach.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bravepeach.settings.local")    # Change setting to use another.
 
 application = get_wsgi_application()

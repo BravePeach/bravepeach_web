@@ -92,7 +92,7 @@ ENV/
 # Pycharm
 .idea/
 
-# Vim
+# vim tmp. files
 *~
 
 # media
@@ -100,3 +100,11 @@ media/
 
 # sqlite
 *.db
+
+# settings
+bravepeach/settings/local.py
+bravepeach/settings/staging.py
+bravepeach/settings/service.py
+
+# Coverage Report
+report/

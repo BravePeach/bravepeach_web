@@ -20,16 +20,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 's+-6_#^s2^z=kox5!_0csa^z-r-1=cr%s+b&n-*q)65$g!d3)^'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-INTERNAL_IPS = ["127.0.0.1"]
-
 
 # Application definition
 
@@ -76,20 +66,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bravepeach.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bravepeach',
-        'USER': 'bravepeach',
-        'PASSWORD': '12345678',
-        'HOST': 'test.cldmydk3gzaq.ap-northeast-1.rds.amazonaws.com',
-        'PORT': '',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
