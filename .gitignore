@@ -106,5 +106,5 @@ bravepeach/settings/local.py
 bravepeach/settings/staging.py
 bravepeach/settings/service.py
 
-# Coverage Report
+# Unittest Report
 report/
