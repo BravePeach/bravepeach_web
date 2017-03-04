@@ -20,3 +20,9 @@ $ virtualenv .venv
 $ . .venv/bin/activate
 (.venv) $ pip install -r requirements.txt
 ```
+### In case of Cryptography Error
+
+try in advance :
+```
+$ sudo apt install build-essential libffi-dev libssl-dev
+```
