@@ -20,15 +20,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 's+-6_#^s2^z=kox5!_0csa^z-r-1=cr%s+b&n-*q)65$g!d3)^'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
 
 # Application definition
 
@@ -39,8 +30,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
+    'django_extensions',
     'webapp',
     'django_mysql'
+    'storages',
+    'widget_tweaks',
+>>>>>>> 626c3a8d4fe39caf23d1b440033b52bc6f9ec405:bravepeach/settings/base.py
 ]
 
 MIDDLEWARE = [
@@ -51,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'bravepeach.urls'
@@ -73,20 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bravepeach.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bravepeach',
-        'USER': 'bravepeach',
-        'PASSWORD': '12345678',
-        'HOST': 'test.cldmydk3gzaq.ap-northeast-1.rds.amazonaws.com',
-        'POST': '',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -137,7 +120,29 @@ LOGIN_URL = '/login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-#media
+# Media
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+
+
+AWS_S3_CUSTOM_DOMAIN = 'bravestatics.s3-website-northeast-1.amazonaws.com'
+
+# STATICFILES_LOCATION = 'static'
+# STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+# STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+#MEDIA FILE LOCATION
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+
+#AWS
+AWS_STORAGE_BUCKET_NAME = 'bravestatics'
+
+
+# For Deploy
+APT_PACKAGE_LIST = ["git", "build-essential", "python3-dev", "python3-pip",
+                    "libmysqlclient-dev", "libssl-dev", "libffi-dev",
+                    ]

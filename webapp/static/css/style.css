@@ -880,3 +880,20 @@ footer{background: #424242; margin-top:20px; width:100%; position: absolute; fon
 .ui-state-default{display: block; border-radius: 8px; width: 50px; height: 50px; margin: auto; padding-top: 10px;}
 a.ui-state-default:hover{background-color: #e64c47; color: white;}
 .ui-datepicker-unselectable{color: #d3d3d3;}
+
+div.user-regist{
+    padding : 200px 100px 100px 150px;
+}
+
+.user-regist-header{
+
+  font-family: NanumSquareOTFB;
+  font-size: 48px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+    color : #e64c47;
+}
