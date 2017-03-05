@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django_mysql'
     'storages',
     'widget_tweaks',
->>>>>>> 626c3a8d4fe39caf23d1b440033b52bc6f9ec405:bravepeach/settings/base.py
 ]
 
 MIDDLEWARE = [
