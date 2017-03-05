@@ -4,8 +4,6 @@
 
     // 가이드 검색
     function filter_guide() {
-        console.log("create post is working")
-
         $.ajax({
             url: "filtering/",
             type: "GET",
@@ -14,9 +12,57 @@
                     end_date: $('#end_date_form').val(),
                     traveler_cnt: $('#traveler_cnt_form').val()
             },
-            success: function (data) {
-                console.log(data);
-                console.log("success")
+            success: function (object) {
+                $('.guide-card-wrapper').html("");
+                $('.search-filter-result').html(object.length);
+                for (var i = 0; i < object.length; i++ ) {
+                    ratingFloat = parseFloat(object[i].rating);
+                    console.log(object[i]);
+
+                    if(/^[a-zA-Z]*$/.test(object[i].first_name) == false) {
+                        var name = object[i].last_name + object[i].first_name;
+                    }
+                    else {
+                        var name = object[i].first_name + " " + object[i].last_name;
+                    }
+
+                    var score = '<div class="guide-score-wrapper">\n';
+                    for (var j = 0; j < 5; j ++){
+                        if (ratingFloat >= 1){
+                            score += '<img class="guide-score" src="/static/image/icon/logo_full.png">\n';
+                            ratingFloat --;
+                        }
+                        else if (ratingFloat >= 0.5){
+                            score += '<img class="guide-score" src="/static/image/icon/logo_half.png">\n';
+                            ratingFloat --;
+                        }
+                        else {
+                            score += '<img class="guide-score" src="/static/image/icon/logo_empty.png">\n';
+                        }
+                    }
+                    score += '</div>';
+                    var guide_card = `
+                        <div class="guide-card" style="display: none">
+                            <div class="guide-text-wrapper">
+                    ` + score + `
+                    <span class="guide-review">
+                        가이드` + object[i].pay_cnt + `건 ㅣ 후기 ` + object[i].review_num + `개
+                    </span>
+                    <div class="guide-image-and-name">
+                        <img class="guide-image" src="assets/image/images/jinwoong.jpg">
+                        <span class="guide-name">` + name +
+                        `</span>
+                    </div>
+                    <span class="guide-location">
+                        뉴욕 / 워싱턴 D.C / 시카고
+                    </span>
+                </div>
+            </div>
+`
+
+                    $('.guide-card-wrapper').append(guide_card);
+                    $('.guide-card').show('slow')
+                }
             },
 
             error : function(xhr,errmsg,err) {
@@ -27,8 +73,9 @@
         });
     };
 
-    $('#location_form, #start_date_form, #end_date_form, #traveler_cnt_form').change(function () {
+    $('#start_date_form, #end_date_form, #traveler_cnt_form').change(function () {
         console.log("form submitted")
+        console.log($('#location_form').val())
         filter_guide();
     });
 
@@ -77,19 +124,37 @@
     });
 
 
-    var input = document.getElementById('location_form');
-    var options = {
-        types: ['(regions)'],
+    // var input = document.getElementById('location_form');
+    // var options = {
+    //     types: ['(regions)'],
+    //
+    // };
+    //
+    // autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    var addressPicker = new AddressPicker({autocompleteService: {types: ['(regions)']}});
+
+    $('#location_form').typeahead(null, {
+      displayKey: 'description',
+      source: addressPicker.ttAdapter()
+    });
+    addressPicker.bindDefaultTypeaheadEvent($('#location_form'))
+
+    $(addressPicker).on('addresspicker:selected', function (event, result) {
+        console.log(result.nameForType(result.addressTypes().slice(-1)[0]))
+        console.log("form submitted")
+        console.log($('#location_form').val())
+        filter_guide();
+    })
+
+
+
+    var input_main = document.getElementById('location_form_main');
+    var options_main = {
 
     };
 
-    autocomplete = new google.maps.places.Autocomplete(input, options);
-
-     var input_main = document.getElementById('location_form_main');
-     var options_main = {
-     };
-
-     autocomplete_main = new google.maps.places.SearchBox(input_main, options_main);
+    autocomplete_main = new google.maps.places.SearchBox(input_main, options_main);
 
      // 인원 증가
     var total_traveler = 0;

@@ -1,25 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
-from jsonfield import JSONField
+from django_mysql.models import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 
 
-
-
-
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_num = models.CharField(max_length=11, null=True)
     is_guide = models.BooleanField(default=False)
-    delete_reason = models.IntegerField(null= True)
+    delete_reason = models.IntegerField(null=True)
     rating = models.DecimalField(max_digits=2, decimal_places=1, null=True)
     nationality = models.CharField(max_length=40, null=True)
     birthday = models.DateField(blank=True, null=True)
     gender = models.NullBooleanField(null=True)
-    profile_image = models.URLField(default='',  null=True)
-    photo = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
+    # profile_image = models.URLField(default='',  null=True)
+    photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
     deleted_at = models.DateTimeField(null=True)
     delete_reason_optional = models.CharField(max_length=100, null=True)
 
@@ -27,15 +24,16 @@ class Profile(models.Model):
         return 'Profile for user {}'.format(self.user.username)
 
 
-
-@receiver(post_save,sender=settings.AUTH_USER_MODEL)
-def create_user_profile(sender,instance,created, **kwargs):
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
-@receiver(post_save, sender =settings.AUTH_USER_MODEL)
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
 
 class Notice(models.Model):
     title = models.CharField(max_length=100)
@@ -88,7 +86,6 @@ class UserRequest(models.Model):
     importance = models.IntegerField
     cost = models.IntegerField
     published = models.BooleanField(default=False)
-
 
 
 class GuideOffer(models.Model):

@@ -3,6 +3,10 @@
 {% block head %}
 {% load staticfiles %}
 <link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
+<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -29,7 +33,7 @@
             <img class="arrow-down" src="assets/image/icon/arrow_down_white.png" alt="펼치기 버튼">
         </div>
         <div class="search-filter-list-wrapper">
-            <span class="search-filter-result">124명의 가이드가 있습니다.</span>
+            <span class="search-filter-result"></span>명의 가이드가 있습니다.
             <div class="search-filter-list">
                 인기순
             </div>
@@ -43,94 +47,7 @@
             <div class=""></div>
 
         <div class="guide-card-wrapper">
-            <div class="guide-card">
-                <div class="guide-background-image-wrapper">
-                    <img class="guide-background-image" src="assets/image/images/gathering.jpg" alt="가이드 사진">
-                </div>
-                <div class="guide-text-wrapper">
-                    <div class="guide-score-wrapper">
-                        <img class="guide-score" src="assets/image/icon/logo_full.png">
-                        <img class="guide-score" src="assets/image/icon/logo_full.png">
-                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
-                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
-                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
-                    </div>
-                    <span class="guide-review">
-                        가이드 40건 ㅣ 후기 23개
-                    </span>
-                    <div class="guide-image-and-name">
-                        <img class="guide-image" src="assets/image/images/jinwoong.jpg">
-                        <span class="guide-name">
-                            {{ guide }}
-                            {{ guide.first_name }}
-                        </span>
-                    </div>
-                    <span class="guide-location">
-                        뉴욕 / 워싱턴 D.C / 시카고
-                    </span>
-                    <span class="guide-howmany">
-                        5명 가능
-                    </span>
-                </div>
-            </div>
-            <div class="guide-card2">
-                <div class="guide-background-image-wrapper">
-                    <img class="guide-background-image" src="assets/image/images/mountain3.jpg" alt="가이드 사진">
-                </div>
-                <div class="guide-text-wrapper">
-                    <div class="guide-score-wrapper">
-                        <img class="guide-score" src="assets/image/icon/logo_full.png">
-                        <img class="guide-score" src="assets/image/icon/logo_full.png">
-                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
-                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
-                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
-                    </div>
-                    <span class="guide-review">
-                        가이드 40건 ㅣ 후기 23개
-                    </span>
-                    <div class="guide-image-and-name">
-                        <img class="guide-image" src="assets/image/images/jihyo.jpg">
-                        <span class="guide-name">
-                            송지효(Jihyo Song)
-                        </span>
-                    </div>
-                    <span class="guide-location">
-                        뉴욕 / 워싱턴 D.C / 시카고
-                    </span>
-                    <span class="guide-howmany">
-                        5명 가능
-                    </span>
-                </div>
-            </div>
-            <div class="guide-card3">
-                <div class="guide-background-image-wrapper">
-                    <img class="guide-background-image" src="assets/image/images/red_sunset.jpg" alt="가이드 사진">
-                </div>
-                <div class="guide-text-wrapper">
-                    <div class="guide-score-wrapper">
-                        <img class="guide-score" src="assets/image/icon/logo_full.png">
-                        <img class="guide-score" src="assets/image/icon/logo_full.png">
-                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
-                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
-                        <img class="guide-score" src="assets/image/icon/logo_empty.png">
-                    </div>
-                    <span class="guide-review">
-                        가이드 40건 ㅣ 후기 23개
-                    </span>
-                    <div class="guide-image-and-name">
-                        <img class="guide-image" src="assets/image/images/jinwoong.jpg">
-                        <span class="guide-name">
-                            김나영(Nayoung Kim)
-                        </span>
-                    </div>
-                    <span class="guide-location">
-                        뉴욕 / 워싱턴 D.C / 시카고
-                    </span>
-                    <span class="guide-howmany">
-                        5명 가능
-                    </span>
-                </div>
-            </div>
+
         </div>
           <div class="pagination-wrapper">
             <ul class="pagination">

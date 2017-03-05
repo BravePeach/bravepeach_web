@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
-from .models import Guide, Profile
+from .models import Profile, Guide, Review
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from dateutil import parser
@@ -75,31 +75,30 @@ def guide_search(request):
 #     template_name = 'webapp/templates/views/guide_search.html'
 
 def filtering(request):
-    result = {}
+    result = []
     if request.method == 'GET':
         location = request.GET.get('location')
-        # start_date = int(request.GET.get('start_date').replace('.',''))
-        # end_date = int(request.GET.get('end_date').replace('.',''))
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')
 
         guide_queryset = Guide.objects.all()
         if traveler_cnt:
             guide_queryset = guide_queryset.filter(max_traveler_cnt__gte=traveler_cnt)
 
-        # 날짜 필터, 지역 필터 어떻게 하지?
-        # if bool(start_date) & bool(end_date):
-        #     travel_date = set({})
-        #     for i in range(start_date, end_date + 1):
-        #         travel_date.add(i)
+        if bool(start_date) & bool(end_date):
+            travel_date = []
+            for i in range(int(start_date.replace('.', '')), int(end_date.replace('.', '')) + 1):
+                travel_date.append(str(i))
+            guide_queryset = guide_queryset.exclude(off_day__has_any_keys=travel_date)
 
         for guide in guide_queryset:
-            result['rating'] = guide.rating
-            result['pay_cnt'] = guide.pay_cnt
-            result['max_traveler_cnt'] = guide.max_traveler_cnt
-            result['guide_location'] = guide.guide_location
-            result['first_name'] = guide.user.first_name
+            temp = {'rating': guide.rating, 'pay_cnt': guide.pay_cnt, 'guide_location': guide.guide_location,
+                    'first_name': guide.user.first_name, 'last_name': guide.user.last_name,
+                    'review_num': Review.objects.filter(receiver=guide.user.username).count()}
+            result.append(temp)
 
-    return JsonResponse(result)
+    return JsonResponse(result, safe=False)
 
 
 @login_required
