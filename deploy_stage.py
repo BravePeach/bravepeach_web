@@ -14,7 +14,7 @@ with paramiko.SSHClient() as client:
     cmd_dict["Install Dependency Packages"] = ["sudo apt install -y " + " ".join(APT_PACKAGE_LIST),
                                                "sudo pip3 install virtualenv"]
     cmd_dict["Pull Latest Source"] = ["cd bravepeach_web", "git pull",
-                                      "cp bravepeach/settings/example.py bravepeach/settings/staging.py"]
+                                      "cp bravepeach/settings/local.py bravepeach/settings/staging.py"]
     cmd_dict["Setup Python Environment"] = ["cd bravepeach_web", "virtualenv -p python3 .venv",
                                             "source .venv/bin/activate", "pip install -r requirements.txt"]
     #cmd_dict["Reload Service"] = ["sudo systemd service uwsgi reload"]

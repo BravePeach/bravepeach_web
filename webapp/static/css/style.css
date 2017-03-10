@@ -130,38 +130,7 @@ body{
     cursor: pointer;
 }
 
-.traveler_cntpicker{
-    display: none;
-    position: absolute;
-    top:77px;
-    left: -148px;
-    width: 385px;
-    height: 235px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    border: solid 1px #d4d4d4;
-    font-size: 20px;
-}
 
-.traveler_cntpicker div{
-    margin: 32px 0px 17px 26px;
-}
-
-.adult_num, .child_num, .toddler_num{margin-right: 46px;}
-.adult_num, .toddler_num{margin-left: 122px;}
-.child_num{margin-left: 103px;}
-
-.increase_button, .decrease_button{
-    text-align:center;
-    font-size:25px;
-    display:inline-block;
-    margin-left: 17px;
-    width: 29px;
-    height: 29px;
-    border:1px solid;
-    border-radius: 14.5px;
-    cursor:pointer;
-}
 
 .main-form-button{
     position: absolute;
@@ -415,13 +384,12 @@ body{
     min-width: 320px;
     max-width: 902px;
     margin: auto;
-    margin-top: 100px;
     padding-left: 12px;
     padding-right: 12px;
 }
 
 .main-container{
-    margin-top: 100px;
+    padding-top: 127px;
 }
 
 .main-mobile-logo-wrapper{
@@ -485,17 +453,14 @@ body{
     font-weight: 100;
 }
 
-.search-filter-button{
-    text-align: center;
-    width: 145px;
-    height: 50px;
-    margin-top: 17px;
-    margin-bottom: 0px;
-    color: white;
+.search-filter-list-wrapper{
     font-size: 16px;
-    padding-top: 14px;
-    font-weight: 100;
+    margin-top: 40px;
 }
+
+.search-filter-list{display: inline-block; float: right;}
+
+.search-filter-list span{margin-left:34px; cursor: pointer;}
 
 .enroll-trip-help{
     display: block;
@@ -572,7 +537,8 @@ body{
 .guide-card-wrapper{
     overflow-y: hidden;
     white-space: nowrap;
-    margin-top: 26px;
+    margin-top: 112px;
+    width:  100%;
 }
 
 .guide-card{

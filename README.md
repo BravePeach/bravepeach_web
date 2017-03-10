@@ -22,7 +22,7 @@ $ . .venv/bin/activate
 ```
 
 ### Django Setting
-[이곳](https://dayone.me/20Tcz1k) 을 참고해 세팅을 설정하면 된다. [샘플](bravepeach/settings/example.py) 을 제공하고 있으니 복사해 사용하면 편리하다.
+[이곳](https://dayone.me/20Tcz1k) 을 참고해 세팅을 설정하면 된다. [샘플](bravepeach/settings/local.py) 을 제공하고 있으니 복사해 사용하면 편리하다.
 
 기본 세팅파일은 `bravepeach/settings/local.py` 를 이용하도록 되어 있으며,
 

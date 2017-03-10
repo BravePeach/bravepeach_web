@@ -33,17 +33,16 @@ class GuideSearchForm(forms.Form):
 
 
 # 회원정보 변경
-
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name','last_name','email')
 
+
 class ProfileEditForm(forms.ModelForm):
     GENDER = (
         (1, "남성"),
         (2, "여성"),
-
     )
 
     birthday = forms.DateField(widget=extras.SelectDateWidget(years=range(1950, 2017)))

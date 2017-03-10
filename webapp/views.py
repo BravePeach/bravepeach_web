@@ -6,6 +6,7 @@ from .models import Guide, Review
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from dateutil import parser
+from django.db.models import Count, Case, When, F
 
 
 # def user_login(request):
@@ -62,6 +63,9 @@ def guide_search(request):
     return render(request, 'views/guide_search.html', {})
 
 
+def enroll_trip(request):
+    return render(request, 'views/enroll_trip.html')
+
 # class GuideSearch(ListView):
 #
 #     def get(self, request):
@@ -74,6 +78,7 @@ def guide_search(request):
 #     paginate_by = 9
 #     template_name = 'webapp/templates/views/guide_search.html'
 
+
 def filtering(request):
     result = []
     if request.method == 'GET':
@@ -81,10 +86,12 @@ def filtering(request):
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')
+        sort = request.GET.get('sort')
+        print(sort)
 
         guide_queryset = Guide.objects.all()
         if traveler_cnt:
-            guide_queryset = guide_queryset.filter(max_traveler_cnt__gte=traveler_cnt)
+            guide_queryset = guide_queryset.filter(max_traveler_cnt__gte=int(traveler_cnt.split()[1][:-1]))
 
         if bool(start_date) & bool(end_date):
             travel_date = []
@@ -92,10 +99,27 @@ def filtering(request):
                 travel_date.append(str(i))
             guide_queryset = guide_queryset.exclude(off_day__has_any_keys=travel_date)
 
+        if sort == "popularity":
+            guide_queryset = guide_queryset.order_by('-pay_cnt')
+
+        elif sort == "reviewNum":
+            guide_id_list = Review.objects.values('receiver').annotate(
+                receiver_cnt=Count(
+                    Case(
+                        When(
+                            receiver__startswith='G', then=1
+                        )
+                    )
+                )
+            ).order_by('-receiver_cnt').values_list('receiver', flat=True)
+
+            guide_id_list = [int(i[1:]) for i in guide_id_list]
+            guide_queryset = [Guide.objects.get(id=i) for i in guide_id_list]
+
         for guide in guide_queryset:
             temp = {'rating': guide.rating, 'pay_cnt': guide.pay_cnt, 'guide_location': guide.guide_location,
                     'first_name': guide.user.first_name, 'last_name': guide.user.last_name,
-                    'review_num': Review.objects.filter(receiver=guide.user.username).count()}
+                    'review_num': Review.objects.filter(receiver='G' + str(guide.id)).count()}
             result.append(temp)
 
     return JsonResponse(result, safe=False)

@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="main-container">
+            <section>
+                <h1 class="sup-title-peach">여행지 등록</h1>
+                <h2 class="sub-title">용감한 님의 맞춤형 여행지 정보를 등록하세요!</h2>
+            </section>
+            <div class="white-bar">
+                <img class="icon" src="/static/image/icon/where_black.png" alt="where?">
+                <input class="enroll-trip-form" type="text" name="" value="" placeholder="뉴욕, 뉴저지">
+                <img class="arrow-down" src="/static/image/icon/arrow_down_black.png" alt="펼치기 버튼">
+            </div>
+
+            <div class="white-bar">
+                <img class="icon" src="/static/image/icon/when_black.png" alt="where?">
+                <input class="enroll-trip-form" type="date" name="" value="">
+                <img class="arrow-down" src="/static/image/icon/arrow_down_black.png" alt="펼치기 버튼">
+            </div>
+
+            <div class="white-bar">
+                <img class="icon" src="/static/image/icon/howmany_black.png" alt="where?">
+                <input class="enroll-trip-form" type="text" name="" value="" placeholder="인원 3명">
+                <img class="arrow-down" src="/static/image/icon/arrow_down_black.png" alt="펼치기 버튼">
+            </div>
+
+            <span class="enroll-trip-help">*가이드의 도움이 필요한 항목을 활성화 시켜주세요.</span>
+
+            <div class="peach-button-wrapper">
+                <div class="col-xs-4">
+                    <button class="paech-button way-of-travel-button inactive btn1">
+                        <img src="/static/image/icon/logo_empty.png">
+
+                        <span class="enroll-trip-button-name">이동 수단</span>
+                    </button>
+                </div>
+
+                <div class="col-xs-4">
+                    <button class="paech-button lodging-button inactive btn2">
+                        <img src="/static/image/icon/logo_empty.png">
+
+                        <span class="enroll-trip-button-name">숙소 </span>
+                    </button>
+                </div>
+
+                <div class="col-xs-4">
+                    <button class="paech-button guide-button inactive btn3">
+                        <img src="/static/image/icon/logo_empty.png">
+
+                        <span class="enroll-trip-button-name">가이드</span>
+                    </button>
+                </div>
+            </div>
+
+            <button class="gradation-bar inactive btn1">
+
+                <span class="bar-text">이동 수단</span>
+
+                <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+
+            </button>
+
+            <div class="scrolling-page1">
+
+                <span style="float: left">1.</span>
+                <div class="sellect-wrapper">
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">직항
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">경유 1회
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">경유 2회
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">상관없음
+                    </div>
+                </div>
+
+                <span style="float: left">2.</span>
+                <div class="sellect-wrapper">
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">이코노미 석
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">비즈니스 석
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">퍼스트 석
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">상관없음
+                    </div>
+                </div>
+
+                <span style="float: left">3.</span>
+                <div class="sellect-wrapper">
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">국내 항공
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">해외 항공
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">상관없음
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                        <input class="radio-style" type="checkbox">기타
+                    </div>
+                </div>
+
+                <div class="additional-request-box">
+
+                    <!--멀티라인 인풋 추가-->
+
+                </div>
+
+            </div>
+
+            <button class="gradation-bar inactive btn2">
+
+                <span class="bar-text">숙소</span>
+
+                <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+
+            </button>
+
+            <div class="scrolling-page2">
+
+                <span style="float: left">1.</span>
+                <div class="sellect-wrapper">
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="radio-style" type="checkbox">공항 근처
+                    </div>
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="radio-style" type="checkbox">시내
+                    </div>
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="radio-style" type="checkbox">여행지 근처
+                    </div>
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="radio-style" type="checkbox">기타
+                    </div>
+                </div>
+
+                <span style="float: left">2.</span>
+                <div class="sellect-wrapper">
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="radio-style" type="checkbox">호텔
+                    </div>
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="radio-style" type="checkbox">한인 민박
+                    </div>
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="radio-style" type="checkbox">현지인 집
+                    </div>
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="radio-style" type="checkbox">리조트
+                    </div>
+                    <div class="col-xs-6 col-sm-fifth">
+                     <input class="radio-style" type="checkbox">가이드 집
+                    </div>
+                </div>
+
+                <div class="additional-request-box">
+
+                    <!--멀티라인 인풋 추가-->
+
+                </div>
+
+            </div>
+
+            <button class="gradation-bar inactive btn3">
+
+                <span class="bar-text">가이드</span>
+
+                <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+
+            </button>
+
+            <div class="scrolling-page3">
+
+                <span style="float: left">1.</span>
+                <div class="sellect-wrapper">아침 ______시 부터는 일정을 시작해 주세요.</div>
+
+                <span style="float: left">2.</span>
+                <div class="sellect-wrapper">저녁 _____시에는 일정을 마쳐주세요.</div>
+
+                <span style="float: left">3.</span>
+                <div class="sellect-wrapper">꼭 가고 싶은 여행지는 _________________________입니다.</div>
+
+                <span style="float: left">4.</span>
+                <div class="sellect-wrapper">
+                    <div style="margin-bottom: 16px;">여행테마</div>
+                    <div class="row" style="margin-bottom:24px;">
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">전체
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">현지 꿀팁
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">액티비티
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">문화/예술
+                        </div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-3">
+                     <input class="radio-style" type="checkbox">골목 여행
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                     <input class="radio-style" type="checkbox">자연 경관
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                     <input class="radio-style" type="checkbox">맛집 기행
+                    </div>
+                    <div class="col-xs-6 col-sm-3">
+                     <input class="radio-style" type="checkbox">역사여행
+                    </div>
+                </div>
+
+                </div>
+                <span style="float: left">6.</span>
+                <div class="sellect-wrapper">
+                    <div style="margin-bottom: 16px;">이런 성향의 가이드가 좋아요!</div>
+                    <div class="row" style="margin-bottom:24px;">
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">전체
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">유쾌한
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">차분한
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">지적인
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3">
+                         <input class="radio-style" type="checkbox">유머러스한
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                         <input class="radio-style" type="checkbox">감성적인
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                         <input class="radio-style" type="checkbox">설명을 잘하는
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                         <input class="radio-style" type="checkbox">경제적인
+                        </div>
+                    </div>
+                </div>
+
+                <span style="float: left">7.</span>
+                <div class="sellect-wrapper">
+                    <div style="margin-bottom: 16px;">저에게 가장 중요한 것은</div>
+                    <div class="row" style="margin-bottom:24px;">
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">맛집
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">인생 사진
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">적절한 휴식
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="radio-style" type="checkbox">친구같은 가이드
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3">
+                         <input class="radio-style" type="checkbox">역사공부
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                         <input class="radio-style" type="checkbox">기타
+                        </div>
+                    </div>
+                </div>
+
+                <div class="additional-request-box">
+
+                    <!--멀티라인 인풋 추가-->
+
+                </div>
+
+            </div>
+
+            <div class="total-amount-wrapper">
+                <span>예상총액</span>
+            </div>
+
+            <div class="submit-button-wrapper">
+                <div class="col-xs-6">
+                <button class="temp-store-button">임시저장</button>
+                </div>
+                <div class="col-xs-6">
+                <button class="find-guide-button">가이드 모집</button>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

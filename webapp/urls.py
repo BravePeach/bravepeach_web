@@ -32,6 +32,9 @@ urlpatterns = [
     url(r'^guide_search/$', views.guide_search, name='guide_search'),
     url(r'^guide_search/filtering/$', views.filtering, name='filtering'),
 
+    # enroll trip
+    url(r'^enroll_trip', views.enroll_trip, name='enroll_trip'),
+
     # edit user profile
     url(r'^edit/$',views.edit,name='edit'),
 ]

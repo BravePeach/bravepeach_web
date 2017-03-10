@@ -3,14 +3,15 @@
  */
 
     // 가이드 검색
-    function filter_guide() {
+    function filter_guide(sort = 'popularity') {
         $.ajax({
             url: "filtering/",
             type: "GET",
             data: { location: $('#location_form').val(),
                     start_date: $('#start_date_form').val(),
                     end_date: $('#end_date_form').val(),
-                    traveler_cnt: $('#traveler_cnt_form').val()
+                    traveler_cnt: $('#traveler_cnt_form').val(),
+                    sort: sort,
             },
             success: function (object) {
                 $('.guide-card-wrapper').html("");
@@ -49,7 +50,7 @@
                         가이드` + object[i].pay_cnt + `건 ㅣ 후기 ` + object[i].review_num + `개
                     </span>
                     <div class="guide-image-and-name">
-                        <img class="guide-image" src="assets/image/images/jinwoong.jpg">
+                        <img class="guide-image" src="/static/image/images/jinwoong.jpg">
                         <span class="guide-name">` + name +
                         `</span>
                     </div>
@@ -58,7 +59,7 @@
                     </span>
                 </div>
             </div>
-`
+`;
 
                     $('.guide-card-wrapper').append(guide_card);
                     $('.guide-card').show('slow')
@@ -71,11 +72,10 @@
                 console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
             }
         });
-    };
+}
 
-    $('#start_date_form, #end_date_form, #traveler_cnt_form').change(function () {
+$('#start_date_form, #end_date_form').change(function () {
         console.log("form submitted")
-        console.log($('#location_form').val())
         filter_guide();
     });
 
@@ -83,7 +83,7 @@
                     beforeShow: function (input, inst) {
                         setTimeout(function () {
                             inst.dpDiv.css({
-                                top: 240,
+                                top: 360,
                                 left: 220,
                             });
                         }, 0);
@@ -163,7 +163,7 @@
             return parseInt(val.slice(0, -1))+1 +'명'
         });
         total_traveler ++;
-        $('#traveler_cnt_main').attr('value', total_traveler)
+        $('#traveler_cnt_main, #traveler_cnt_form').attr('value', '인원 ' + total_traveler +'명')
     });
 
     $('.decrease_button').click(function(){
@@ -172,12 +172,91 @@
                 return
             }
             total_traveler --;
-            $('#traveler_cnt_main').attr('value', total_traveler);
+            $('#traveler_cnt_main, #traveler_cnt_form').attr('value', '인원 ' + total_traveler +'명');
             return parseInt(val.slice(0, -1))-1 +'명'
         });
     });
 
-    $('#traveler_cnt_main').click(function() {
+    $('#traveler_cnt_main, .arrow-down, #traveler_cnt_form').click(function() {
         $('.traveler_cntpicker').slideToggle(200)
     });
 
+    // 가이드 검색 정렬
+    function orderGuide(value){
+        console.log(value)
+    };
+
+
+      // 버튼 클릭시 페이지 펼치기
+                $(".btn1").click(function(){
+                    if($(".gradation-bar.btn1").hasClass("inactive")){
+                        $(".gradation-bar.btn1").removeClass("inactive");
+                        $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_full.png");
+                    }
+                    else{
+                        $(".gradation-bar.btn1").addClass("inactive");
+                        $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_empty.png");
+                    }
+                    $(".scrolling-page1").slideToggle(200);
+                });
+
+                $(".btn2").click(function(){
+                    if($(".gradation-bar.btn2").hasClass("inactive")){
+                        $(".gradation-bar.btn2").removeClass("inactive");
+                        $(".lodging-button > img").attr("src", "/static/image/icon/logo_full.png");
+                    }
+                    else{
+                        $(".gradation-bar.btn2").addClass("inactive");
+                        $(".lodging-button > img").attr("src", "/static/image/icon/logo_empty.png");
+                    }
+                    $(".scrolling-page2").slideToggle(200);
+                });
+
+                $(".btn3").click(function(){
+                    if($(".gradation-bar.btn3").hasClass("inactive")){
+                        $(".gradation-bar.btn3").removeClass("inactive");
+                        $(".guide-button > img").attr("src", "/static/image/icon/logo_full.png");
+                    }
+                    else{
+                        $(".gradation-bar.btn3").addClass("inactive");
+                        $(".guide-button > img").attr("src", "/static/image/icon/logo_empty.png");
+                    }
+                    $(".scrolling-page3").slideToggle(200);
+                });
+
+
+                // 복숭아 버튼 호버시 그림 바꾸고 글자에 그림자 넣기
+                // 중복을 줄일수 없을까?
+                $(".way-of-travel-button")
+                    .mousemove(function(){
+                        $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_full.png");
+                        $(".enroll-trip-button-name").attr("text-shadow", "0px 1px 1px rgba(0,0,0,0.3)");
+                })
+                    .mouseout(function(){
+                        // 클릭을 안했을때만 빈 그림으로 바꾼다.
+                        if($(".gradation-bar.btn1").hasClass("inactive")){
+                            $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_empty.png")
+                    }
+                });
+
+
+                $(".lodging-button")
+                    .mousemove(function(){
+                        $(".lodging-button > img").attr("src", "/static/image/icon/logo_full.png");
+                })
+                    .mouseout(function(){
+                        if($(".gradation-bar.btn2").hasClass("inactive")){
+                            $(".lodging-button > img").attr("src", "/static/image/icon/logo_empty.png")
+                        }
+                });
+
+
+                $(".guide-button")
+                    .mousemove(function(){
+                        $(".guide-button > img").attr("src", "/static/image/icon/logo_full.png");
+                })
+                    .mouseout(function(){
+                        if($(".gradation-bar.btn3").hasClass("inactive")){
+                            $(".guide-button > img").attr("src", "/static/image/icon/logo_empty.png")
+                        }
+                })

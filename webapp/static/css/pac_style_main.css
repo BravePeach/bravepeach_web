@@ -3,3 +3,36 @@
 .pac-item{padding-left: 15px; height: 64px; padding-top: 22px; font-family: 'NanumSquare', 'Nanum Gothic', sans-serif; font-size: 20px;}
 .pac-matched{font-size: 20px;}
 .pac-item-query{font-size: 20px;}
+
+.traveler_cntpicker{
+    display: none;
+    position: absolute;
+    top:77px;
+    left: -148px;
+    width: 385px;
+    height: 235px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: solid 1px #d4d4d4;
+    font-size: 20px;
+}
+
+.traveler_cntpicker div{
+    margin: 32px 0px 17px 26px;
+}
+
+.adult_num, .child_num, .toddler_num{margin-right: 46px;}
+.adult_num, .toddler_num{margin-left: 122px;}
+.child_num{margin-left: 103px;}
+
+.increase_button, .decrease_button{
+    text-align:center;
+    font-size:25px;
+    display:inline-block;
+    margin-left: 17px;
+    width: 29px;
+    height: 29px;
+    border:1px solid;
+    border-radius: 14.5px;
+    cursor:pointer;
+}

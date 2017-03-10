@@ -17,32 +17,52 @@
             <h2 class="sub-title">자신에게 꼭 맞는 가이드를 찾아보세요!</h2>
         </section>
         <div class="gradation-bar">
-            <img class="icon" src=image/icon/where_white.png" alt="where?">
-            <input class="find-guide-form" id="location_form" type="text" name="" value="">
+            <img class="icon" src="/static/image/icon/where_white.png" alt="where?">
+            <input class="find-guide-form" id="location_form" type="text" name="" value="" style="top:0px; left: 0px; width: 100%;">
 
           </div>
         <div class="gradation-bar">
-            <img class="icon" src="assets/image/icon/when_white.png" alt="when?">
+            <img class="icon" src="/static/image/icon/when_white.png" alt="when?">
             <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="" readonly>
             <img class="arrow-right" src="">
             <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="" readonly>
         </div>
         <div class="gradation-bar">
-            <img class="icon" src="assets/image/icon/howmany_white.png" alt="how many?">
-            <input class="find-guide-form" id="traveler_cnt_form" type="text" name="" value="" readonly>
-            <img class="arrow-down" src="assets/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+            <img class="icon" src="/static/image/icon/howmany_white.png" alt="how many?">
+            <input class="find-guide-form" id="traveler_cnt_form" type="text" name="" value="" readonly style="width: 78%;">
+            <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+                                    <div class="traveler_cntpicker">
+                            <div>
+                                성인
+                                <span class="adult_num">0명</span>
+                                <span class="increase_button">+</span>
+                                <span class="decrease_button">-</span>
+                            </div>
+
+                            <div>
+                                어린이
+                                <span class="child_num">0명</span>
+                                <span class="increase_button">+</span>
+                                <span class="decrease_button">-</span>
+                            </div>
+
+                            <div>
+                                유아
+                                <span class="toddler_num">0명</span>
+                                <span class="increase_button">+</span>
+                                <span class="decrease_button">-</span>
+                            </div>
+                        </div>
+
         </div>
         <div class="search-filter-list-wrapper">
-            <span class="search-filter-result"></span>명의 가이드가 있습니다.
             <div class="search-filter-list">
-                인기순
+                <span class="order-active" onclick="filter_guide('popularity')">인기순</span>
+                <span onclick="filter_guide('reviewNum')">후기순</span>
+                <span onclick="filter_guide('recentActivity')">최근활동순</span>
             </div>
-        </div>
+            <span style="float: right;"><span class="search-filter-result"></span>명의 가이드가 있습니다.</span>
 
-        <div class="search-filter-button-wrapper">
-            <div class="gradation-bar search-filter-button">
-                검색 필터
-            </div>
         </div>
             <div class=""></div>
 
