@@ -3,19 +3,17 @@ from . import views
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 
-
-
 urlpatterns = [
-    # index page
-    url(r'^$', views.index, name='index'),
+    # Common
+    url(r'^$', views.common.index, name='index'),
 
-    # log-in and log-out
-    url(r'login/$', auth_views.login, name='login',
-        kwargs={'template_name': 'login.html'}),
-    url(r'logout/$', views.user_logout, name='logout'),
-
-    # password reset
-    url(r'^password_reset/$',auth_views.password_reset,name="password_reset",
+    # User
+    url(r'^register/$', views.user.register, name='register'),
+    url(r'^register_bravepeach/$', views.user.register_bravepeach, name="register_bravepeach"),
+    url(r'login/$', auth_views.login, name='login', kwargs={'template_name': 'login.html'}),
+    url(r'logout/$', views.user.user_logout, name='logout'),
+    url(r'^edit/$',views.user.edit,name='edit'),
+    url(r'^password_reset/$', auth_views.password_reset, name="password_reset",
         kwargs={'template_name': 'password_reset.html',
                 'email_template_name' : 'password_reset_email.html'}),
     url(r'^password_reset/done/$', auth_views.password_reset_done, name="password_reset_done",
