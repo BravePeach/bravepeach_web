@@ -1,0 +1,196 @@
+/*
+ * http://getbootstrap.com/customize - 하려 했으나, 원본 소스와 차이가 있어 강제 선언으로 처리
+ * font-family:"돋움",Dotum,"굴림",Gulim,AppleGothic,Sans-serif; color:#383d41;
+ * */
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
+@import url(//cdn.jsdelivr.net/nanumsquare/1.0/nanumsquare.css);
+
+:root {
+	--blush: #f2ad8a;
+	--pastel-red: #e64c47;
+	--greyish-brown: #404040;
+	--white: #dbdbdb;
+	--pale-red: #da4d44;
+	--white-70: rgba(255, 255, 255, 0.7);
+	--white-two: #ffffff;
+	--white-three: #f6f6f6;
+	--pastel-red-60: rgba(217, 104, 101, 0.6);
+	--dark-sky-blue: #4a90e2;
+	--greyish-brown-two: #4a4a4a;
+	--warm-grey: #9c9c9c;
+	--pale-grey: #ededef;
+}
+
+* {
+  font-family: 'NanumSquare', 'Nanum Gothic', sans-serif;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: none;
+}
+
+body {
+  font-family: 'NanumSquare', sans-serif;
+  margin: 0;
+  position: relative;
+  z-index: -1;
+}
+
+header {
+  height: 65px;
+}
+
+.brave_head {
+  .main_logo {
+    float:left;
+    margin-left:50px;
+    margin-top: 12px;
+  }
+
+  .profile_img {
+    float: right;
+    margin-top: 35px;
+    margin-right: 65px;
+    a img {
+      width: 50px;
+      height: auto;
+      border-radius: 24px;
+    }
+  }
+
+  .gnb {
+    float: right;
+    margin-top: 7px;
+    margin-right: 50px;
+
+    ul {
+      list-style: none;
+
+      li {
+        float: right;
+        margin: 0 15px;
+
+        a {
+          font-size: 15px;
+          color: #000;
+          text-shadow: rgba(255, 255, 255, 0.6) 1px 1px 1px;
+          filter: shadow(color=#fff, direction=135, strength=4);
+
+          :hover {
+            text-decoration: none;
+            color: #da4d44;
+            color: var(--pale-red);
+          }
+        }
+      }
+    }
+  }
+}
+
+.main_brave_head {
+  .main_logo {
+    float: left;
+    margin-left: 50px;
+    margin-top: 40px;
+  }
+  .gnb {
+    margin-top: 60px;
+  }
+}
+
+.brave_fixed_head {
+  .main_logo {
+    margin-top: 4px;
+  }
+  .gnb {
+    margin-top: 26px;
+  }
+}
+.main_logo img{width:200px;}
+
+/*헤더 배경화면*/
+.head_container{width:880px; margin:0 auto; min-height: 740px;}
+
+/*메인 헤더 부분*/
+.head_main_banner_bg{
+  width:100%; height:
+    740px;
+  background: url(/assets/image/travel_main.jpg) center no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+.main_text{width:350px; margin-top: 230px;}
+
+.head_main_text{
+  position: absolute; top:0; width: 880px;
+
+  h1 {
+    font-size: 45px;
+    color: #fff;
+    margin-top: 8px;
+    text-shadow: rgba(0, 0, 0, 0.6) 1px 1px 1px;
+    filter: shadow(color=#000, direction=135, strength=4);
+  }
+
+  h4 {
+    color: #fff;
+    line-height: 28px;
+    text-shadow: rgba(0, 0, 0, 0.6) 1px 1px 1px;
+    filter: shadow(color=#000, direction=135, strength=4);
+  }
+}
+
+footer {
+  background: #424242;
+  margin-top:20px;
+  width:100%;
+  position: absolute;
+  font-size: 20px;
+  text-align: center;
+}
+
+.foot_menu {
+  width: 775px;
+  margin: 75px auto;
+}
+
+.foot_menu ul {
+  width: 100%;
+  list-style: none;
+  display: table;
+  margin: 0 auto;
+  padding: 0;
+
+  li {
+    float:left; margin:0;
+
+    a {
+      color: #fff;
+      :hover {
+        text-decoration: none;
+        color: #e64c47;
+      }
+    }
+  }
+}
+
+.info {
+  text-align: center;
+  color:#ccc;
+  font-size:13px;
+  margin-top:89px;
+}
+
+.copyright {
+  text-align: center;
+  color:#ccc;
+  font-size:13px;
+  margin-top:89px;
+  margin-bottom: 74px;
+}

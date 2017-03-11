@@ -6,8 +6,13 @@ BravePeach WebServer with Django
 ### Pre-requisites
 
 ```bash
-$ sudo apt install build-essential python3-dev python3-pip git git-flow libssl-dev libffi-dev libmysqlclient-dev
+$ sudo apt install build-essential python3-dev python3-pip git git-flow libssl-dev libffi-dev libmysqlclient-dev npm
+$ sudo npm install -g less
+$ lessc # installation test
 ```
+**Note**
+`lessc` 명령어를 입력했을 때 `node` 를 찾을 수 없다는 에러가 발생하면 
+`$ sudo vi /usr/local/bin/lessc` 로  lessc 파일을 열어 첫번째 줄의 `node` 를 `nodejs` 로 수정한다.
 
 ### Instructions
 
