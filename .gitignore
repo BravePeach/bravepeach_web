@@ -102,9 +102,7 @@ media/
 *.db
 
 # settings
-bravepeach/settings/local.py
-bravepeach/settings/staging.py
-bravepeach/settings/service.py
+settings.json
 
 # Unittest Report
 report/

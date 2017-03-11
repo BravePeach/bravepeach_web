@@ -12,14 +12,26 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 from django.core.management.utils import get_random_secret_key
 from django.core.mail import backends
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+LOCAL_SETTINGS = json.loads(open(os.path.join(BASE_DIR, "settings.json")).read())
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = LOCAL_SETTINGS["SECRET_KEY"]
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True    # NEVER SET "True" IN SERVICE!!!!
+
+ALLOWED_HOSTS = LOCAL_SETTINGS["ALLOWED_HOSTS"]     # add your ip address
+
+INTERNAL_IPS = LOCAL_SETTINGS["INTERNAL_IPS"]   # add "127.0.0.1" when make local
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
-
 
 # Application definition
 
@@ -32,10 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'django_extensions',
-    'webapp',
     'django_mysql',
     'storages',
     'widget_tweaks',
+    'static_precompiler',
+    'django_user_agents',
+    'webapp',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'bravepeach.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'bravepeach.urls'
@@ -102,11 +117,21 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Database
+# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+
+DATABASES = LOCAL_SETTINGS["DATABASES"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'static_precompiler.finders.StaticPrecompilerFinder',
+)
 
 HASHID_FIELD_SALT = get_random_secret_key()
 
@@ -131,17 +156,19 @@ AWS_S3_CUSTOM_DOMAIN = 'bravestatics.s3-website-northeast-1.amazonaws.com'
 # STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 # STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
-#MEDIA FILE LOCATION
+# MEDIA FILE LOCATION
 MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
-
-#AWS
+# AWS
 AWS_STORAGE_BUCKET_NAME = 'bravestatics'
-
 
 # For Deploy
 APT_PACKAGE_LIST = ["git", "build-essential", "python3-dev", "python3-pip",
                     "libmysqlclient-dev", "libssl-dev", "libffi-dev",
                     ]
+
+# AWS
+AWS_ACCESS_KEY_ID = LOCAL_SETTINGS["AWS_ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = LOCAL_SETTINGS["AWS_SECRET_ACCESS_KEY"]

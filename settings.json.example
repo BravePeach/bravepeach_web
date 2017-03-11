@@ -1,0 +1,18 @@
+{
+  "SECRET_KEY": "",
+  "DEBUG": true,
+  "ALLOWED_HOSTS": [],
+  "INTERNAL_IPS": [],
+  "DATABASES":{
+    "default": {
+      "ENGINE": "django.db.backends.mysql",
+      "NAME": "",
+      "USER": "",
+      "PASSWORD": "",
+      "HOST": "",
+      "PORT": ""
+    }
+  },
+  "AWS_ACCESS_KEY_ID": "",
+  "AWS_SECRET_ACCESS_KEY": ""
+}
