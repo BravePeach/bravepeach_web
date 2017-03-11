@@ -106,3 +106,6 @@ settings.json
 
 # Unittest Report
 report/
+
+# Auto compiled css from less
+webapp/static/less/*.css

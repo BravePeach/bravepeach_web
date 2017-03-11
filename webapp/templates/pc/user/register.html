@@ -12,14 +12,15 @@
 
 {% block content %}
     <div id="user-register">
-    <div id="register-title">회원가입</div>
-    {% for txt, color in register_type %}
-        <div class="register_button" style="background-color: {{ color }};">
-        {{ txt }}
+        <div id="register-title">회원가입</div>
+        <div class="register-wrapper">
+            <a href="" class="register-fb">Facebook으로 가입하기</a>
+            <a href="" class="register-naver">Naver로 가입하기</a>
+            <a href="" class="register-google">Google로 가입하기</a>
+            <a href="{% url 'register_bp' %}" class="register-bp">Bravepeach로 가입하기</a>
+            <div class="line"></div><div class="or">또는</div><div class="line"></div>
+            <div class="already-text">Bravepeach 계정이 있으신가요?</div>
+            <a href="" class="login">로그인</a>
         </div>
-    {% endfor %}
-    <div class="line"></div><div class="or">또는</div><div class="line"></div>
-    <div class="already-text">Bravepeach 계정이 있으신가요?</div>
-    <div class="login">로그인</div>
     </div>
 {% endblock %}

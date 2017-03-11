@@ -32,9 +32,7 @@ def register_user(request):
 
 
 def register(request):
-    return flavour_render(request, 'user/register.html',
-                          {"register_type": [('Facebook으로 가입하기', '#4990e2'), ("Naver로 가입하기", "#6ac601"),
-                                             ("Google로 가입하기", '#ff9600'), ("Bravepeach로 가입하기", "#e64c47")]})
+    return flavour_render(request, 'user/register.html',)
 
 
 def register_bravepeach(request):
@@ -44,8 +42,7 @@ def register_bravepeach(request):
     else:
         user_form = UserRegistrationForm()
         profile_form = ProfileEditForm()
-        return flavour_render(request, 'user/register_bravepeach.html',
-                              {'user_form': user_form, 'profile_form': profile_form})
+        return flavour_render(request, 'user/register_bp.html', {'user_form': user_form, 'profile_form': profile_form})
 
 
 @login_required

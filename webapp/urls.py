@@ -9,7 +9,7 @@ urlpatterns = [
 
     # User
     url(r'^register/$', views.user.register, name='register'),
-    url(r'^register_bravepeach/$', views.user.register_bravepeach, name="register_bravepeach"),
+    url(r'^register_bravepeach/$', views.user.register_bravepeach, name="register_bp"),
     url(r'login/$', auth_views.login, name='login', kwargs={'template_name': 'login.html'}),
     url(r'logout/$', views.user.user_logout, name='logout'),
     url(r'^edit/$',views.user.edit,name='edit'),
@@ -24,10 +24,10 @@ urlpatterns = [
         kwargs={'template_name': 'password_reset_complete.html'}),
 
     # guide search
-    url(r'^guide_search/$', views.guide_search, name='guide_search'),
-    url(r'^guide_search/filtering/$', views.FilterGuide.as_view(), name='filter_guide'),
+    url(r'^guide_search/$', views.views.guide_search, name='guide_search'),
+    url(r'^guide_search/filtering/$', views.views.FilterGuide.as_view(), name='filter_guide'),
 
     # enroll trip
-    url(r'^enroll_trip', views.enroll_trip, name='enroll_trip'),
+    url(r'^enroll_trip', views.views.enroll_trip, name='enroll_trip'),
 
 ]

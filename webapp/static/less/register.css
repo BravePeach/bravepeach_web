@@ -11,8 +11,9 @@
   font-size: 48px;
   font-weight: normal;
 }
-#user-register .register_button {
-  cursor: pointer;
+#user-register .register-wrapper a {
+  text-decoration: none;
+  display: block;
   width: 441px;
   height: 71px;
   margin: 17px auto 0 auto;
@@ -27,6 +28,18 @@
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
+}
+#user-register .register-wrapper .register-fb {
+  background-color: #4990e2;
+}
+#user-register .register-wrapper .register-naver {
+  background-color: #6ac601;
+}
+#user-register .register-wrapper .register-google {
+  background-color: #ff9600;
+}
+#user-register .register-wrapper .register-bp {
+  background-color: #e64c47;
 }
 #user-register .line {
   display: inline-block;
