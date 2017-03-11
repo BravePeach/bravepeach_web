@@ -2,11 +2,11 @@ from ..models import Guide, Review
 from django.http import JsonResponse
 from django.db.models import Count, Case, When
 from django.views.generic import View
-from django.shortcuts import render
+from bravepeach.util import flavour_render
 
 
-def load(request):
-    return render(request, 'views/guide_search.html', {})
+def guide_search(request):
+    return flavour_render(request, 'trip/guide_search.html', {})
 
 
 class FilterGuide(View):
@@ -52,3 +52,7 @@ class FilterGuide(View):
             result.append(temp)
 
         return JsonResponse(result, safe=False)
+
+
+def enroll_trip(request):
+    return flavour_render(request, 'trip/enroll_trip.html', {})

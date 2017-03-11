@@ -3,12 +3,8 @@ from dateutil import parser
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
-from django.core import serializers
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Case, When, F
-
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm
-from ..models import Guide, Review
 from bravepeach.util import flavour_render
 
 

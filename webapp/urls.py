@@ -24,10 +24,10 @@ urlpatterns = [
         kwargs={'template_name': 'password_reset_complete.html'}),
 
     # guide search
-    url(r'^guide_search/$', views.guide_search.load, name='guide_search'),
-    url(r'^guide_search/filtering/$', views.guide_search.FilterGuide.as_view(), name='filter_guide'),
+    url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),
+    url(r'^guide_search/filtering/$', views.trip.FilterGuide.as_view(), name='filter_guide'),
 
     # enroll trip
-    # url(r'^enroll_trip', views.enroll_trip, name='enroll_trip'),
+    url(r'^enroll_trip', views.trip.enroll_trip, name='enroll_trip'),
 
 ]

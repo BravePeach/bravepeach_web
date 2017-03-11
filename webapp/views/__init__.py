@@ -1,1 +1,1 @@
-from . import common, user, guide_search
+from . import common, user, trip
