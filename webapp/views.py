@@ -3,10 +3,11 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Guide, Review
-from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from dateutil import parser
 from django.db.models import Count, Case, When, F
+from django.views.generic import View
+from django.core.paginator import Paginator
 
 
 # def user_login(request):
@@ -66,28 +67,15 @@ def guide_search(request):
 def enroll_trip(request):
     return render(request, 'views/enroll_trip.html')
 
-# class GuideSearch(ListView):
-#
-#     def get(self, request):
-#         location = request.GET.get('location')
-#         start_date = request.GET.get('start_date')
-#         end_date = request.GET.get('end_date')
-#         traveler_cnt = request.GET.get('traveler_cnt')
-#
-#     queryset = Guide.objects.all().filter(max_traveler_cnt__gte=)
-#     paginate_by = 9
-#     template_name = 'webapp/templates/views/guide_search.html'
 
-
-def filtering(request):
-    result = []
-    if request.method == 'GET':
+class FilterGuide(View):
+    def get(self, request):
+        result = []
         location = request.GET.get('location')
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')
         sort = request.GET.get('sort')
-        print(sort)
 
         guide_queryset = Guide.objects.all()
         if traveler_cnt:
@@ -122,7 +110,7 @@ def filtering(request):
                     'review_num': Review.objects.filter(receiver='G' + str(guide.id)).count()}
             result.append(temp)
 
-    return JsonResponse(result, safe=False)
+        return JsonResponse(result, safe=False)
 
 
 @login_required

@@ -25,7 +25,7 @@ urlpatterns = [
 
     # guide search
     url(r'^guide_search/$', views.guide_search, name='guide_search'),
-    url(r'^guide_search/filtering/$', views.filtering, name='filtering'),
+    url(r'^guide_search/filtering/$', views.FilterGuide.as_view(), name='filter_guide'),
 
     # enroll trip
     url(r'^enroll_trip', views.enroll_trip, name='enroll_trip'),
