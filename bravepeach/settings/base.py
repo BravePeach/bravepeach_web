@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django_mysql',
     'storages',
     'widget_tweaks',
+    # 'django_mobile',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +48,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'django_mobile.middleware.MobileDetectionMiddleware'
+    # 'django_mobile.middleware.SetFlavourMiddleware'
 ]
 
 ROOT_URLCONF = 'bravepeach.urls'
@@ -62,7 +65,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'django_mobile.context_processors.flavour',
             ],
+            # 'loaders': [
+                # 'django_mobile.loader.Loader',
+            # ],
         },
     },
 ]

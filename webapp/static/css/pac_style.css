@@ -4,7 +4,28 @@
 .pac-matched{font-size: 24px;}
 .pac-item-query{font-size: 24px;}
 
-.twitter-typeahead{margin-top: 12px; margin-left: 10.9%; opacity:0.3; width: 78%;}
+.twitter-typeahead{margin-top: 12px; margin-left: 10.9%; width: 78%;}
+
+.tt-dropdown-menu{
+    width: 689px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: solid 1px #d4d4d4;
+    font-size: 24px;
+}
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #e64c47;
+}
+
+.tt-suggestion{
+    height: 58px;
+    padding: 0px 24px 5px 24px;
+    border-bottom: 1px solid #979797;
+    margin: 0px;
+}
+
+.tt-hint{opacity: 0.3 !important;}
 
 .traveler_cntpicker{
     z-index: 100;
