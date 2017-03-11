@@ -1,0 +1,25 @@
+{% extends "pc/common/base.html" %}
+{% load compile_static %}
+{% load static %}
+
+{% block title %}{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/register.less'|compile %}">
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/register.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="user-register">
+    <div id="register-title">회원가입</div>
+    {% for txt, color in register_type %}
+        <div class="register_button" style="background-color: {{ color }};">
+        {{ txt }}
+        </div>
+    {% endfor %}
+    <div class="line"></div><div class="or">또는</div><div class="line"></div>
+    <div class="already-text">Bravepeach 계정이 있으신가요?</div>
+    <div class="login">로그인</div>
+    </div>
+{% endblock %}

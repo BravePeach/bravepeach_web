@@ -23,9 +23,6 @@ urlpatterns = [
     url(r'^password_reset/complete$', auth_views.password_reset_complete, name="password_reset_complete",
         kwargs={'template_name': 'password_reset_complete.html'}),
 
-    # user register
-    url(r'^register/$', views.register, name='register'),
-
     # guide search
     url(r'^guide_search/$', views.guide_search, name='guide_search'),
     url(r'^guide_search/filtering/$', views.filtering, name='filtering'),
@@ -33,6 +30,4 @@ urlpatterns = [
     # enroll trip
     url(r'^enroll_trip', views.enroll_trip, name='enroll_trip'),
 
-    # edit user profile
-    url(r'^edit/$',views.edit,name='edit'),
 ]
