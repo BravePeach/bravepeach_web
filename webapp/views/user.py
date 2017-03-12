@@ -1,34 +1,35 @@
-from dateutil import parser
-
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import redirect, get_object_or_404
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.core import serializers
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Case, When, F
 
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm
-from ..models import Guide, Review
+from ..models import Profile
 from bravepeach.util import flavour_render
+
+
+def user_login(request):
+    logout(request)
+    if request.method == "POST":
+        print(request.POST)
+        username = request.POST["username"]
+        password = request.POST["password"]
+        remember = request.POST.get('remember_me', None)
+        user = authenticate(username=username, password=password)
+        if user is not None and user.is_active:
+            login(request, user)
+            if not remember:
+                request.session.set_expiry(0)
+            return redirect("index")
+        else:
+            return flavour_render(request, "user/login.html")
+    else:
+        return flavour_render(request, "user/login.html")
 
 
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(request.GET.get('next', '/'))
-
-
-def register_user(request):
-    user_form = UserRegistrationForm(request.POST)
-    profile_form = ProfileEditForm(request.POST)
-    if user_form.is_valid() and profile_form.is_valid():
-        profile_form.save()
-        new_user = user_form.save(commit=False)
-        new_user.set_password(user_form.cleaned_data['password'])
-        new_user.save()
-        this_user = authenticate(username=user_form.cleaned_data['username'],
-                                 password=user_form.cleaned_data['password'],)
-        login(request, this_user)
-        return request, this_user
 
 
 def register(request):

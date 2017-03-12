@@ -10,7 +10,7 @@ urlpatterns = [
     # User
     url(r'^register/$', views.user.register, name='register'),
     url(r'^register_bravepeach/$', views.user.register_bravepeach, name="register_bp"),
-    url(r'login/$', auth_views.login, name='login', kwargs={'template_name': 'login.html'}),
+    url(r'login/$', views.user.user_login, name='login'),
     url(r'logout/$', views.user.user_logout, name='logout'),
     url(r'^edit/$',views.user.edit,name='edit'),
     url(r'^password_reset/$', auth_views.password_reset, name="password_reset",

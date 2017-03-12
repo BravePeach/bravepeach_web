@@ -1,38 +1,34 @@
-{% extends "base.html" %}
-{% load staticfiles %}
+{% extends "pc/common/base.html" %}
+{% load compile_static %}
+{% load static %}
 
+{% block title %}bravepeach login{% endblock %}
 
-{% block title %} bravepeach login {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/login.less'|compile %}">
+{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/mobile.css' %}">
-<div class="main-container">
-    <a class="regist-button facebook">
-        Facebook으로 가입하기
-    </a>
-    <a class="regist-button naver">
-        Naver로 가입하기
-    </a>
-    <a class="regist-button google">
-        Google로 가입하기
-    </a>
-    <a class="regist-button brave">
-        BravePeach로 가입하기
-    </a>
-
-    <div class="boundary">
-        <div class="col-xs-5"><hr></div>
-        <div class="col-xs-2">또는</div>
-        <div class="col-xs-5"><hr></div>
-    </div>
-
-    <form class="regist-form-wrapper" action="{% url 'login' %}" method="post">
-        {{form.as_p}}
+<div class="login-wrapper">
+<div class="login-title">로그인</div>
+<div class="login-btn login-fb">Facebook으로 로그인</div>
+    <div class="login-btn login-naver">Naver로 로그인</div>
+    <div class="login-btn login-google">Google로 로그인</div>
+    <div class="line"></div><div class="or">또는</div><div class="line"></div>
+    <form id="login-form" method="post">
         {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next }}"/>
-    <button type="submit" class="regist-submit">로그인</button>
-        <p><a href="{% url 'password_reset' %}">비밀번호를 잊으셨나요?</a></p>
+        <div class="login-label">이메일 주소</div>
+        <input type="email" name="username" id="username" class="input-text login-input">
+        <div class="login-label">비밀번호</div>
+        <input type="password" name="password" id="password" class="input-text login-input">
+        <button class="submit-login" type="submit">로그인</button>
+        <div class="remember-wrapper">
+        <label for="login-remember" class="login-label"> <input type="checkbox" id="login-remember" name="remember_me" class="input-checkbox" value="true"> 로그인 상태 유지 </label>
+        </div>
+        <div class="line line-long"></div>
     </form>
+    <div class="login-label">Bravepeach 계정이 없으세요?</div>
+    <a href="{% url 'register_bp' %}" class="register-bp">Bravepeach로 가입하기</a>
 
 </div>
 
