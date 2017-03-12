@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.forms import extras
+
+from .models import Profile
 
 
 class LoginForm(forms.Form):
@@ -62,3 +64,16 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('birthday', 'gender')
+
+
+class PasswordResetCustomForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(PasswordResetCustomForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({"class": "input-text", "id": "reset-email"})
+
+
+class SetPasswordCustcomForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(SetPasswordCustcomForm, self).__init__(*args, **kwargs)
+        self.fields['new_passowrd1'].widget.attrs.update({"class": "input-text", "id": "new-password1"})
+        self.fields['new_passowrd2'].widget.attrs.update({"class": "input-text", "id": "new-password2"})

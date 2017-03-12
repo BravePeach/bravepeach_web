@@ -84,6 +84,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bravepeach.wsgi.application'
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

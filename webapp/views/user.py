@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -67,6 +68,11 @@ def register_bravepeach(request):
         user_form = UserRegistrationForm()
         profile_form = ProfileEditForm()
         return flavour_render(request, 'user/register_bp.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+def password_reset_complete(request):
+    messages.add_message(request, messages.INFO, "reset_pw")
+    return redirect("login", reset_pw="true")
 
 
 @login_required
