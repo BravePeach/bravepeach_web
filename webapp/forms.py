@@ -6,8 +6,8 @@ from django.forms import extras
 
 class LoginForm(forms.Form):
     email = forms.CharField(label='이메일 주소', max_length=30, min_length=5,
-                            widget=forms.TextInput(attrs={'class': 'register-text'}))
-    password = forms.CharField(label='비밀번호', widget=forms.PasswordInput(attrs={'class': 'register-text'}))
+                            widget=forms.TextInput(attrs={'class': 'input-text'}))
+    password = forms.CharField(label='비밀번호', widget=forms.PasswordInput(attrs={'class': 'input-text'}))
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -20,11 +20,13 @@ class UserRegistrationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
-        self.fields['last_name'].widget.attrs.update({"class": "register-text", "placeholder": "성(Last Name)*"})
-        self.fields['first_name'].widget.attrs.update({"class": "register-text", "placeholder": "이름(First Name)*"})
-        self.fields['password'].widget.attrs.update({"class": "register-text", "placeholder": "비밀번호*"})
-        self.fields['password2'].widget.attrs.update({"class": "register-text", "placeholder": "비밀번호 확인*"})
-        self.fields['email'].widget.attrs.update({"class": "register-text", "placeholder": "이메일(E-mail)*"})
+        self.fields['last_name'].widget.attrs.update({"class": "input-text", "placeholder": "성(Last Name)*",
+                                                      "required": "true"})
+        self.fields['first_name'].widget.attrs.update({"class": "input-text", "placeholder": "이름(First Name)*",
+                                                       "required": "true"})
+        self.fields['password'].widget.attrs.update({"class": "input-text", "placeholder": "비밀번호*"})
+        self.fields['password2'].widget.attrs.update({"class": "input-text", "placeholder": "비밀번호 확인*"})
+        self.fields['email'].widget.attrs.update({"class": "input-text", "placeholder": "이메일(E-mail)*"})
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -53,10 +55,10 @@ class ProfileEditForm(forms.ModelForm):
     )
 
     birthday = forms.DateField(widget=extras.SelectDateWidget(years=range(1920, 2017),
-                                                              attrs={"class": "register-select"},
+                                                              attrs={"class": "input-radio"},
                                                               empty_label=("년도*", "달*", "일*")))
     gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
 
     class Meta:
         model = Profile
-        fields = ('photo', 'phone_num', 'nationality')
+        fields = ('birthday', 'gender')

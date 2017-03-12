@@ -8,16 +8,21 @@
     <link rel="stylesheet" href="{% static 'less/register_bp.less'|compile %}">
 {% endblock %}
 
+{% block js %}
+    <script src="{% static 'js/register.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     <div class="contents-wrapper">
         <div class="page-title">회원가입</div>
         <div class="profile-wrapper">
             <div class="profile">
+                {# TODO: Upload Image and crop #}
                 <img src="{% static 'image/icon/profile_photo.png' %}" width="30" height="23" alt="">
             </div>
         </div>
         <div class="form-wrapper">
-            <form action="">
+            <form action="" method="post" id="register-form">
                 {% csrf_token %}
                 {{ user_form.last_name }}
                 {{ user_form.first_name }}
@@ -32,10 +37,10 @@
                 <div class="pw-notice notice notice-right">비밀번호가 일치합니다.</div>
                 <div class="pw-notice notice notice-wrong">비밀번호가 일치하지 않습니다.</div>
                 <div>{{ profile_form.birthday }}</div>
-                <!--nationality-->
+                {# TODO: Add nationality #}
                 <div class="button-wrapper">
-                    <button class="cancel-register">취소</button>
-                    <button class="submit-register">가입하기</button>
+                    <button class="cancel-register" type="reset">취소</button>
+                    <button class="submit-register" type="button" onclick="submit_register_form()">가입하기</button>
                 </div>
             </form>
         </div>

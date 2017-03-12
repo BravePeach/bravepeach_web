@@ -37,8 +37,31 @@ def register(request):
 
 def register_bravepeach(request):
     if request.method == "POST":
-        request, user = register_user(request)
-        return flavour_render(request, "user/greeting.html", {"user": user})
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_user.username = user_form.cleaned_data['email']
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
+            profile_instance = get_object_or_404(Profile, user_id=new_user.id)
+            profile_form = ProfileEditForm(request.POST, instance=profile_instance)
+            if profile_form.is_valid():
+                profile_form.save()
+                this_user = authenticate(username=user_form.cleaned_data['email'],
+                                         password=user_form.cleaned_data["password"])
+                if this_user:
+                    login(request, this_user)
+                    return flavour_render(request, "user/greeting.html", {"user": new_user})
+                else:
+                    print("no auth user")
+                return redirect("register_bp")
+            else:
+                print(profile_form.errors)
+                return redirect("register_bp")
+        else:
+            print(user_form.errors)
+            return redirect("register_bp")
+
     else:
         user_form = UserRegistrationForm()
         profile_form = ProfileEditForm()
