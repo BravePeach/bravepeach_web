@@ -1,8 +1,10 @@
+from django.shortcuts import redirect
 from ..models import Guide, Review
 from django.http import JsonResponse
 from django.db.models import Count, Case, When
 from django.views.generic import View
 from bravepeach.util import flavour_render
+from ..forms import RequestForm
 
 
 def guide_search(request):
@@ -55,4 +57,20 @@ class FilterGuide(View):
 
 
 def enroll_trip(request):
-    return flavour_render(request, 'trip/enroll_trip.html', {})
+    if request.method == 'POST':
+        data = request.POST.copy()
+
+        for key in ['trans_via', 'trans_type', 'accom_location', 'accom_type', 'theme', 'guide_type', 'importance']:
+            if data.__contains__(key):
+                new_value = sum([int(i) for i in data.getlist(key)])
+                data.update({key: new_value})
+
+        form = RequestForm(data)
+
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+
+    else:
+        form = RequestForm()
+    return flavour_render(request, 'trip/enroll_trip.html', {'form': form})

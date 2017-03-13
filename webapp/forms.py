@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, UserRequest
 from django.forms import extras
 
 
@@ -26,12 +26,6 @@ class UserRegistrationForm(forms.ModelForm):
         return cd['password2']
 
 
-class GuideSearchForm(forms.Form):
-    location = forms.CharField(max_length=200, label='')
-    on_day = forms.CharField()
-    traveler_cnt = forms.IntegerField()
-
-
 # 회원정보 변경
 class UserEditForm(forms.ModelForm):
     class Meta:
@@ -52,4 +46,29 @@ class ProfileEditForm(forms.ModelForm):
         model = Profile
         fields = ('photo', 'phone_num', 'nationality')
 
+
+# 요청서 작성
+class RequestForm(forms.ModelForm):
+    travel_begin_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
+    travel_end_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
+    CHOICES1 = ((i, i) for i in range(1, 25))
+    CHOICES2 = ((i, i) for i in range(1, 25))
+    start_time = forms.ChoiceField(choices=CHOICES1)
+    end_time = forms.ChoiceField(choices=CHOICES2)
+    cost = forms.NumberInput
+
+    class Meta:
+        model = UserRequest
+        fields = [
+            'city', 'travel_begin_at', 'travel_end_at', 'age_group', 'trans_type', 'trans_via', 'trans_class',
+            'trans_comment', 'accom_location', 'accom_location_optional', 'accom_type', 'accom_comment',
+            'start_time', 'end_time', 'landmark', 'theme', 'local_trans', 'guide_type', 'importance', 'cost', 'additional_request'
+        ]
+        widgets = {
+            'city': forms.TextInput,
+            'age_group': forms.TextInput,
+            'trans_comment': forms.Textarea,
+            'accom_comment': forms.Textarea,
+            'additional_request': forms.Textarea,
+        }
 

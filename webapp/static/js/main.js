@@ -17,7 +17,7 @@ function filterGuide(sort) {
         url: "filtering/",
         type: "GET",
         data: {
-            location: $('#location_form').val(),
+            location: $('#id_city').val(),
             start_date: $('#start_date_form').val(),
             end_date: $('#end_date_form').val(),
             traveler_cnt: $('#traveler_cnt_form').val(),
@@ -118,11 +118,11 @@ $('.datepicker1, .datepicker2').datepicker({
 
 $('#search_location1').click(function () {
     window.location.href = "/guide_search";
-    $('#location_form').attr('value', '보라카이')
+    $('#id_city').attr('value', '보라카이')
 });
 
 
-// var input = document.getElementById('location_form');
+// var input = document.getElementById('id_city');
 // var options = {
 //     types: ['(regions)'],
 //
@@ -140,7 +140,7 @@ $('#search_location1').click(function () {
     var addressPicker = new AddressPicker({autocompleteService: {types: ['(regions)']}});
 
 
-    $('#location_form').typeahead(null, {
+    $('#id_city').typeahead(null, {
         displayKey: 'description',
         source: addressPicker.ttAdapter(),
         change: function(item) {
@@ -162,22 +162,22 @@ $('#search_location1').click(function () {
 
 
 
-//$('#location_form').typeahead(null, {
+//$('#id_city').typeahead(null, {
   //  displayKey: 'description',
   //  source: addressPicker.ttAdapter()
 //});
 
-addressPicker.bindDefaultTypeaheadEvent($('#location_form'))
+addressPicker.bindDefaultTypeaheadEvent($('#id_city'))
 
 $(addressPicker).on('addresspicker:selected', function (event, result) {
     console.log(result.nameForType('country'))
     console.log("form submitted")
-    console.log($('#location_form').val())
+    console.log($('#id_city').val())
     filterGuide($('.order-active').attr('id'));
 })
 
 
-var input_main = document.getElementById('location_form_main');
+var input_main = document.getElementById('id_city_main');
 var options_main = {};
 
 autocomplete_main = new google.maps.places.SearchBox(input_main, options_main);
@@ -189,7 +189,7 @@ $('.increase_button').click(function () {
         return parseInt(val.slice(0, -1)) + 1 + '명'
     });
     total_traveler++;
-    $('#traveler_cnt_main, #traveler_cnt_form').attr('value', '인원 ' + total_traveler + '명')
+    $('#traveler_cnt_main, #traveler_cnt_form, #id_age_group').attr('value', '인원 ' + total_traveler + '명')
 });
 
 $('.decrease_button').click(function () {
@@ -198,7 +198,7 @@ $('.decrease_button').click(function () {
             return
         }
         total_traveler--;
-        $('#traveler_cnt_main, #traveler_cnt_form').attr('value', '인원 ' + total_traveler + '명');
+        $('#traveler_cnt_main, #traveler_cnt_form, #id_age_group').attr('value', '인원 ' + total_traveler + '명');
         return parseInt(val.slice(0, -1)) - 1 + '명'
     });
 });
@@ -273,17 +273,6 @@ $(".lodging-button")
     .mouseout(function () {
         if ($(".gradation-bar.btn2").hasClass("inactive")) {
             $(".lodging-button > img").attr("src", "/static/image/icon/logo_empty.png")
-        }
-    });
-
-
-$(".guide-button")
-    .mousemove(function () {
-        $(".guide-button > img").attr("src", "/static/image/icon/logo_full.png");
-    })
-    .mouseout(function () {
-        if ($(".gradation-bar.btn3").hasClass("inactive")) {
-            $(".guide-button > img").attr("src", "/static/image/icon/logo_empty.png")
         }
     });
 

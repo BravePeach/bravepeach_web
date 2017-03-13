@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
+from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, RequestForm
 from .models import Guide, Review
 from django.contrib.auth.decorators import login_required
 from dateutil import parser
@@ -62,10 +62,6 @@ def register(request):
 
 def guide_search(request):
     return render(request, 'views/guide_search.html', {})
-
-
-def enroll_trip(request):
-    return render(request, 'views/enroll_trip.html')
 
 
 class FilterGuide(View):
