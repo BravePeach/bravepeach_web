@@ -1,0 +1,22 @@
+{% extends "mobile/base.html" %}
+{% load compile_static %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/register.less'|compile %}">
+{% endblock %}
+
+{% block contents %}
+    <div class="wrapper">
+        <div class="register-title">회원가입</div>
+        <div class="register-wrapper">
+        <a href="" class="register-fb">Facebook으로 가입하기</a>
+        <a href="" class="register-naver">Naver로 가입하기</a>
+        <a href="" class="register-google">Google로 가입하기</a>
+        <a href="{% url 'register_bp' %}" class="register-bp">Bravepeach로 가입하기</a>
+        <div class="line"></div><div class="or">또는</div><div class="line"></div>
+        <div class="already-text">Bravepeach 계정이 있으신가요?</div>
+        <a href="{% url "login" %}" class="login">로그인</a>
+        </div>
+    </div>
+{% endblock %}

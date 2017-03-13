@@ -1,0 +1,50 @@
+{% extends "mobile/base.html" %}
+{% load compile_static %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/register_bp.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/register.js' %}"></script>
+{% endblock %}
+
+{% block contents %}
+    <div class="contents-wrapper">
+        {#        <div class="page-title">회원가입</div>#}
+        <div class="form-wrapper">
+            <form action="" method="post" id="register-form">
+                <div class="profile">
+                    {# TODO: Upload Image and crop #}
+                    {#                <img src="{% static 'image/icon/profile_photo.png' %}" width="30" height="23" alt="">#}
+                </div>
+                {% csrf_token %}
+                <div class="name-wrapper">
+                    {{ user_form.last_name }}
+                    {{ user_form.first_name }}
+                    {{ profile_form.gender }}
+                </div>
+                <div class="info-wrapper">
+                    {{ user_form.email }}
+                    <div class="email-notice notice mobile-notice">이메일을 입력해주세요.</div>
+                    <div class="email-notice notice notice-right">이메일이 유효합니다.</div>
+                    <div class="email-notice notice notice-wrong">이메일이 유효하지 않습니다.</div>
+                    {{ user_form.password }}
+                    {{ user_form.password2 }}
+                    <div class="pw-notice notice mobile-notice">6-20자리 영문소문자/숫자/특수문자 포함</div>
+                    <div class="pw-notice notice notice-right">비밀번호가 일치합니다.</div>
+                    <div class="pw-notice notice notice-wrong">비밀번호가 일치하지 않습니다.</div>
+                    <div>{{ profile_form.birthday }}</div>
+                    {# TODO: Add nationality #}
+                    {#                <div class="button-wrapper">#}
+                    {#                    <button class="cancel-register" type="reset">취소</button>#}
+                    <button class="submit-register" type="button" onclick="submit_register_form()">가입하기</button>
+                    {#                </div>#}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock%}

@@ -26,9 +26,11 @@ $(function() {
             $(".email-notice.notice-wrong").css("display", "none");
         } else {
             if (mail_re.test(mail_val)) {
+                $(".email-notice.mobile-notice").css("display", "none");
                 $(".email-notice.notice-right").css("display", "inline-block");
                 $(".email-notice.notice-wrong").css("display", "none");
             } else {
+                $(".email-notice.mobile-notice").css("display", "none");
                 $(".email-notice.notice-right").css("display", "none");
                 $(".email-notice.notice-wrong").css("display", "inline-block");
             }
@@ -45,9 +47,11 @@ $(function() {
             $(".pw-notice.notice-wrong").css("display", "none");
         } else {
             if (pw_val === pw_val2) {
+                $(".pw-notice.mobile-notice").css("display", "none");
                 $(".pw-notice.notice-right").css("display", "inline-block");
                 $(".pw-notice.notice-wrong").css("display", "none");
             } else {
+                $(".pw-notice.mobile-notice").css("display", "none");
                 $(".pw-notice.notice-right").css("display", "none");
                 $(".pw-notice.notice-wrong").css("display", "inline-block");
             }
