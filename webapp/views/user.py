@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm
@@ -67,6 +68,18 @@ def register_bravepeach(request):
         user_form = UserRegistrationForm()
         profile_form = ProfileEditForm()
         return flavour_render(request, 'user/register_bp.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+def check_email(request):
+    if request.method != "POST":
+        return JsonResponse({"ok": False})
+
+    email = request.POST.get("email", None)
+    user = User.objects.filter(email=email)
+    if len(user) > 0:
+        return JsonResponse({"ok": True, "usable": False})
+    else:
+        return JsonResponse({"ok": True, "usable": True})
 
 
 def password_reset_complete(request):

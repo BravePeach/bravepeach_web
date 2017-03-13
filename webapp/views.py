@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
-from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm, RequestForm
+from django.contrib.auth.models import User
+from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Guide, Review
 from django.contrib.auth.decorators import login_required
 from dateutil import parser
-from django.db.models import Count, Case, When, F
+from django.db.models import Count, Case, When
 from django.views.generic import View
 from django.core.paginator import Paginator
 

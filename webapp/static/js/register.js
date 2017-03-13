@@ -16,8 +16,25 @@ function submit_register_form() {
     }
 }
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 $(function() {
     $("#id_email").on("change keyup", function () {
+        $(".email-notice.email-used").css("display", "none");
         var mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var mail_val = $("#id_email").val();
         if (mail_val === "") {
@@ -34,6 +51,24 @@ $(function() {
                 $(".email-notice.notice-right").css("display", "none");
                 $(".email-notice.notice-wrong").css("display", "inline-block");
             }
+        }
+    });
+
+    $("#id_email").on("focusout, blur", function(){
+        var mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var mail_val = $("#id_email").val();
+        if (mail_val !== "" && mail_re.test(mail_val)) {
+            $.post("/check_email/",
+                {
+                    email: mail_val,
+                    csrfmiddlewaretoken: getCookie("csrftoken")
+                }, function (data) {
+                    if (data.ok === true && data.usable !== true) {
+                        $(".email-notice.mobile-notice").css("display", "none");
+                        $(".email-notice.notice-right").css("display", "none");
+                        $(".email-notice.email-used").css("display", "inline-block");
+                    }
+                });
         }
     });
 
