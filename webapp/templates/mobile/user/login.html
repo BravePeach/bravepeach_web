@@ -10,7 +10,13 @@
     <script src="{% static 'js/login.js' %}"></script>
 {% endblock %}
 
-{% block contents%}
+{% block content %}
+    {% for message in messages %}
+        {% if message == "reset_pw" %}
+            <div class="pw-reset-msg">새로운 비밀번호가 성공적으로 변경되었습니다.
+                <div class="close" onclick="close_pw_reset_msg()"><img src="{% static 'image/icon/cancel.png' %}" alt="" width="18" height="18"></div></div>
+        {% endif %}
+    {% endfor %}
     <div class="contents-wrapper">
         <div class="login-title" {% if request.reset_pw %}style="display: none;" {% endif %}>로그인</div>
         <div class="login-btn login-fb">Facebook으로 로그인</div>

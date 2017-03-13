@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static 'less/mobile/greeting.less'|compile %}">
 {% endblock %}
 
-{% block contents %}
+{% block content %}
     <div class="contents-wrapper">
         <img src="{% static 'image/icon/logo_bravepeach.png' %}" alt="">
         <div class="greeting-msg greeting-name">{{ request.user.first_name }} {{ request.user.last_name }} 님<br>
