@@ -1,0 +1,35 @@
+{% extends "mobile/base.html" %}
+{% load compile_static %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/login.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
+
+{% block contents%}
+    <div class="contents-wrapper">
+        <div class="login-title" {% if request.reset_pw %}style="display: none;" {% endif %}>로그인</div>
+        <div class="login-btn login-fb">Facebook으로 로그인</div>
+        <div class="login-btn login-naver">Naver로 로그인</div>
+        <div class="login-btn login-google">Google로 로그인</div>
+        <div class="line"></div><div class="or">또는</div><div class="line"></div>
+        <form id="login-form" method="post">
+            {% csrf_token %}
+            <div class="login-label">이메일 주소</div>
+            <input type="email" name="username" id="username" class="input-text login-input">
+            <div class="login-label">비밀번호</div>
+            <input type="password" name="password" id="password" class="input-text login-input">
+            <button class="submit-login" type="submit">로그인</button>
+            <div class="remember-wrapper">
+                <label for="login-remember" class="login-label"> <input type="checkbox" id="login-remember" name="remember_me" class="input-checkbox" value="true"> 로그인 상태 유지 </label>
+            </div>
+            <div class="line line-long"></div>
+        </form>
+        <div class="login-question">Bravepeach 계정이 없으세요?</div>
+        <a href="{% url 'register_bp' %}" class="register-bp">Bravepeach로 가입하기</a>
+    </div>
+{% endblock %}
