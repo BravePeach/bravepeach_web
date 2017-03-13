@@ -1,1 +1,1 @@
-from . import common, user, views
+from . import common, user, trip

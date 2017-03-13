@@ -27,10 +27,10 @@ urlpatterns = [
     url(r'^password_reset/complete$', views.user.password_reset_complete, name="password_reset_complete"),
 
     # guide search
-    url(r'^guide_search/$', views.views.guide_search, name='guide_search'),
-    url(r'^guide_search/filtering/$', views.views.FilterGuide.as_view(), name='filter_guide'),
+    url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),
+    url(r'^guide_search/filtering/$', views.trip.FilterGuide.as_view(), name='filter_guide'),
 
     # enroll trip
-    url(r'^enroll_trip', views.views.enroll_trip, name='enroll_trip'),
+    url(r'^enroll_trip', views.trip.enroll_trip, name='enroll_trip'),
 
 ]

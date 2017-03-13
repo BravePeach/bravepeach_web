@@ -701,7 +701,7 @@ body {
     padding: 28px 25px 5px 22px;
 }
 
-#total-amount-input{
+#id_cost{
     border: 0px;
     text-align: right;
 }
@@ -801,6 +801,8 @@ footer {
 
 }
 
+#id_city{top:0px; left: 0px; width: 100%;}
+
 .scrolling-page1, .scrolling-page2, .scrolling-page3 {
     font-size: 20px;
     color: #4a4a4a;
@@ -811,6 +813,7 @@ footer {
 
 .scrolling-page3 {
     margin-bottom: 0px;
+    display: block;
 }
 
 .scrolling-page1 input, .scrolling-page2 input, .scrolling-page3 input {
@@ -900,7 +903,7 @@ footer {
 }
 */
 
-#guide_input3{
+#id_landmark{
     display: inline-block;
     width: 800px;
     border-width: 0px 0px 1px 0px;

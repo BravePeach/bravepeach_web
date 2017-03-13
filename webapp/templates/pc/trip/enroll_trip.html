@@ -1,13 +1,16 @@
-{% extends "base.html" %}
-
-{% block head %}
-
+{% extends "pc/common/base.html" %}
+{% load widget_tweaks %}
 {% load staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" href='{% static "css/style.css" %}'>
 <link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
-<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>-->
+{% endblock %}
+
+{% block js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
-
+<script src='{% static "js/main.js" %}'></script>
 {% endblock %}
 
 {% block content %}
@@ -17,21 +20,25 @@
                 <h1 class="sup-title-peach">여행지 등록</h1>
                 <h2 class="sub-title">용감한 님의 맞춤형 여행지 정보를 등록하세요!</h2>
             </section>
+            <form method="POST">
+                {% csrf_token %}
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/where_black.png" alt="where?">
-                <input class="enroll-trip-form" id="location_form" type="text" name="" value="" placeholder="뉴욕, 뉴저지" style="top:0px; left: 0px; width: 100%;">
+                <!--<input class="enroll-trip-form" id="location_form" type="text" name="" value="" placeholder="뉴욕, 뉴저지" style="top:0px; left: 0px; width: 100%;">
+                -->
+                {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}
             </div>
 
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/when_black.png" alt="where?">
-                <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="" readonly>
+                {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"}}
                 <img class="arrow-right" src="">
-                <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="" readonly>
+                {{ form.travel_end_at |add_class:"find-guide-form2 datepicker2"|attr:"readonly"}}
             </div>
 
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/howmany_black.png" alt="where?">
-                <input class="enroll-trip-form" id="traveler_cnt_form" type="text" name="" value="" placeholder="인원">
+                {{ form.age_group |add_class:"enroll-trip-form"|attr:"placeholder:인원"|attr:"readonly" }}
                 <img class="arrow-down" src="/static/image/icon/arrow_down_black.png" alt="펼치기 버튼">
                         <div class="traveler_cntpicker">
             <div>
@@ -61,52 +68,52 @@
 
             <div class="peach-button-wrapper">
                 <div class="col-xs-4">
-                    <button class="paech-button way-of-travel-button inactive btn1">
+                    <div class="paech-button way-of-travel-button inactive btn1">
                         <img src="/static/image/icon/logo_empty.png">
 
                         <span class="enroll-trip-button-name">이동 수단</span>
-                    </button>
+                    </div>
                 </div>
 
                 <div class="col-xs-4">
-                    <button class="paech-button lodging-button inactive btn2">
+                    <div class="paech-button lodging-button inactive btn2">
                         <img src="/static/image/icon/logo_empty.png">
 
                         <span class="enroll-trip-button-name">숙소 </span>
-                    </button>
+                    </div>
                 </div>
 
                 <div class="col-xs-4">
-                    <button class="paech-button guide-button inactive btn3">
-                        <img src="/static/image/icon/logo_empty.png">
+                    <div class="paech-button guide-button inactive btn3">
+                        <img src="/static/image/icon/logo_full.png">
 
                         <span class="enroll-trip-button-name">가이드</span>
-                    </button>
+                    </div>
                 </div>
             </div>
 
-            <button class="gradation-bar inactive btn1">
+            <div class="gradation-bar inactive btn1">
 
                 <span class="bar-text">이동 수단</span>
 
                 <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
 
-            </button>
+            </div>
 
             <div class="scrolling-page1">
 
                 <span style="float: left">1.</span>
                 <div class="sellect-wrapper">
                     <div class="col-xs-6 col-sm-3">
-                        <input class="checkbox" id="via-input1" type="checkbox">
+                        <input class="checkbox" id="via-input1" type="checkbox" name="trans_via" value=1>
                         <label for="via-input1"></label>직항
                     </div>
                     <div class="col-xs-6 col-sm-3">
-                        <input class="checkbox" id="via-input2" type="checkbox">
+                        <input class="checkbox" id="via-input2" type="checkbox" name="trans_via" value=2>
                         <label for="via-input2"></label>경유 1회
                     </div>
                     <div class="col-xs-6 col-sm-3">
-                        <input class="checkbox" id="via-input3" type="checkbox">
+                        <input class="checkbox" id="via-input3" type="checkbox" name="trans_via" value=4>
                         <label for="via-input3"></label>경유 2회
                     </div>
                 </div>
@@ -114,122 +121,116 @@
                 <span style="float: left">2.</span>
                 <div class="sellect-wrapper">
                     <div class="col-xs-6 col-sm-3">
-                        <input class="checkbox" type="checkbox">이코노미 석
+                        <input class="checkbox" type="checkbox" name="trans_type" name="trans_type" value=1>이코노미 석
                     </div>
                     <div class="col-xs-6 col-sm-3">
-                        <input class="checkbox" type="checkbox">비즈니스 석
+                        <input class="checkbox" type="checkbox" name="trans_type" name="trans_type" value=2>비즈니스 석
                     </div>
                     <div class="col-xs-6 col-sm-3">
-                        <input class="checkbox" type="checkbox">퍼스트 석
+                        <input class="checkbox" type="checkbox" name="trans_type" name="trans_type" value=4>퍼스트 석
                     </div>
                 </div>
-
-                <textarea class="additional-request-box" placeholder="ex) 국적기로 예약해 주세요. 자리는 창가 쪽을 좋아합니다. 대한항공 마일리지를 모으고 있어요.
-가격이 비싸더라도 대한항공으로 예약을 해주세요.
-
-"></textarea>
+                {{ form.trans_comment |add_class:"additional-request-box"|attr:"placeholder:ex) 국적기로 예약해 주세요. 자리는 창가 쪽을 좋아합니다. 대한항공 마일리지를 모으고 있어요. 가격이 비싸더라도 대한항공으로 예약을 해주세요." }}
 
             </div>
 
-            <button class="gradation-bar inactive btn2">
+            <div class="gradation-bar inactive btn2">
 
                 <span class="bar-text">숙소</span>
 
                 <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
 
-            </button>
+            </div>
 
             <div class="scrolling-page2">
 
                 <span style="float: left">1.</span>
                 <div class="sellect-wrapper">
                     <div class="col-xs-2 col-sm-fifth">
-                        <input class="checkbox" type="checkbox">공항 근처
+                        <input class="checkbox" name="accom_location" type="checkbox" value=1>공항 근처
                     </div>
                     <div class="col-xs-2 col-sm-fifth">
-                        <input class="checkbox" type="checkbox">시내
+                        <input class="checkbox" name="accom_location" type="checkbox" value=2>시내
                     </div>
                     <div class="col-xs-2 col-sm-fifth">
-                        <input class="checkbox" type="checkbox">여행지 근처
+                        <input class="checkbox" name="accom_location" type="checkbox" value=4>여행지 근처
                     </div>
                     <div class="col-xs-2 col-sm-fifth">
-                        <input class="checkbox" type="checkbox">기타
+                        <input class="checkbox" name="accom_location" type="checkbox" value=8>기타
                     </div>
                 </div>
 
                 <span style="float: left">2.</span>
                 <div class="sellect-wrapper">
                     <div class="col-xs-2 col-sm-fifth">
-                        <input class="checkbox" type="checkbox">호텔
+                        <input class="checkbox" name="accom_type" type="checkbox" value=1>호텔
                     </div>
                     <div class="col-xs-2 col-sm-fifth">
-                        <input class="checkbox" type="checkbox">한인 민박
+                        <input class="checkbox" name="accom_type" type="checkbox" value=2>한인 민박
                     </div>
                     <div class="col-xs-2 col-sm-fifth">
-                        <input class="checkbox" type="checkbox">현지인 집
+                        <input class="checkbox" name="accom_type" type="checkbox" value=4>현지인 집
                     </div>
                     <div class="col-xs-2 col-sm-fifth">
-                        <input class="checkbox" type="checkbox">리조트
+                        <input class="checkbox" name="accom_type" type="checkbox" value=8>리조트
                     </div>
                     <div class="col-xs-2 col-sm-fifth">
-                     <input class="checkbox" type="checkbox">가이드 집
+                     <input class="checkbox" name="accom_type" type="checkbox" value=16>가이드 집
                     </div>
                 </div>
-
-                <textarea class="additional-request-box" placeholder="추가적으로 부탁하고 싶은 점을 적어주세요.
-ex) 숙소는 현지에서 지불하고 싶어요."></textarea>
+                {{ form.accom_comment |add_class:"additional-request-box"|attr:"placeholder:추가적으로 부탁하고 싶은 점을 적어주세요. ex) 숙소는 현지에서 지불하고 싶어요." }}
 
             </div>
 
-            <button class="gradation-bar inactive btn3">
+            <div class="gradation-bar active btn3">
 
                 <span class="bar-text">가이드</span>
 
                 <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
 
-            </button>
+            </div>
 
             <div class="scrolling-page3">
 
                 <span style="float: left">1.</span>
-                <div class="sellect-wrapper">아침 ______시 부터는 일정을 시작해 주세요.</div>
+                <div class="sellect-wrapper">아침 {{ form.start_time }}시 부터는 일정을 시작해 주세요.</div>
 
                 <span style="float: left">2.</span>
-                <div class="sellect-wrapper">저녁 _____시에는 일정을 마쳐주세요.</div>
+                <div class="sellect-wrapper">저녁 {{ form.end_time }}시에는 일정을 마쳐주세요.</div>
 
                 <span style="float: left">3.</span>
-                <div class="sellect-wrapper">꼭 가고 싶은 여행지는 <input id="guide_input3" type="text">입니다.</div>
+                <div class="sellect-wrapper">꼭 가고 싶은 여행지는 {{ form.landmark }}입니다.</div>
 
                 <span style="float: left">4.</span>
                 <div class="sellect-wrapper">
                     <div style="margin-bottom: 16px;">여행테마</div>
                     <div class="row" style="margin-bottom:24px;">
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">전체
+                            <input class="checkbox" name="theme" type="checkbox" value=1>전체
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">현지 꿀팁
+                            <input class="checkbox" name="theme" type="checkbox" value=2>현지 꿀팁
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">액티비티
+                            <input class="checkbox" name="theme" type="checkbox" value=4>액티비티
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">문화/예술
+                            <input class="checkbox" name="theme" type="checkbox" value=8>문화/예술
                         </div>
                     </div>
 
                 <div class="row">
                     <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" type="checkbox">골목 여행
+                     <input class="checkbox" name="theme" type="checkbox" value=16>골목 여행
                     </div>
                     <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" type="checkbox">자연 경관
+                     <input class="checkbox" name="theme" type="checkbox" value=32>자연 경관
                     </div>
                     <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" type="checkbox">맛집 기행
+                     <input class="checkbox" name="theme" type="checkbox" value=64>맛집 기행
                     </div>
                     <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" type="checkbox">역사여행
+                     <input class="checkbox" name="theme" type="checkbox" value=128>역사여행
                     </div>
                 </div>
 
@@ -239,31 +240,31 @@ ex) 숙소는 현지에서 지불하고 싶어요."></textarea>
                     <div style="margin-bottom: 16px;">이런 성향의 가이드가 좋아요!</div>
                     <div class="row" style="margin-bottom:24px;">
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">전체
+                            <input class="checkbox" name="guide_type" type="checkbox" value=1>전체
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">유쾌한
+                            <input class="checkbox" name="guide_type" type="checkbox" value=2>유쾌한
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">차분한
+                            <input class="checkbox" name="guide_type" type="checkbox" value=4>차분한
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">지적인
+                            <input class="checkbox" name="guide_type" type="checkbox" value=8>지적인
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" type="checkbox">유머러스한
+                         <input class="checkbox" name="guide_type" type="checkbox" value=16>유머러스한
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" type="checkbox">감성적인
+                         <input class="checkbox" name="guide_type" type="checkbox" value=32>감성적인
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" type="checkbox">설명을 잘하는
+                         <input class="checkbox" name="guide_type" type="checkbox" value=64>설명을 잘하는
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" type="checkbox">경제적인
+                         <input class="checkbox" name="guide_type" type="checkbox" value=128>경제적인
                         </div>
                     </div>
                 </div>
@@ -273,46 +274,45 @@ ex) 숙소는 현지에서 지불하고 싶어요."></textarea>
                     <div style="margin-bottom: 16px;">저에게 가장 중요한 것은</div>
                     <div class="row" style="margin-bottom:24px;">
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">맛집
+                            <input class="checkbox" name="importance" type="checkbox" value=1>맛집
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">인생 사진
+                            <input class="checkbox" name="importance" type="checkbox" value=2>인생 사진
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">적절한 휴식
+                            <input class="checkbox" name="importance" type="checkbox" value=4>적절한 휴식
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" type="checkbox">친구같은 가이드
+                            <input class="checkbox" name="importance" type="checkbox" value=8>친구같은 가이드
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" type="checkbox">역사공부
+                         <input class="checkbox" name="importance" type="checkbox" value=16>역사공부
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" type="checkbox">기타
+                         <input class="checkbox" name="importance" type="checkbox" value=32>기타
                         </div>
                     </div>
                 </div>
-
-                <textarea class="additional-request-box" placeholder="추가적으로 부탁하고 싶은 점을 적어주세요.
-ex) 빽빽하지 않은 여행일정이 좋아요. 하루에 2-3군데에서 여유롭게 즐기고 싶어요."></textarea>
+                {{ form.additional_request |add_class:"additional-request-box"|attr:"placeholder:추가적으로 부탁하고 싶은 점을 적어주세요. ex) 빽빽하지 않은 여행일정이 좋아요. 하루에 2-3군데에서 여유롭게 즐기고 싶어요." }}
 
             </div>
 
             <div class="total-amount-wrapper">
-                <input type="number" id="total-amount-input">만 원
+                {{ form.cost }}만 원
             </div>
             <span style="font-size: 26px; margin: 75px 14px 0px 0px; display: block; float: right">희망 경비</span>
             <div class="submit-button-wrapper">
                 <div class="col-xs-6">
-                <button class="temp-store-button">임시저장</button>
+                <div class="temp-store-button">취소</div>
                 </div>
                 <div class="col-xs-6">
-                <button class="find-guide-button">가이드 모집</button>
+                <button class="find-guide-button" type="submit">가이드 모집</button>
                 </div>
             </div>
+            </form>
         </div>
 
 {% endblock %}
