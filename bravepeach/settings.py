@@ -84,6 +84,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bravepeach.wsgi.application'
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -172,3 +174,6 @@ APT_PACKAGE_LIST = ["git", "build-essential", "python3-dev", "python3-pip",
 # AWS
 AWS_ACCESS_KEY_ID = LOCAL_SETTINGS["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = LOCAL_SETTINGS["AWS_SECRET_ACCESS_KEY"]
+
+# Session
+SESSION_COOKIE_AGE = 60*60*24*30    # 1month

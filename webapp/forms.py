@@ -1,23 +1,34 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, UserRequest
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.forms import extras
+
+from .models import Profile, UserRequest
 
 
 class LoginForm(forms.Form):
-    email = forms.CharField(label='이메일 주소',max_length=30,min_length=5,widget=forms.TextInput(attrs={'class' : 'regist-input'}))
-    password = forms.CharField(label='비밀번호',widget=forms.PasswordInput(attrs={'class' : 'regist-input'}))
+    email = forms.CharField(label='이메일 주소', max_length=30, min_length=5,
+                            widget=forms.TextInput(attrs={'class': 'input-text'}))
+    password = forms.CharField(label='비밀번호', widget=forms.PasswordInput(attrs={'class': 'input-text'}))
 
 
 class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(label='Password',
-                               widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Confirm Password',
-                                widget=forms.PasswordInput)
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        self.fields['last_name'].widget.attrs.update({"class": "input-text", "placeholder": "성(Last Name)*",
+                                                      "required": "true"})
+        self.fields['first_name'].widget.attrs.update({"class": "input-text", "placeholder": "이름(First Name)*",
+                                                       "required": "true"})
+        self.fields['password'].widget.attrs.update({"class": "input-text", "placeholder": "비밀번호*"})
+        self.fields['password2'].widget.attrs.update({"class": "input-text", "placeholder": "비밀번호 확인*"})
+        self.fields['email'].widget.attrs.update({"class": "input-text", "placeholder": "이메일(E-mail)*"})
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -39,12 +50,20 @@ class ProfileEditForm(forms.ModelForm):
         (2, "여성"),
     )
 
-    birthday = forms.DateField(widget=extras.SelectDateWidget(years=range(1950, 2017)))
+    birthday = forms.DateField(widget=extras.SelectDateWidget(years=range(1920, 2017),
+                                                              attrs={"class": "input-radio"},
+                                                              empty_label=("년도*", "달*", "일*")))
     gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
 
     class Meta:
         model = Profile
-        fields = ('photo', 'phone_num', 'nationality')
+        fields = ('birthday', 'gender')
+
+
+class PasswordResetCustomForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(PasswordResetCustomForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({"class": "input-text", "id": "reset-email"})
 
 
 # 요청서 작성
@@ -72,3 +91,9 @@ class RequestForm(forms.ModelForm):
             'additional_request': forms.Textarea,
         }
 
+
+class SetPasswordCustcomForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(SetPasswordCustcomForm, self).__init__(*args, **kwargs)
+        self.fields['new_passowrd1'].widget.attrs.update({"class": "input-text", "id": "new-password1"})
+        self.fields['new_passowrd2'].widget.attrs.update({"class": "input-text", "id": "new-password2"})

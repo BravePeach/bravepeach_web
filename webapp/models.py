@@ -8,7 +8,7 @@ from decimal import Decimal
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     phone_num = models.CharField(max_length=11, null=True)
     is_guide = models.BooleanField(default=False)
     delete_reason = models.IntegerField(null=True)
