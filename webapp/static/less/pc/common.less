@@ -8,19 +8,19 @@
 @import url(//cdn.jsdelivr.net/nanumsquare/1.0/nanumsquare.css);
 
 :root {
-	--blush: #f2ad8a;
-	--pastel-red: #e64c47;
-	--greyish-brown: #404040;
-	--white: #dbdbdb;
-	--pale-red: #da4d44;
-	--white-70: rgba(255, 255, 255, 0.7);
-	--white-two: #ffffff;
-	--white-three: #f6f6f6;
-	--pastel-red-60: rgba(217, 104, 101, 0.6);
-	--dark-sky-blue: #4a90e2;
-	--greyish-brown-two: #4a4a4a;
-	--warm-grey: #9c9c9c;
-	--pale-grey: #ededef;
+  --blush: #f2ad8a;
+  --pastel-red: #e64c47;
+  --greyish-brown: #404040;
+  --white: #dbdbdb;
+  --pale-red: #da4d44;
+  --white-70: rgba(255, 255, 255, 0.7);
+  --white-two: #ffffff;
+  --white-three: #f6f6f6;
+  --pastel-red-60: rgba(217, 104, 101, 0.6);
+  --dark-sky-blue: #4a90e2;
+  --greyish-brown-two: #4a4a4a;
+  --warm-grey: #9c9c9c;
+  --pale-grey: #ededef;
 }
 
 * {
@@ -223,7 +223,7 @@ footer {
 }
 
 .input-text-label {
-    font-family: NanumSquareOTFB;
+  font-family: NanumSquareOTFB;
   font-size: 20px;
   font-weight: normal;
   font-style: normal;
@@ -235,19 +235,40 @@ footer {
 
 .input-radio {
   display: inline-block;
-  margin-right: 16px;
-  //width: 105px;
+  //margin-right: 16px;
+  height: 24px;
+  width: 24px;
+  border-radius: 8px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-color: #fafafa;
+  // box-shadow: 0 -0.5px 1px 0 #a9a9a9;
+  margin-top: -2px;
+  vertical-align: middle;
+}
+
+.input-select {
   height: 40px;
+  width: 105px;
   border-radius: 8px;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   background-color: #fafafa;
   box-shadow: 0 -0.5px 1px 0 #a9a9a9;
-  width: 105px;
+  display: inline-block;
+  font-family: NanumSquareOTFB;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  color: #bbbbbb;
+  margin-right: 16px;
 }
 
 .input-checkbox {
-    width: 25px;
+  width: 25px;
   height: 25px;
   margin-top: 15px;
   margin-right: 10px;
@@ -260,7 +281,7 @@ footer {
   line-height: normal;
   letter-spacing: -0.5px;
   color: #606060;
-    border-radius: 3px;
+  border-radius: 3px;
   border: solid 1px #979797;
 }
 

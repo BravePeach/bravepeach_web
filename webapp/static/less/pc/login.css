@@ -1,0 +1,154 @@
+.pw-reset-msg {
+  width: 630px;
+  height: 84px;
+  background-color: #fafafa;
+  border: solid 1px #979797;
+  font-family: NanumSquareOTFB;
+  font-size: 25px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 84px;
+  letter-spacing: normal;
+  text-align: center;
+  padding: 28px 74px auto;
+  margin: auto;
+  margin-bottom: 21px;
+}
+.pw-reset-msg .close {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  position: relative;
+  left: 592px;
+  top: -105px;
+}
+.login-wrapper {
+  width: 441px;
+  margin: auto;
+}
+.login-wrapper .login-title {
+  width: 134px;
+  height: 55px;
+  font-family: NanumSquareOTFB;
+  font-size: 48px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #606060;
+  margin: auto;
+  margin-bottom: 35px;
+}
+.login-wrapper .login-btn {
+  width: 441px;
+  height: 71px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+  text-align: center;
+  padding-top: 25px;
+  margin-bottom: 17px;
+  background-color: #6ac601;
+}
+.login-wrapper .login-btn.login-fb {
+  background-color: #4990e2;
+}
+.login-wrapper .login-btn.login-google {
+  background-color: #ff9600;
+}
+.login-wrapper .line {
+  display: inline-block;
+  vertical-align: middle;
+  width: 170px;
+  height: 2px;
+  border: solid 1px #e64c47;
+  margin-top: -9px;
+}
+.login-wrapper .or {
+  vertical-align: middle;
+  display: inline-block;
+  margin: 17px 32px 35px 32px;
+  font-family: NanumSquareOTFB;
+  width: 36px;
+  height: 22px;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.5px;
+  text-align: center;
+  color: #000000;
+}
+.login-wrapper .remember-wrapper {
+  height: 25px;
+  line-height: 25px;
+  vertical-align: middle;
+  display: block;
+}
+.login-wrapper .login-label {
+  display: block;
+  height: 22px;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: -0.5px;
+  color: #606060;
+  margin-bottom: 8px;
+}
+.login-wrapper .login-input {
+  height: 43px;
+  margin-bottom: 29px;
+}
+.login-wrapper .submit-login {
+  width: 100%;
+  height: 71px;
+  border-radius: 8px;
+  background-color: #e64c47;
+  color: #ffffff;
+  font-family: NanumSquareOTFB;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.5px;
+  border: none;
+  margin-top: 6px;
+}
+.login-wrapper .line-long {
+  width: 100%;
+  margin: 40px auto 25px auto;
+  display: block;
+}
+.login-wrapper .register-bp {
+  display: block;
+  width: 100%;
+  height: 71px;
+  border-radius: 8px;
+  background-color: #e64c47;
+  color: #ffffff;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 71px;
+  letter-spacing: -0.5px;
+  border: none;
+  margin-top: 8px;
+  text-align: center;
+  text-decoration: none;
+}

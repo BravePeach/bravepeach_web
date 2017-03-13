@@ -1,11 +1,11 @@
-{% extends "pc/common/base.html" %}
+{% extends "pc/base.html" %}
 {% load compile_static %}
 {% load static %}
 
 {% block title %}bravepeach login{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'less/login.less'|compile %}">
+    <link rel="stylesheet" href="{% static 'less/pc/login.less'|compile %}">
 {% endblock %}
 
 {% block js %}

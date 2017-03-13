@@ -1,10 +1,10 @@
-{% extends "pc/common/base.html" %}
+{% extends "pc/base.html" %}
 {% load compile_static %}
 {% load static %}
 
 {% block title %}{% endblock %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'less/register.less'|compile %}">
+    <link rel="stylesheet" href="{% static 'less/pc/register.less'|compile %}">
 {% endblock %}
 {% block js %}
     <script src="{% static 'js/register.js' %}"></script>
