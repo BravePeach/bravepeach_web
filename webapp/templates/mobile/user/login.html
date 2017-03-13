@@ -23,6 +23,10 @@
             <input type="email" name="username" id="username" class="input-text login-input">
             <div class="login-label">비밀번호</div>
             <input type="password" name="password" id="password" class="input-text login-input">
+            {% if login == "fail" %}
+                <div class="login-fail">아이디 또는 비밀번호를 다시 확인하세요. <br>BravePeach에 등록되지 않은 아이디이거나 잘못 입력하셨습니다.</div>
+                <a href="{% url "password_reset" %}" class="find-pw">비밀번호가 기억나지 않으세요?</a>
+            {% endif %}
             <button class="submit-login" type="submit">로그인</button>
             <div class="remember-wrapper">
                 <label for="login-remember" class="login-label"> <input type="checkbox" id="login-remember" name="remember_me" class="input-checkbox" value="true"> 로그인 상태 유지 </label>

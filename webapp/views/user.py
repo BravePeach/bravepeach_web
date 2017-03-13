@@ -12,7 +12,6 @@ from bravepeach.util import flavour_render
 def user_login(request):
     logout(request)
     if request.method == "POST":
-        print(request.POST)
         username = request.POST["username"]
         password = request.POST["password"]
         remember = request.POST.get('remember_me', None)
@@ -23,9 +22,9 @@ def user_login(request):
                 request.session.set_expiry(0)
             return redirect("index")
         else:
-            return flavour_render(request, "user/login.html")
+            return flavour_render(request, "user/login.html", {"login": "fail"})
     else:
-        return flavour_render(request, "user/login.html")
+        return flavour_render(request, "user/login.html", {"login": None})
 
 
 def user_logout(request):
