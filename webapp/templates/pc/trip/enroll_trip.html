@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block css %}
-<link rel="stylesheet" href='{% static "css/style.css" %}'>
+<link rel="stylesheet" href='{% static "css/enroll_trip.css" %}'>
 <link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
 {% endblock %}
 
@@ -24,8 +24,6 @@
                 {% csrf_token %}
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/where_black.png" alt="where?">
-                <!--<input class="enroll-trip-form" id="location_form" type="text" name="" value="" placeholder="뉴욕, 뉴저지" style="top:0px; left: 0px; width: 100%;">
-                -->
                 {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}
             </div>
 
