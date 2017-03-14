@@ -85,4 +85,5 @@ def enroll_trip(request):
             return redirect("enroll_trip")
     else:
         form = RequestForm()
-        return flavour_render(request, 'trip/enroll_trip.html', {'form': form})
+
+    return flavour_render(request, 'trip/enroll_trip.html', {'form': form})

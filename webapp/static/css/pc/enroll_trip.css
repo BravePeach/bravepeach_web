@@ -131,6 +131,24 @@
     height: 75%;
     font-size: 24px;
 }
+.ui-state-default {
+    display: block;
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    padding-top: 10px;
+}
+
+a.ui-state-default:hover {
+    background-color: #e64c47;
+    color: white;
+}
+
+.ui-datepicker-unselectable {
+    color: #d3d3d3;
+}
+
 
 .arrow-down {
     float: right;
@@ -322,3 +340,26 @@
     background-color: #e64c47;
     float: left;
 }
+
+.twitter-typeahead{margin-top: 12px; margin-left: 10.9%; width: 78%;}
+
+.tt-dropdown-menu{
+    width: 689px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: solid 1px #d4d4d4;
+    font-size: 24px;
+}
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #e64c47;
+}
+
+.tt-suggestion{
+    height: 58px;
+    padding: 0px 24px 5px 24px;
+    border-bottom: 1px solid #979797;
+    margin: 0px;
+}
+
+.tt-hint{opacity: 0.3 !important;}

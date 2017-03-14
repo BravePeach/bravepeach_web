@@ -62,12 +62,8 @@ def register_bravepeach(request):
     return render(request, '')
 
 
-def guide_search(request):
+def guide_search(request, data):
     return render(request, 'views/guide_search.html', {})
-
-
-def enroll_trip(request):
-    return render(request, 'views/enroll_trip.html')
 
 # class GuideSearch(ListView):
 #

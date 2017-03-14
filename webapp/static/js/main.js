@@ -1,6 +1,3 @@
-/**
- * Created by sunmoon on 17. 3. 1.
- */
 // 정렬 기준 바꾸기
 function changeOrder(val) {
     if (val != $('.order-active').id) {
