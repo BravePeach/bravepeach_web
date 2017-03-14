@@ -31,10 +31,6 @@ from django.core.paginator import Paginator
 #     return render(request, 'views/login.html',{'form':form})
 
 
-def index(request):
-    return render(request, "views/index.html", {})
-
-
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(request.GET.get('next', '/'))

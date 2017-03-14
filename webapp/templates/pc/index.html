@@ -1,4 +1,5 @@
 {% extends "pc/base.html" %}
+{% load widget_tweaks %}
 {% load compile_static %}
 {% load static %}
 
@@ -17,16 +18,17 @@
             <h1>어디로 가시나요?</h1>
         </div>
 
-        <form class="main-form-wrapper">
+        <form class="main-form-wrapper" method="get">
+            {% csrf_token %}
             <div class="location_form_main_wrapper">
                 <span class="form-name">위치</span>
-                <input id="location_form" class="location_form_main" placeholder="목적지, 도시명, 주소" type="text" required>
+                {{ form.city |add_class:"location_form_main"|attr:"placeholder:목적지, 도시명, 주소"}}
             </div>
 
             <div class="travel_date_form_main_wrapper">
                 <span class="form-name">날짜</span>
-                <input id="start_date_form_main" placeholder="출국일," type="text" readonly>
-                <input id="end_date_form_main" placeholder="도착일" type="text" readonly>
+                {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"|attr:"placeholder:출국일"}}
+                {{ form.travel_end_at |add_class:"find-guide-form datepicker2"|attr:"readonly"|attr:"placeholder:도착일"}}
             </div>
 
             <div class="traveler_cnt_form_main_wrapper">

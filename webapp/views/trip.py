@@ -73,4 +73,5 @@ def enroll_trip(request):
 
     else:
         form = RequestForm()
+
     return flavour_render(request, 'trip/enroll_trip.html', {'form': form})

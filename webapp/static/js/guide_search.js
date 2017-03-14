@@ -1,6 +1,5 @@
-/**
- * Created by sunmoon on 17. 3. 1.
- */
+filterGuide('popularity')
+
 // 정렬 기준 바꾸기
 function changeOrder(val) {
     if (val != $('.order-active').id) {
@@ -116,16 +115,6 @@ $('.datepicker1, .datepicker2').datepicker({
     }
 });
 
-
-// var input = document.getElementById('id_city');
-// var options = {
-//     types: ['(regions)'],
-//
-// };
-//
-// autocomplete = new google.maps.places.Autocomplete(input, options);
-
-
     function extractor(query) {
         var result = /([^\/]+)$/.exec(query);
         if(result && result[1])
@@ -202,52 +191,13 @@ $('#traveler_cnt_main, .arrow-down, #traveler_cnt_form').click(function () {
     $('.traveler_cntpicker').slideToggle(200)
 });
 
-// 버튼 클릭시 페이지 펼치기
-$(".btn1").click(function () {
-    if ($(".gradation-bar.btn1").hasClass("inactive")) {
-        $(".gradation-bar.btn1").removeClass("inactive");
-        $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_full.png");
-    }
-    else {
-        $(".gradation-bar.btn1").addClass("inactive");
-        $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_empty.png");
-    }
-    $(".scrolling-page1").slideToggle(200);
-});
 
-$(".btn2").click(function () {
-    if ($(".gradation-bar.btn2").hasClass("inactive")) {
-        $(".gradation-bar.btn2").removeClass("inactive");
-        $(".lodging-button > img").attr("src", "/static/image/icon/logo_full.png");
-    }
-    else {
-        $(".gradation-bar.btn2").addClass("inactive");
-        $(".lodging-button > img").attr("src", "/static/image/icon/logo_empty.png");
-    }
-    $(".scrolling-page2").slideToggle(200);
-});
-
-// 복숭아 버튼 호버시 그림 바꾸고 글자에 그림자 넣기
-// 중복을 줄일수 없을까?
-$(".way-of-travel-button")
-    .mousemove(function () {
-        $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_full.png");
-        $(".enroll-trip-button-name").attr("text-shadow", "0px 1px 1px rgba(0,0,0,0.3)");
-    })
-    .mouseout(function () {
-        // 클릭을 안했을때만 빈 그림으로 바꾼다.
-        if ($(".gradation-bar.btn1").hasClass("inactive")) {
-            $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_empty.png")
-        }
-    });
-
-
-$(".lodging-button")
-    .mousemove(function () {
-        $(".lodging-button > img").attr("src", "/static/image/icon/logo_full.png");
-    })
-    .mouseout(function () {
-        if ($(".gradation-bar.btn2").hasClass("inactive")) {
-            $(".lodging-button > img").attr("src", "/static/image/icon/logo_empty.png")
-        }
-    });
+// 하트 버튼 눌렀을때
+function like(guideCard) {
+    message = '<div class="like-message">' +
+            '<img class="guide-image" src="/static/image/images/jinwoong.jpg" style="width: 64px; height: 64px; left:13px; top:31px">' +
+            '<span class="like-message-text"> <strong>' + guideCard.childNodes[3].innerHTML + '</strong>가이드를 찜 하셨습니다.<br>\'찜한 가이드\'에서 확인하실 수 있습니다.</span>' +
+            '</div>';
+    $('.like-message-wrapper').append(message);
+    $('.like-message').last().delay(3000).fadeOut();
+}

@@ -1,12 +1,15 @@
-{% extends "base.html" %}
-
-{% block head %}
+{% extends "pc/base.html" %}
 {% load staticfiles %}
+
+{% block css %}
 <link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
+<link rel="stylesheet" href='{% static "css/style.css" %}'>
+{% endblock %}
 <!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>-->
+{% block js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
-
+<script src='{% static "js/guide_search.js" %}'></script>
 {% endblock %}
 
 {% block content %}
@@ -18,14 +21,14 @@
     </section>
     <div class="gradation-bar" style="z-index: 1">
         <img class="icon" src="/static/image/icon/where_white.png" alt="where?">
-        <input class="find-guide-form" id="location_form" type="text" name="" value="">
+        <input class="find-guide-form" id="location_form" type="text" name="" value="{{ city }}">
 
     </div>
     <div class="gradation-bar">
         <img class="icon" src="/static/image/icon/when_white.png" alt="when?">
-        <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="" readonly>
+        <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="{{ travel_begin_at }}" readonly>
         <img class="arrow-right" src="">
-        <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="" readonly>
+        <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="{{ travel_end_at }}" readonly>
     </div>
     <div class="gradation-bar">
         <img class="icon" src="/static/image/icon/howmany_white.png" alt="how many?">

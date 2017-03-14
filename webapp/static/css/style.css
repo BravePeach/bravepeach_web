@@ -70,6 +70,7 @@ body {
 }
 
 .travel_date_form_main_wrapper {
+    margin-top: 1px;
     width: 264.9px;
     height: 75px;
     background-color: #ffffff;
@@ -81,6 +82,7 @@ body {
 }
 
 .traveler_cnt_form_main_wrapper {
+    margin-top: 1px;
     width: 235px;
     height: 75px;
     background-color: #ffffff;

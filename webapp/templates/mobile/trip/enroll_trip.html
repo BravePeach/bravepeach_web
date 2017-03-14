@@ -1,10 +1,9 @@
-{% extends "pc/common/base.html" %}
+{% extends "mobile/base.html" %}
 {% load widget_tweaks %}
 {% load staticfiles %}
 
 {% block css %}
-<link rel="stylesheet" href='{% static "css/enroll_trip.css" %}'>
-<link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
+<link rel="stylesheet" href='{% static "css/mobile/enroll_trip.css" %}'>
 {% endblock %}
 
 {% block js %}
@@ -62,7 +61,7 @@
             </div>
             </div>
 
-            <span class="enroll-trip-help">*가이드의 도움이 필요한 항목을 활성화 시켜주세요! Click</span>
+            <span class="enroll-trip-help">가이드가 필요한 부분을 활성화시켜주세요! Click</span>
 
             <div class="peach-button-wrapper">
                 <div class="col-xs-4">
