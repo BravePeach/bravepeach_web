@@ -5,9 +5,10 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'less/pc/index.less'|compile %}">
-{#    <link rel="stylesheet" href='{% static "css/pac_style_main.css" %}'>#}
 {% endblock %}
-
+{% block js %}
+    <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
 {% block title %} bravepeach | 나만의 여행을 위한 맞춤형 여행 플랫폼 {% endblock %}
 
 {% block content %}
@@ -19,7 +20,6 @@
         </div>
 
         <form class="main-form-wrapper" method="get">
-            {% csrf_token %}
             <div class="location_form_main_wrapper">
                 <span class="form-name">위치</span>
                 {{ form.city |add_class:"location_form_main"|attr:"placeholder:목적지, 도시명, 주소"}}
@@ -55,8 +55,8 @@
                         <span class="decrease_button">-</span>
                     </div>
                 </div>
-                <input id="traveler_cnt_main" placeholder="여행자 수" type="text" readonly>
-                <input class="main-form-button" type="submit" value="가이드 검색">
+                {{ form.age_group |add_class:"traveler_cnt_main"|attr:"readonly"|attr:"placeholder:여행자 수"}}
+                <input class="main-form-button" type="submit">
             </div>
         </form>
     </div>

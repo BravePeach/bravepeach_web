@@ -16,7 +16,7 @@ function filterGuide(sort) {
         url: "guide_search/filtering/",
         type: "GET",
         data: {
-            location: $('#id_city').val(),
+            location: $('#location_form').val(),
             start_date: $('#start_date_form').val(),
             end_date: $('#end_date_form').val(),
             traveler_cnt: $('#traveler_cnt_form').val(),
@@ -73,8 +73,8 @@ function filterGuide(sort) {
         },
 
         error: function (xhr, errmsg, err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " + errmsg +
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            $('#results').html("<div class='alert-box alert radius'data-alert>Oops! We have encountered an error: " + errmsg +
+                " <a href='#'class='close'>&times;</a></div>"); // add the error to the dom
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
@@ -115,56 +115,23 @@ $('.datepicker1, .datepicker2').datepicker({
     }
 });
 
-    function extractor(query) {
-        var result = /([^\/]+)$/.exec(query);
-        if(result && result[1])
-            return result[1].trim();
-        return '';
-    }
-    var addressPicker = new AddressPicker({autocompleteService: {types: ['(regions)']}});
+var addressPicker = new AddressPicker({autocompleteService: {types: ['(regions)']}});
 
 
-    $('#id_city').typeahead(null, {
-        displayKey: 'description',
-        source: addressPicker.ttAdapter(),
-        change: function(item) {
-            return this.$element.val().replace(/[^\/]*$/,'')+item+'/';
-        },
-        matcher: function (item) {
-          var tquery = extractor(this.query);
-          if(!tquery) return false;
-          return ~item.toLowerCase().indexOf(tquery.toLowerCase())
-        },
-        highlighter: function (item) {
-
-          var query = extractor(this.query).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
-          return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
-            return '<strong>' + match + '</strong>'
-          })
-        }
-    });
-
-
-
-//$('#id_city').typeahead(null, {
-  //  displayKey: 'description',
-  //  source: addressPicker.ttAdapter()
-//});
+$('#id_city').typeahead(null, {
+    displayKey: 'description',
+    source: addressPicker.ttAdapter()
+});
 
 addressPicker.bindDefaultTypeaheadEvent($('#id_city'))
 
 $(addressPicker).on('addresspicker:selected', function (event, result) {
     console.log(result.nameForType('country'))
     console.log("form submitted")
-    console.log($('#id_city').val())
+    console.log($('#location_form').val())
     filterGuide($('.order-active').attr('id'));
 })
 
-
-var input_main = document.getElementById('id_city_main');
-var options_main = {};
-
-autocomplete_main = new google.maps.places.SearchBox(input_main, options_main);
 
 // 인원 증가
 var total_traveler = 0;
@@ -173,7 +140,7 @@ $('.increase_button').click(function () {
         return parseInt(val.slice(0, -1)) + 1 + '명'
     });
     total_traveler++;
-    $('#traveler_cnt_main, #traveler_cnt_form, #id_age_group').attr('value', '인원 ' + total_traveler + '명')
+    $('#traveler_cnt_form').attr('value', '인원 '+ total_traveler + '명')
 });
 
 $('.decrease_button').click(function () {
@@ -182,21 +149,21 @@ $('.decrease_button').click(function () {
             return
         }
         total_traveler--;
-        $('#traveler_cnt_main, #traveler_cnt_form, #id_age_group').attr('value', '인원 ' + total_traveler + '명');
+        $('#traveler_cnt_form, #id_age_group').attr('value', '인원 '+ total_traveler + '명');
         return parseInt(val.slice(0, -1)) - 1 + '명'
     });
 });
 
-$('#traveler_cnt_main, .arrow-down, #traveler_cnt_form').click(function () {
+$('.arrow-down, #traveler_cnt_form').click(function () {
     $('.traveler_cntpicker').slideToggle(200)
 });
 
 
 // 하트 버튼 눌렀을때
 function like(guideCard) {
-    message = '<div class="like-message">' +
-            '<img class="guide-image" src="/static/image/images/jinwoong.jpg" style="width: 64px; height: 64px; left:13px; top:31px">' +
-            '<span class="like-message-text"> <strong>' + guideCard.childNodes[3].innerHTML + '</strong>가이드를 찜 하셨습니다.<br>\'찜한 가이드\'에서 확인하실 수 있습니다.</span>' +
+    message = '<div class="like-message">'+
+            '<img class="guide-image" src="/static/image/images/jinwoong.jpg" style="width: 64px; height: 64px; left:13px; top:31px">'+
+            '<span class="like-message-text"> <strong>'+ guideCard.childNodes[3].innerHTML + '</strong>가이드를 찜 하셨습니다.<br>\'찜한 가이드\'에서 확인하실 수 있습니다.</span>'+
             '</div>';
     $('.like-message-wrapper').append(message);
     $('.like-message').last().delay(3000).fadeOut();

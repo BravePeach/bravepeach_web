@@ -100,6 +100,7 @@ class IndexGuideSearchFrom(forms.Form):
     city = forms.CharField(widget=forms.TextInput)
     travel_begin_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
     travel_end_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
+    age_group = forms.CharField(widget=forms.TextInput, required=False)
 
 
 class SetPasswordCustcomForm(SetPasswordForm):

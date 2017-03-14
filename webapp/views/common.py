@@ -14,8 +14,14 @@ def index(request):
             travel_begin_at = request.GET.__getitem__('travel_begin_at')
         if request.GET.__contains__('travel_end_at'):
             travel_end_at = request.GET.__getitem__('travel_end_at')
+        if request.GET.__contains__('age_group'):
+            age_group = request.GET.__getitem__('age_group')
         if form.is_valid():
-            return flavour_render(request, "trip/guide_search.html", {'city': city, 'travel_begin_at': travel_begin_at, 'travel_end_at':travel_end_at})
+            return flavour_render(request, "trip/guide_search.html", {'city': city,
+                                                                      'travel_begin_at': travel_begin_at,
+                                                                      'travel_end_at':travel_end_at,
+                                                                      'age_group': age_group,
+                                                                      })
     else:
         form = IndexGuideSearchFrom()
 

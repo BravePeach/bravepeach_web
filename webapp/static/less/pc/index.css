@@ -106,7 +106,7 @@
   width: 50%;
   cursor: pointer;
 }
-#traveler_cnt_main {
+.traveler_cnt_main {
   position: absolute;
   top: 38px;
   left: 7px;

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
 <link rel="stylesheet" href='{% static "css/pc/guide_search.css" %}'>
 {% endblock %}
-<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>-->
+
 {% block js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
@@ -21,7 +21,7 @@
     </section>
     <div class="gradation-bar" style="z-index: 1">
         <img class="icon" src="/static/image/icon/where_white.png" alt="where?">
-        <input class="find-guide-form" id="location_form" type="text" name="" value="{{ city }}">
+        <input class="find-guide-form" id="id_city" type="text" name="" value="{{ city }}" style="width: 100%">
 
     </div>
     <div class="gradation-bar">
@@ -32,7 +32,7 @@
     </div>
     <div class="gradation-bar">
         <img class="icon" src="/static/image/icon/howmany_white.png" alt="how many?">
-        <input class="find-guide-form" id="traveler_cnt_form" type="text" name="" value="" readonly style="width: 78%;">
+        <input class="find-guide-form" id="traveler_cnt_form" type="text" name="" value="{{ age_group }}" readonly style="width: 78%;">
         <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
         <div class="traveler_cntpicker">
             <div>

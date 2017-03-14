@@ -9,7 +9,7 @@
 {% block js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
-<script src='{% static "js/main.js" %}'></script>
+<script src='{% static "js/enroll_trip.js" %}'></script>
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,6 @@
                 <h2 class="sub-title">용감한 님의 맞춤형 여행지 정보를 등록하세요!</h2>
             </section>
             <form method="POST">
-                {% csrf_token %}
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/where_black.png" alt="where?">
                 {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}

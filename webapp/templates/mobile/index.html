@@ -1,11 +1,110 @@
 {% extends "mobile/base.html" %}
+{% load widget_tweaks %}
 {% load compile_static %}
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static '' %}">
-{% endblock%}
+    <link rel="stylesheet" href="{% static 'css/mobile/index.css' %}">
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+{% block title %} bravepeach | 나만의 여행을 위한 맞춤형 여행 플랫폼 {% endblock %}
 
 {% block content %}
-    <h1>Bravepeach Mobile Index</h1>
+<div class="main-header">
+    <div class="head-container">
+
+
+    </div>
+</div>
+
+<div class="mobile-main main-container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4" id="search_location1">
+            <div class="main-thumbnail red-sunset">
+                <div class="overlay">
+                    <h4>모두의 핫플레이스</h4>
+                    <h3>보라카이</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+            <div class="main-thumbnail mountain">
+                <div class="overlay">
+                    <h4>죽기전에 꼭 가야할 그 곳</h4>
+                    <h3>미국 서부</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+            <div class="main-thumbnail waiting">
+                <div class="overlay">
+                    <h4>도시의 모든 것</h4>
+                    <h3>뉴욕</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div class="main-thumbnail red-sunset">
+                <div class="overlay">
+                    <h4>모두의 핫플레이스</h4>
+                    <h3>보라카이</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+            <div class="main-thumbnail mountain">
+                <div class="overlay">
+                    <h4>죽기전에 꼭 가야할 그 곳</h4>
+                    <h3>미국 서부</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+            <div class="main-thumbnail waiting">
+                <div class="overlay">
+                    <h4>도시의 모든 것</h4>
+                    <h3>뉴욕</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div class="main-thumbnail red-sunset">
+                <div class="overlay">
+                    <h4>모두의 핫플레이스</h4>
+                    <h3>보라카이</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+            <div class="main-thumbnail mountain">
+                <div class="overlay">
+                    <h4>죽기전에 꼭 가야할 그 곳</h4>
+                    <h3>미국 서부</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4">
+            <div class="main-thumbnail waiting">
+                <div class="overlay">
+                    <h4>도시의 모든 것</h4>
+                    <h3>뉴욕</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
