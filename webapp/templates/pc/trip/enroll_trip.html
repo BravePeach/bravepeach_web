@@ -3,14 +3,20 @@
 {% load staticfiles %}
 
 {% block css %}
-<link rel="stylesheet" href='{% static "css/enroll_trip.css" %}'>
-<link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
+    <link rel="stylesheet" href='{% static "css/enroll_trip.css" %}'>
+    <link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
+    <link rel="stylesheet" href="{% static 'css/select2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.placecomplete.css' %}">
 {% endblock %}
 
 {% block js %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
-<script src='{% static "js/main.js" %}'></script>
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>#}
+{#<script src='{% static "js/main.js" %}'></script>#}
+{#    <script src='{% static "js/jquery.placecomplete.js" %}'></script>#}
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/jquery.placecomplete.js' %}"></script>
+    <script src='{% static "js/enroll_trip.js" %}'></script>
 {% endblock %}
 
 {% block content %}
@@ -23,7 +29,8 @@
             {% csrf_token %}
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/where_black.png" alt="where?">
-                {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}
+{#                {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}#}
+                {{ form.city }}
             </div>
 
             <div class="white-bar">
