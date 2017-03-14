@@ -60,19 +60,36 @@
         </div>
         <div class="tab-contents tab-trip">
             {% for offer in offer_list %}
+                {# NOTE: Slow Query? #}
                 <div class="tab-content">
-                    {{ offer.id }}
-                    {{ offer.request_id }}
                     {% if offer.is_canceled %}
                         <div class="tab-content-label done">취소</div>
+                    {% else %}
+                        <div class="cancel-offer" onclick="cancel_offer({{ offer.id }}, '{{ offer.guide.user.first_name }}')">
+                        </div>
                     {% endif %}
-                    <div class="tab-content-pic">picpic</div><!--
+                    <div class="tab-content-pic">{{ offer.guide.id }}</div><!--
                 --><div class="tab-content-info">
-                    {{ offer.travel_begin_at }}~{{ offer.travel_end_at }}<br>
-                    {{ offer.city }}
+                    <div class="guide-options">
+                        <div class="guide-option {% if offer.request.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">이동수단</div>
+                        <div class="guide-option {% if offer.request.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">숙박</div>
+                        <div class="guide-option {% if offer.request.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">가이드</div>
+                    </div>
+                    <div class="schedule">{{ offer.request.travel_begin_at }} ~ {{ offer.request.travel_end_at }}</div>
+                    <div class="cities ellipsis">
+                        {% for c in offer.request.city %}
+                            {% if not forloop.first %} / {% endif %} {{ c }}
+                        {% endfor %}
+                    </div>
+                    <div class="age-grp"> {{ offer.request.age_group }} </div>
+                    <div class="cost">총 경비 <span class="money">{{ offer.request.cost|intcomma }}</span> 만원</div>
                 </div><!--
                 --><div class="tab-content-btn">
-                    <a href="" class="list-btn no-list">리스트 보기</a>
+                    <a href="" class="show-request-btn">여행 요청서 보기</a>
+                    <a href="" class="show-offer-btn">최종 견적서 보기</a>
                 </div>
                 </div>
             {% empty %}
@@ -84,14 +101,34 @@
         <div class="tab-contents tab-past">
             {% for enroll in past_list %}
                 <div class="tab-content">
-                    {#                    <div class="tab-content-label">label</div>#}
+                    <div class="tab-content-label {% if not enroll.published %}done{% endif %}">
+                        {% if enroll.published %}
+                            {% if offer_cnt > 0 %}결제 대기중{% else %}모집중{% endif %}
+                        {% else %}마감{% endif %}
+                    </div>
                     <div class="tab-content-pic">picpic</div><!--
                 --><div class="tab-content-info">
-                    {{ enroll.travel_begin_at }}~{{ enroll.travel_end_at }}<br>
-                    {{ enroll.city }}
+                    <div class="guide-options">
+                        <div class="guide-option {% if enroll.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">이동수단</div>
+                        <div class="guide-option {% if enroll.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">숙박</div>
+                        <div class="guide-option {% if enroll.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">가이드</div>
+                    </div>
+                    <div class="schedule">{{ enroll.travel_begin_at }} ~ {{ enroll.travel_end_at }}</div>
+                    <div class="cities ellipsis">
+                        {% for c in enroll.city %}
+                            {% if not forloop.first %} / {% endif %} {{ c }}
+                        {% endfor %}
+                    </div>
+                    <div class="age-grp"> {{ enroll.age_group }} </div>
+                    <div class="cost">희망 경비 <span class="money">{{ enroll.cost|intcomma }}</span> 만원</div>
                 </div><!--
                 --><div class="tab-content-btn">
-                    <a href="" class="list-btn">리스트 보기</a>
+                    <a href="" class="list-btn {% if offer_cnt == 0 %}no-list{% endif %}">
+                        {% if offer_cnt == 0 %}지원 가이드 없음{% else %}리스트 보기{% endif %}</a>
+                    <div class="offer-cnt">{% if offer_cnt > 0 %}가이드 {{ offer_cnt|intcomma }} 명 지원{% else %} {% endif %}</div>
                 </div>
                 </div>
             {% empty %}

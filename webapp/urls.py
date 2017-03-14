@@ -34,6 +34,7 @@ urlpatterns = [
     # Trip
     url(r'^my_trip/$', views.trip.my_trip, name="my_trip"),
     url(r'^enroll_trip', views.trip.enroll_trip, name='enroll_trip'),
+    url(r'^cancel_offer/$', views.trip.cancel_offer, name="cancel_offer")
 
     # Guide2User
 ]

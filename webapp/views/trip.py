@@ -124,3 +124,14 @@ def my_trip(request):
     return flavour_render(request, "trip/my_trip.html", {"enroll_list": enroll_offer_list,
                                                          "offer_list": enroll_paid_list,
                                                          "past_list": past_list})
+
+
+@login_required
+def cancel_offer(request):
+    offer_id = request.POST['offer_id']
+    offer = GuideOffer.objects.filter(request__user_id=request.user.id, id=offer_id)
+    if not offer:
+        return JsonResponse({"ok": False})
+    #offer.is_canceled = True
+    # offer.save()
+    return JsonResponse({"ok": True})
