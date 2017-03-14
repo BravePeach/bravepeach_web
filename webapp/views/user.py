@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm
@@ -12,7 +13,6 @@ from bravepeach.util import flavour_render
 def user_login(request):
     logout(request)
     if request.method == "POST":
-        print(request.POST)
         username = request.POST["username"]
         password = request.POST["password"]
         remember = request.POST.get('remember_me', None)
@@ -23,9 +23,9 @@ def user_login(request):
                 request.session.set_expiry(0)
             return redirect("index")
         else:
-            return flavour_render(request, "user/login.html")
+            return flavour_render(request, "user/login.html", {"login": "fail"})
     else:
-        return flavour_render(request, "user/login.html")
+        return flavour_render(request, "user/login.html", {"login": None})
 
 
 def user_logout(request):
@@ -68,6 +68,18 @@ def register_bravepeach(request):
         user_form = UserRegistrationForm()
         profile_form = ProfileEditForm()
         return flavour_render(request, 'user/register_bp.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+def check_email(request):
+    if request.method != "POST":
+        return JsonResponse({"ok": False})
+
+    email = request.POST.get("email", None)
+    user = User.objects.filter(email=email)
+    if len(user) > 0:
+        return JsonResponse({"ok": True, "usable": False})
+    else:
+        return JsonResponse({"ok": True, "usable": True})
 
 
 def password_reset_complete(request):

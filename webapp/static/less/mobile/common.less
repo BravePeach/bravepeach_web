@@ -1,0 +1,159 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
+@import url(//cdn.jsdelivr.net/nanumsquare/1.0/nanumsquare.css);
+
+:root {
+  --blush: #f2ad8a;
+  --pastel-red: #e64c47;
+  --greyish-brown: #404040;
+  --white: #dbdbdb;
+  --pale-red: #da4d44;
+  --white-70: rgba(255, 255, 255, 0.7);
+  --white-two: #ffffff;
+  --white-three: #f6f6f6;
+  --pastel-red-60: rgba(217, 104, 101, 0.6);
+  --dark-sky-blue: #4a90e2;
+  --greyish-brown-two: #4a4a4a;
+  --warm-grey: #9c9c9c;
+  --pale-grey: #ededef;
+}
+
+* {
+  font-family: 'NanumSquare', 'Nanum Gothic', sans-serif;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font-family: 'NanumSquare', 'Nanum Gothic', sans-serif;
+  width: 750px;
+  margin: auto;
+  z-index: -1;
+}
+
+.line {
+  width: 250px;
+  height: 4px;
+  border: solid 2px #bbbbbb;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 10px;
+}
+
+.line-long {
+  width: 710px;
+  margin: auto;
+  border: solid 2px #e64c47;
+}
+
+.or {
+  vertical-align: middle;
+  display: inline-block;
+  font-family: NanumSquareOTFB;
+  margin: 70px 65px 70px 65px;
+  width: 80px;
+  height: 32px;
+  font-size: 32px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: #000000;
+}
+
+.notice {
+  height: 32px;
+  font-family: NanumSquareOTFB;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.3px;
+  color: #606060;
+}
+.notice-right {
+  display: none;
+  color: #0076ff;
+}
+.notice-wrong {
+  display: none;
+  color: #fe3824;
+}
+
+.input-text {		// Fullsize only
+  width: 710px;
+  height: 90px;
+  border-radius: 16px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-color: #fafafa;
+  box-shadow: 0 -0.5px 1px 0 #a9a9a9;
+  font-family: NanumSquareOTFB;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  color: #bbbbbb;
+  margin-bottom: 16px;
+  padding-left: 28px;
+}
+
+.input-radio {
+  margin-right: 10px;
+  clear: both;
+  width: 48px;
+  height: 48px;
+  background-color: #ffffff;
+  //box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  border: solid 1px #979797;
+  vertical-align: middle;
+  margin-top: -2px;
+
+  :focus {
+    outline: none;
+  }
+}
+
+.input-select {
+  width: 210px;
+  height: 80px;
+  padding-left: 28px;
+  border-radius: 8px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-color: #fafafa;
+  box-shadow: 0 -0.5px 1px 0 #a9a9a9;
+  font-family: NanumSquareOTFB;
+  font-size: 32px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  color: #bbbbbb;
+  margin: 16px 12px 16px 12px;
+}
+
+.input-checkbox {
+    width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  border: solid 1px #979797;
+  vertical-align: middle;
+  margin-top: -2px;
+}

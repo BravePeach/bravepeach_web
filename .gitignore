@@ -108,4 +108,6 @@ settings.json
 report/
 
 # Auto compiled css from less
-webapp/static/less/*.css
+webapp/static/less/pc/*.css
+webapp/static/less/mobile/*.css
+static/COMPILED/

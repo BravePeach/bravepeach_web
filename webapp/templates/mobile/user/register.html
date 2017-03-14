@@ -1,18 +1,14 @@
-{% extends "pc/base.html" %}
+{% extends "mobile/base.html" %}
 {% load compile_static %}
 {% load static %}
 
-{% block title %}{% endblock %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'less/pc/register.less'|compile %}">
-{% endblock %}
-{% block js %}
-    <script src="{% static 'js/register.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'less/mobile/register.less'|compile %}">
 {% endblock %}
 
 {% block content %}
-    <div id="user-register">
-        <div id="register-title">회원가입</div>
+    <div class="wrapper">
+        <div class="register-title">회원가입</div>
         <div class="register-wrapper">
             <a href="" class="register-fb">Facebook으로 가입하기</a>
             <a href="" class="register-naver">Naver로 가입하기</a>

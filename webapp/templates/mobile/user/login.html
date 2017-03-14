@@ -1,11 +1,9 @@
-{% extends "pc/base.html" %}
+{% extends "mobile/base.html" %}
 {% load compile_static %}
 {% load static %}
 
-{% block title %}bravepeach login{% endblock %}
-
 {% block css %}
-    <link rel="stylesheet" href="{% static 'less/pc/login.less'|compile %}">
+    <link rel="stylesheet" href="{% static 'less/mobile/login.less'|compile %}">
 {% endblock %}
 
 {% block js %}
@@ -19,7 +17,7 @@
                 <div class="close" onclick="close_pw_reset_msg()"><img src="{% static 'image/icon/cancel.png' %}" alt="" width="18" height="18"></div></div>
         {% endif %}
     {% endfor %}
-    <div class="login-wrapper">
+    <div class="contents-wrapper">
         <div class="login-title" {% if request.reset_pw %}style="display: none;" {% endif %}>로그인</div>
         <div class="login-btn login-fb">Facebook으로 로그인</div>
         <div class="login-btn login-naver">Naver로 로그인</div>
@@ -41,7 +39,7 @@
             </div>
             <div class="line line-long"></div>
         </form>
-        <div class="login-label">Bravepeach 계정이 없으세요?</div>
+        <div class="login-question">Bravepeach 계정이 없으세요?</div>
         <a href="{% url 'register_bp' %}" class="register-bp">Bravepeach로 가입하기</a>
     </div>
 {% endblock %}

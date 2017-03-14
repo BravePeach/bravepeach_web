@@ -1,9 +1,9 @@
-{% extends "pc/common/base.html" %}
+{% extends "pc/base.html" %}
 {% load compile_static %}
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'less/index.less'|compile %}">
+    <link rel="stylesheet" href="{% static 'less/pc/index.less'|compile %}">
 {#    <link rel="stylesheet" href='{% static "css/pac_style_main.css" %}'>#}
 {% endblock %}
 

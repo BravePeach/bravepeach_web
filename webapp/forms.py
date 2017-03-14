@@ -51,13 +51,17 @@ class ProfileEditForm(forms.ModelForm):
     )
 
     birthday = forms.DateField(widget=extras.SelectDateWidget(years=range(1920, 2017),
-                                                              attrs={"class": "input-radio"},
+                                                              attrs={"class": "input-select"},
                                                               empty_label=("년도*", "달*", "일*")))
     gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
 
     class Meta:
         model = Profile
         fields = ('birthday', 'gender')
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileEditForm, self).__init__(*args, **kwargs)
+        self.fields["gender"].widget.attrs.update({"class": "input-radio"})
 
 
 class PasswordResetCustomForm(PasswordResetForm):
