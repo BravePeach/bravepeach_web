@@ -1,4 +1,4 @@
-{% extends "pc/common/base.html" %}
+{% extends "pc/base.html" %}
 {% load widget_tweaks %}
 {% load staticfiles %}
 
@@ -14,14 +14,13 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="main-container">
-            <section>
-                <h1 class="sup-title-peach">여행지 등록</h1>
-                <h2 class="sub-title">용감한 님의 맞춤형 여행지 정보를 등록하세요!</h2>
-            </section>
-            <form method="POST">
-                {% csrf_token %}
+    <div class="main-container">
+        <section>
+            <h1 class="sup-title-peach">여행지 등록</h1>
+            <h2 class="sub-title">{{ user.first_name }} 님의 맞춤형 여행지 정보를 등록하세요!</h2>
+        </section>
+        <form method="POST">
+            {% csrf_token %}
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/where_black.png" alt="where?">
                 {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}
@@ -38,28 +37,28 @@
                 <img class="icon" src="/static/image/icon/howmany_black.png" alt="where?">
                 {{ form.age_group |add_class:"enroll-trip-form"|attr:"placeholder:인원"|attr:"readonly" }}
                 <img class="arrow-down" src="/static/image/icon/arrow_down_black.png" alt="펼치기 버튼">
-                        <div class="traveler_cntpicker">
-            <div>
-                성인
-                <span class="adult_num">0명</span>
-                <span class="increase_button">+</span>
-                <span class="decrease_button">-</span>
-            </div>
+                <div class="traveler_cntpicker">
+                    <div>
+                        성인
+                        <span class="adult_num">0명</span>
+                        <span class="increase_button">+</span>
+                        <span class="decrease_button">-</span>
+                    </div>
 
-            <div>
-                어린이
-                <span class="child_num">0명</span>
-                <span class="increase_button">+</span>
-                <span class="decrease_button">-</span>
-            </div>
+                    <div>
+                        어린이
+                        <span class="child_num">0명</span>
+                        <span class="increase_button">+</span>
+                        <span class="decrease_button">-</span>
+                    </div>
 
-            <div>
-                유아
-                <span class="toddler_num">0명</span>
-                <span class="increase_button">+</span>
-                <span class="decrease_button">-</span>
-            </div>
-            </div>
+                    <div>
+                        유아
+                        <span class="toddler_num">0명</span>
+                        <span class="increase_button">+</span>
+                        <span class="decrease_button">-</span>
+                    </div>
+                </div>
             </div>
 
             <span class="enroll-trip-help">*가이드의 도움이 필요한 항목을 활성화 시켜주세요.</span>
@@ -173,7 +172,7 @@
                         <input class="checkbox" name="accom_type" type="checkbox" value=8>리조트
                     </div>
                     <div class="col-xs-2 col-sm-fifth">
-                     <input class="checkbox" name="accom_type" type="checkbox" value=16>가이드 집
+                        <input class="checkbox" name="accom_type" type="checkbox" value=16>가이드 집
                     </div>
                 </div>
                 {{ form.accom_comment |add_class:"additional-request-box"|attr:"placeholder:추가적으로 부탁하고 싶은 점을 적어주세요. ex) 숙소는 현지에서 지불하고 싶어요." }}
@@ -217,20 +216,20 @@
                         </div>
                     </div>
 
-                <div class="row">
-                    <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" name="theme" type="checkbox" value=16>골목 여행
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="checkbox" name="theme" type="checkbox" value=16>골목 여행
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="checkbox" name="theme" type="checkbox" value=32>자연 경관
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="checkbox" name="theme" type="checkbox" value=64>맛집 기행
+                        </div>
+                        <div class="col-xs-6 col-sm-3">
+                            <input class="checkbox" name="theme" type="checkbox" value=128>역사여행
+                        </div>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" name="theme" type="checkbox" value=32>자연 경관
-                    </div>
-                    <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" name="theme" type="checkbox" value=64>맛집 기행
-                    </div>
-                    <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" name="theme" type="checkbox" value=128>역사여행
-                    </div>
-                </div>
 
                 </div>
                 <span style="float: left">6.</span>
@@ -253,16 +252,16 @@
 
                     <div class="row">
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="guide_type" type="checkbox" value=16>유머러스한
+                            <input class="checkbox" name="guide_type" type="checkbox" value=16>유머러스한
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="guide_type" type="checkbox" value=32>감성적인
+                            <input class="checkbox" name="guide_type" type="checkbox" value=32>감성적인
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="guide_type" type="checkbox" value=64>설명을 잘하는
+                            <input class="checkbox" name="guide_type" type="checkbox" value=64>설명을 잘하는
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="guide_type" type="checkbox" value=128>경제적인
+                            <input class="checkbox" name="guide_type" type="checkbox" value=128>경제적인
                         </div>
                     </div>
                 </div>
@@ -287,10 +286,10 @@
 
                     <div class="row">
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="importance" type="checkbox" value=16>역사공부
+                            <input class="checkbox" name="importance" type="checkbox" value=16>역사공부
                         </div>
                         <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="importance" type="checkbox" value=32>기타
+                            <input class="checkbox" name="importance" type="checkbox" value=32>기타
                         </div>
                     </div>
                 </div>
@@ -304,13 +303,12 @@
             <span style="font-size: 26px; margin: 75px 14px 0px 0px; display: block; float: right">희망 경비</span>
             <div class="submit-button-wrapper">
                 <div class="col-xs-6">
-                <div class="temp-store-button">취소</div>
+                    <div class="temp-store-button">취소</div>
                 </div>
                 <div class="col-xs-6">
-                <button class="find-guide-button" type="submit">가이드 모집</button>
+                    <button class="find-guide-button" type="submit">가이드 모집</button>
                 </div>
             </div>
-            </form>
-        </div>
-
+        </form>
+    </div>
 {% endblock %}
