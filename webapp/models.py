@@ -89,6 +89,25 @@ class UserRequest(models.Model):
     published = models.BooleanField(default=False, blank=True)
     additional_request = models.CharField(max_length=200, blank=True)
 
+    @property
+    def trans_guided(self):
+        if self.trans_via is None and self.trans_class is None and not self.trans_comment:
+            return False
+        return True
+
+    @property
+    def accom_guided(self):
+        if self.accom_location is None and self.accom_type is None and not self.accom_comment:
+            return False
+        return True
+
+    @property
+    def guide_guided(self):
+        if (self.start_time is None and self.end_time is None and not self.landmark and not self.theme and
+                not self.guide_type and not self.importance):
+            return False
+        return True
+
 
 class GuideOffer(models.Model):
     paid = models.BooleanField(default=False)

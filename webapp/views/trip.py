@@ -1,4 +1,6 @@
 import json
+import datetime
+from collections import OrderedDict
 
 from django.shortcuts import redirect
 from django.http import JsonResponse
@@ -8,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from bravepeach.util import flavour_render
 from ..forms import RequestForm
-from ..models import Guide, Review
+from ..models import Guide, Review, UserRequest, GuideOffer
 
 
 def guide_search(request):
@@ -85,5 +87,40 @@ def enroll_trip(request):
             return redirect("enroll_trip")
     else:
         form = RequestForm()
+        return flavour_render(request, 'trip/enroll_trip.html', {'form': form})
 
-    return flavour_render(request, 'trip/enroll_trip.html', {'form': form})
+
+@login_required
+def my_trip(request):
+    enroll_dict = OrderedDict()
+    enroll_offer_dict = OrderedDict()
+    enroll_paid_list = []
+
+    enroll_list = UserRequest.objects.filter(user_id=request.user.id).order_by('-id')
+    offer_list = (GuideOffer.objects.filter(request_id__in=[x.id for x in enroll_list])
+                  .filter(request__travel_end_at__gte=datetime.date.today())).order_by('-id', '-paid', 'is_canceled')
+    past_list = (GuideOffer.objects.filter(request_id__in=[x.id for x in enroll_list]).filter(paid=True)
+                 .filter(request__travel_end_at__lt=datetime.date.today()))
+
+    for enroll in enroll_list:
+        enroll_dict[enroll.id] = enroll
+
+    for offer in offer_list:
+        if offer.paid:
+            enroll_paid_list.append(offer)
+        elif offer.request_id not in [x.request_id for x in enroll_paid_list]:
+            if offer.request_id not in enroll_offer_dict:
+                enroll_offer_dict[offer.request_id] = [enroll_dict[offer.request_id], 0]
+            enroll_offer_dict[offer.request_id][1] += 1
+        if offer.request_id in enroll_dict:
+            del enroll_dict[offer.request_id]
+
+    for enroll in enroll_dict.values():
+        enroll_offer_dict[enroll.id] = [enroll, 0]
+
+    enroll_offer_list = list(enroll_offer_dict.values())
+    enroll_offer_list.sort(key=lambda x: (x[0].published, x[1], x[0].id), reverse=True)
+
+    return flavour_render(request, "trip/my_trip.html", {"enroll_list": enroll_offer_list,
+                                                         "offer_list": enroll_paid_list,
+                                                         "past_list": past_list})
