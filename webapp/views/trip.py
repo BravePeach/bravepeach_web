@@ -1,10 +1,12 @@
 from django.shortcuts import redirect
-from ..models import Guide, Review
 from django.http import JsonResponse
 from django.db.models import Count, Case, When
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
+
 from bravepeach.util import flavour_render
 from ..forms import RequestForm
+from ..models import Guide, Review
 
 
 def guide_search(request):
@@ -56,6 +58,7 @@ class FilterGuide(View):
         return JsonResponse(result, safe=False)
 
 
+@login_required
 def enroll_trip(request):
     if request.method == 'POST':
         data = request.POST.copy()
@@ -70,7 +73,9 @@ def enroll_trip(request):
         if form.is_valid():
             form.save()
             return redirect('index')
-
+        else:
+            print(form.errors)
+            return redirect("enroll_trip")
     else:
         form = RequestForm()
-    return flavour_render(request, 'trip/enroll_trip.html', {'form': form})
+        return flavour_render(request, 'trip/enroll_trip.html', {'form': form})
