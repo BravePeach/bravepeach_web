@@ -40,8 +40,8 @@
                 <div>{{ profile_form.birthday }}</div>
                 {# TODO: Add nationality #}
                 <div class="button-wrapper">
-                    <button class="cancel-register" type="reset">취소</button>
-                    <button class="submit-register" type="button" onclick="submit_register_form()">가입하기</button>
+                    <a href="{% url 'index' %}" class="register-btn cancel-register">취소</a>
+                    <button class="register-btn submit-register" type="button" onclick="submit_register_form()">가입하기</button>
                 </div>
             </div>
         </form>

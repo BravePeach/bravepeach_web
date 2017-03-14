@@ -9,7 +9,7 @@ function submit_register_form() {
     if (validate_pw()) {
         form.submit();
     } else {
-        alert("Invalid PW form");
+        swal("Invalid PW format", "Password must contains at least one alphabet/number/special character.", "error");
         $("#id_password").val("");
         $("#id_password2").val("");
         $("#id_password").focus();

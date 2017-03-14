@@ -63,21 +63,29 @@
       margin-bottom: 16px;
     }
 
-    .submit-register {
+    .register-btn {
       margin-top: 66px;
       width: 710px;
       height: 114px;
       border-radius: 24px;
-      background-color: #e64c47;
       font-family: NanumSquareOTFB;
       font-size: 30px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
-      line-height: normal;
+      line-height: 114px;
       letter-spacing: -0.4px;
       color: #ffffff;
       text-align: center;
+
+      &.cancel-register {
+        display: block;
+        background-color: #606060;
+      }
+
+      &.submit-register {
+        background-color: #e64c47;
+      }
     }
   }
 }
