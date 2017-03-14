@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.db.models import Count, Case, When
@@ -61,7 +63,12 @@ class FilterGuide(View):
 @login_required
 def enroll_trip(request):
     if request.method == 'POST':
+        print(request.POST)
+        cities = request.POST["city"].replace(' ', '').split(',')
+        age_group = [int(x) for x in request.POST["age_group"].split(',')]
         data = request.POST.copy()
+        data['city'] = json.dumps(cities)
+        data['age_group'] = json.dumps(age_group)
 
         for key in ['trans_via', 'trans_type', 'accom_location', 'accom_type', 'theme', 'guide_type', 'importance']:
             if data.__contains__(key):

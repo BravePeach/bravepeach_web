@@ -3,17 +3,13 @@
 {% load staticfiles %}
 
 {% block css %}
-    <link rel="stylesheet" href='{% static "css/enroll_trip.css" %}'>
     <link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
     <link rel="stylesheet" href="{% static 'css/select2.css' %}">
     <link rel="stylesheet" href="{% static 'css/jquery.placecomplete.css' %}">
+    <link rel="stylesheet" href='{% static "css/enroll_trip.css" %}'>
 {% endblock %}
 
 {% block js %}
-{#<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>#}
-{#<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>#}
-{#<script src='{% static "js/main.js" %}'></script>#}
-{#    <script src='{% static "js/jquery.placecomplete.js" %}'></script>#}
     <script src="{% static 'js/select2.js' %}"></script>
     <script src="{% static 'js/jquery.placecomplete.js' %}"></script>
     <script src='{% static "js/enroll_trip.js" %}'></script>
@@ -25,7 +21,7 @@
             <h1 class="sup-title-peach">여행지 등록</h1>
             <h2 class="sub-title">{{ user.first_name }} 님의 맞춤형 여행지 정보를 등록하세요!</h2>
         </section>
-        <form method="POST">
+        <form method="POST" id="enroll-form">
             {% csrf_token %}
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/where_black.png" alt="where?">
@@ -313,7 +309,7 @@
                     <div class="temp-store-button">취소</div>
                 </div>
                 <div class="col-xs-6">
-                    <button class="find-guide-button" type="submit">가이드 모집</button>
+                    <button class="find-guide-button" type="button" onclick="submit_enroll_form()">가이드 모집</button>
                 </div>
             </div>
         </form>
