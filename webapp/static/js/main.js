@@ -7,6 +7,15 @@ function submit_enroll_form(){
 }
 
 $(function() {
+    $( window ).scroll(function() {
+        if($('#header').offset().top) {
+            $('#header')[0].style['background']="white"
+        }
+        else{
+            $('#header')[0].style['background']="transparent"
+        }
+    });
+
     $("#id_city").placecomplete({
         tags: true,
         requestParams: {
