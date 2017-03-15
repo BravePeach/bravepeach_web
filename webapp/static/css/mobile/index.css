@@ -1,3 +1,5 @@
+body{width: 100%;}
+
 .main-header {
   position: relative;
   width: 100%;
@@ -16,31 +18,19 @@
   padding-left: 12px;
   padding-right: 12px;
 }
-.main-container {
-  padding-top: 127px;
+
+.main-logo{
+    display: block;
+    width: 284px;
+    margin: 77px auto 0px auto;
 }
-.main-message {
-  margin: 277px 0 91.6px 0;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-.main-message h2 {
-  font-size: 22px;
-  font-weight: 100;
-  line-height: 32px;
-}
-.main-message h1 {
-  font-size: 48px;
-  font-weight: 100;
-  line-height: 54.4px;
-}
+
 .main-form-wrapper {
-  margin-left: -56px;
-  width: 1000px;
-  height: 80px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  border: solid 1px #979797;
+    width: 355px;
+    height: 60px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.85);
+    border: solid 1px #c7c7cd;
 }
 .main-form-wrapper .col-xs-3 {
   height: 100%;
@@ -147,7 +137,7 @@
   display: none;
 }
 .thumbnail-wrapper {
-  height: 287px;
+  height: 202.9px;
 }
 .thumbnail-wrapper .col-cs-12,
 .thumbnail-wrapper .col-sm-4 {
@@ -155,27 +145,39 @@
 }
 .main-thumbnail {
   position: relative;
-  width: 88%;
+  width: 100%;
   height: 262.6px;
-  border-radius: 8px;
   margin: auto;
   overflow: hidden;
   background-size: cover;
   color: white;
   text-align: center;
   cursor: pointer;
-  margin-bottom: 24.4px;
+  margin-bottom: 2px;
 }
 .main-thumbnail h4 {
-  margin-top: 80px;
-  font-size: 16px;
-  font-weight: 100;
+    margin-top: 80px;
+    font-family: NanumSquareOTFR;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.4px;
+    text-align: center;
+    color: #fefefe;
 }
 .main-thumbnail h3 {
-  font-size: 32px;
-  margin-top: 16px;
-  font-weight: 100;
-  line-height: 35px;
+    margin-top: 16px;
+    font-family: NanumSquareOTFR;
+    font-size: 32px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.8px;
+    text-align: center;
+    color: #fefefe;
 }
 .red-sunset {
   background: url(../../image/images/red_sunset.jpg) center no-repeat;
@@ -195,7 +197,6 @@
   height: 100%;
 }
 .main-thumbnail:hover > .overlay {
-  border-radius: 8px;
   background-color: black;
   opacity: 0.7;
 }
@@ -265,9 +266,8 @@
   cursor: pointer;
 }
 .twitter-typeahead {
-  margin-top: 38px;
-  margin-left: 11px;
-  width: 78%;
+    width: 100%;
+    margin-top: 115px;
 }
 .tt-dropdown-menu {
   font-size: 20px;
@@ -287,13 +287,36 @@
   margin: 0px;
 }
 .tt-hint {
-  opacity: 0.3 !important;
+    display: none;
 }
 #id_city {
-  top: 0px;
-  left: 0px;
-  width: 100%;
+    display: block;
+    padding-left: 83px;
+    margin:auto;
+    width: 355px;
+    height: 60px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    border: solid 1px #c7c7cd;
+    font-family: NanumSquareOTFR;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.3px;
+    color: #4a4a4a;
 }
+
+.search-icon{
+    opacity: 0.6;
+    width: 20px;
+    position: absolute;
+    right: 100px;
+    top: 136px;
+    z-index: 100;
+}
+
 #ui-datepicker-div {
   display: none;
 }

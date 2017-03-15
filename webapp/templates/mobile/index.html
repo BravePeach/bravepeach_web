@@ -14,9 +14,12 @@
 {% block content %}
 <div class="main-header">
     <div class="head-container">
-
-
     </div>
+    <img class="main-logo" src="{% static 'image/icon/logo_bravepeach.png' %}">
+    <div style="width: 50%; float: left; position: relative">
+    <img class="search-icon" src="{% static 'image/icon/Search Icon.png' %}">
+    </div>
+    {{ form.city |add_class:"find-guide-form"|attr:"placeholder:원하는 지역의 가이드를 검색해 보세요"}}
 </div>
 
 <div class="mobile-main main-container">

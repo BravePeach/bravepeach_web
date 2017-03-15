@@ -10,7 +10,6 @@ body{width: 100%;}
 }
 
 .sup-title-peach {
-    width: 98px;
     height: 32px;
     font-family: NanumSquareOTFB;
     font-size: 20px;
@@ -20,12 +19,12 @@ body{width: 100%;}
     line-height: 1.6;
     letter-spacing: -0.5px;
     color: #000000;
+    margin: 0px;
 }
 
 .sub-title {
     margin-top: 0px;
     margin-bottom: 17px;
-    width: 210px;
     height: 32px;
     font-family: NanumSquareOTFR;
     font-size: 16px;
@@ -35,18 +34,17 @@ body{width: 100%;}
     line-height: 2;
     letter-spacing: -0.4px;
     color: #606060;
+    margin-top: -1px;
 }
 
 .gradation-bar {
     width: 100%;
-    background: linear-gradient(to right, #F2AD8A, #E64C47);
-    border-radius: 8px;
-    border: 1px;
-    border-color: #DDD9D9;
-    border-style: solid;
-    height: 60px;
     margin-bottom: 8px;
     position: relative;
+    height: 50px;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, #f2ad8a, #e64c47);
+    border: solid 1px #ddd9d9;
 }
 
 .icon {
@@ -57,17 +55,25 @@ body{width: 100%;}
 }
 
 .find-guide-form, .find-guide-form2 {
-    width: 33.5%;
-    height: 36px;
-    border-radius: 3px;
-    opacity: 0.3;
     position: absolute;
     top: 12px;
-    left: 10.9%;
+    left: 66px;
     border-style: none;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
-    font-size: 20px;
-    padding-left: 22px;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
+    background: #ffffff;
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    width: 250px;
+    height: 30px;
+    border-radius: 3px;
+    font-family: NanumSquareOTFR;
+    font-size: 17px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #fafafa;
 }
 
 .find-guide-form2 {
@@ -236,7 +242,7 @@ body{width: 100%;}
     margin-top: 30px;
     z-index: -1;
 }
-#id_city{top:0px; left: 0px; width: 100%;}
+#id_city{width: 100%;}
 
 .guide-howmany {
     font-size: 16px;
@@ -351,3 +357,34 @@ a.ui-state-default:hover {
     color: #d3d3d3;
 }
 
+.twitter-typeahead{margin-top: 12px; margin-left: 10.9%; width: 78%;}
+
+.tt-dropdown-menu{
+    width: 689px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: solid 1px #d4d4d4;
+    font-size: 24px;
+}
+.tt-suggestion.tt-cursor {
+    color: #fff;
+    background-color: #e64c47;
+}
+
+.tt-suggestion{
+    height: 58px;
+    padding: 0px 24px 5px 24px;
+    border-bottom: 1px solid #979797;
+    margin: 0px;
+}
+
+.tt-hint{opacity: 0.3 !important; width: 100%;}
+
+#id_city{left:0px; top:0px; width: 100%;}
+
+.icon {
+    width: 30px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}

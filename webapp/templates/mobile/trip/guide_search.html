@@ -1,9 +1,9 @@
-{% extends "pc/base.html" %}
+{% extends "mobile/base.html" %}
 {% load staticfiles %}
 
 {% block css %}
 <link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
-<link rel="stylesheet" href='{% static "css/pc/guide_search.css" %}'>
+<link rel="stylesheet" href='{% static "css/mobile/guide_search.css" %}'>
 {% endblock %}
 
 {% block js %}
@@ -26,13 +26,13 @@
     </div>
     <div class="gradation-bar">
         <img class="icon" src="/static/image/icon/when_white.png" alt="when?">
-        <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="{{ travel_begin_at }}" readonly>
+        <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="{{ travel_begin_at }}" readonly style="width: 107px;">
         <img class="arrow-right" src="">
-        <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="{{ travel_end_at }}" readonly>
+        <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="{{ travel_end_at }}" readonly style="width: 107px;">
     </div>
     <div class="gradation-bar">
         <img class="icon" src="/static/image/icon/howmany_white.png" alt="how many?">
-        <input class="find-guide-form" id="traveler_cnt_form" type="text" name="" value="{{ age_group }}" readonly style="width: 78%;">
+        <input class="find-guide-form" id="traveler_cnt_form" type="text" name="" value="{{ age_group }}" readonly>
         <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
         <div class="traveler_cntpicker">
             <div>
