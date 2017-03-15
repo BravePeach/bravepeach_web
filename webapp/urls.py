@@ -27,11 +27,14 @@ urlpatterns = [
                                                "post_reset_redirect": "password_reset_complete"}),
     url(r'^password_reset/complete$', views.user.password_reset_complete, name="password_reset_complete"),
 
-    # guide search
+    # User2Guide
     url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),
     url(r'^guide_search/filtering/$', views.trip.FilterGuide.as_view(), name='filter_guide'),
 
-    # enroll trip
+    # Trip
+    url(r'^my_trip/$', views.trip.my_trip, name="my_trip"),
     url(r'^enroll_trip', views.trip.enroll_trip, name='enroll_trip'),
+    url(r'^cancel_offer/$', views.trip.cancel_offer, name="cancel_offer")
 
+    # Guide2User
 ]

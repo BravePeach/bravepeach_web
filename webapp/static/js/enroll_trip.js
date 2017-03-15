@@ -1,44 +1,55 @@
-$(function() {
-    $('.datepicker1, .datepicker2').datepicker({
-        showAnim: "slideDown",
-        minDate: 0,
-        dateFormat: 'yy.mm.dd',
-        prevText: '<',
-        nextText: '>',
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        dayNames: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
-        dayNamesShort: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
-        dayNamesMin: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
-        showMonthAfterYear: true,
-        yearSuffix: '년',
-        onSelect: function () {
-            var date1 = $('.datepicker1').datepicker('getDate');
-            var date = new Date(Date.parse(date1));
-            date.setDate(date.getDate() + 1);
-            var newDate = date.toDateString();
-            newDate = new Date(Date.parse(newDate));
-            $('.datepicker2').datepicker("option", "minDate", newDate);
-            if ($('#start_date_form').val() && $('#end_date_form').val()) {
-                filterGuide($('.order-active').attr('id'));
-            }
-        },
-        onClose: function () {
-            if ($('.datepicker1').val() && !$('.datepicker2').val()) {
-                $('.datepicker2').datepicker("show")
-            }
+var city_list = [];
+
+$(function(){
+    $("#id_city").placecomplete({
+        tags:true,
+        requestParams: {
+            types: ["(cities)"]
         }
     });
 
-    var addressPicker = new AddressPicker({autocompleteService: {types: ['(regions)']}});
+    $("#id_city").on({'placecomplete:selected': function(evt, placeResult){
+        console.log(placeResult);
+        city_list.push(placeResult['name']);
+        console.log(city_list);
+    }});
+});
 
-
-    $('#id_city').typeahead(null, {
-        displayKey: 'description',
-        source: addressPicker.ttAdapter(),
-    });
-
-    addressPicker.bindDefaultTypeaheadEvent($('#id_city'))
+function submit_enroll_form(){
+    $("#id_city").val(city_list.join());
+    $("#id_age_group").val(traveler_list);
+    $("#enroll-form").submit();
+}
+$('.datepicker1, .datepicker2').datepicker({
+    showAnim: "slideDown",
+    minDate: 0,
+    dateFormat: 'yy.mm.dd',
+    prevText: '<',
+    nextText: '>',
+    monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    dayNames: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+    dayNamesShort: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+    dayNamesMin: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
+    showMonthAfterYear: true,
+    yearSuffix: '년',
+    onSelect: function () {
+        var date1 = $('.datepicker1').datepicker('getDate');
+        var date = new Date(Date.parse(date1));
+        date.setDate(date.getDate() + 1);
+        var newDate = date.toDateString();
+        newDate = new Date(Date.parse(newDate));
+        $('.datepicker2').datepicker("option", "minDate", newDate);
+        if ($('#start_date_form').val() && $('#end_date_form').val()) {
+            filterGuide($('.order-active').attr('id'));
+        }
+    },
+    onClose: function () {
+        if ($('.datepicker1').val() && !$('.datepicker2').val()){
+            $('.datepicker2').datepicker("show")
+        }
+    }
+});
 
 // 인원 증가
     var total_traveler = 0;
@@ -114,4 +125,4 @@ $(function() {
                 $(".lodging-button > img").attr("src", "/static/image/icon/logo_empty.png")
             }
         });
-});
+
