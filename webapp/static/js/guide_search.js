@@ -1,13 +1,24 @@
+
+
 var city_list = []
 var traveler_list = [0, 0, 0, 0, 0, 0];
 
-    function changeOrder(val) {
-        if (val != $('.order-active').id) {
-            $('.order-active').removeClass('order-active');
-            document.getElementById(val).className = 'order-active';
-            filterGuide(val);
-        }
+function changeOrder(val) {
+    if (val != $('.order-active').id) {
+        $('.order-active').removeClass('order-active');
+        document.getElementById(val).className = 'order-active';
+        filterGuide(val);
     }
+}
+
+function like(guideCard) {
+    message = '<div class="like-message">' +
+        '<img class="guide-image" src="/static/image/images/jinwoong.jpg" style="width: 64px; height: 64px; left:13px; top:31px">' +
+        '<span class="like-message-text"> <strong>' + guideCard.childNodes[3].innerHTML + '</strong>가이드를 찜 하셨습니다.<br>\'찜한 가이드\'에서 확인하실 수 있습니다.</span>' +
+        '</div>';
+    $('.like-message-wrapper').append(message);
+    $('.like-message').last().delay(3000).fadeOut();
+}
 function filterGuide(sort) {
         $.ajax({
             url: "filtering/",
@@ -50,7 +61,7 @@ function filterGuide(sort) {
                     score += '</div>';
                     var guide_card = `
                         <div class="guide-card" style="display: none">
-                            <div class="like-button" onclick="like(this.parentElement)">하트</div>
+                            <img src="/static/image/icon/heart_full.png" class="like-button" onclick="like(this.parentElement)">
                             <span class="guide-name">` + name +
                         `</span>
                     ` + score + `
@@ -170,14 +181,4 @@ $(function() {
         $('.traveler_cntpicker').slideToggle(200)
     });
 
-
-// 하트 버튼 눌렀을때
-    function like(guideCard) {
-        message = '<div class="like-message">' +
-            '<img class="guide-image" src="/static/image/images/jinwoong.jpg" style="width: 64px; height: 64px; left:13px; top:31px">' +
-            '<span class="like-message-text"> <strong>' + guideCard.childNodes[3].innerHTML + '</strong>가이드를 찜 하셨습니다.<br>\'찜한 가이드\'에서 확인하실 수 있습니다.</span>' +
-            '</div>';
-        $('.like-message-wrapper').append(message);
-        $('.like-message').last().delay(3000).fadeOut();
-    }
 });

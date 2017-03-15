@@ -20,11 +20,11 @@ body{width: 100%;}
     line-height: 1.6;
     letter-spacing: -0.5px;
     color: #000000;
+    margin:0px !important;
 }
 
 .sub-title {
-    margin-top: 0px;
-    margin-bottom: 17px;
+    margin-bottom: 10px;
     width: 210px;
     height: 32px;
     font-family: NanumSquareOTFR;
@@ -209,7 +209,7 @@ body{width: 100%;}
 
 .peach-button-wrapper {
     width: 100%;
-    height: 185px;
+    height: 100px;
     display: inline-block;
     padding-top: 13px;
     text-align: center;
@@ -233,7 +233,7 @@ body{width: 100%;}
 
 .enroll-trip-button-name {
     display: block;
-    margin-top: 17px;
+    margin-top: 9px;
     width: 65px;
     height: 18px;
     font-family: NanumSquareOTFR;
@@ -244,6 +244,7 @@ body{width: 100%;}
     line-height: normal;
     letter-spacing: -0.4px;
     color: #606060;
+    margin-left: -4px;
 }
 
 .gradation-bar {
@@ -268,9 +269,17 @@ body{width: 100%;}
 }
 
 .bar-text {
-    color: white;
     float: left;
     margin-left: 15px;
+    font-family: NanumSquareOTFR;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+    padding-top: 19px;
 }
 
 .scrolling-page1, .scrolling-page2, .scrolling-page3 {
@@ -291,7 +300,6 @@ body{width: 100%;}
 }
 
 .sellect-wrapper {
-    display: inline-block;
     width: 97%;
     margin-bottom: 47px;
     padding-left: 20px;
