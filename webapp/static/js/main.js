@@ -1,4 +1,3 @@
-var traveler_list = [0, 0, 0, 0, 0, 0];
 
 $(function() {
 
