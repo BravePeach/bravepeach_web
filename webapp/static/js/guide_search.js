@@ -1,3 +1,6 @@
+var city_list = []
+var traveler_list = [0, 0, 0, 0, 0, 0];
+
     function changeOrder(val) {
         if (val != $('.order-active').id) {
             $('.order-active').removeClass('order-active');
@@ -7,7 +10,7 @@
     }
 function filterGuide(sort) {
         $.ajax({
-            url: "guide_search/filtering/",
+            url: "filtering/",
             type: "GET",
             data: {
                 location: $('#location_form').val(),
@@ -115,22 +118,31 @@ $(function() {
         }
     });
 
-    var addressPicker = new AddressPicker({autocompleteService: {types: ['(regions)']}});
-
-
-    $('#id_city').typeahead(null, {
-        displayKey: 'description',
-        source: addressPicker.ttAdapter()
+    $("#id_city").placecomplete({
+        tags: true,
+        requestParams: {
+            types: ["(regions)"]
+        }
     });
 
-    addressPicker.bindDefaultTypeaheadEvent($('#id_city'))
+    $("#id_city").on({
+        'placecomplete:selected': function (evt, placeResult) {
+            console.log(placeResult);
+            city_list.push(placeResult['name']);
+            console.log(city_list);
+        },
+        'placecomplete:cleared': function() {
+            city_list.pop();
+            console.log(city_list)
+        }
+    });
 
-    $(addressPicker).on('addresspicker:selected', function (event, result) {
-        console.log(result.nameForType('country'))
-        console.log("form submitted")
-        console.log($('#location_form').val())
-        filterGuide($('.order-active').attr('id'));
-    })
+    // $(addressPicker).on('addresspicker:selected', function (event, result) {
+    //     console.log(result.nameForType('country'))
+    //     console.log("form submitted")
+    //     console.log($('#location_form').val())
+    //     filterGuide($('.order-active').attr('id'));
+    // })
 
 
 // 인원 증가

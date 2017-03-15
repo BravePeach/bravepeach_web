@@ -2,14 +2,15 @@
 {% load staticfiles %}
 
 {% block css %}
-<link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
-<link rel="stylesheet" href='{% static "css/mobile/guide_search.css" %}'>
+    <link rel="stylesheet" href="{% static 'css/select2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.placecomplete.css' %}">
+    <link rel="stylesheet" href='{% static "css/mobile/guide_search.css" %}'>
 {% endblock %}
 
 {% block js %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
-<script src='{% static "js/guide_search.js" %}'></script>
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/jquery.placecomplete.js' %}"></script>
+    <script src='{% static "js/guide_search.js" %}'></script>
 {% endblock %}
 
 {% block content %}
@@ -21,7 +22,7 @@
     </section>
     <div class="gradation-bar" style="z-index: 1">
         <img class="icon" src="/static/image/icon/where_white.png" alt="where?">
-        <input class="find-guide-form" id="id_city" type="text" name="" value="{{ city }}" style="width: 100%">
+        <input class="find-guide-form" id="id_city" type="text" name="" value="{{ city }}" style="width: 250px">
 
     </div>
     <div class="gradation-bar">
@@ -59,13 +60,12 @@
 
     </div>
     <div class="search-filter-list-wrapper">
-        <div class="search-filter-list">
-            <span class="order-active" onclick="changeOrder(this.id)" id="popularity">인기순</span>
-            <span onclick="changeOrder(this.id)" id="reviewNum">후기순</span>
-            <span onclick="changeOrder(this.id)" id="recentActivity">최근활동순</span>
-        </div>
-        <span style="float: right;"><span class="search-filter-result"></span>명의 가이드가 있습니다.</span>
-
+        <span style="display: inline-block; margin-left: 2px;"><span class="search-filter-result"></span>명의 가이드가 있습니다.</span>
+        <select class="search-filter-list">
+            <option>인기순</option>
+            <option>후기순</option>
+            <option>최근활동순</option>
+        </select>
     </div>
     <div class=""></div>
 

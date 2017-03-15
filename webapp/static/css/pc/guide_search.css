@@ -343,27 +343,12 @@ a.ui-state-default:hover {
     color: #d3d3d3;
 }
 
-.twitter-typeahead{margin-top: 12px; margin-left: 10.9%; width: 78%;}
-
-.tt-dropdown-menu{
-    width: 689px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    border: solid 1px #d4d4d4;
-    font-size: 24px;
-}
-.tt-suggestion.tt-cursor {
-    color: #fff;
-    background-color: #e64c47;
+.select2-drop{
+    width: 689px !important;
+    margin: 1px 0px -1px 0px;
 }
 
-.tt-suggestion{
-    height: 58px;
-    padding: 0px 24px 5px 24px;
-    border-bottom: 1px solid #979797;
-    margin: 0px;
+.select2-container-multi .select2-choices .select2-search-field input{
+    padding-top: 3px;
+    color: white;
 }
-
-.tt-hint{opacity: 0.3 !important; width: 100%;}
-
-#id_city{left:0px; top:0px; width: 100%;}

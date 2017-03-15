@@ -17,10 +17,6 @@
   padding-right: 12px;
 }
 
-.main-container{
-  padding-top: 127px;
-}
-
 .main-message{
   margin: 277px 0 91.6px 0;
   color: white;
@@ -92,7 +88,7 @@
   position: absolute;
   border: none;
   top: 38px;
-  left: 11px;
+  left: 10px;
   width: 95%;
   height: 30px;
   font-size: 18px;
@@ -102,9 +98,9 @@
   position: absolute;
   border: none;
   top:38px;
-  left: 8px;
+  left: 10px;
   font-size: 18px;
-  width: 50%;
+  width: 98px;
   cursor: pointer;
 }
 
@@ -112,9 +108,9 @@
   position: absolute;
   border: none;
   top: 38px;
-  left: 70px;
+  left: 113px;
   font-size: 18px;
-  width: 50%;
+  width: 98px;
   cursor: pointer;
 }
 
@@ -146,6 +142,10 @@
   position:absolute;
   top:13px;
   left: 11px;
+}
+
+.traveler_cnt_form_main_wrapper .form-name{
+  left: 7px;
 }
 
 .main-form{
@@ -305,10 +305,10 @@
 }
 
 .tt-suggestion{
-    height: 58px;
-    padding: 0px 24px 5px 24px;
-    border-bottom: 1px solid #979797;
-    margin: 0px;
+  height: 58px;
+  padding: 0px 24px 5px 24px;
+  border-bottom: 1px solid #979797;
+  margin: 0px;
 }
 
 .tt-hint{opacity: 0.3 !important;}
@@ -316,30 +316,33 @@
 #id_city{top:0px; left: 0px; width: 100%;}
 
 #ui-datepicker-div {
-    display: none;
+  display: none;
 }
 
 .ui-datepicker {
-    position: absolute !important;
-    left: 50% !important;
-    margin-left: -344px; /* approx half the height of the datepicker div - adjust based on your size */
-    width: 689px;
-    height: 430px;
-    border-radius: 8px;
-    border: 1px solid #d4d4d4;
-    text-align: center;
-    background-color: white;
+  margin-top: 12px;
+  position: absolute !important;
+  left: 50% !important;
+  margin-left: -4px;
+  border-radius: 8px;
+  text-align: center;
+  width: 470px;
+  height: 470px;
+  background-color: #ffffff;
+  border: solid 1px #d4d4d4;
+
 }
 
 .ui-datepicker a {
-    color: black;
+  color: black;
+  text-decoration: none;
 }
 
 .ui-datepicker-header {
     width: 235px;
     margin: auto;
     margin-top: 30px;
-    font-size: 32px;
+    font-size: 23px;
 }
 
 .ui-datepicker-prev {
@@ -353,8 +356,41 @@
 }
 
 .ui-datepicker-calendar {
-    margin-top: 20px;
-    width: 95%;
-    height: 75%;
-    font-size: 24px;
+  margin: auto;
+  margin-top: 20px;
+  width: 95%;
+  height: 80%;
+  font-size: 18px;
+}
+
+.ui-datepicker-calendar th{
+  font-size: 16px;
+  font-weight: normal !important;
+}
+
+.ui-datepicker-title{
+  margin-top: -9px;
+}
+
+
+a.ui-state-default:hover {
+    background-color: #e64c47;
+    color: white;
+}
+
+.ui-datepicker-unselectable {
+    color: #d3d3d3;
+}
+
+.ui-state-default {
+    display: block;
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    padding-top: 13px;
+}
+
+.select2-choices{
+  border: none;
 }
