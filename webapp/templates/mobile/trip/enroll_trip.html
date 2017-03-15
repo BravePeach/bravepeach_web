@@ -3,21 +3,23 @@
 {% load staticfiles %}
 
 {% block css %}
-<link rel="stylesheet" href='{% static "css/mobile/enroll_trip.css" %}'>
+    <link rel="stylesheet" href="{% static 'css/select2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.placecomplete.css' %}">
+    <link rel="stylesheet" href='{% static "css/mobile/enroll_trip.css" %}'>
 {% endblock %}
 
 {% block js %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
-<script src='{% static "js/enroll_trip.js" %}'></script>
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/jquery.placecomplete.js' %}"></script>
+    <script src='{% static "js/enroll_trip.js" %}'></script>
 {% endblock %}
 
 {% block content %}
 
 <div class="main-container">
             <section>
-                <h1 class="sup-title-peach">여행지 등록</h1>
-                <h2 class="sub-title">나만의 여행지를 등록해보세요!</h2>
+                <div class="sup-title-peach">여행지 등록</div>
+                <div class="sub-title">나만의 여행지를 등록해보세요!</div>
             </section>
             <form method="POST">
                 {% csrf_token %}
@@ -118,7 +120,7 @@
             <div class="scrolling-page1">
 
                 <span style="float: left">1.</span>
-                <div class="sellect-wrapper">
+                <div class="row sellect-wrapper">
                     <div class="col-xs-6 col-sm-3">
                         <input class="checkbox" id="via-input1" type="checkbox" name="trans_via" value=1>
                         <label for="via-input1"></label>직항
@@ -134,7 +136,7 @@
                 </div>
 
                 <span style="float: left">2.</span>
-                <div class="sellect-wrapper">
+                <div class="row sellect-wrapper">
                     <div class="col-xs-6 col-sm-3">
                         <input class="checkbox" type="checkbox" name="trans_type" name="trans_type" value=1>이코노미 석
                     </div>
@@ -160,36 +162,36 @@
             <div class="scrolling-page2">
 
                 <span style="float: left">1.</span>
-                <div class="sellect-wrapper">
-                    <div class="col-xs-2 col-sm-fifth">
+                <div class="row sellect-wrapper">
+                    <div class="col-xs-5 col-sm-fifth">
                         <input class="checkbox" name="accom_location" type="checkbox" value=1>공항 근처
                     </div>
-                    <div class="col-xs-2 col-sm-fifth">
+                    <div class="col-xs-5 col-sm-fifth">
                         <input class="checkbox" name="accom_location" type="checkbox" value=2>시내
                     </div>
-                    <div class="col-xs-2 col-sm-fifth">
+                    <div class="col-xs-5 col-sm-fifth">
                         <input class="checkbox" name="accom_location" type="checkbox" value=4>여행지 근처
                     </div>
-                    <div class="col-xs-2 col-sm-fifth">
+                    <div class="col-xs-5 col-sm-fifth">
                         <input class="checkbox" name="accom_location" type="checkbox" value=8>기타
                     </div>
                 </div>
 
                 <span style="float: left">2.</span>
-                <div class="sellect-wrapper">
-                    <div class="col-xs-2 col-sm-fifth">
+                <div class="row sellect-wrapper">
+                    <div class="col-xs-5 col-sm-fifth">
                         <input class="checkbox" name="accom_type" type="checkbox" value=1>호텔
                     </div>
-                    <div class="col-xs-2 col-sm-fifth">
+                    <div class="col-xs-5 col-sm-fifth">
                         <input class="checkbox" name="accom_type" type="checkbox" value=2>한인 민박
                     </div>
-                    <div class="col-xs-2 col-sm-fifth">
+                    <div class="col-xs-5 col-sm-fifth">
                         <input class="checkbox" name="accom_type" type="checkbox" value=4>현지인 집
                     </div>
-                    <div class="col-xs-2 col-sm-fifth">
+                    <div class="col-xs-5 col-sm-fifth">
                         <input class="checkbox" name="accom_type" type="checkbox" value=8>리조트
                     </div>
-                    <div class="col-xs-2 col-sm-fifth">
+                    <div class="col-xs-5 col-sm-fifth">
                      <input class="checkbox" name="accom_type" type="checkbox" value=16>가이드 집
                     </div>
                 </div>
