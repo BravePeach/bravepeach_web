@@ -158,12 +158,12 @@ body{width: 100%;}
     right: 48.75%;
 }
 
-
-.adult_num, .child_num, .toddler_num{margin-right: 46px;}
-.adult_num, .toddler_num{margin-left: 122px;}
-.child_num{margin-left: 103px;}
+.traveler-num{
+    float:right;
+}
 
 .increase_button, .decrease_button{
+    float:right;
     text-align:center;
     font-size:25px;
     display:inline-block;

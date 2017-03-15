@@ -55,24 +55,24 @@ $(function() {
     });
 
 // 인원 증가
-    var total_traveler = traveler_list.reduce(function (a, b) {
-        return a + b;
-    }, 0);
+    var total_traveler = 0;
 
     $('.increase_button').click(function () {
-        $('span:first-child', $(this).parent('div')).html(function (i, val) {
+        traveler_list[parseInt($(this).parent()[0].className)] ++;
+        $('span:last-child', $(this).parent('div')).html(function (i, val) {
             return parseInt(val.slice(0, -1)) + 1 + '명'
         });
-
+        total_traveler++;
         $('#traveler_cnt_main, #traveler_cnt_form, #id_age_group').attr('value', '인원 ' + total_traveler + '명')
     });
 
     $('.decrease_button').click(function () {
-        $('span:first-child', $(this).parent('div')).html(function (i, val) {
+        $('span:last-child', $(this).parent('div')).html(function (i, val) {
             if (val[0] == 0) {
                 return
             }
-
+            traveler_list[parseInt($(this).parent()[0].className)] --;
+            total_traveler--;
             $('#traveler_cnt_main, #traveler_cnt_form, #id_age_group').attr('value', '인원 ' + total_traveler + '명');
             return parseInt(val.slice(0, -1)) - 1 + '명'
         });

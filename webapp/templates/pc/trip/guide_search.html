@@ -2,14 +2,15 @@
 {% load staticfiles %}
 
 {% block css %}
-<link rel="stylesheet" href='{% static "css/pac_style.css" %}'>
-<link rel="stylesheet" href='{% static "css/pc/guide_search.css" %}'>
+    <link rel="stylesheet" href="{% static 'css/select2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.placecomplete.css' %}">
+    <link rel="stylesheet" href='{% static "css/pc/guide_search.css" %}'>
 {% endblock %}
 
 {% block js %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
-<script src='{% static "js/guide_search.js" %}'></script>
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/jquery.placecomplete.js' %}"></script>
+    <script src='{% static "js/guide_search.js" %}'></script>
 {% endblock %}
 
 {% block content %}
@@ -21,7 +22,7 @@
     </section>
     <div class="gradation-bar" style="z-index: 1">
         <img class="icon" src="/static/image/icon/where_white.png" alt="where?">
-        <input class="find-guide-form" id="id_city" type="text" name="" value="{{ city }}">
+        <input class="find-guide-form" id="id_city" type="text" name="" value="{{ city }}" style="width: 78%;">
 
     </div>
     <div class="gradation-bar">
