@@ -56,8 +56,7 @@ class Guide(models.Model):
     max_traveler_cnt = models.IntegerField(null=True)
     introduction = models.TextField(null=True)
     license = models.BooleanField(default=False)
-    is_local = models.BooleanField(default=False)
-    #기본값은 스루가이드
+    is_local = models.BooleanField(default=False)   # 기본값은 스루가이드
     activated = models.BooleanField(default=True)
     guide_location = JSONField(null=True)
     off_day = JSONField(null=True)
@@ -65,7 +64,7 @@ class Guide(models.Model):
 
 
 class UserRequest(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, default='1') # 테스트용으로 default='1'
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, default='1')     # 테스트용으로 default='1'
     city = JSONField(null=True)
     travel_begin_at = models.DateField(null=True, blank=True)
     travel_end_at = models.DateField(null=True, blank=True)
@@ -150,14 +149,14 @@ class GuideTemplate(models.Model):
 
 
 class Cost(models.Model):
+    offer = models.ForeignKey(GuideOffer, related_name="costs")
     type = models.IntegerField(null=True)
     price = models.IntegerField(null=True)
     info = models.CharField(max_length=100)
-    offer = models.ForeignKey(GuideOffer)
 
 
 class Review(models.Model):
-    offer = models.ForeignKey(GuideOffer)
+    offer = models.ForeignKey(GuideOffer, related_name="reviews")
     writer = models.CharField(max_length=100)
     receiver = models.CharField(max_length=100)
     rating = models.DecimalField(max_digits=2, decimal_places=1)

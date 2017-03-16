@@ -1,10 +1,10 @@
-{% extends "pc/base.html" %}
+{% extends "mobile/base.html" %}
 {% load compile_static %}
 {% load static %}
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'less/pc/my_trip.less'|compile %}">
+    <link rel="stylesheet" href="{% static 'less/mobile/my_trip.less'|compile %}">
 {% endblock %}
 
 {% block js %}
@@ -14,6 +14,7 @@
 {% block content %}
     <div class="contents-wrapper">
         <div class="contents-title">여행</div>
+        <div class="contents-name">{{ request.user.first_name }} 님의 여행</div>
         <div class="tabs">
             <div class="tab tab-enroll active">여행 요청서</div><!--
             --><div class="tab tab-trip">확정된 여행</div><!--
@@ -46,11 +47,11 @@
                     <div class="age-grp"> {{ enroll.age_group }} </div>
                     <div class="cost">희망 경비 <span class="money">{{ enroll.cost|intcomma }}</span> 만원</div>
                 </div><!--
-                --><div class="tab-content-btn">
-                    <a href="" class="list-btn {% if offer_cnt == 0 %}disabled-link{% endif %}">
-                        {% if offer_cnt == 0 %}지원 가이드 없음{% else %}리스트 보기{% endif %}</a>
-                    <div class="offer-cnt">{% if offer_cnt > 0 %}가이드 {{ offer_cnt|intcomma }} 명 지원{% else %} {% endif %}</div>
-                </div>
+                    --><a href="" class="list-btn {% if offer_cnt == 0 %}disabled-link{% endif %}">
+                        {% if offer_cnt == 0 %}지원 가이드가 없습니다
+                        {% else %}
+                            <span class="offer-cnt">가이드 지원 {{ offer_cnt|intcomma }}명</span>  리스트 보기
+                        {% endif %}</a>
                 </div>
             {% empty %}
                 <div class="tab-content">
@@ -87,10 +88,9 @@
                     <div class="age-grp"> {{ offer.request.age_group }} </div>
                     <div class="cost">총 경비 <span class="money">{{ offer.request.cost|intcomma }}</span> 만원</div>
                 </div><!--
-                --><div class="tab-content-btn">
-                    <a href="" class="show-request-btn">여행 요청서 보기</a>
-                    <a href="" class="show-offer-btn">최종 견적서 보기</a>
-                </div>
+                --><div class="tab-content-btn"><!--
+                    --><a href="" class="show-request-btn">여행 요청서</a><!--
+                    --><a href="" class="show-offer-btn">최종 견적서</a></div>
                 </div>
             {% empty %}
                 <div class="tab-content">
@@ -120,23 +120,23 @@
                     <div class="age-grp"> {{ past.age_group }} </div>
                     <div class="cost">총 경비 <span class="money">{{ past.cost|intcomma }}</span> 만원</div>
                 </div><!--
-                --><div class="tab-content-btn">
+                --><div class="tab-content-btn"><!--
                     {# TODO: add review link #}
                     {% with reviews=past.reviews.all %}
-                        <a href="" class="guide-review {% if reviews|length < 2 %}disabled-link{% endif %}">후기보기</a>
-                        {% if revies|length == 2%}
-                            <a href="" class="my-review">내가 쓴 후기 보기</a>
-                        {% elif revies|length == 1 %}
-                            {% if revies.0.writer_id == request.user.id %}
-                                <a href="" class="my-review">내가 쓴 후기 보기</a>
+                        {% if reviews|length == 2%}
+                            --><a href="" class="my-review">내가 쓴 후기 보기</a><!--
+                        {% elif reviews|length == 1 %}
+                            {% if reviews.0.writer_id == request.user.id %}
+                                --><a href="" class="my-review">내가 쓴 후기 보기</a><!--
                             {% else %}
-                                <a href="" class="my-review">후기쓰기</a>
+                                --><a href="" class="my-review">후기 쓰기</a><!--
                             {% endif %}
                         {% else %}
-                            <a href="" class="my-review">후기쓰기</a>
+                            --><a href="" class="my-review">후기 쓰기</a><!--
                         {% endif %}
+                        --><a href="" class="guide-review {% if reviews|length < 2 %}disabled-link{% endif %}">후기 보기</a><!--
                     {% endwith %}
-                </div>
+                --></div>
                 </div>
             {% empty %}
                 <div class="tab-content">

@@ -111,4 +111,4 @@ report/
 webapp/static/less/*.css
 webapp/static/less/pc/*.css
 webapp/static/less/mobile/*.css
-static/
+static/*

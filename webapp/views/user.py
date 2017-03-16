@@ -70,6 +70,13 @@ def register_bravepeach(request):
         return flavour_render(request, 'user/register_bp.html', {'user_form': user_form, 'profile_form': profile_form})
 
 
+def greeting(reauest):
+    """
+    NOTE: This is just for test.
+    """
+    return flavour_render(reauest, "user/greeting.html")
+
+
 def check_email(request):
     if request.method != "POST":
         return JsonResponse({"ok": False})

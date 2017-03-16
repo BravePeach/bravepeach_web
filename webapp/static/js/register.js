@@ -1,3 +1,5 @@
+var mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 function validate_pw() {
     var pw_re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/;
     var pw_val = $("#id_password").val();
@@ -19,7 +21,6 @@ function submit_register_form() {
 $(function() {
     $("#id_email").on("change keyup", function () {
         $(".email-notice.email-used").css("display", "none");
-        var mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var mail_val = $("#id_email").val();
         if (mail_val === "") {
             $(".email-notice").css("display", "inline-block");
@@ -33,23 +34,21 @@ $(function() {
             } else {
                 $(".email-notice.mobile-notice").css("display", "none");
                 $(".email-notice.notice-right").css("display", "none");
-                $(".email-notice.notice-wrong").css("display", "inline-block");
+                $(".email-notice.email-invalid").css("display", "inline-block");
             }
         }
     });
 
-    $("#id_email").on("focusout, blur", function(){
-        var mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    $("#id_email").on("focusout blur", function(){
         var mail_val = $("#id_email").val();
         if (mail_val !== "" && mail_re.test(mail_val)) {
             $.post("/check_email/",
-                {
-                    email: mail_val,
-                    csrfmiddlewaretoken: getCookie("csrftoken")
-                }, function (data) {
+                {email: mail_val},
+                function (data) {
                     if (data.ok === true && data.usable !== true) {
                         $(".email-notice.mobile-notice").css("display", "none");
                         $(".email-notice.notice-right").css("display", "none");
+                        $(".email-notice.notice-wrong").css("display", "none");
                         $(".email-notice.email-used").css("display", "inline-block");
                     }
                 });
