@@ -30,30 +30,32 @@
     </div>
     {% if request.user.is_authenticated %}
         <div class="profile_img">
-            <a href="edit/" title="">
+            <a href="{% url 'logout' %}" title="">
                 <img style="width: 50px;height: auto;border-radius: 24px;" {% if request.user.profile.photo.url is not NULL %} src="{{ request.user.profile.photo.url }}" {% else %} src="" {% endif %} alt="프로필 이미지">
             </a>
-            <span>환영합니다!
-            <a href="edit/" title="">{{request.user.first_name}} {{request.user.last_name}}님!</a>
-        </span>
         </div>
     {% endif %}
     <div class="gnb">
         <ul>
-            <li><a href="#" title="도움말">도움말</a></li>
             {% if request.user.is_authenticated %}
-                <li><a href="/logout/?next={{request.path}}">로그아웃</a></li>
-{#                <li><a href="#" title="메세지">메세지</a></li>#}
+                <li><a href="#" title="메세지">메세지</a></li>
                 <li><a href="{% url 'my_trip' %}" title="여행">여행</a></li>
-                <li><a href="{% url 'like' %}" title="가이드 찜 리스트">가이드 찜 리스트</a></li>
-                <li><a href="#" title="가이드 찾기">가이드 하기</a></li>
+                <li><a href="{% url 'like' %}" title="찜한 가이드">찜한 가이드</a></li>
+                <li><a href="#" title="가이드 하기">가이드 하기</a></li>
+                <li><a href="{% url 'enroll_trip' %}" title="여행 요청서">여행 요청서</a></li>
             {% else %}
+                <li><a href="" title="도움말">도움말</a></li>
                 <li><a href="{% url 'login' %}" title="로그인">로그인</a></li>
                 <li><a href="{% url 'register' %}" title="회원가입">회원가입</a></li>
+                <li><a href="" title="가이드 하기">가이드 하기</a></li>
             {% endif %}
         </ul>
     </div>
 </header>
+   <a class="enroll-trip-button" href="{% url 'enroll_trip' %}">
+        <h2>여행 요청서 쓰기</h2>
+        <span>나만의 전문 가이드를 모집해보세요!</span>
+    </a>
 {% block content %}{% endblock %}
 <footer>
     <div class="foot_menu">

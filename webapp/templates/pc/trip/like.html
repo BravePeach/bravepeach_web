@@ -20,7 +20,7 @@
     {% for guide in guide_list %}
         <div class="guide-card">
             <form id="like" method="get">
-                <input type="hidden" id="user_id" value="{{ user.id }}" name="user_id">
+                <input type="hidden" id="user_id" value="{{ request.user.id }}" name="user_id">
                 <input type="hidden" id="guide_id" value="{{ guide.id }}" name="guide_id">
                 <div class="like-button liked" onclick="like(this)"></div>
             </form>

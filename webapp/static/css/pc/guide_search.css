@@ -277,21 +277,6 @@
     margin: 0px 6px;
 }
 
-.enroll-trip-button{
-    color: white;
-    width: 324px;
-    height: 93.5px;
-    border-radius: 100px;
-    background-image: linear-gradient(to right, #f2ad8a, #e64c47);
-    box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.5);
-}
-
-.enroll-trip-button.fixed{
-    position: fixed;
-    bottom: 26.5px;
-    right: 26px;
-}
-
 .page-up-button {
     display: none;
 }

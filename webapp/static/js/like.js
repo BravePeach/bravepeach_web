@@ -18,8 +18,8 @@ function like(e){
         url: url,
         type: "GET",
         data: {
-            user_id: $('#user_id').val(),
-            guide_id: $('#guide_id').val(),
+            user_id: $(e).siblings("#user_id").val(),
+            guide_id: $(e).siblings('#guide_id').val(),
         },
     })
 }

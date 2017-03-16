@@ -196,30 +196,8 @@ body{width: 100%;}
     width: 27px;
 }
 
-.like-message-wrapper{
-    width: 430px;
-    position: fixed;
-    bottom: 26px;
-    left: 26px;
-    z-index: 1000;
-}
-
 .like-message{
-    position:relative;
-    display: inline-block;
-    width: 430px;
-    height: 126px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    border: solid 1px #979797;
-    margin-bottom: 10px;
-}
-
-.like-message-text{
-    display: block;
-    font-size: 20px;
-    padding: 37px 0px 0px 89px;
+    display: none;
 }
 
 .order-active{
