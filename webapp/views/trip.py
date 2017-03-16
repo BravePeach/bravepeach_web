@@ -55,7 +55,8 @@ class FilterGuide(View):
 
         for guide in guide_queryset:
             print(Like.objects.filter(from_id=request.user.id, to_id=guide.id).exists())
-            temp = {'rating': guide.rating,
+            temp = {'id': guide.id,
+                    'rating': guide.rating,
                     'pay_cnt': guide.pay_cnt,
                     'guide_location': guide.guide_location,
                     'first_name': guide.user.first_name,
@@ -63,7 +64,7 @@ class FilterGuide(View):
                     'review_num': Review.objects.filter(receiver=guide.id).count(),
                     'is_liked': Like.objects.filter(from_id=request.user.id, to_id=guide.id).exists()}
             result.append(temp)
-
+        result += [request.user.id]
         return JsonResponse(result, safe=False)
 
 
@@ -145,15 +146,18 @@ def cancel_offer(request):
 @login_required
 def like(request):
     guide_id_list = [i.to_id for i in Like.objects.filter(from_id=request.user.id).order_by('-id')]
-    guide_list = Guide.objects.filter(id__in=guide_id_list)
-    return flavour_render(request, 'user/like.html', {"guide_list": guide_list})
+    guide_list = Guide.objects.filter(id__in=guide_id_list).extra(
+        select={'manual': 'FIELD(id,%s)' % ','.join(map(str, guide_id_list))},
+        order_by=['manual']
+    )
+
+    return flavour_render(request, 'trip/like.html', {"guide_list": guide_list})
 
 
 class AddLike(View):
     def get(self, request):
         user_id = request.GET.get('user_id')
         guide_id = request.GET.get('guide_id')
-        print(user_id)
         Like.objects.create(from_id=user_id, to_id=guide_id)
         return JsonResponse({"ok": True})
 
