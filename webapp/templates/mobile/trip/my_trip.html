@@ -1,0 +1,149 @@
+{% extends "mobile/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/my_trip.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/my_trip.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="contents-wrapper">
+        <div class="contents-title">여행</div>
+        <div class="contents-name">{{ request.user.first_name }} 님의 여행</div>
+        <div class="tabs">
+            <div class="tab tab-enroll active">여행 요청서</div><!--
+            --><div class="tab tab-trip">확정된 여행</div><!--
+            --><div class="tab tab-past tab-last">지난 여행</div>
+        </div>
+        <div class="tab-contents tab-enroll tab-active">
+            {% for enroll, offer_cnt in enroll_list %}
+                <div class="tab-content">
+                    <div class="tab-content-label {% if not enroll.published %}done{% endif %}">
+                        {% if enroll.published %}
+                            {% if offer_cnt > 0 %}결제 대기중{% else %}모집중{% endif %}
+                        {% else %}마감{% endif %}
+                    </div>
+                    <div class="tab-content-pic">picpic</div><!--
+                --><div class="tab-content-info">
+                    <div class="guide-options">
+                        <div class="guide-option {% if enroll.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">이동수단</div>
+                        <div class="guide-option {% if enroll.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">숙박</div>
+                        <div class="guide-option {% if enroll.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">가이드</div>
+                    </div>
+                    <div class="schedule">{{ enroll.travel_begin_at }} ~ {{ enroll.travel_end_at }}</div>
+                    <div class="cities ellipsis">
+                        {% for c in enroll.city %}
+                            {% if not forloop.first %} / {% endif %} {{ c }}
+                        {% endfor %}
+                    </div>
+                    <div class="age-grp"> {{ enroll.age_group }} </div>
+                    <div class="cost">희망 경비 <span class="money">{{ enroll.cost|intcomma }}</span> 만원</div>
+                </div><!--
+                    --><a href="" class="list-btn {% if offer_cnt == 0 %}disabled-link{% endif %}">
+                        {% if offer_cnt == 0 %}지원 가이드가 없습니다
+                        {% else %}
+                            <span class="offer-cnt">가이드 지원 {{ offer_cnt|intcomma }}명</span>  리스트 보기
+                        {% endif %}</a>
+                </div>
+            {% empty %}
+                <div class="tab-content">
+                    no request
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tab-contents tab-trip">
+            {% for offer in offer_list %}
+                {# TODO: Slow Query? #}
+                <div class="tab-content">
+                    {% if offer.is_canceled %}
+                        <div class="tab-content-label done">취소</div>
+                    {% else %}
+                        <div class="cancel-offer" onclick="cancel_offer({{ offer.id }}, '{{ offer.guide.user.first_name }}')">
+                        </div>
+                    {% endif %}
+                    <div class="tab-content-pic">{{ offer.guide.id }}</div><!--
+                --><div class="tab-content-info">
+                    <div class="guide-options">
+                        <div class="guide-option {% if offer.request.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">이동수단</div>
+                        <div class="guide-option {% if offer.request.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">숙박</div>
+                        <div class="guide-option {% if offer.request.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">가이드</div>
+                    </div>
+                    <div class="schedule">{{ offer.request.travel_begin_at }} ~ {{ offer.request.travel_end_at }}</div>
+                    <div class="cities ellipsis">
+                        {% for c in offer.request.city %}
+                            {% if not forloop.first %} / {% endif %} {{ c }}
+                        {% endfor %}
+                    </div>
+                    <div class="age-grp"> {{ offer.request.age_group }} </div>
+                    <div class="cost">총 경비 <span class="money">{{ offer.request.cost|intcomma }}</span> 만원</div>
+                </div><!--
+                --><div class="tab-content-btn">
+                    <a href="" class="show-request-btn">여행 요청서 보기</a>
+                    <a href="" class="show-offer-btn">최종 견적서 보기</a>
+                </div>
+                </div>
+            {% empty %}
+                <div class="tab-content">
+                    no trip
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tab-contents tab-past">
+            {% for past in past_list %}
+                <div class="tab-content">
+                    <div class="tab-content-pic">picpic</div><!--
+                --><div class="tab-content-info">
+                    <div class="guide-options">
+                        <div class="guide-option {% if past.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">이동수단</div>
+                        <div class="guide-option {% if past.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">숙박</div>
+                        <div class="guide-option {% if past.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">가이드</div>
+                    </div>
+                    <div class="schedule">{{ past.travel_begin_at }} ~ {{ past.travel_end_at }}</div>
+                    <div class="cities ellipsis">
+                        {% for c in past.city %}
+                            {% if not forloop.first %} / {% endif %} {{ c }}
+                        {% endfor %}
+                    </div>
+                    <div class="age-grp"> {{ past.age_group }} </div>
+                    <div class="cost">총 경비 <span class="money">{{ past.cost|intcomma }}</span> 만원</div>
+                </div><!--
+                --><div class="tab-content-btn">
+                    {# TODO: add review link #}
+                    {% with reviews=past.reviews.all %}
+                        <a href="" class="guide-review {% if reviews|length < 2 %}disabled-link{% endif %}">후기보기</a>
+                        {% if revies|length == 2%}
+                            <a href="" class="my-review">내가 쓴 후기 보기</a>
+                        {% elif revies|length == 1 %}
+                            {% if revies.0.writer_id == request.user.id %}
+                                <a href="" class="my-review">내가 쓴 후기 보기</a>
+                            {% else %}
+                                <a href="" class="my-review">후기쓰기</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="" class="my-review">후기쓰기</a>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                </div>
+            {% empty %}
+                <div class="tab-content">
+                    no history
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
