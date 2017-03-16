@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from bravepeach.util import flavour_render
 from ..forms import RequestForm
-from ..models import Guide, Review, UserRequest, GuideOffer
+from ..models import Guide, Review, UserRequest, GuideOffer, Like
 
 
 def guide_search(request):
@@ -54,9 +54,14 @@ class FilterGuide(View):
             guide_queryset = [Guide.objects.get(id=i) for i in guide_id_list]
 
         for guide in guide_queryset:
-            temp = {'rating': guide.rating, 'pay_cnt': guide.pay_cnt, 'guide_location': guide.guide_location,
-                    'first_name': guide.user.first_name, 'last_name': guide.user.last_name,
-                    'review_num': Review.objects.filter(receiver='G' + str(guide.id)).count()}
+            print(Like.objects.filter(from_id=request.user.id, to_id=guide.id).exists())
+            temp = {'rating': guide.rating,
+                    'pay_cnt': guide.pay_cnt,
+                    'guide_location': guide.guide_location,
+                    'first_name': guide.user.first_name,
+                    'last_name': guide.user.last_name,
+                    'review_num': Review.objects.filter(receiver=guide.id).count(),
+                    'is_liked': Like.objects.filter(from_id=request.user.id, to_id=guide.id).exists()}
             result.append(temp)
 
         return JsonResponse(result, safe=False)
@@ -135,3 +140,27 @@ def cancel_offer(request):
     #offer.is_canceled = True
     # offer.save()
     return JsonResponse({"ok": True})
+
+
+@login_required
+def like(request):
+    guide_id_list = [i.to_id for i in Like.objects.filter(from_id=request.user.id).order_by('-id')]
+    guide_list = Guide.objects.filter(id__in=guide_id_list)
+    return flavour_render(request, 'user/like.html', {"guide_list": guide_list})
+
+
+class AddLike(View):
+    def get(self, request):
+        user_id = request.GET.get('user_id')
+        guide_id = request.GET.get('guide_id')
+        print(user_id)
+        Like.objects.create(from_id=user_id, to_id=guide_id)
+        return JsonResponse({"ok": True})
+
+
+class DeleteLike(View):
+    def get(self, request):
+        user_id = request.GET.get('user_id')
+        guide_id = request.GET.get('guide_id')
+        Like.objects.filter(from_id=user_id, to_id=guide_id).delete()
+        return JsonResponse({"ok": True})

@@ -103,3 +103,4 @@ def edit(request):
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
     return flavour_render(request, 'views/edit_profile.html', {'user_form': user_form, 'profile_form': profile_form})
+

@@ -11,14 +11,32 @@ function changeOrder(val) {
     }
 }
 
-function like(guideCard) {
-    message = '<div class="like-message">' +
+function like(e){
+    if ($(e).hasClass("liked")){
+        $(e).removeClass("liked").addClass("unliked")
+        var url = "/delete_like";
+    }
+    else {
+        $(e).removeClass("unliked").addClass("liked")
+        var message = '<div class="like-message">' +
         '<img class="guide-image" src="/static/image/images/jinwoong.jpg" style="width: 64px; height: 64px; left:13px; top:31px">' +
-        '<span class="like-message-text"> <strong>' + guideCard.childNodes[3].innerHTML + '</strong>가이드를 찜 하셨습니다.<br>\'찜한 가이드\'에서 확인하실 수 있습니다.</span>' +
+        '<span class="like-message-text"> <strong>' + e.parentElement.childNodes[3].innerHTML + '</strong>가이드를 찜 하셨습니다.<br>\'찜한 가이드\'에서 확인하실 수 있습니다.</span>' +
         '</div>';
-    $('.like-message-wrapper').append(message);
-    $('.like-message').last().delay(3000).fadeOut();
+        $('.like-message-wrapper').append(message);
+        $('.like-message').last().delay(3000).fadeOut();
+        var url = "/add_like";
+    }
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        data: {
+            user_id: $('#user_id').val(),
+            guide_id: $('#guide_id').val(),
+        },
+    })
 }
+
 function filterGuide(sort) {
         $.ajax({
             url: "filtering/",
@@ -44,6 +62,13 @@ function filterGuide(sort) {
                         var name = object[i].first_name + " " + object[i].last_name;
                     }
 
+                    if (object[i].is_liked){
+                        var heart_image = '<div class="like-button liked" onclick="like(this)"></div>'
+                    }
+
+                    else {
+                        var heart_image = '<div class="like-button unliked" onclick="like(this)"></div>'
+                    }
                     var score = '<div class="guide-score-wrapper">\n';
                     for (var j = 0; j < 5; j++) {
                         if (ratingFloat >= 1) {
@@ -59,21 +84,18 @@ function filterGuide(sort) {
                         }
                     }
                     score += '</div>';
-                    var guide_card = `
-                        <div class="guide-card" style="display: none">
-                            <img src="/static/image/icon/heart_full.png" class="like-button" onclick="like(this.parentElement)">
-                            <span class="guide-name">` + name +
-                        `</span>
-                    ` + score + `
-                    <span class="guide-review">
-                        가이드` + object[i].pay_cnt + `건 ㅣ 후기 ` + object[i].review_num + `개
-                    </span>
-                        <img class="guide-image" src="/static/image/images/jinwoong.jpg">
-                    <span class="guide-location">
-                        뉴욕 / 워싱턴 D.C / 시카고
-                    </span>
-            </div>
-`;
+                    var guide_card = '<div class="guide-card" style="display: none">' +
+                            heart_image +
+                            '<span class="guide-name">' + name +
+                        '</span>' + score +
+                    '<span class="guide-review">' +
+                        '가이드 ' + object[i].pay_cnt + '건 ㅣ 후기 ' + object[i].review_num + '개'+
+                    '</span>' +
+                        '<img class="guide-image" src="/static/image/images/jinwoong.jpg">' +
+                    '<span class="guide-location">' +
+                        '뉴욕 / 워싱턴 D.C / 시카고' +
+                    '</span>' +
+            '</div>';
 
                     $('.guide-card-wrapper').append(guide_card);
                     $('.guide-card').show('slow')
