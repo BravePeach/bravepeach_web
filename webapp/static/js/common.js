@@ -13,3 +13,22 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+function fixTripButton() {
+    var container = $('.enroll-trip-button');
+    var maxTop = $('footer').offset().top - container.outerHeight() - 26.5;
+    var scrollVal = $(document).scrollTop() + $(window).height() - 120;
+
+    container.css('top', scrollVal);
+    if (container.offset().top > maxTop) {
+        container.css('top', maxTop);
+    }
+}
+
+$(function(){
+    fixTripButton();
+    $('.enroll-trip-button').fadeIn('slow');
+    $(document).scroll(function(){
+        fixTripButton();
+    });
+});
