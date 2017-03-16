@@ -51,7 +51,7 @@ header {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .brave_head {
@@ -317,4 +317,10 @@ footer {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.disabled-link {
+  background-color: #bbbbbb !important;
+  pointer-events: none;
+  cursor: default;
 }

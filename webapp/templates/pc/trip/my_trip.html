@@ -47,7 +47,7 @@
                     <div class="cost">희망 경비 <span class="money">{{ enroll.cost|intcomma }}</span> 만원</div>
                 </div><!--
                 --><div class="tab-content-btn">
-                    <a href="" class="list-btn {% if offer_cnt == 0 %}no-list{% endif %}">
+                    <a href="" class="list-btn {% if offer_cnt == 0 %}disabled-link{% endif %}">
                         {% if offer_cnt == 0 %}지원 가이드 없음{% else %}리스트 보기{% endif %}</a>
                     <div class="offer-cnt">{% if offer_cnt > 0 %}가이드 {{ offer_cnt|intcomma }} 명 지원{% else %} {% endif %}</div>
                 </div>
@@ -60,7 +60,7 @@
         </div>
         <div class="tab-contents tab-trip">
             {% for offer in offer_list %}
-                {# NOTE: Slow Query? #}
+                {# TODO: Slow Query? #}
                 <div class="tab-content">
                     {% if offer.is_canceled %}
                         <div class="tab-content-label done">취소</div>
@@ -99,36 +99,43 @@
             {% endfor %}
         </div>
         <div class="tab-contents tab-past">
-            {% for enroll in past_list %}
+            {% for past in past_list %}
                 <div class="tab-content">
-                    <div class="tab-content-label {% if not enroll.published %}done{% endif %}">
-                        {% if enroll.published %}
-                            {% if offer_cnt > 0 %}결제 대기중{% else %}모집중{% endif %}
-                        {% else %}마감{% endif %}
-                    </div>
                     <div class="tab-content-pic">picpic</div><!--
                 --><div class="tab-content-info">
                     <div class="guide-options">
-                        <div class="guide-option {% if enroll.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-option {% if past.trans_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">이동수단</div>
-                        <div class="guide-option {% if enroll.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-option {% if past.accom_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">숙박</div>
-                        <div class="guide-option {% if enroll.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-option {% if past.guide_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">가이드</div>
                     </div>
-                    <div class="schedule">{{ enroll.travel_begin_at }} ~ {{ enroll.travel_end_at }}</div>
+                    <div class="schedule">{{ past.travel_begin_at }} ~ {{ past.travel_end_at }}</div>
                     <div class="cities ellipsis">
-                        {% for c in enroll.city %}
+                        {% for c in past.city %}
                             {% if not forloop.first %} / {% endif %} {{ c }}
                         {% endfor %}
                     </div>
-                    <div class="age-grp"> {{ enroll.age_group }} </div>
-                    <div class="cost">희망 경비 <span class="money">{{ enroll.cost|intcomma }}</span> 만원</div>
+                    <div class="age-grp"> {{ past.age_group }} </div>
+                    <div class="cost">총 경비 <span class="money">{{ past.cost|intcomma }}</span> 만원</div>
                 </div><!--
                 --><div class="tab-content-btn">
-                    <a href="" class="list-btn {% if offer_cnt == 0 %}no-list{% endif %}">
-                        {% if offer_cnt == 0 %}지원 가이드 없음{% else %}리스트 보기{% endif %}</a>
-                    <div class="offer-cnt">{% if offer_cnt > 0 %}가이드 {{ offer_cnt|intcomma }} 명 지원{% else %} {% endif %}</div>
+                    {# TODO: add review link #}
+                    {% with reviews=past.reviews.all %}
+                        <a href="" class="guide-review {% if reviews|length < 2 %}disabled-link{% endif %}">후기보기</a>
+                        {% if revies|length == 2%}
+                            <a href="" class="my-review">내가 쓴 후기 보기</a>
+                        {% elif revies|length == 1 %}
+                            {% if revies.0.writer_id == request.user.id %}
+                                <a href="" class="my-review">내가 쓴 후기 보기</a>
+                            {% else %}
+                                <a href="" class="my-review">후기쓰기</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="" class="my-review">후기쓰기</a>
+                        {% endif %}
+                    {% endwith %}
                 </div>
                 </div>
             {% empty %}

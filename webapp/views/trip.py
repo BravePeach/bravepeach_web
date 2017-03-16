@@ -104,8 +104,8 @@ def my_trip(request):
     enroll_list = UserRequest.objects.filter(user_id=request.user.id).order_by('-id')
     offer_list = (GuideOffer.objects.filter(request_id__in=[x.id for x in enroll_list])
                   .filter(request__travel_end_at__gte=datetime.date.today())).order_by('-id', '-paid', 'is_canceled')
-    past_list = (GuideOffer.objects.filter(request_id__in=[x.id for x in enroll_list]).filter(paid=True)
-                 .filter(request__travel_end_at__lt=datetime.date.today()))
+    past_list = (GuideOffer.objects.filter(request_id__in=[x.id for x in enroll_list])
+                 .filter(paid=True, is_canceled=False, request__travel_end_at__lt=datetime.date.today()))
 
     for enroll in enroll_list:
         enroll_dict[enroll.id] = enroll
