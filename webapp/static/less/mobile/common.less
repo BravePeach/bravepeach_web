@@ -31,39 +31,39 @@
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 body {
   font-family: 'NanumSquare', 'Nanum Gothic', sans-serif;
-  width: 750px;
+  width: 375px;
   margin: auto;
   z-index: -1;
 }
 
 .line {
-  width: 250px;
-  height: 4px;
-  border: solid 2px #bbbbbb;
+  width: 125px;
+  height: 2px;
+  border: solid 1px #bbbbbb;
   display: inline-block;
   vertical-align: middle;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .line-long {
-  width: 710px;
+  width: 355px;
   margin: auto;
-  border: solid 2px #e64c47;
+  border: solid 1px #e64c47;
 }
 
 .or {
   vertical-align: middle;
   display: inline-block;
   font-family: NanumSquare;
-  margin: 70px 65px 70px 65px;
-  width: 80px;
-  height: 32px;
-  font-size: 32px;
+  margin: 35px 32px 35px 32px;
+  width: 40px;
+  height: 16px;
+  font-size: 14px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -74,9 +74,9 @@ body {
 }
 
 .notice {
-  height: 32px;
+  height: 16px;
   font-family: NanumSquare;
-  font-size: 24px;
+  font-size: 14px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -94,30 +94,29 @@ body {
 }
 
 .input-text {		// Fullsize only
-  width: 710px;
-  height: 90px;
-  border-radius: 16px;
+  width: 355px;
+  height: 43px;
+  border-radius: 8px;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   background-color: #fafafa;
   box-shadow: 0 -0.5px 1px 0 #a9a9a9;
   font-family: NanumSquare;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.5px;
   color: #bbbbbb;
-  margin-bottom: 16px;
-  padding-left: 28px;
+  margin-bottom: 8px;
+  padding-left: 14px;
 }
 
 .input-radio {
-  margin-right: 10px;
   clear: both;
-  width: 48px;
-  height: 48px;
+  width: 24px;
+  height: 24px;
   background-color: #ffffff;
   //box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
   border: solid 1px #979797;
@@ -130,30 +129,43 @@ body {
 }
 
 .input-select {
-  width: 210px;
-  height: 80px;
-  padding-left: 28px;
+  width: 105px;
+  height: 40px;
+  padding-left: 14px;
   border-radius: 8px;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   background-color: #fafafa;
   box-shadow: 0 -0.5px 1px 0 #a9a9a9;
   font-family: NanumSquare;
-  font-size: 32px;
+  font-size: 16px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
   letter-spacing: -0.4px;
   color: #bbbbbb;
-  margin: 16px 12px 16px 12px;
+  margin: 8px 5px 8px 6px;
 }
 
 .input-checkbox {
-    width: 50px;
-  height: 50px;
-  border-radius: 6px;
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
   border: solid 1px #979797;
   vertical-align: middle;
   margin-top: -2px;
+}
+
+
+.disabled-link {
+  background-color: #bbbbbb !important;
+  cursor: default !important;
+  pointer-events: none !important;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
