@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'static_precompiler',
     'django_user_agents',
+    'redactor',
     'webapp',
 ]
 
@@ -178,3 +179,11 @@ AWS_SECRET_ACCESS_KEY = LOCAL_SETTINGS["AWS_SECRET_ACCESS_KEY"]
 
 # Session
 SESSION_COOKIE_AGE = 60*60*24*30    # 1month
+
+
+# wysiwyg-redactor
+# https://pypi.python.org/pypi/django-wysiwyg-redactor
+
+REDACTOR_OPTIONS = {'lang': 'ko'}
+REDACTOR_UPLOAD = 'uploads/'
+REDACTOR_AUTH_DECORATOR = 'django.contrib.auth.decorators.login_required'

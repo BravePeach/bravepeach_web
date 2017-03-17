@@ -8,6 +8,7 @@ from django_mysql.models import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
+from redactor.fields import RedactorField
 
 
 class Profile(models.Model):
@@ -144,7 +145,7 @@ class GuideOffer(models.Model):
     paid = models.BooleanField(default=False)
     guide = models.ForeignKey(Guide, related_name="offers")
     request = models.ForeignKey(UserRequest)
-    etc = models.CharField(max_length=300)
+    etc = models.CharField(max_length=300, blank=True)
     travel_period = JSONField(null=True)
     trans_info = JSONField(null=True)
     accom_template = JSONField(null=True)
@@ -195,7 +196,7 @@ class Review(models.Model):
     writer = models.CharField(max_length=100)
     receiver = models.CharField(max_length=100)
     rating = models.DecimalField(max_digits=2, decimal_places=1)
-    content = models.TextField(null=True)
-    writer_id = models.IntegerField()
-    receiver_id = models.IntegerField()
+    content = RedactorField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    guide = models.ForeignKey(Guide)
     location = models.CharField(max_length=100)

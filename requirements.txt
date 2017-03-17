@@ -17,6 +17,7 @@ django-static-precompiler==1.5
 django-storages==1.5.2
 django-user-agents==0.3.0
 django-widget-tweaks==1.4.1
+django-wysiwyg-redactor==0.5.0
 docopt==0.6.2
 docutils==0.13.1
 hashids==1.2.0
