@@ -1,10 +1,13 @@
+import math
+from decimal import Decimal
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from django_mysql.models import JSONField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
-from decimal import Decimal
 
 
 class Profile(models.Model):
@@ -62,6 +65,36 @@ class Guide(models.Model):
     off_day = JSONField(null=True)
     career = JSONField(null=True)
 
+    @property
+    def full_name(self):
+        if all(ord(char) < 128 for char in self.user.last_name+self.user.first_name):
+            return " ".join([self.user.first_name, self.user.first_name])
+        else:
+            return "".join([self.user.last_name, self.user.first_name])
+
+    @property
+    def clean_rating(self):
+        frac_part, int_part = math.modf(self.rating)
+        frac_part = 0 if frac_part < 0.5 else 0.5
+        return int(int_part), frac_part
+
+    @property
+    def guide_cnt(self):
+        return len(self.offers.filter(paid=True, is_canceled=False,
+                                      request__travel_end_at__lte=datetime.date.today()))
+
+    @property
+    def theme_list(self):
+        theme_names = ("맛집", "역사", "골목")
+        theme_lst = [theme_names[idx] for idx, v in enumerate(bin(self.guide_theme)[2:]) if v == '1']
+        return theme_lst
+
+    @property
+    def style_list(self):
+        style_names = ("quite", "noisy")
+        style_lst = [style_names[idx] for idx, v in enumerate(bin(self.guide_type)[2:]) if v == '1']
+        return style_lst
+
 
 class UserRequest(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default='1')     # 테스트용으로 default='1'
@@ -110,7 +143,7 @@ class UserRequest(models.Model):
 
 class GuideOffer(models.Model):
     paid = models.BooleanField(default=False)
-    guide = models.ForeignKey(Guide)
+    guide = models.ForeignKey(Guide, related_name="offers")
     request = models.ForeignKey(UserRequest)
     etc = models.CharField(max_length=300)
     travel_period = JSONField(null=True)
@@ -130,6 +163,7 @@ class CancelledOffer(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     guide = models.IntegerField(null=True)
     reason = models.CharField(max_length=500)
+    is_completed = models.BooleanField(default=False)
 
 
 class AccomTemplate(models.Model):
