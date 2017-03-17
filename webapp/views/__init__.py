@@ -1,1 +1,1 @@
-from . import common, user, trip
+from . import common, user, trip, guide

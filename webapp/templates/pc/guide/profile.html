@@ -1,0 +1,104 @@
+{% extends "pc/base.html" %}
+{% load compile_static %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/pc/guide_profile.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+    <div class="contents-wrapper">
+        <div class="page-title">가이드 프로필</div>
+        <div class="subtitle"><span class="name">{{ guide.full_name }}</span> 가이드의 프로필</div>
+        <div class="guide-brief">
+            <div class="brief-image"></div>
+            <div class="brief-contents">
+                <div class="like">{% if request.user.is_authenticated %}
+                    {# TODO: heart sticker from like. Make it to a tag and bind js+ajax function #}
+                    <img src="{% static 'image/icon/heart_white_shadow.png' %}" alt=""> <img src="" alt="">{% endif %}</div>
+                <div class="brief-title">
+                    {{ guide.full_name }} 님은 스루 가이드{% if guide.is_local %}, 현지 가이드{% endif %} 입니다.
+                </div>
+                <div class="location">
+                    <div class="location-title">가능 지역</div>
+                    <div class="location-list">{% for loc in guide.guide_location %} {{ loc }} {% endfor %}</div>
+                </div>
+                <div class="rating">
+                    <div class="rating-title">평점</div>
+                    <div class="rating-point">
+                        {% for i in rating %}
+                            <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">
+                        {% endfor %}
+                        {% if guide.clean_rating.1 == 0.5 %}
+                            <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="rating-img">
+                        {% else %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endif %}
+                        {% for i in norating %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endfor %}
+                        {{ guide.clean_rating.0|add:guide.clean_rating.1|floatformat:1 }}</div>
+                </div>
+                <div class="info">
+                    <div class="guide-cnt">가이드 {{ guide.guide_cnt }} 건</div> |
+                    <div class="review-cnt">후기 {{ reviews|length }} 개</div>
+                </div>
+            </div>
+        </div>
+        <div class="detail-contents">
+            <div class="detail-title">소개</div>
+            <div class="hr"></div>
+            <div class="detail-content">{{ guide.introduction }}</div>
+            <div class="detail-title">경력</div>
+            <div class="hr"></div>
+            <div class="detail-content">{{ guide.career }}</div>
+            <div class="detail-title">여행 테마</div>
+            <div class="hr"></div>
+            <div class="detail-content">{% for theme in guide.theme_list %}
+                <div class="theme">{{ theme }}</div>
+            {% endfor %}</div>
+            <div class="detail-title">성격</div>
+            <div class="hr"></div>
+            <div class="detail-content">{% for style in guide.style_list %}
+                <div class="style">{{ style }}</div>
+            {% endfor %}</div>
+            <div class="detail-title">진행한 여행</div>
+            <div class="hr"></div>
+            <div class="detail-content">{% for trip in recent_trip %}
+                <div class="trip-info">
+                <div class="trip-image"></div>
+                    <div class="content">
+                        <div class="guide-options">
+                            <div class="guide-option {% if trip.request.trans_guided %}guided{% endif %}"></div>
+                            <div class="guide-txt">이동수단</div>
+                            <div class="guide-option {% if trip.request.accom_guided %}guided{% endif %}"></div>
+                            <div class="guide-txt">숙박</div>
+                            <div class="guide-option {% if trip.request.guide_guided %}guided{% endif %}"></div>
+                            <div class="guide-txt">가이드</div>
+                        </div>
+                    <div class="schedule">
+                        {{ trip.request.travel_begin_at|date:"Y/m/d" }} ~ {{ trip.request.travel_end_at|date:"Y/m/d" }}
+                    </div>
+                    <div class="cities">
+                        {% for city in trip.request.cities %}
+                            {% if not forloop.first %} / {% endif %}{{ city }}
+                        {% endfor %}
+                    </div>
+                    <div class="age-grp">{{ age_grp }}</div>
+                    <div class="rating"></div>
+                        {% if trip.id in review_ids %}
+                            <div class="review">후기있음</div>
+                        {% endif %}
+                </div>
+                </div>
+            {% endfor %}</div>
+            <div class="detail-title">후기</div>
+            <div class="hr"></div>
+            <div class="detail-content">{% for review in reviews %}
+            {% endfor %}</div>
+        </div>
+    </div>
+{% endblock %}
