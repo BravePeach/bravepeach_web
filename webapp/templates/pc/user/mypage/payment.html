@@ -1,0 +1,89 @@
+{% extends "pc/user/mypage/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'less/pc/mypage_payment.less'|compile %}">
+{% endblock %}
+
+{% block mypage %}
+    <div class="title">결제 대기</div>
+    <div class="payment-header">
+        <span class="payment-date">입금 기한</span><!--
+    --><span class="payment-guide">가이드</span><!--
+    --><span class="payment-travel">여행 시작일</span><!--
+    --><span class="payment-location">여행지</span><!--
+    --><span class="payment-money">결제금액</span>
+    </div>
+    <div class="hr"></div>
+    {% for wait in wait_list %}
+        <div class="payment-body">
+            <span class="payment-date">money</span><!--
+--><span class="payment-guide">{{ wait.guide.full_name }}</span><!--
+            --><span class="payment-travel">{{ wait.request.travel_begin_at|date:"Y/m/d" }}</span><!--
+            --><span class="payment-location ellipsis">
+        {% for c in wait.request.city %}
+            {% if not forloop.first %}/{% endif %}{{ c }}
+        {% endfor %}
+    </span><!--
+            --><span class="payment-money">{{ wait.request.cost|intcomma }} 만원</span>
+        </div>
+        <div class="hr"></div>
+    {% empty %}
+        <div class="payment-empty">결제 대기중인 여행이 없습니다.</div>
+    {% endfor %}
+    <div class="empty"></div>
+    <div class="title">결제 완료</div>
+    <div class="payment-header">
+        <span class="payment-date">결제 완료일</span><!--
+    --><span class="payment-guide">가이드</span><!--
+    --><span class="payment-travel">여행 시작일</span><!--
+    --><span class="payment-location">여행지</span><!--
+    --><span class="payment-money">결제금액</span>
+    </div>
+    <div class="hr"></div>
+    {% for paid in paid_list %}
+        <div class="payment-body">
+            <span class="payment-date">money</span><!--
+--><span class="payment-guide">{{ paid.guide.full_name }}</span><!--
+            --><span class="payment-travel">{{ paid.request.travel_begin_at|date:"Y/m/d" }}</span><!--
+            --><span class="payment-location ellipsis">
+        {% for c in paid.request.city %}
+            {% if not forloop.first %}/{% endif %}{{ c }}
+        {% endfor %}
+    </span><!--
+            --><span class="payment-money">{{ paid.request.cost|intcomma }} 만원</span>
+        </div>
+        <div class="hr"></div>
+    {% empty %}
+        <div class="payment-empty">결제 완료된 여행이 없습니다.</div>
+    {% endfor %}
+    <div class="empty"></div>
+    <div class="title">결제 취소</div>
+    <div class="payment-header">
+        <span class="payment-date">결제 취소일</span><!--
+    --><span class="payment-guide">가이드</span><!--
+    --><span class="payment-travel">여행 시작일</span><!--
+    --><span class="payment-location">여행지</span><!--
+    --><span class="payment-money">결제금액</span>
+    </div>
+    <div class="hr"></div>
+    {% for cancel in cancel_list %}
+        <div class="payment-body">
+            <span class="payment-date">money</span><!--
+--><span class="payment-guide">{{ cancel.guide.full_name }}</span><!--
+            --><span class="payment-travel">{{ cancel.request.travel_begin_at|date:"Y/m/d" }}</span><!--
+            --><span class="payment-location ellipsis">
+        {% for c in cancel.request.city %}
+            {% if not forloop.first %}/{% endif %}{{ c }}
+        {% endfor %}
+    </span><!--
+            --><span class="payment-money">{{ cancel.request.cost|intcomma }} 만원</span>
+        </div>
+        <div class="hr"></div>
+    {% empty %}
+        <div class="payment-empty">결제 취소된 여행이 없습니다.</div>
+    {% endfor %}
+{% endblock %}

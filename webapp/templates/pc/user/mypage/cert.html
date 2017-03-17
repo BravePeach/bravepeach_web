@@ -1,0 +1,37 @@
+{% extends "pc/user/mypage/base.html" %}
+{% load compile_static %}
+{% load static %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'less/pc/mypage_cert.less'|compile %}">
+{% endblock %}
+
+{% block mypage %}
+    <div class="cert-title">이메일로 인증하기</div>
+    <div class="cert-body">
+        {% if request.user.mail_certified %}
+            <span>{{ request.user.email }}</span> 로 인증되었습니다.
+        {% else %}
+            <input type="email" placeholder="이메일을 입력하세요" class="email-input" id="cert-mail">
+            <button type="button" onclick="cert_mail()" class="mail-cert-btn">인증링크 받기</button>
+            <div class="cert-notice">해당 이메일로 인증링크가 보내졌습니다.<br>
+                이메일에서 링크를 누르시면 인증이 완료됩니다.</div>
+        {% endif %}
+    </div>
+    <div class="empty"></div>
+    <div class="cert-title">전화번호로 인증하기</div>
+    <div class="cert-body" id="cert-phone-wrapper">
+        {% if request.user.phone_certified %}
+            <span>{{ request.user.profile.phone_num }}</span> 로 인증되었습니다.
+        {% else %}
+            <select name="country" id="cert-country" class="cert-select">
+                <option value="82">+82(대한민국)</option>
+            </select>
+            <input type="text" class="cert-phone" name="cert-phone" id="cert-phone-num">
+            <button type="button" onclick="cert_phone()" class="mail-cert-btn">인증번호 받기</button>
+            <input type="text" class="cert-num" id="cert-num" placeholder="인증번호를 입력하세요">
+            <button type="button" onclick="cert_phone2()" class="mail-cert-btn">인증하기</button>
+        {% endif %}
+    </div>
+{% endblock %}

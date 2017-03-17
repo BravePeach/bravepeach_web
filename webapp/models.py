@@ -24,9 +24,18 @@ class Profile(models.Model):
     photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
     deleted_at = models.DateTimeField(null=True)
     delete_reason_optional = models.CharField(max_length=100, blank=True)
+    mail_certified = models.BooleanField(default=False)
+    phone_certified = models.BooleanField(default=False)
 
     def __str__(self):
         return 'Profile for user dict'.format(self.user.username)
+
+    @property
+    def full_name(self):
+        if all(ord(char) < 128 for char in self.user.last_name+self.user.first_name):
+            return " ".join([self.user.first_name, self.user.last_name])
+        else:
+            return "".join([self.user.last_name, self.user.first_name])
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -68,7 +77,7 @@ class Guide(models.Model):
     @property
     def full_name(self):
         if all(ord(char) < 128 for char in self.user.last_name+self.user.first_name):
-            return " ".join([self.user.first_name, self.user.first_name])
+            return " ".join([self.user.first_name, self.user.last_name])
         else:
             return "".join([self.user.last_name, self.user.first_name])
 
@@ -160,7 +169,7 @@ class Like(models.Model):
 
 
 class CancelledOffer(models.Model):
-    offer = models.ForeignKey(GuideOffer)
+    offer = models.ForeignKey(GuideOffer, related_name="cancel")
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     guide = models.IntegerField(null=True)
     reason = models.CharField(max_length=500)

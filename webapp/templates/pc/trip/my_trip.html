@@ -37,7 +37,7 @@
                         <div class="guide-option {% if enroll.guide_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">가이드</div>
                     </div>
-                    <div class="schedule">{{ enroll.travel_begin_at }} ~ {{ enroll.travel_end_at }}</div>
+                    <div class="schedule">{{ enroll.travel_begin_at|date:"Y/m/d" }} ~ {{ enroll.travel_end_at|date:"Y/m/d" }}</div>
                     <div class="cities ellipsis">
                         {% for c in enroll.city %}
                             {% if not forloop.first %} / {% endif %} {{ c }}
@@ -54,7 +54,8 @@
                 </div>
             {% empty %}
                 <div class="tab-content">
-                    no request
+                    <div class="no-content-header">작성된 여행 요청서가 없습니다. </div>
+                    <div class="no-content-text">'여행 요청서 쓰기'를 통해 전문가이드를 모집할 나만의 여행을 요청해보세요.</div>
                 </div>
             {% endfor %}
         </div>
@@ -78,7 +79,7 @@
                         <div class="guide-option {% if offer.request.guide_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">가이드</div>
                     </div>
-                    <div class="schedule">{{ offer.request.travel_begin_at }} ~ {{ offer.request.travel_end_at }}</div>
+                    <div class="schedule">{{ offer.request.travel_begin_at|date:"Y/m/d" }} ~ {{ offer.request.travel_end_at|date:"Y/m/d" }}</div>
                     <div class="cities ellipsis">
                         {% for c in offer.request.city %}
                             {% if not forloop.first %} / {% endif %} {{ c }}
@@ -94,7 +95,7 @@
                 </div>
             {% empty %}
                 <div class="tab-content">
-                    no trip
+                    <div class="no-content-header">확정된 여행이 없습니다.</div>
                 </div>
             {% endfor %}
         </div>
@@ -111,7 +112,7 @@
                         <div class="guide-option {% if past.guide_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">가이드</div>
                     </div>
-                    <div class="schedule">{{ past.travel_begin_at }} ~ {{ past.travel_end_at }}</div>
+                    <div class="schedule">{{ past.travel_begin_at|date:"Y/m/d" }} ~ {{ past.travel_end_at|date:"Y/m/d" }}</div>
                     <div class="cities ellipsis">
                         {% for c in past.city %}
                             {% if not forloop.first %} / {% endif %} {{ c }}
@@ -140,7 +141,7 @@
                 </div>
             {% empty %}
                 <div class="tab-content">
-                    no history
+                    <div class="no-content-header">지난 여행이 없습니다.</div>
                 </div>
             {% endfor %}
         </div>
