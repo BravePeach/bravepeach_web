@@ -80,7 +80,7 @@ class Guide(models.Model):
     @property
     def guide_cnt(self):
         return len(self.offers.filter(paid=True, is_canceled=False,
-                                      request__travel_end_at__lte=datetime.date.today()))
+                                      request__travel_end_at__lt=datetime.date.today()))
 
     @property
     def theme_list(self):

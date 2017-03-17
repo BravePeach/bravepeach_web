@@ -1,101 +1,96 @@
 .contents-wrapper {
-  width: 880px;
-  margin: auto;
+  width: 375px;
+  margin: 15px auto;
+  padding: 0 10px 0 10px;
 
   .page-title {
-    height: 55px;
+    height: 32px;
     font-family: NanumSquare;
-    font-size: 48px;
-    font-weight: normal;
+    font-size: 20px;
+    font-weight: bold;
     font-style: normal;
     font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    margin-top: 5px;
-    color: #e64c47;
+    line-height: 1.6;
+    letter-spacing: -0.5px;
+    color: #000000;
   }
 
   .subtitle {
     height: 32px;
     font-family: NanumSquare;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
-    line-height: 1.45;
-    letter-spacing: normal;
-    text-align: left;
-    margin-top: 12px;
-
-    .name {
-      font-weight: bold;
-    }
+    line-height: 2;
+    letter-spacing: -0.4px;
+    color: #606060;
   }
 
   .guide-brief {
     position: relative;
-    margin-top: 50px;
-    width: 880px;
-    padding: 21px 33px 21px 33px;
+    width: 346px;
+    padding: 15px 20px 15px 20px;
     border-radius: 8px;
-    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-    border: solid 1px #606060;
+    box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.16);
+    border: solid 1px #979797;
 
     .brief-image {
       display: inline-block;
-      width: 134px;
-      height: 134px;
+      width: 27px;
+      height: 27px;
       border-radius: 100%;
+    }
+
+    .brief-title {
+      display: inline-block;
+      height:27px;
+      font-family: NanumSquare;
+      font-size: 14px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 27px;
+      letter-spacing: normal;
+      text-align: left;
+      color: #000000;
+      position: relative;
+      top: -10px;
+
+      .guide-name {
+        font-weight: bold;
+      }
+
+      .highlight {
+        color: #dd3537;
+      }
+    }
+    .like {
+      position: absolute;
+      top: 7px;
+      right: 9px;
+      height: 14px;
+
+      img {
+        height: 14px;
+        width: 14px;
+      }
     }
 
     .brief-contents {
       display: inline-block;
-      padding-left: 33px;
-
-      .like {
-        position: absolute;
-        top: 33px;
-        right: 33px;
-        height: 24px;
-
-        img {
-          height: 24px;
-          width: 27px;
-        }
-      }
-
-      .brief-title {
-        height:34px;
-        font-family: NanumSquare;
-        font-size: 30px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        text-align: left;
-        color: #000000;
-
-        .guide-name {
-          font-weight: bold;
-        }
-
-        .highlight {
-          color: #dd3537;
-        }
-      }
+      margin-top: 12px;
 
       .location {
-        margin-top: 20px;
-        height: 22px;
+        display: block;
+        height: 12px;
 
         .location-title {
           display: inline-block;
-          width: 123px;
+          width: 50px;
           font-family: NanumSquare;
-          font-size: 20px;
-          font-weight: lighter;
+          font-size: 11px;
+          font-weight: normal;
           font-style: normal;
           font-stretch: normal;
           line-height: normal;
@@ -105,10 +100,10 @@
         }
 
         .location-list {
-          width: 420px;
+          width: 230px;
           display: inline-block;
           font-family: NanumSquare;
-          font-size: 20px;
+          font-size: 11px;
           font-weight: normal;
           font-style: normal;
           font-stretch: normal;
@@ -120,14 +115,15 @@
       }
       .rating {
         height: 22px;
-        margin-top: 15px;
+        margin-top: 6px;
 
         .rating-title {
+          margin-top: 6px;
           display: inline-block;
-          width: 123px;
-          height: 22px;
+          width: 50px;
+          height: 13px;
           font-family: NanumSquare;
-          font-size: 20px;
+          font-size: 11px;
           font-weight: normal;
           font-style: normal;
           font-stretch: normal;
@@ -138,9 +134,9 @@
         }
         .rating-point {
           display: inline-block;
-          height: 29px;
+          height: 13px;
           font-family: NanumSquare;
-          font-size: 14px;
+          font-size: 9px;
           font-weight: normal;
           font-style: normal;
           font-stretch: normal;
@@ -148,8 +144,9 @@
           letter-spacing: normal;
           text-align: left;
           color: #606060;
+
           .rating-img {
-            height: 29px;
+            height: 13px;
             display: inline-block;
             margin-right: 6px;
           }
@@ -157,10 +154,11 @@
       }
 
       .info {
-        margin-top: 22px;
-        height: 22px;
+        margin-top: 15px;
+        height: 12px;
+        width: 50px;
         font-family: NanumSquareOTFR;
-        font-size: 20px;
+        font-size: 11px;
         font-weight: normal;
         font-style: normal;
         font-stretch: normal;
@@ -168,24 +166,23 @@
         letter-spacing: normal;
         text-align: left;
         color: #000000;
+      }
 
-        .guide-cnt, .review-cnt {
-          display: inline-block;
-        }
-
+      .guide-cnt, .review-cnt {
+        display: inline-block;
+        margin-top: 16px;
       }
     }
   }
 
   .detail-contents {
-    width: 830px;
-    margin: 50px auto;
+    margin: 20px auto;
 
     .detail-title {
-      height: 34px;
-      margin-bottom: 10px;
+      height: 22px;
+      margin-bottom: 5px;
       font-family: NanumSquare;
-      font-size: 30px;
+      font-size: 20px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
@@ -194,53 +191,56 @@
       text-align: left;
       color: #e64c47;
     }
+
     .hr {
-      width: 830px;
-      height: 1px;
+      width: 100%;
+      height: 2px;
       border: solid 1px #979797;
     }
+
     .detail-content {
-      margin-top: 10px;
-      margin-bottom: 50px;
-      padding-top: 22px;
-      padding-bottom: 15px;
-      width: 830px;
+      margin: 10px auto 40px auto;
+      width: 335px;
       font-family: NanumSquare;
-      font-size: 20px;
+      font-size: 12px;
       font-weight: normal;
       font-style: normal;
       font-stretch: normal;
-      line-height: 1.4;
+      line-height: 1.75;
       letter-spacing: normal;
       color: #000000;
 
       .trip-info {
+        margin-left: -10px;
         position: relative;
         display: block;
-        width: 830px;
+        width: 355px;
         border-radius: 8px;
-        border: solid 1px #ddd9d9;
-        margin-bottom: 16px;
+        background-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+        border: solid 1px #979797;
+        margin-bottom: 11px;
 
         .trip-image {
           display: inline-block;
-          width: 200px;
-          //height: 200px;
+          width: 113px;
+          //height: 20px;
         }
         .content {
           display: inline-block;
-          width: 620px;
-          padding-left: 20px;
+          width: 240px;
+          padding-left: 10px;
 
           .guide-options {
             display: block;
-            height: 15px;
+            height: 13px;
+            margin-top: 15px;
 
             .guide-option {
               position: relative;
               display: inline-block;
-              width: 10px;
-              height: 10px;
+              width: 13px;
+              height: 13px;
               margin-right: 5px;
               -webkit-border-radius: 5px;
               -moz-border-radius: 5px;
@@ -254,6 +254,7 @@
                 background: linear-gradient(to right, #f2ad8a, #e64c47);
               }
             }
+
             .guide-option::before {
               width: 100%;
               height: 100%;
@@ -269,24 +270,26 @@
 
             .guide-txt {
               display: inline-block;
-              height: 15px;
+              height: 13px;
               font-family: NanumSquare;
-              font-size: 13px;
+              font-size: 10px;
               font-weight: normal;
               font-style: normal;
               font-stretch: normal;
-              line-height: 15px;
+              line-height: 13px;
               letter-spacing: normal;
               color: #000000;
-              margin-right: 23px;
+              margin-right: 22px;
+              position: relative;
+              top: -4px;
             }
           }
 
           .schedule {
-            margin-top: 18px;
-            height:23px;
+            margin-top: 10px;
+            height:19px;
             font-family: NanumSquare;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
             font-style: normal;
             font-stretch: normal;
@@ -296,10 +299,10 @@
           }
 
           .cities {
-            margin-top: 6px;
-            height: 23px;
+            margin-top: 10px;
+            height: 21px;
             font-family: NanumSquare;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             font-style: normal;
             font-stretch: normal;
@@ -309,10 +312,10 @@
           }
 
           .age-grp {
-            margin-top: 19px;
-            height:18px;
+            margin-top: 10px;
+            height:14px;
             font-family: NanumSquare;
-            font-size: 15px;
+            font-size: 12px;
             font-weight: normal;
             font-style: normal;
             font-stretch: normal;
@@ -323,19 +326,19 @@
 
           .rating {
             display: inline-block;
-            height:29px;
-            margin-top: 14px;
-
+            height:19px;
+            margin-top: 15px;
           }
+
           .review {
             display: inline-block;
-            height: 32px;
-            width: 85px;
+            height: 18px;
+            width: 49px;
             margin-left: 280px;
             border-radius: 100px;
             border: solid 1px #979797;
             font-family: NanumSquare;
-            font-size: 16px;
+            font-size: 9px;
             font-weight: normal;
             font-style: normal;
             font-stretch: normal;
