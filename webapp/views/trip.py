@@ -145,7 +145,7 @@ def cancel_offer(request):
 
 @login_required
 def like(request):
-    guide_id_list = [i.to_id for i in Like.objects.filter(from_id=request.user.id).order_by('-id')]
+    guide_id_list = [i.guide_id for i in Like.objects.filter(user_id=request.user.id).order_by('-id')]
     guide_list = Guide.objects.filter(id__in=guide_id_list).extra(
         select={'manual': 'FIELD(id,%s)' % ','.join(map(str, guide_id_list))},
         order_by=['manual']
@@ -158,7 +158,7 @@ class AddLike(View):
     def get(self, request):
         user_id = request.GET.get('user_id')
         guide_id = request.GET.get('guide_id')
-        Like.objects.create(from_id=user_id, to_id=guide_id)
+        Like.objects.create(user_id=user_id, guide_id=guide_id)
         return JsonResponse({"ok": True})
 
 
@@ -166,5 +166,5 @@ class DeleteLike(View):
     def get(self, request):
         user_id = request.GET.get('user_id')
         guide_id = request.GET.get('guide_id')
-        Like.objects.filter(from_id=user_id, to_id=guide_id).delete()
+        Like.objects.filter(user_id=user_id, guide_id=guide_id).delete()
         return JsonResponse({"ok": True})
