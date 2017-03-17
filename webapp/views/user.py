@@ -95,7 +95,23 @@ def password_reset_complete(request):
 
 
 @login_required
-def edit(request):
+def mypage(request, page_type="account"):
+    page_type_dict = {"alarm": "알림", "account": "계정 관리", "payment": "결제 내역", "review": "후기 관리",
+                      "cert": "본인 인증하기", "unsub": "회원 탈퇴"}
+    if page_type not in page_type_dict:
+        return redirect("index")
+
+    return flavour_render(request, "user/mypage/"+page_type+".html",
+                          {"page_type": page_type, "type_dict": page_type_dict})
+
+
+@login_required
+def profile(request):
+    return flavour_render(request, "user/profile.html")
+
+
+@login_required
+def edit_profile(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,
                                  data=request.POST)

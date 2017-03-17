@@ -1,0 +1,34 @@
+{% extends "pc/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load custom_filters %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/pc/mypage_base.less'|compile %}">
+{% endblock %}
+
+{% block content %}
+    <div class="contents-wrapper">
+        <div class="page-title">마이페이지</div>
+        <div class="page-subtitle">{{ type_dict|key:page_type }}</div>
+        <div class="sidebar">
+            <div class="profile-pic">
+                <img src="" alt="">
+            </div>
+            <a href="{% url 'profile' %}" class="view-profile">프로필 보기</a>
+            <a href="{% url "logout" %}" class="logout">로그아웃</a>
+            <div class="empty"></div>
+            <a href="{% url 'mypage' page_type='alarm' %}" class="side-menu {% if page_type == "alarm" %}selected{% endif %}">알림</a>
+            <a href="{% url 'mypage' page_type='account' %}" class="side-menu {% if page_type == "account" %}selected{% endif %}">계정 관리</a>
+            <a href="{% url 'mypage' page_type='payment' %}" class="side-menu {% if page_type == "payment" %}selected{% endif %}">결제 내역</a>
+            <a href="{% url 'mypage' page_type='review' %}" class="side-menu {% if page_type == "review" %}selected{% endif %}">후기 관리</a>
+            <a href="{% url 'mypage' page_type='cert' %}" class="side-menu {% if page_type == "cert" %}selected{% endif %}">본인 인증하기</a>
+            <a href="{% url 'mypage' page_type='unsub' %}" class="side-menu {% if page_type == "unsub" %}selected{% endif %}">회원 탈퇴</a>
+            <div class="empty"></div>
+            <div class="empty"></div>
+        </div>
+    <div class="mypage-wrapper">
+    {% block mypage %}{% endblock %}
+    </div>
+    </div>
+{% endblock %}
