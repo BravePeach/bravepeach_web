@@ -69,7 +69,7 @@
             <div class="hr"></div>
             <div class="detail-content">{% for trip in recent_trip %}
                 <div class="trip-info">
-                <div class="trip-image"></div>
+                    <div class="trip-image"></div>
                     <div class="content">
                         <div class="guide-options">
                             <div class="guide-option {% if trip.request.trans_guided %}guided{% endif %}"></div>
@@ -79,20 +79,20 @@
                             <div class="guide-option {% if trip.request.guide_guided %}guided{% endif %}"></div>
                             <div class="guide-txt">가이드</div>
                         </div>
-                    <div class="schedule">
-                        {{ trip.request.travel_begin_at|date:"Y/m/d" }} ~ {{ trip.request.travel_end_at|date:"Y/m/d" }}
-                    </div>
-                    <div class="cities">
-                        {% for city in trip.request.cities %}
-                            {% if not forloop.first %} / {% endif %}{{ city }}
-                        {% endfor %}
-                    </div>
-                    <div class="age-grp">{{ age_grp }}</div>
-                    <div class="rating"></div>
+                        <div class="schedule">
+                            {{ trip.request.travel_begin_at|date:"Y/m/d" }} ~ {{ trip.request.travel_end_at|date:"Y/m/d" }}
+                        </div>
+                        <div class="cities">
+                            {% for city in trip.request.cities %}
+                                {% if not forloop.first %} / {% endif %}{{ city }}
+                            {% endfor %}
+                        </div>
+                        <div class="age-grp">{{ age_grp }}</div>
+                        <div class="rating"></div>
                         {% if trip.id in review_ids %}
                             <div class="review">후기있음</div>
                         {% endif %}
-                </div>
+                    </div>
                 </div>
             {% endfor %}</div>
             <div class="detail-title">후기</div>
