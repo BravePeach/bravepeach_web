@@ -31,8 +31,8 @@ function like(e){
         url: url,
         type: "GET",
         data: {
-            user_id: $('#user_id').val(),
-            guide_id: $('#guide_id').val(),
+            user_id: $(e).siblings("#user_id").val(),
+            guide_id: $(e).siblings('#guide_id').val(),
         },
     })
 }
@@ -49,10 +49,12 @@ function filterGuide(sort) {
                 sort: sort,
             },
             success: function (object) {
+                console.log(object)
+                var user = object[object.length - 1];
                 $('.guide-card-wrapper').html("");
-                $('.search-filter-result').html(object.length);
-                for (var i = 0; i < object.length; i++) {
-                    ratingFloat = parseFloat(object[i].rating);
+                $('.search-filter-result').html(object.length - 1);
+                for (var i = 0; i < object.length - 1; i++) {
+                    var ratingFloat = parseFloat(object[i].rating);
                     console.log(object[i]);
 
                     if (/^[a-zA-Z]*$/.test(object[i].first_name) == false) {
@@ -84,7 +86,9 @@ function filterGuide(sort) {
                         }
                     }
                     score += '</div>';
-                    var guide_card = '<div class="guide-card" style="display: none">' +
+                    var guide_card = '<div class="guide-card">' +
+                        '<input type="hidden" id="user_id" value="' + user + '" name="user_id">' +
+                        '<input type="hidden" id="guide_id" value="' + object[i].id + '" name="guide_id">' +
                             heart_image +
                             '<span class="guide-name">' + name +
                         '</span>' + score +
@@ -98,7 +102,6 @@ function filterGuide(sort) {
             '</div>';
 
                     $('.guide-card-wrapper').append(guide_card);
-                    $('.guide-card').show('slow')
                 }
             },
 

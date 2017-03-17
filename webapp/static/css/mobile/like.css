@@ -1,0 +1,160 @@
+
+.main-container, .head-container {
+    width: 355px;
+    margin: auto;
+}
+
+.main-container {
+    padding-top: 58px;
+    position:relative;
+}
+
+.sup-title-peach {
+    height: 32px;
+    font-family: NanumSquareOTFB;
+    font-size: 20px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: -0.5px;
+    color: #000000;
+    margin: 0px;
+}
+
+.sub-title {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    height: 32px;
+    font-family: NanumSquareOTFR;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2;
+    letter-spacing: -0.4px;
+    color: #606060;
+    margin-top: -1px;
+}
+.guide-card-wrapper {
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin: 18px -13px 0px -13px;
+}
+
+.guide-card {
+    width: 355px;
+    height: 300px;
+    border-radius: 8px;
+    border: solid 1px #979797;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    float: left;
+    margin: 0 13px 5px 13px;
+}
+
+.like-button{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    width: 27px;
+}
+
+.like-message-wrapper{
+    width: 430px;
+    position: fixed;
+    bottom: 26px;
+    left: 26px;
+    z-index: 1000;
+}
+
+.like-message{
+    display: none;
+}
+
+.guide-score-wrapper {
+    width: 140px;
+    height: 24.7px;
+    margin: 16px auto 5px auto;
+}
+
+.guide-score {
+    height: 100%;
+    margin: 0px 1px;
+}
+
+.guide-review {
+    width: 107px;
+    margin: 0 auto;
+    font-family: NanumSquareOTFR;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #000000;
+
+}
+
+.guide-image {
+    position: absolute;
+    top: 20px;
+    left: 135px;
+    width: 85.5px;
+    height: 85.7px;
+    border-radius: 42.7px;
+    box-shadow: 0px 0px 3px;
+}
+
+.guide-name {
+    display: block;
+    margin-top: 112px;
+    z-index: -1;
+    font-family: NanumSquareOTFB;
+    font-size: 30px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #000000;
+}
+
+.guide-location {
+    display: block;
+    margin-top: 30px;
+    z-index: -1;
+    font-family: NanumSquareOTFB;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+}
+.like-button{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+    width: 27px;
+    height: 24px;
+    border: none;
+}
+
+.liked{
+    background: url(../../image/icon/heart_full.png);
+    background-size: cover;
+}
+
+.unliked{
+    background: url(../../image/icon/heart_white_shadow.png);
+    background-size: cover;
+}

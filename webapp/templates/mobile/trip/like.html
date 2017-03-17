@@ -1,0 +1,50 @@
+{% extends "mobile/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mobile/like.css' %}">
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/like.js' %}"></script>
+{% endblock %}
+{% block title %}{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <section name="top">
+        <h1 class="sup-title-peach">찜한 가이드</h1>
+        <h2 class="sub-title"><strong>{{guide_list.count}}</strong>명의 가이드를 찜하셨습니다.</h2>
+    </section>
+
+    <div class="guide-card-wrapper">
+    {% for guide in guide_list %}
+        <div class="guide-card">
+            <form id="like" method="get">
+                <input type="hidden" id="user_id" value="{{ request.user.id }}" name="user_id">
+                <input type="hidden" id="guide_id" value="{{ guide.id }}" name="guide_id">
+                <div class="like-button liked" onclick="like(this)"></div>
+            </form>
+            <span class="guide-name">
+                {{ guide.user.last_name }} {{ guide.user.first_name }}
+            </span>
+            <div class="guide-score-wrapper">
+
+
+            </div>
+            <span class="guide-review">
+                가이드 {{ guide.pay_cnt }}건 ㅣ 후기 0개
+            </span>
+            <img class="guide-image" src="/static/image/images/jinwoong.jpg">
+            <span class="guide-location">
+                뉴욕 / 워싱턴 D.C / 시카고
+            </span>
+        </div>
+
+    {% endfor %}
+    </div>
+</div>
+
+<div class="like-message-wrapper"></div>
+
+
+{% endblock %}

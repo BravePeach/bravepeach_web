@@ -8,13 +8,11 @@ function submit_enroll_form(){
 
 $(function() {
     $( window ).scroll(function() {
-        if($('#header').offset().top < 204 && $('#header')[0].style['backgroundColor']=="rgb(255, 255, 255)") {
-            console.log('change')
-            $('#header').animate({backgroundColor: "rgba(255, 255, 255, 0)"}, 300);
+        if($('#header').offset().top < 204) {
+            $('#header').stop().animate({backgroundColor: "rgba(255, 255, 255, 0)"});
         }
-        else if ($('#header').offset().top >= 204 && ($('#header')[0].style['backgroundColor']=="rgba(255, 255, 255, 0)" || $('#header')[0].style['backgroundColor']=="")){
-                        console.log('change')
-            $('#header').animate({backgroundColor: "rgb(255, 255, 255)"}, 300);
+        else if ($('#header').offset().top){
+            $('#header').stop().animate({backgroundColor: "rgb(255, 255, 255)"});
         }
     });
 
