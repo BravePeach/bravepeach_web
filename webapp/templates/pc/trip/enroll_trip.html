@@ -22,10 +22,10 @@
         </section>
         <form method="POST" id="enroll-form">
             {% csrf_token %}
+            {{ form.user }}
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/where_black.png" alt="where?">
-{#                {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}#}
-                {{ form.city }}
+                {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}
             </div>
 
             <div class="white-bar">
