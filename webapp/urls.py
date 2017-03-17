@@ -28,6 +28,9 @@ urlpatterns = [
                                                "post_reset_redirect": "password_reset_complete"}),
     url(r'^password_reset/complete$', views.user.password_reset_complete, name="password_reset_complete"),
 
+    # Guide
+    url(r'^guide/(?P<gid>\d+)/$', views.guide.profile, name='guide_profile'),
+
     # User2Guide
     url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),
     url(r'^guide_search/filtering/$', views.trip.FilterGuide.as_view(), name='filter_guide'),
