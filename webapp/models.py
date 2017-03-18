@@ -187,7 +187,7 @@ class AccomTemplate(models.Model):
 
 class GuideTemplate(models.Model):
     title = models.CharField(max_length=100)
-    content = models.TextField(null=True)
+    content = models.TextField(blank=True)
     picture = models.CharField(max_length=200)
     guide = models.ForeignKey(Guide)
 

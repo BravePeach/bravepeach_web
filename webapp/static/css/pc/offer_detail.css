@@ -1,0 +1,187 @@
+.main-container, .head-container {
+    min-width: 320px;
+    max-width: 904px;
+    margin: auto;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.main-container {
+    padding-top: 5px;
+}
+
+.sup-title-peach {
+    color: #E64C47;
+    margin-top: 0px;
+    margin-bottom: 12px;
+    font-family: NanumSquareOTFB;
+    font-size: 48px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+.sub-title {
+    margin-top: 0px;
+    margin-bottom: 17px;
+    width: 485px;
+    height: 32px;
+    font-family: NanumSquareOTFR;
+    font-size: 22px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+.contents-wrapper .guide-brief {
+  position: relative;
+  margin-top: 50px;
+  width: 880px;
+  padding: 21px 33px 21px 33px;
+  border-radius: 8px;
+  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  border: solid 1px #606060;
+}
+.contents-wrapper .guide-brief .brief-image {
+  display: inline-block;
+  width: 134px;
+  height: 134px;
+  border-radius: 100%;
+}
+.contents-wrapper .guide-brief .brief-contents {
+  display: inline-block;
+  padding-left: 33px;
+}
+.contents-wrapper .guide-brief .brief-contents .like {
+  position: absolute;
+  top: 33px;
+  right: 33px;
+  height: 24px;
+}
+.contents-wrapper .guide-brief .brief-contents .like img {
+  height: 24px;
+  width: 27px;
+}
+.contents-wrapper .guide-brief .brief-contents .brief-title {
+  height: 34px;
+  font-family: NanumSquare;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000000;
+}
+.contents-wrapper .guide-brief .brief-contents .brief-title .guide-name {
+  font-weight: bold;
+}
+.contents-wrapper .guide-brief .brief-contents .brief-title .highlight {
+  color: #dd3537;
+}
+.contents-wrapper .guide-brief .brief-contents .location {
+  margin-top: 20px;
+  height: 22px;
+}
+.contents-wrapper .guide-brief .brief-contents .location .location-title {
+  display: inline-block;
+  width: 123px;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: lighter;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000000;
+}
+.contents-wrapper .guide-brief .brief-contents .location .location-list {
+  width: 420px;
+  display: inline-block;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #dd3537;
+}
+.contents-wrapper .guide-brief .brief-contents .rating {
+  height: 22px;
+  margin-top: 15px;
+}
+.contents-wrapper .guide-brief .brief-contents .rating .rating-title {
+  display: inline-block;
+  width: 123px;
+  height: 22px;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000000;
+}
+.contents-wrapper .guide-brief .brief-contents .rating .rating-point {
+  display: inline-block;
+  height: 29px;
+  font-family: NanumSquare;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #606060;
+}
+.contents-wrapper .guide-brief .brief-contents .rating .rating-point .rating-img {
+  height: 29px;
+  display: inline-block;
+  margin-right: 6px;
+}
+.contents-wrapper .guide-brief .brief-contents .info {
+  margin-top: 22px;
+  height: 22px;
+  font-family: NanumSquareOTFR;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000000;
+}
+.contents-wrapper .guide-brief .brief-contents .info .guide-cnt,
+.contents-wrapper .guide-brief .brief-contents .info .review-cnt {
+  display: inline-block;
+}
+
+.gradation-bar{
+    width: 880px;
+    height: 55px;
+    border-radius: 8px;
+    background-image: linear-gradient(to right, #f2ad8a, #e64c47);
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+    padding: 15px 0px 0px 20px;
+    margin-top: 30px;
+}

@@ -1,6 +1,8 @@
 {% extends "pc/base.html" %}
 {% load static %}
 {% load humanize %}
+{% load mathfilters %}
+{% load custom_filters %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/pc/volunteer_list.css' %}">
@@ -46,28 +48,37 @@
     <hr>
 
     <div class="guide-card-wrapper">
-        {% for guide in guide_list %}
-        <div class="guide-card">
+        {% for guide_offer in guide_offers %}
+        <a class="guide-card" href="{% url 'offer_detail' guide_offer.id %}">
             <form id="like" method="get">
                 <input type="hidden" id="user_id" value="{{ request.user.id }}" name="user_id">
-                <input type="hidden" id="guide_id" value="{{ guide.id }}" name="guide_id">
-                <div class="like-button {% if guide.is_liked %} liked {% else %} unliked {% endif %}" onclick="like(this)"></div>
+                <input type="hidden" id="guide_id" value="{{ guide_offer.guide_offer.guide.id }}" name="guide_id">
+                <div class="like-button {% if guide_offer.guide.is_liked %} liked {% else %} unliked {% endif %}" onclick="like(this)"></div>
             </form>
             <span class="guide-name">
-                {{ guide.user.last_name }} {{ guide.user.first_name }}
+                {{ guide_offer.guide.full_name }}
             </span>
             <div class="guide-score-wrapper">
-
-
+                {% for i in guide_offer.guide.clean_rating.0|to_list %}
+                <img class="guide-score" src="{% static 'image/icon/logo_full.png' %}" alt="">
+                {% endfor %}
+                {% if guide_offer.guide.clean_rating.1 == 0.5 %}
+                <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="guide-score">
+                {% else %}
+                <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="guide-score">
+                {% endif %}
+                {% for i in 4|sub:guide_offer.guide.clean_rating.0|to_list %}
+                <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="guide-score">
+                {% endfor %}
             </div>
             <span class="guide-review">
-                가이드 {{ guide.pay_cnt }}건 ㅣ 후기 0개
+                가이드 {{ guide_offer.guide.pay_cnt }}건 ㅣ 후기 0개
             </span>
             <img class="guide-image" src="/static/image/images/jinwoong.jpg">
-            <span class="guide-location">
-                뉴욕 / 워싱턴 D.C / 시카고
+            <span class="guide-cost">
+                총 경비 <span class="guide-money">{#{ guide_offer. }#}</span>원
             </span>
-        </div>
+        </a>
 
         {% endfor %}
     </div>

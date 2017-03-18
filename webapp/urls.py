@@ -40,7 +40,8 @@ urlpatterns = [
 
     # Trip
     url(r'^my_trip/$', views.trip.my_trip, name="my_trip"),
-    url(r'^my_trip/(?P<user_request_id>\d+)/$', views.trip.show_volunteer_list, name="guide_list"),
+    url(r'^my_trip/(?P<user_request_id>\d+)/$', views.trip.volunteer_list, name="guide_list"),
+    url(r'^offer/(?P<offer_id>\d+)/$', views.trip.offer_detail, name="offer_detail"),
     url(r'^enroll_trip/$', views.trip.enroll_trip, name='enroll_trip'),
     url(r'^cancel_offer/$', views.trip.cancel_offer, name="cancel_offer"),
 

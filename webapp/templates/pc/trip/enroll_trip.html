@@ -17,8 +17,8 @@
 {% block content %}
     <div class="main-container">
         <section>
-            <h1 class="sup-title-peach">여행지 등록</h1>
-            <h2 class="sub-title">{{ user.first_name }} 님의 맞춤형 여행지 정보를 등록하세요!</h2>
+            <h1 class="sup-title-peach">여행 요청서 쓰기</h1>
+            <h2 class="sub-title">{{ user.first_name }} 님이 원하는 여행을 이동수단/숙소/가이드 항목별로 간편히 작성하세요!</h2>
         </section>
         <form method="POST" id="enroll-form">
             {% csrf_token %}
@@ -30,9 +30,9 @@
 
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/when_black.png" alt="where?">
-                {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"}}
+                {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"|attr:"placeholder:시작 날짜"}}
                 <img class="arrow-right" src="">
-                {{ form.travel_end_at |add_class:"find-guide-form2 datepicker2"|attr:"readonly"}}
+                {{ form.travel_end_at |add_class:"find-guide-form2 datepicker2"|attr:"readonly"|attr:"placeholder:종료 날짜"}}
             </div>
 
             <div class="white-bar">
@@ -317,11 +317,11 @@
                 {{ form.additional_request |add_class:"additional-request-box"|attr:"placeholder:추가적으로 부탁하고 싶은 점을 적어주세요. ex) 빽빽하지 않은 여행일정이 좋아요. 하루에 2-3군데에서 여유롭게 즐기고 싶어요." }}
 
             </div>
-
+            <hr>
             <div class="total-amount-wrapper">
                 {{ form.cost }}만 원
             </div>
-            <span style="font-size: 26px; margin: 75px 14px 0px 0px; display: block; float: right">희망 경비</span>
+            <span style="font-size: 26px; margin: 0px 14px 0px 0px; display: block; float: right">희망 경비</span>
             <div class="submit-button-wrapper">
                 <div class="col-xs-6">
                     <div class="temp-store-button">취소</div>

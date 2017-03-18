@@ -7,16 +7,16 @@
 }
 
 .main-container {
-    padding-top: 5px;
+    padding-top: 55px;
 }
 
 .sup-title-peach {
     color: #E64C47;
     margin-top: 0px;
     margin-bottom: 12px;
-    font-family: NanumSquareOTFB;
+    font-family: NanumSquare;
     font-size: 48px;
-    font-weight: normal;
+    font-weight: bold;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
@@ -27,9 +27,8 @@
 .sub-title {
     margin-top: 0px;
     margin-bottom: 17px;
-    width: 485px;
     height: 32px;
-    font-family: NanumSquareOTFR;
+    font-family: NanumSquare;
     font-size: 22px;
     font-weight: normal;
     font-style: normal;
@@ -54,9 +53,10 @@
     top: 15px;
     left: 2%;
 }
+.select2-input{padding-top:2px}
 
 .enroll-trip-form {
-    width: 33.5%;
+    width: 689px;
     height: 36px;
     border-radius: 3px;
     position: absolute;
@@ -66,11 +66,21 @@
     font-size: 20px;
     color: black;
     padding-left: 5px;
+    background-color: rgba(212, 212, 212, 0.3);
+    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+    padding-left: 21px;
 }
 
 #id_cost{
+    padding-top: 7px;
     border: 0px;
     text-align: right;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 #id_city{top:0px; left: 0px; width: 100%;}
@@ -85,14 +95,14 @@
     width: 33.5%;
     height: 36px;
     border-radius: 3px;
-    opacity: 0.3;
     position: absolute;
     top: 12px;
     left: 10.9%;
     border-style: none;
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
     font-size: 20px;
     padding-left: 22px;
+    background-color: rgba(212, 212, 212, 0.3);
+    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
 }
 
 .find-guide-form2 {
@@ -165,9 +175,9 @@ a.ui-state-default:hover {
 
 .arrow-down {
     float: right;
-    width: 20px;
+    width: 24px;
     position: absolute;
-    top: 24px;
+    top: 22px;
     right: 3%;
 }
 
@@ -216,10 +226,24 @@ a.ui-state-default:hover {
     margin: 21px 32px;
 }
 
+.traveler_cntpicker div :before {
+  content : "";
+  position: absolute;
+  left    : 0;
+  bottom  : 0;
+  height  : 1px;
+  width   : 50%;  /* or 100px */
+  border-bottom:1px solid #979797;
+}
+
 .enroll-trip-help {
     display: block;
     margin-top: 40px;
     font-size: 16px;
+}
+
+.enroll-trip-button{
+    display: none !important;
 }
 
 .peach-button-wrapper {
@@ -249,7 +273,8 @@ a.ui-state-default:hover {
 .enroll-trip-button-name {
     display: block;
     font-size: 25px;
-    margin-top: 17px;
+    margin: 17px 0px 0px -2px;
+    text-align: center;
 }
 
 .gradation-bar {
@@ -277,6 +302,24 @@ a.ui-state-default:hover {
     color: white;
     float: left;
     margin-left: 15px;
+    font-family: NanumSquare;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    margin-top: 21px;
+}
+
+select{
+    width: 81px;
+    height: 36px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    border: solid 1px #979797;
+    background-color: white;
+    margin: 0px 8px 0px 8px;
 }
 
 .scrolling-page1, .scrolling-page2, .scrolling-page3 {
@@ -316,9 +359,9 @@ a.ui-state-default:hover {
 }
 
 .total-amount-wrapper {
+    margin-top: -30px;
     text-align: right;
     height: 65px;
-    margin-top: 48px;
     float: right;
     border-bottom: 1px solid #bbbbbb;
     font-size: 20px;
@@ -351,6 +394,7 @@ a.ui-state-default:hover {
 }
 
 .temp-store-button {
+    padding-top: 17px;
     background-color: #606060;
     float: right;
 }
@@ -382,3 +426,8 @@ a.ui-state-default:hover {
 }
 
 .tt-hint{opacity: 0.3 !important;}
+
+hr{
+    margin: 48px 0px 50px 0px;
+    border-bottom: solid 1px #bbbbbb;
+}

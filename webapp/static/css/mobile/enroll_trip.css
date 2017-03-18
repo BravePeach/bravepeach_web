@@ -10,7 +10,6 @@ body{width: 100%;}
 }
 
 .sup-title-peach {
-    width: 98px;
     height: 32px;
     font-family: NanumSquareOTFB;
     font-size: 20px;
@@ -25,7 +24,6 @@ body{width: 100%;}
 
 .sub-title {
     margin-bottom: 10px;
-    width: 210px;
     height: 32px;
     font-family: NanumSquareOTFR;
     font-size: 16px;

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'static_precompiler',
     'django_user_agents',
     'redactor',
+    'mathfilters',
     'webapp',
 ]
 

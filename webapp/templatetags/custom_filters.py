@@ -11,3 +11,12 @@ def key(d, key_name):
         from django.conf import settings
         value = settings.TEMPLATE_STRING_IF_INVALID
     return value
+
+
+# {% for i in 5|to_list %}
+# is
+# {% for i in [1, 2, 3, 4, 5] %}
+@register.filter(name="to_list")
+def to_list(value):
+    return range(value)
+

@@ -79,6 +79,8 @@ class RequestForm(forms.ModelForm):
     start_time = forms.ChoiceField(choices=CHOICES1)
     end_time = forms.ChoiceField(choices=CHOICES2)
     cost = forms.NumberInput
+    city = forms.CharField(initial="")
+    age_group = forms.CharField(initial="")
 
     class Meta:
         model = UserRequest
@@ -88,8 +90,6 @@ class RequestForm(forms.ModelForm):
             'start_time', 'end_time', 'landmark', 'theme', 'local_trans', 'guide_type', 'importance', 'cost', 'additional_request'
         ]
         widgets = {
-            'city': forms.TextInput,
-            'age_group': forms.TextInput,
             'trans_comment': forms.Textarea,
             'accom_comment': forms.Textarea,
             'additional_request': forms.Textarea,

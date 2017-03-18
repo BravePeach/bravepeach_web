@@ -87,6 +87,7 @@ $(function() {
         if ($(".gradation-bar.btn1").hasClass("inactive")) {
             $(".gradation-bar.btn1").removeClass("inactive");
             $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_full.png");
+            $('html, body').animate({scrollTop: $('.gradation-bar.btn1').offset().top - 100}, '200');
         }
         else {
             $(".gradation-bar.btn1").addClass("inactive");
@@ -99,6 +100,7 @@ $(function() {
         if ($(".gradation-bar.btn2").hasClass("inactive")) {
             $(".gradation-bar.btn2").removeClass("inactive");
             $(".lodging-button > img").attr("src", "/static/image/icon/logo_full.png");
+            $('html, body').animate({scrollTop: $('.gradation-bar.btn2').offset().top - 100}, '200')
         }
         else {
             $(".gradation-bar.btn2").addClass("inactive");

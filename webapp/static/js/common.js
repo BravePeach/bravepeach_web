@@ -20,7 +20,7 @@ function fixTripButton() {
     var scrollVal = $(document).scrollTop() + $(window).height() - 120;
 
     container.css('top', scrollVal);
-    if (container.offset().top > maxTop) {
+    if (scrollVal > maxTop) {
         container.css('top', maxTop);
     }
 }
