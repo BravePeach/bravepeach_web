@@ -2,7 +2,7 @@ import json
 import datetime
 from collections import OrderedDict
 
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.http import JsonResponse
 from django.db.models import Count, Case, When
 from django.views.generic import View
@@ -54,15 +54,14 @@ class FilterGuide(View):
             guide_queryset = [Guide.objects.get(id=i) for i in guide_id_list]
 
         for guide in guide_queryset:
-            print(Like.objects.filter(from_id=request.user.id, to_id=guide.id).exists())
             temp = {'id': guide.id,
                     'rating': guide.rating,
                     'pay_cnt': guide.pay_cnt,
                     'guide_location': guide.guide_location,
                     'first_name': guide.user.first_name,
                     'last_name': guide.user.last_name,
-                    'review_num': Review.objects.filter(receiver=guide.id).count(),
-                    'is_liked': Like.objects.filter(from_id=request.user.id, to_id=guide.id).exists()}
+                    'review_num': Review.objects.filter(guide_id=guide.id).count(),
+                    'is_liked': Like.objects.filter(user_id=request.user.id, guide_id=guide.id).exists()}
             result.append(temp)
         result += [request.user.id]
         return JsonResponse(result, safe=False)
@@ -168,3 +167,11 @@ class DeleteLike(View):
         guide_id = request.GET.get('guide_id')
         Like.objects.filter(user_id=user_id, guide_id=guide_id).delete()
         return JsonResponse({"ok": True})
+
+
+def show_volunteer_list(request, user_request_id):
+    user_request = get_object_or_404(UserRequest.objects.select_related('user'), id=user_request_id, user_id=request.user.id)
+    guide_offer = GuideOffer.objects.filter(request_id=user_request_id)
+    guide_list = Guide.objects.filter(id__in=guide_offer.values('guide_id'))
+    return flavour_render(request, 'trip/volunteer_list.html', {"user_request": user_request,
+                                                                "guide_list": guide_list})

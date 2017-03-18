@@ -12,7 +12,7 @@ def profile(request, gid):
     recent_trip = (GuideOffer.objects.filter(paid=True, is_canceled=False, guide=guide,
                                              request__travel_end_at__lt=datetime.date.today())
                    .select_related('request').order_by('-request__travel_end_at')).all()[:5]
-    review_list = Review.objects.filter(receiver_id=guide.id).order_by('-id')
+    review_list = Review.objects.filter(guide_id=guide.id).order_by('-id')
     return flavour_render(request, "guide/profile.html", {"guide": guide, "recent_trip": recent_trip,
                                                           "rating": range(guide.clean_rating[0]),
                                                           "norating": range(4-guide.clean_rating[0]),

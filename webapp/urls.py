@@ -40,13 +40,14 @@ urlpatterns = [
 
     # Trip
     url(r'^my_trip/$', views.trip.my_trip, name="my_trip"),
-    url(r'^enroll_trip', views.trip.enroll_trip, name='enroll_trip'),
+    url(r'^my_trip/(?P<user_request_id>\d+)/$', views.trip.show_volunteer_list, name="guide_list"),
+    url(r'^enroll_trip/$', views.trip.enroll_trip, name='enroll_trip'),
     url(r'^cancel_offer/$', views.trip.cancel_offer, name="cancel_offer"),
 
     # Like
-    url(r'^like', views.trip.like, name="like"),
-    url(r'^add_like', views.trip.AddLike.as_view(), name="add_like"),
-    url(r'^delete_like', views.trip.DeleteLike.as_view(), name="delete_like"),
+    url(r'^like/$', views.trip.like, name="like"),
+    url(r'^add_like/$', views.trip.AddLike.as_view(), name="add_like"),
+    url(r'^delete_like/$', views.trip.DeleteLike.as_view(), name="delete_like"),
 
     # Guide2User
 ]
