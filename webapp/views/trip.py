@@ -180,15 +180,20 @@ def volunteer_list(request, user_request_id):
 
 def offer_detail(request, offer_id):
     guide_offer = get_object_or_404(GuideOffer.objects.select_related('guide').filter(pk=offer_id, request__user__id=request.user.id))
-    flat_guide_template = [val for sublist in guide_offer.guide_template for val in sublist]
+
+    g_template_qlist = []
+    if guide_offer.guide_template:
+        for id_list in guide_offer.guide_template:
+            g_template_qlist += [GuideTemplate.objects.filter(id__in=id_list, guide_id=guide_offer.guide_id)
+                                                    .extra(select={'manual': 'FIELD(id,%s)' % ','.join(map(str, id_list))},
+                                                           order_by=['manual'])]
+
+    a_template_list = guide_offer.accom_template
+    for i in a_template_list:
+        i[0] = AccomTemplate.objects.get(id=i[0])
+
     return flavour_render(request, 'trip/offer_detail.html', {"guide": guide_offer.guide,
                                                               "guide_offer": guide_offer,
-                                                              "g_template": GuideTemplate.objects
-                                                              .filter(
-                                                                  id__in=flat_guide_template,
-                                                                  guide_id=guide_offer.guide_id
-                                                              )
-                                                              .extra(
-                                                                  select={'manual': 'FIELD(id,%s)' % ','.join(map(str, flat_guide_template))},
-                                                                  order_by=['manual']
-                                                              )})
+                                                              "g_template_qlist": g_template_qlist,
+                                                              "a_template_list": a_template_list,
+                                                              })

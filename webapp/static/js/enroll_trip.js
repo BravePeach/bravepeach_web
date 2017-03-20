@@ -11,13 +11,15 @@ $(function() {
     $("#id_city").placecomplete({
         tags: true,
         requestParams: {
-            types: ["(cities)"]
+            // types: ["(cities)"]
         }
     });
 
     $("#id_city").on({
         'placecomplete:selected': function (evt, placeResult) {
             console.log(placeResult);
+            console.log(placeResult.geometry.location.lat());
+            console.log(placeResult.geometry.location.lng());
             city_list.push(placeResult['name']);
             console.log(city_list);
         }

@@ -72,7 +72,7 @@ var GooglePlacesAPI = {
             this.completeInit();
         } else {
             $.ajax({
-                url: "https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initPlacecomplete",
+                url: "https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initPlacecomplete&language=ko",
                 dataType: "script",
                 cache: true
             });

@@ -68,28 +68,39 @@
     {% endif %}
 
     <!--숙소-->
-    {% if guide_offer.accom_template %}
+    {% if a_template_list %}
     <div class="gradation-bar">숙소</div>
-    {% for accom in guide_offer.accom_template %}
+    {% for accom in a_template_list %}
+        {{ accom.1}} - {{accom.2}}
+        {{ accom.0.address.0 }}, {{ accom.0.address.1 }}
+        <br>
+        {{ accom.0.title }}
+        <br>
+        위치: {{ accom.0.address.2 }}, {{ accom.0.address.1 }}
 
+        <div class="map" style="height: 200px;">{{ accom.0.lat}} {{accom.0.lng}}</div>
+
+    <hr>
     {% endfor %}
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&"></script>
     {% endif %}
 
     <!--가이드-->
     {% if guide_offer.guide_template %}
     <div class="gradation-bar">가이드</div>
-    {% for g in g_template %}
-        <div>{{g.title}}</div>
-        <div>{{g.content}}</div>
+    {% for g_template_q in g_template_qlist %}
+    {{ forloop.counter }}일
+        {% for g_template in g_template_q %}
+            {{ g_template.title|linebreaks }}
+            {{ g_template.content|linebreaks }}
+        {% endfor %}
     {% endfor %}
     {% endif %}
 
     <!--견적서-->
     {#% if %#}
     <div class="gradation-bar">견적서</div>
-    {#% for %#}
-
-    {#% endfor %#}
     {#% endif %#}
 
 </div>

@@ -4,7 +4,7 @@ import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
-from django_mysql.models import JSONField
+from django_mysql.models import JSONField, ListCharField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
@@ -127,7 +127,7 @@ class UserRequest(models.Model):
     guide_type = models.IntegerField(null=True, blank=True)
     importance = models.IntegerField(null=True, blank=True)
     cost = models.IntegerField(null=True, blank=True)
-    published = models.BooleanField(default=False, blank=True)
+    published = models.BooleanField(default=True, blank=True)
     additional_request = models.CharField(max_length=200, blank=True)
 
     @property
@@ -178,11 +178,29 @@ class CancelledOffer(models.Model):
 
 class AccomTemplate(models.Model):
     title = models.CharField(max_length=100)
-    address = models.CharField(max_length=200)
-    map = models.CharField(max_length=200)
-    content = models.TextField(blank=True, null=True)
-    pic_list = JSONField(null=True)
+    # JSONField로 하려 했으나 migrate 과정에서 에러가 나서 일단은 ListField로..
+    address = ListCharField(
+        base_field=models.CharField(max_length=20),
+        size=3,
+        max_length=(3*21)
+    )
+    lat = models.FloatField(default=0)
+    lng = models.FloatField(default=0)
+    content = models.TextField(blank=True)
+    pic_list = JSONField(blank=True, null=True)
     guide = models.ForeignKey(Guide)
+
+    @property
+    def country(self):
+        return self.address[0]
+
+    @property
+    def city(self):
+        return self.address[1]
+
+    @property
+    def small_city(self):
+        return self.address[2]
 
 
 class GuideTemplate(models.Model):
