@@ -60,10 +60,10 @@ def register_bravepeach(request):
                     print("no auth user")
                 return redirect("register_bp")
             else:
-                print(profile_form.errors)
+                print("profile error: ", profile_form.errors)
                 return redirect("register_bp")
         else:
-            print(user_form.errors)
+            print("user_error: ", user_form.errors)
             return redirect("register_bp")
 
     else:

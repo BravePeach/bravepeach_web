@@ -9,7 +9,8 @@ function validate_pw() {
 function submit_register_form() {
     var form = $("#register-form");
     if (validate_pw()) {
-        form.submit();
+        // form.submit();   // This Does not check required input field.
+        $('#submit-btn').trigger("click");
     } else {
         swal("Invalid PW format", "Password must contains at least one alphabet/number/special character.", "error");
         $("#id_password").val("");
@@ -19,6 +20,8 @@ function submit_register_form() {
 }
 
 $(function() {
+    $("input").prop("required", true);
+
     $("#id_email").on("change keyup", function () {
         $(".email-notice.email-used").css("display", "none");
         var mail_val = $("#id_email").val();

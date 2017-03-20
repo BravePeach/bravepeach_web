@@ -1,3 +1,5 @@
+import datetime
+
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
@@ -50,7 +52,7 @@ class ProfileEditForm(forms.ModelForm):
         (2, "여성"),
     )
 
-    birthday = forms.DateField(widget=extras.SelectDateWidget(years=range(1920, 2017),
+    birthday = forms.DateField(widget=extras.SelectDateWidget(years=range(1920, datetime.date.today().year),
                                                               attrs={"class": "input-select"},
                                                               empty_label=("년도*", "달*", "일*")))
     gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
