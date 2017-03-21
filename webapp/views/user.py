@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm
+from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm
 from ..models import Profile, GuideOffer, Review
 from bravepeach.util import flavour_render
 
@@ -99,7 +99,7 @@ def password_reset_complete(request):
 @login_required
 def mypage(request, page_type="account"):
     page_type_dict = {"alarm": "알림", "account": "계정 관리", "payment": "결제 내역", "review": "후기 관리",
-                      "cert": "본인 인증하기", "unsub": "회원 탈퇴"}
+                      "cert": "본인 인증하기", "unsub": "회원 탈퇴", "profile": "계정 관리"}
     if page_type not in page_type_dict:
         return redirect("index")
 
@@ -111,9 +111,14 @@ def mypage(request, page_type="account"):
         pass
     elif page_type == "account":
         pass
+    elif page_type == "profile":
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+        param_dict["user_form"] = user_form
+        param_dict["profile_form"] = profile_form
     elif page_type == "payment":
         payment_list = (GuideOffer.objects.filter(request__user_id=request.user.id,
-                                                  request__travel_end_at__lt=datetime.date.today())
+                                                  request__travel_begin_at__gte=datetime.date.today())
                         .prefetch_related('request').prefetch_related('cancel').order_by('-id'))
         wait_list = []
         paid_list = []
@@ -134,14 +139,10 @@ def mypage(request, page_type="account"):
     elif page_type == "cert":
         pass
     elif page_type == 'unsub':
-        pass
+        unsub_form = UnsubscribeForm()
+        param_dict["unsub_form"] = unsub_form
 
     return flavour_render(request, "user/mypage/"+page_type+".html", param_dict)
-
-
-@login_required
-def profile(request):
-    return flavour_render(request, "user/profile.html")
 
 
 @login_required
@@ -156,8 +157,23 @@ def edit_profile(request):
             request.user.profile.birthday = profile_form.cleaned_data['birthday']
             user_form.save()
             profile_form.save()
-    else:
-        user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
-    return flavour_render(request, 'user/edit_profile.html', {'user_form': user_form, 'profile_form': profile_form})
+        else:
+            pass
+    return redirect("mypage", page_type="profile")
 
+
+@login_required
+def unsub_bp(request):
+    if request.method != "POST":
+        return redirect('mypage', page_type="unsub")
+
+    request.user.profile.deleted_at = datetime.datetime.now()
+    request.user.is_active = False
+    unsub_form = UnsubscribeForm(request.POST, instance=request.user.profile)
+
+    if unsub_form.is_valid():
+        unsub_form.save()
+        request.user.save()
+        return redirect('logout')
+    else:
+        return redirect('mypage', page_type="unsub")

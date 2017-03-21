@@ -8,13 +8,11 @@
 {% endblock %}
 
 {% block mypage %}
-    <div class="mypage-wrapper">
     <div class="greeting">{{ request.user.profile.full_name }} 님 안녕하세요!</div>
     <div class="join_date">{{ request.user.date_joined|date:"Y/m/d" }} 가입</div>
     <div class="email">{{ request.user.email }}</div>
     <div class="birthday">{{ request.user.profile.birthday|date:"Y.m.d" }}</div><div class="sex">{{ request.user.profile.gender|yesno:"남자,여자" }}</div>
     <div class="nationality">{{ request.user.profile.nationality }}</div>
     <div class="hr"></div>
-        <a href="{% url 'edit_profile' %}" class="edit-profile">프로필 수정</a>
-    </div>
+    <a href="{% url 'mypage' page_type="profile" %}" class="edit-profile">프로필 수정</a>
 {% endblock %}

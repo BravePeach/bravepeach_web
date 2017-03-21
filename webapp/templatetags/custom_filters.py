@@ -20,3 +20,7 @@ def key(d, key_name):
 def to_list(value):
     return range(value)
 
+
+@register.filter(name="addcls")
+def addcls(field, cls):
+    return field.as_widget(attrs={"class": cls})
