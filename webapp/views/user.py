@@ -1,5 +1,11 @@
 import datetime
+from io import BytesIO
+from uuid import uuid4
 
+import boto3
+from PIL import Image
+import requests
+from django.core.files.base import ContentFile
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
@@ -7,6 +13,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+from bravepeach import settings
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm
 from ..models import Profile, GuideOffer, UserReview
 from bravepeach.util import flavour_render
@@ -164,10 +171,35 @@ def edit_profile(request):
 
 def upload_original(request):
     if request.method == "POST":
-        post = request.POST
-        file = request.FILES
-        print(post, file)
-        return JsonResponse({"ok": True})
+        files = request.FILES
+        s3 = boto3.resource("s3", aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+        file_ext = files['original'].name.split(".")[-1]
+        tmp_name = datetime.datetime.now().strftime("%Y_%m_%d/%H_%M_%S_%f")+"."+file_ext
+        img = Image.open(files['original'])
+        img.thumbnail((600, 600), Image.ANTIALIAS)
+        tmp_file = "/tmp/{}.jpg".format(uuid4())
+        img.save(tmp_file, format="jpeg")
+        s3.meta.client.upload_file(tmp_file, settings.AWS_STORAGE_BUCKET_NAME,
+                                      "original/{}".format(tmp_name))
+        url = "http://" + "/".join([settings.AWS_S3_CUSTOM_DOMAIN, "original", tmp_name])
+        return JsonResponse({"ok": True, "url": url})
+    return JsonResponse({"ok": False})
+
+
+@login_required
+def upload_profile(request):
+    if request.method == "POST":
+        res = requests.get(request.POST.get('img'))
+        img = Image.open(BytesIO(res.content))
+        crop_img = img.crop([int(x) for x in request.POST.getlist('coord[]')])
+        resize_img = crop_img.resize((200, 200), Image.ANTIALIAS)
+        byte_img = BytesIO()
+        resize_img.save(byte_img, format="jpeg")
+        filename = str(request.user.id)+"__"+datetime.datetime.now().strftime("%H_%M_%S_%f")+".jpg"
+        request.user.profile.photo.save(filename, ContentFile(byte_img.getvalue()))
+        url = "http://"+settings.AWS_S3_CUSTOM_DOMAIN+"/"+str(request.user.profile.photo)
+        return JsonResponse({"ok": True, "url": url})
     return JsonResponse({"ok": False})
 
 

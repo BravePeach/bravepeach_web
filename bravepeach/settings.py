@@ -151,9 +151,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Media
 # MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
-AWS_S3_CUSTOM_DOMAIN = 'cdn.bravepeach.com'
+AWS_S3_CUSTOM_DOMAIN = 'di6a2p2igrt9l.cloudfront.net'   # cdn.bravepeach.com after SSL
 MEDIAFILES_LOCATION = 'media'
-MEDIA_URL = "https://{domain}/{media}/".format(domain=AWS_S3_CUSTOM_DOMAIN, media=MEDIAFILES_LOCATION)
+MEDIA_URL = "http://{domain}/{media}/".format(domain=AWS_S3_CUSTOM_DOMAIN, media=MEDIAFILES_LOCATION)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # AWS

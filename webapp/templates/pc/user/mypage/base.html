@@ -12,27 +12,66 @@
     <script src="{% static 'js/mypage.js' %}"></script>
     <script src="{% static 'js/jquery.Jcrop.min.js' %}"></script>
     <script>
-    $(function(){
-        $(".profile-pic").click(function(){
-            $("#profile-input").click();
-        });
+        var img_coord = [];
+        var img_url = "";
 
-        $("#profile-input").change(function(){
-            var formdata = new FormData();
-            formdata.append("original", $("#profile-input")[0].files[0]);
+        function cancel_profile(){
+            $("#original_profile").prop("src", "");
+            $("#original_profile").removeAttr("style");
+            $("#original_profile").data('Jcrop').destroy();
+            $("#profile-input").val("");
+            $(".profile_modal").removeClass("activated");
+        }
 
-            $.ajax({
-                url: "{% url 'upload_original' %}",
-                processData: false,
-                contentType: false,
-                data: formdata,
-                type: "POST",
-                success: function(data){
-                    alert(data["ok"]);
-                }
+        function save_profile(){
+            cancel_profile();
+            $.post('{% url 'upload_profile' %}',
+                {
+                    img: img_url,
+                    coord: img_coord
+                },function(data){
+                    if (data['ok'] === true) {
+                        $("#profile-image").prop("src", data["url"]);
+                    }
+                });
+        }
+
+        function get_coord(c){
+            img_coord = [c.x, c.y, c.x2, c.y2];
+            console.log(img_coord);
+        }
+
+        $(function(){
+            $(".profile-pic").click(function(){
+                $("#profile-input").click();
+            });
+
+            $("#profile-input").change(function(){
+                var formdata = new FormData();
+                formdata.append("original", $("#profile-input")[0].files[0]);
+
+                $.ajax({
+                    url: "{% url 'upload_original' %}",
+                    processData: false,
+                    contentType: false,
+                    data: formdata,
+                    type: "POST",
+                    success: function(data){
+                        if (data["ok"] === true) {
+                            $(".profile_modal").addClass("activated");
+                            img_url = data['url'];
+                            $("#original_profile").prop("src", data["url"]);
+                            $("#original_profile").Jcrop({
+                                addClass: "jcrop-centered",
+                                aspectRatio: 1,
+                                setSelect: [0, 0, 600, 600],
+                                onSelect: get_coord
+                            });
+                        }
+                    }
+                });
             });
         });
-    });
     </script>
 {% endblock %}
 
@@ -42,14 +81,14 @@
         <div class="page-subtitle">{{ type_dict|key:page_type }}</div>
         <div class="sidebar">
             <div class="profile-pic">
-                <img alt="" id="profile-image">
+                <img src="{% if request.user.profile.photo.url is not NULL %}{{ request.user.profile.photo.url }}{% else %}{% static 'image/icon/logo_white.png' %}{% endif %}" alt="" id="profile-image">
             </div>
             <input type="file" id="profile-input" style="display: none;">
             <a href="{% url 'mypage' page_type='account' %}" class="view-profile">프로필 보기</a>
             <a href="{% url "logout" %}" class="logout">로그아웃</a>
             <div class="empty"></div>
             <a href="{% url 'mypage' page_type='alarm' %}" class="side-menu {% if page_type == "alarm" %}selected{% endif %}">알림</a>
-            <a href="{% url 'mypage' page_type='account' %}" class="side-menu {% if page_type == "account" %}selected{% endif %}">계정 관리</a>
+            <a href="{% url 'mypage' page_type='account' %}" class="side-menu {% if page_type == "account" or page_type == "profile" %}selected{% endif %}">계정 관리</a>
             <a href="{% url 'mypage' page_type='payment' %}" class="side-menu {% if page_type == "payment" %}selected{% endif %}">결제 내역</a>
             <a href="{% url 'mypage' page_type='review' %}" class="side-menu {% if page_type == "review" %}selected{% endif %}">후기 관리</a>
             <a href="{% url 'mypage' page_type='cert' %}" class="side-menu {% if page_type == "cert" %}selected{% endif %}">본인 인증하기</a>
@@ -57,8 +96,15 @@
             <div class="empty"></div>
             <div class="empty"></div>
         </div>
-    <div class="mypage-wrapper">
-    {% block mypage %}{% endblock %}
+        <div class="mypage-wrapper">
+            {% block mypage %}{% endblock %}
+        </div>
     </div>
+    <div class="profile_modal">
+        <div class="original-wrapper"> <img id="original_profile"></div>
+        <div class="btn-area">
+            <button class="cancel-btn" id="cancel_profile" onclick="cancel_profile()">취소</button>
+            <button class="submit-btn" id="save_profile" onclick="save_profile()">저장하기</button>
+        </div>
     </div>
 {% endblock %}
