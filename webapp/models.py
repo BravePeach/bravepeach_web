@@ -205,23 +205,9 @@ class AccomTemplate(models.Model):
 
     @property
     def type(self):
-        if self.type_id == 1:
-            return '호텔'
+        type_list = ['호텔', '한인 민박', '현지인 집', '리조트', '가이드 집', '기타']
+        return type_list[self.type_id]
 
-        elif self.type_id == 2:
-            return '한인 민박'
-
-        elif self.type_id == 3:
-            return '현지인 집'
-
-        elif self.type_id == 4:
-            return '리조트'
-
-        elif self.type_id == 5:
-            return '가이드 집'
-
-        else:
-            return '기타'
 
 class GuideTemplate(models.Model):
     title = models.CharField(max_length=100)
@@ -232,9 +218,14 @@ class GuideTemplate(models.Model):
 
 class Cost(models.Model):
     offer = models.ForeignKey(GuideOffer, related_name="costs")
-    type = models.IntegerField(null=True)
-    price = models.IntegerField(null=True)
+    type_id = models.IntegerField(default=0)
+    price = models.IntegerField(default=0)
     info = models.CharField(max_length=100)
+
+    @property
+    def type(self):
+        type_list = ['이동수단', '숙소', '가이드비 / 수고비', '입장료 / 티켓값', '교통비', '식비', '기타']
+        return type_list[self.type_id]
 
 
 # User2Guide

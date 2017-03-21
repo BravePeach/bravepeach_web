@@ -2,7 +2,29 @@ function randomRange(n1, n2) {
   return Math.floor( (Math.random() * (n2 - n1 + 1)) + n1 );
 }
 
+function createComment() {
+    console.log("clicked")
+}
+
+function fixButton() {
+    var container = $('.button-wrapper');
+    var maxTop = $('footer').offset().top - container.outerHeight() - 55;
+    var scrollVal = $(document).scrollTop() + $(window).height() - 223;
+
+    container.css('top', scrollVal);
+    if (scrollVal > maxTop) {
+        container.css('top', maxTop);
+    }
+}
+
+
 $(function () {
+    fixButton();
+    $('.button-wrapper').fadeIn('slow');
+    $(document).scroll(function() {
+        fixButton();
+    });
+
     $('.map').each(function (index, Element) {
             var coords = $(Element).text().split(" ");
             var latlng = new google.maps.LatLng(parseFloat(coords[0]), parseFloat(coords[1]));

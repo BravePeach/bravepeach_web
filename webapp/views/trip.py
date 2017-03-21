@@ -4,13 +4,13 @@ from collections import OrderedDict
 
 from django.shortcuts import redirect, get_object_or_404
 from django.http import JsonResponse
-from django.db.models import Count, Case, When
+from django.db.models import Count, Case, When, Sum
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 
 from bravepeach.util import flavour_render
 from ..forms import RequestForm
-from ..models import Guide, Review, UserRequest, GuideOffer, Like, GuideTemplate, AccomTemplate, Comment
+from ..models import Guide, Review, UserRequest, GuideOffer, Like, GuideTemplate, AccomTemplate, Comment, Cost
 
 
 def guide_search(request):
@@ -169,6 +169,7 @@ class DeleteLike(View):
         return JsonResponse({"ok": True})
 
 
+@login_required
 def volunteer_list(request, user_request_id):
     user_request = get_object_or_404(UserRequest.objects.all(), id=user_request_id, user_id=request.user.id)
     guide_offer = GuideOffer.objects.select_related('guide').filter(request_id=user_request_id).order_by('-id')
@@ -178,6 +179,7 @@ def volunteer_list(request, user_request_id):
                                                                 })
 
 
+@login_required
 def offer_detail(request, offer_id):
     guide_offer = get_object_or_404(GuideOffer.objects.select_related('guide').filter(pk=offer_id, request__user__id=request.user.id))
 
@@ -185,18 +187,43 @@ def offer_detail(request, offer_id):
     if guide_offer.guide_template:
         for id_list in guide_offer.guide_template:
             g_template_qlist += [GuideTemplate.objects.filter(id__in=id_list, guide_id=guide_offer.guide_id)
-                                                    .extra(select={'manual': 'FIELD(id,%s)' % ','.join(map(str, id_list))},
-                                                           order_by=['manual'])]
+                                                      .extra(select={'manual': 'FIELD(id,%s)' % ','.join(map(str, id_list))},
+                                                             order_by=['manual'])]
 
     a_template_list = guide_offer.accom_template
     for i in a_template_list:
         i[0] = AccomTemplate.objects.get(id=i[0])
 
     comment_q = Comment.objects.select_related('offer').filter(offer_id=offer_id).order_by('created_at')
+    cost_qlist = []
+    type_cost = []
+    for type_id in range(7):
+        cost_q = Cost.objects.select_related('offer').filter(offer_id=offer_id, type_id=type_id).order_by('id')
+        if cost_q:
+            cost_qlist += [cost_q]
+            type_cost += [cost_q.aggregate(Sum('price'))['price__sum']]
+            if type_id == 2:
+                guide_commission = int(float(type_cost[-1]) * 0.12)
+
+    total_cost = sum(type_cost) + guide_commission
 
     return flavour_render(request, 'trip/offer_detail.html', {"guide": guide_offer.guide,
                                                               "guide_offer": guide_offer,
                                                               "g_template_qlist": g_template_qlist,
                                                               "a_template_list": a_template_list,
                                                               "comment_q": comment_q,
+                                                              "cost_qlist": cost_qlist,
+                                                              "type_cost": type_cost,
+                                                              "total_cost": total_cost,
+                                                              "guide_commission": guide_commission,
                                                               })
+
+
+@login_required
+class AddComment(View):
+    def post(self, request):
+        # offer_id
+        writer = request.GET.get('user_id')
+        content = request.GET.get('guide_id')
+        Like.objects.create(writer=writer, content=content)
+        return JsonResponse({"ok": True})

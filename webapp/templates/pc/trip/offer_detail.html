@@ -63,16 +63,15 @@
 
         <!--이동수단-->
         {% if guide_offer.trans_info %}
-            <div class="gradation-bar">이동 수단</div>
+        <div class="gradation-bar">이동 수단</div>
             {% for trans_info in guide_offer.trans_info %}
-                {{ trans_info|linebreaks }}
+        <div class="trans-wrapper">{{ trans_info }}</div>
             {% endfor %}
         {% endif %}
 
         <!--숙소-->
         {% if a_template_list %}
-            <script async defer
-                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&"></script>
 
             <div class="gradation-bar">숙소</div>
             {% for accom in a_template_list %}
@@ -106,7 +105,7 @@
         {% endif %}
 
         <!--가이드-->
-        {% if guide_offer.guide_template %}
+        {% if g_template_qlist %}
             <div class="gradation-bar">가이드</div>
             {% for g_template_q in g_template_qlist %}
                 <div class="guide-wrapper">
@@ -129,9 +128,25 @@
         {% endif %}
 
         <!--견적서-->
-        {#% if %#}
-{#        <div class="gradation-bar">견적서</div>#}
-        {#% endif %#}
+        {% if cost_qlist %}
+        <div class="gradation-bar">견적서</div>
+        {% for cost_q in cost_qlist %}
+        <div class="cost-tilte">{{ cost_q.0.type }}</div>
+        {% for cost in cost_q %}
+        <div class="cost-content-wrapper">
+            {{cost.info}} <span style="float: right;">{{cost.price|intcomma}} 원</span>
+        </div>
+        {% endfor %}
+        <div class="type-total-cost"><span style="color:#dd3537;">{{ type_cost|index:forloop.counter0|intcomma }}</span> 원</div>
+        {% if cost_q == cost_qlist|last %}
+        <hr class="red-hr">
+        {% else %}
+        <hr>
+        {% endif %}
+        {% endfor %}
+        <div class="total-cost-wrapper">총 경비 <span class="total-cost">{{ total_cost|intcomma }}</span> 원</div>
+        <div class="total-cost-note">(가이드 비용의 수수료 12% {{guide_commission|intcomma}}원 포함)</div>
+        {% endif %}
 
     <div class="request-wrapper">
         <div class="comment-title">수정요청 / 문의사항</div>
@@ -150,7 +165,7 @@
                         </div>
                     </div>
                         <div class="comment-time-guide">
-                        {{ comment.created_at }}
+                        {{ comment.created_at|date:'Y.m.d H:i' }}
                         </div>
 
                 {% elif comment.writer == guide_offer.request.user_id %}
@@ -160,13 +175,23 @@
                         </div>
                     </div>
                         <div class="comment-time-user">
-                            {{ comment.created_at }}
+                            {{ comment.created_at|date:'Y.m.d H:i' }}
                         </div>
 
                 {% endif %}
             {% endfor %}
         </div>
+        <div class="comment-form-wrapper">
+            <textarea class="comment-form"></textarea>
+            <a class="comment-submit" onclick="createComment()">등록</a>
+        </div>
+
     </div>
+
+        <div class="button-wrapper">
+            <a class="pay-button">결제 하기</a>
+            <a class="back-button">리스트로 가기</a>
+        </div>
 
     </div>
 
