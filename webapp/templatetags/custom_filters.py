@@ -24,3 +24,8 @@ def to_list(value):
 @register.filter(name="index")
 def index(l, idx):
     return l[idx]
+
+
+@register.filter(name="addcls")
+def addcls(field, cls):
+    return field.as_widget(attrs={"class": cls})

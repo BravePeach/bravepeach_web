@@ -1,0 +1,23 @@
+{% extends "pc/user/mypage/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load custom_filters %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'less/pc/mypage_unsub.less'|compile %}">
+{% endblock %}
+
+{% block mypage %}
+    <div class="unsub-title">BravePeach를 정말로 떠나실 건가요?</div>
+    <div class="unsub-subtitle">붙잡고 싶지만 정말 떠나실 거라면 이유를 알려주세요!</div>
+    <form action="{% url 'unsub_bp' %}" method="post">
+        {% csrf_token %}
+        <div class="reason">{{ unsub_form.delete_reason }}</div>
+        {{ unsub_form.delete_reason_optional }}
+        <div class="btn-area">
+            <a href="{% url 'mypage_default' %}" class="cancel-btn">남아있기</a>
+            <button class="submit-btn">제출하고 탈퇴하기</button>
+        </div>
+    </form>
+{% endblock %}

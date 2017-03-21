@@ -19,8 +19,7 @@ class Profile(models.Model):
     rating = models.DecimalField(max_digits=2, decimal_places=1, default=Decimal('0.0'))
     nationality = models.CharField(max_length=40, blank=True)
     birthday = models.DateField(blank=True, null=True)
-    gender = models.NullBooleanField(null=True)
-    # profile_image = models.URLField(default='',  null=True)
+    gender = models.IntegerField(null=True)
     photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
     deleted_at = models.DateTimeField(null=True)
     delete_reason_optional = models.CharField(max_length=100, blank=True)
@@ -36,17 +35,6 @@ class Profile(models.Model):
             return " ".join([self.user.first_name, self.user.last_name])
         else:
             return "".join([self.user.last_name, self.user.first_name])
-
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
 
 
 class Notice(models.Model):
@@ -163,9 +151,15 @@ class GuideOffer(models.Model):
 
 
 # User2Guide
-class Like(models.Model):
+class UserLike(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     guide = models.ForeignKey(Guide)
+
+
+# Guide2User
+class GuideLike(models.Model):
+    guide = models.ForeignKey(Guide)
+    request = models.ForeignKey(UserRequest)
 
 
 class CancelledOffer(models.Model):
@@ -229,15 +223,12 @@ class Cost(models.Model):
 
 
 # User2Guide
-class Review(models.Model):
-    offer = models.ForeignKey(GuideOffer, related_name="reviews")
-    writer = models.CharField(max_length=100)
-    receiver = models.CharField(max_length=100)
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
+class UserReview(models.Model):
+    offer = models.ForeignKey(GuideOffer, related_name="user_review")
+    rating = models.FloatField(null=False)
     content = RedactorField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    guide = models.ForeignKey(Guide)
-    location = models.CharField(max_length=100)
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL)
+    receiver = models.ForeignKey(Guide)
 
 
 class Comment(models.Model):
@@ -245,3 +236,12 @@ class Comment(models.Model):
     content = models.CharField(max_length=300, default="")
     writer = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+# Guide2User
+class GuideReview(models.Model):
+    offer = models.ForeignKey(GuideOffer, related_name="guide_review")
+    rating = models.FloatField(null=False)
+    content = RedactorField()
+    writer = models.ForeignKey(Guide)
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL)

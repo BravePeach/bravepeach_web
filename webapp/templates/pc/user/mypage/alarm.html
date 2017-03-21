@@ -13,15 +13,13 @@
 {% endblock %}
 
 {% block mypage %}
-    <div class="mypage-wrapper">
-        <div class="section-title">
-            <div class="title-text">알림</div>
-            <div class="show-toggle">
-                <img src="{% static 'image/icon/arrow_down_white.png' %}" alt="">
-            </div>
+    <div class="section-title">
+        <div class="title-text">알림</div>
+        <div class="show-toggle">
+            <img src="{% static 'image/icon/arrow_down_white.png' %}" alt="">
         </div>
-        {% for alarm in alarm_list %}
-            <div class="alarm-content {% if forloop.counter > 6 %}hidden{% endif %}">{{ alarm }}</div>
-        {% endfor %}
     </div>
+    {% for alarm in alarm_list %}
+        <div class="alarm-content {% if forloop.counter > 6 %}hidden{% endif %}">{{ alarm }}</div>
+    {% endfor %}
 {% endblock %}

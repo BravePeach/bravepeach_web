@@ -39,7 +39,41 @@ function cert_phone2() {
     // TODO: empty all input and show cert msg
 }
 
+function edit_profile() {
+
+    if (($("#id_password").val()===""&&$("#id_password2").val()==="") ||
+        (validate_pw() && $("#id_password").val()===$("#id_password2").val())) {
+        $(".hidden_submit").trigger("click");
+    } else {
+        swal("Invalid PW format", "Password must contains at least one alphabet/number/special character.", "error");
+        $("#id_password").val("");
+        $("#id_password2").val("");
+        $("#id_password").focus();
+    }
+}
+
 $(function(){
+        $("#id_password2").on("change keyup", function(){
+        var pw_val = $("#id_password").val();
+        var pw_val2 = $("#id_password2").val();
+
+        if (pw_val === "" || pw_val2 === "") {
+            $(".pw-notice").css("display", "inline-block");
+            $(".pw-notice.notice-right").css("display", "none");
+            $(".pw-notice.notice-wrong").css("display", "none");
+        } else {
+            if (pw_val === pw_val2) {
+                $(".pw-notice.mobile-notice").css("display", "none");
+                $(".pw-notice.notice-right").css("display", "inline-block");
+                $(".pw-notice.notice-wrong").css("display", "none");
+            } else {
+                $(".pw-notice.mobile-notice").css("display", "none");
+                $(".pw-notice.notice-right").css("display", "none");
+                $(".pw-notice.notice-wrong").css("display", "inline-block");
+            }
+        }
+    });
+
     $(".show-toggle").click(function() {
             var btn = $(this);
             if (btn.hasClass("expanded")) {

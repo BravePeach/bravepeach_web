@@ -19,7 +19,7 @@
             <div class="profile-pic">
                 <img src="" alt="">
             </div>
-            <a href="{% url 'profile' %}" class="view-profile">프로필 보기</a>
+            <a href="{% url 'mypage' page_type='account' %}" class="view-profile">프로필 보기</a>
             <a href="{% url "logout" %}" class="logout">로그아웃</a>
             <div class="empty"></div>
             <a href="{% url 'mypage' page_type='alarm' %}" class="side-menu {% if page_type == "alarm" %}selected{% endif %}">알림</a>
