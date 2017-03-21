@@ -10,7 +10,8 @@ from django.contrib.auth.decorators import login_required
 
 from bravepeach.util import flavour_render
 from ..forms import RequestForm
-from ..models import Guide, Review, UserRequest, GuideOffer, Like, GuideTemplate, AccomTemplate
+from ..models import (Guide, UserReview, GuideReview, UserRequest, GuideOffer, UserLike, GuideLike, GuideTemplate,
+                      AccomTemplate)
 
 
 def guide_search(request):
@@ -40,14 +41,8 @@ class FilterGuide(View):
             guide_queryset = guide_queryset.order_by('-pay_cnt')
 
         elif sort == "reviewNum":
-            guide_id_list = Review.objects.values('receiver').annotate(
-                receiver_cnt=Count(
-                    Case(
-                        When(
-                            receiver__startswith='G', then=1
-                        )
-                    )
-                )
+            guide_id_list = UserReview.objects.values('receiver').annotate(
+                receiver_cnt=Count(Case(When(receiver__startswith='G', then=1)))
             ).order_by('-receiver_cnt').values_list('receiver', flat=True)
 
             guide_id_list = [int(i[1:]) for i in guide_id_list]
@@ -60,8 +55,8 @@ class FilterGuide(View):
                     'guide_location': guide.guide_location,
                     'first_name': guide.user.first_name,
                     'last_name': guide.user.last_name,
-                    'review_num': Review.objects.filter(guide_id=guide.id).count(),
-                    'is_liked': Like.objects.filter(user_id=request.user.id, guide_id=guide.id).exists()}
+                    'review_num': UserReview.objects.filter(guide_id=guide.id).count(),
+                    'is_liked': UserLike.objects.filter(user_id=request.user.id, guide_id=guide.id).exists()}
             result.append(temp)
         result += [request.user.id]
         return JsonResponse(result, safe=False)
@@ -78,7 +73,7 @@ def enroll_trip(request):
         data['user'] = request.user.id
 
         for key in ['trans_via', 'trans_type', 'accom_location', 'accom_type', 'theme', 'guide_type', 'importance']:
-            if data.__contains__(key):
+            if key in data:
                 new_value = sum([int(i) for i in data.getlist(key)])
                 data.update({key: new_value})
 
@@ -149,7 +144,6 @@ def like(request):
         select={'manual': 'FIELD(id,%s)' % ','.join(map(str, guide_id_list))},
         order_by=['manual']
     )
-
     return flavour_render(request, 'trip/like.html', {"guide_list": guide_list})
 
 
@@ -173,22 +167,16 @@ def volunteer_list(request, user_request_id):
     user_request = get_object_or_404(UserRequest.objects.all(), id=user_request_id, user_id=request.user.id)
     guide_offer = GuideOffer.objects.select_related('guide').filter(request_id=user_request_id).order_by('-id')
     # guide_list = Guide.objects.filter(id__in=guide_offer.values('guide_id'))
-    return flavour_render(request, 'trip/volunteer_list.html', {"user_request": user_request,
-                                                                "guide_offers": guide_offer,
-                                                                })
+    return flavour_render(request, 'trip/volunteer_list.html',
+                          {"user_request": user_request, "guide_offers": guide_offer})
 
 
 def offer_detail(request, offer_id):
-    guide_offer = get_object_or_404(GuideOffer.objects.select_related('guide').filter(pk=offer_id, request__user__id=request.user.id))
+    guide_offer = (get_object_or_404(GuideOffer.objects.select_related('guide')
+                                     .filter(pk=offer_id, request__user__id=request.user.id)))
     flat_guide_template = [val for sublist in guide_offer.guide_template for val in sublist]
-    return flavour_render(request, 'trip/offer_detail.html', {"guide": guide_offer.guide,
-                                                              "guide_offer": guide_offer,
-                                                              "g_template": GuideTemplate.objects
-                                                              .filter(
-                                                                  id__in=flat_guide_template,
-                                                                  guide_id=guide_offer.guide_id
-                                                              )
-                                                              .extra(
-                                                                  select={'manual': 'FIELD(id,%s)' % ','.join(map(str, flat_guide_template))},
-                                                                  order_by=['manual']
-                                                              )})
+    return flavour_render(request, 'trip/offer_detail.html',
+                          {"guide": guide_offer.guide, "guide_offer": guide_offer,
+                           "g_template": (GuideTemplate.objects.filter(id__in=flat_guide_template, guide_id=guide_offer.guide_id)
+                                          .extra(select={'manual': 'FIELD(id,%s)' % ','.join(map(str, flat_guide_template))},
+                                                 order_by=['manual']))})

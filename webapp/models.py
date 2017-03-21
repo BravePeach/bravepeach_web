@@ -5,8 +5,6 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django_mysql.models import JSONField
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.conf import settings
 from redactor.fields import RedactorField
 
@@ -35,17 +33,6 @@ class Profile(models.Model):
             return " ".join([self.user.first_name, self.user.last_name])
         else:
             return "".join([self.user.last_name, self.user.first_name])
-
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
 
 
 class Notice(models.Model):
@@ -162,9 +149,15 @@ class GuideOffer(models.Model):
 
 
 # User2Guide
-class Like(models.Model):
+class UserLike(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     guide = models.ForeignKey(Guide)
+
+
+# Guide2User
+class GuideLike(models.Model):
+    guide = models.ForeignKey(Guide)
+    request = models.ForeignKey(UserRequest)
 
 
 class CancelledOffer(models.Model):
@@ -199,12 +192,18 @@ class Cost(models.Model):
 
 
 # User2Guide
-class Review(models.Model):
-    offer = models.ForeignKey(GuideOffer, related_name="reviews")
-    writer = models.CharField(max_length=100)
-    receiver = models.CharField(max_length=100)
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
+class UserReview(models.Model):
+    offer = models.ForeignKey(GuideOffer, related_name="user_review")
+    rating = models.FloatField(null=False)
     content = RedactorField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    guide = models.ForeignKey(Guide)
-    location = models.CharField(max_length=100)
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL)
+    receiver = models.ForeignKey(Guide)
+
+
+# Guide2User
+class GuideReview(models.Model):
+    offer = models.ForeignKey(GuideOffer, related_name="guide_review")
+    rating = models.FloatField(null=False)
+    content = RedactorField()
+    writer = models.ForeignKey(Guide)
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL)

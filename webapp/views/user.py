@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm
-from ..models import Profile, GuideOffer, Review
+from ..models import Profile, GuideOffer, UserReview
 from bravepeach.util import flavour_render
 
 
@@ -134,7 +134,7 @@ def mypage(request, page_type="account"):
 
     elif page_type == "review":
         # TODO: model change?
-        review_list = Review.objects.filter(writer=request.user).order_by('-id')
+        review_list = UserReview.objects.filter(writer=request.user).order_by('-id')
         param_dict['review_list'] = review_list
     elif page_type == "cert":
         pass
