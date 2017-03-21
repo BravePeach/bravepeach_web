@@ -5,10 +5,35 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'less/pc/mypage_base.less'|compile %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.Jcrop.min.css'%}">
 {% endblock %}
 
 {% block js %}
     <script src="{% static 'js/mypage.js' %}"></script>
+    <script src="{% static 'js/jquery.Jcrop.min.js' %}"></script>
+    <script>
+    $(function(){
+        $(".profile-pic").click(function(){
+            $("#profile-input").click();
+        });
+
+        $("#profile-input").change(function(){
+            var formdata = new FormData();
+            formdata.append("original", $("#profile-input")[0].files[0]);
+
+            $.ajax({
+                url: "{% url 'upload_original' %}",
+                processData: false,
+                contentType: false,
+                data: formdata,
+                type: "POST",
+                success: function(data){
+                    alert(data["ok"]);
+                }
+            });
+        });
+    });
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -17,8 +42,9 @@
         <div class="page-subtitle">{{ type_dict|key:page_type }}</div>
         <div class="sidebar">
             <div class="profile-pic">
-                <img src="" alt="">
+                <img alt="" id="profile-image">
             </div>
+            <input type="file" id="profile-input" style="display: none;">
             <a href="{% url 'mypage' page_type='account' %}" class="view-profile">프로필 보기</a>
             <a href="{% url "logout" %}" class="logout">로그아웃</a>
             <div class="empty"></div>

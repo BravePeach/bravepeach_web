@@ -150,37 +150,24 @@ LOGIN_URL = '/login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Media
-
-# MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
-
-
-AWS_S3_CUSTOM_DOMAIN = 'bravestatics.s3-website-northeast-1.amazonaws.com'
-
-# STATICFILES_LOCATION = 'static'
-# STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-# STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-
-# MEDIA FILE LOCATION
+AWS_S3_CUSTOM_DOMAIN = 'cdn.bravepeach.com'
 MEDIAFILES_LOCATION = 'media'
-MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+MEDIA_URL = "https://{domain}/{media}/".format(domain=AWS_S3_CUSTOM_DOMAIN, media=MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # AWS
 AWS_STORAGE_BUCKET_NAME = 'bravestatics'
-
-# For Deploy
-APT_PACKAGE_LIST = ["git", "build-essential", "python3-dev", "python3-pip",
-                    "libmysqlclient-dev", "libssl-dev", "libffi-dev",
-                    ]
-
-# AWS
 AWS_ACCESS_KEY_ID = LOCAL_SETTINGS["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = LOCAL_SETTINGS["AWS_SECRET_ACCESS_KEY"]
 
+# For Deploy
+APT_PACKAGE_LIST = ("git", "build-essential", "python3-dev", "python3-pip",
+                    "libmysqlclient-dev", "libssl-dev", "libffi-dev",
+                    )
+
 # Session
 SESSION_COOKIE_AGE = 60*30  # 30min. After that, auto logout
-
 
 # wysiwyg-redactor
 # https://pypi.python.org/pypi/django-wysiwyg-redactor

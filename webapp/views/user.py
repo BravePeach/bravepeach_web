@@ -162,6 +162,15 @@ def edit_profile(request):
     return redirect("mypage", page_type="profile")
 
 
+def upload_original(request):
+    if request.method == "POST":
+        post = request.POST
+        file = request.FILES
+        print(post, file)
+        return JsonResponse({"ok": True})
+    return JsonResponse({"ok": False})
+
+
 @login_required
 def unsub_bp(request):
     if request.method != "POST":
