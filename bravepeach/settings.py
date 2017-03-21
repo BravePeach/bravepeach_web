@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'Asia/Seoul'
 
@@ -179,12 +179,11 @@ AWS_ACCESS_KEY_ID = LOCAL_SETTINGS["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = LOCAL_SETTINGS["AWS_SECRET_ACCESS_KEY"]
 
 # Session
-SESSION_COOKIE_AGE = 60*60*24*30    # 1month
+SESSION_COOKIE_AGE = 60*30  # 30min. After that, auto logout
 
 
 # wysiwyg-redactor
 # https://pypi.python.org/pypi/django-wysiwyg-redactor
-
 REDACTOR_OPTIONS = {'lang': 'ko'}
 REDACTOR_UPLOAD = 'uploads/'
 REDACTOR_AUTH_DECORATOR = 'django.contrib.auth.decorators.login_required'
