@@ -16,73 +16,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='GuideLike',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('guide', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='webapp.Guide')),
-                ('request', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='webapp.UserRequest')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='GuideReview',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('rating', models.FloatField()),
-                ('content', redactor.fields.RedactorField()),
-                ('offer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='guide_review', to='webapp.GuideOffer')),
-                ('receiver', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('writer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='webapp.Guide')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='UserLike',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('guide', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='webapp.Guide')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='UserReview',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('rating', models.FloatField()),
-                ('content', redactor.fields.RedactorField()),
-                ('offer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_review', to='webapp.GuideOffer')),
-                ('receiver', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='webapp.Guide')),
-                ('writer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.RemoveField(
-            model_name='like',
-            name='guide',
-        ),
-        migrations.RemoveField(
-            model_name='like',
-            name='user',
-        ),
-        migrations.RemoveField(
-            model_name='review',
-            name='guide',
-        ),
-        migrations.RemoveField(
-            model_name='review',
-            name='offer',
-        ),
-        migrations.RemoveField(
-            model_name='review',
-            name='user',
-        ),
         migrations.AlterField(
             model_name='profile',
             name='photo',
             field=models.ImageField(blank=True, upload_to='profile/%Y_%m_%d'),
-        ),
-        migrations.DeleteModel(
-            name='Like',
-        ),
-        migrations.DeleteModel(
-            name='Review',
         ),
     ]
