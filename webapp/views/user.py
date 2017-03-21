@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from bravepeach import settings
-from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm
+from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm, UserReviewForm
 from ..models import Profile, GuideOffer, UserReview
 from bravepeach.util import flavour_render
 
@@ -54,10 +54,13 @@ def register_bravepeach(request):
             new_user.username = user_form.cleaned_data['email']
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
-            profile_instance = get_object_or_404(Profile, user_id=new_user.id)
-            profile_form = ProfileEditForm(request.POST, instance=profile_instance)
+            # profile_instance = get_object_or_404(Profile, user_id=new_user.id)
+            # profile_form = ProfileEditForm(request.POST, instance=profile_instance)
+            profile_form = ProfileEditForm(request.POST)
             if profile_form.is_valid():
-                profile_form.save()
+                new_profile = profile_form.save(commit=False)
+                new_profile.user = new_user
+                new_profile.save()
                 this_user = authenticate(username=user_form.cleaned_data['email'],
                                          password=user_form.cleaned_data["password"])
                 if this_user:
@@ -218,3 +221,14 @@ def unsub_bp(request):
         return redirect('logout')
     else:
         return redirect('mypage', page_type="unsub")
+
+
+@login_required
+def write_review(request, offer_id):
+    offer = GuideOffer.objects.get(id=offer_id)
+    prev_review = UserReview.objects.filter(offer_id=offer_id)
+    if prev_review:
+        form = UserReviewForm(instance=prev_review)
+    else:
+        form = UnsubscribeForm()
+    return flavour_render(request, "user/write_review.html", {"offer": offer, "review_form": form})
