@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.db.models import Count, Case, When, Sum
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
+from django.utils import formats
 
 from bravepeach.util import flavour_render
 from ..forms import RequestForm
@@ -197,6 +198,7 @@ def offer_detail(request, offer_id):
     comment_q = Comment.objects.select_related('offer').filter(offer_id=offer_id).order_by('created_at')
     cost_qlist = []
     type_cost = []
+    guide_commission = 0
     for type_id in range(7):
         cost_q = Cost.objects.select_related('offer').filter(offer_id=offer_id, type_id=type_id).order_by('id')
         if cost_q:
@@ -219,11 +221,12 @@ def offer_detail(request, offer_id):
                                                               })
 
 
-@login_required
 class AddComment(View):
     def post(self, request):
-        # offer_id
-        writer = request.GET.get('user_id')
-        content = request.GET.get('guide_id')
-        Like.objects.create(writer=writer, content=content)
-        return JsonResponse({"ok": True})
+        offer_id = request.POST.get('offer_id')
+        writer = request.POST.get('user_id')
+        content = request.POST.get('content')
+        Comment.objects.create(writer=writer, content=content, offer_id=offer_id)
+        c = Comment.objects.all().last()
+        result = {'content': c.__dict__['content'], 'created_at': formats.date_format(c.__dict__['created_at'], "")}
+        return JsonResponse(result)

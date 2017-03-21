@@ -2,8 +2,29 @@ function randomRange(n1, n2) {
   return Math.floor( (Math.random() * (n2 - n1 + 1)) + n1 );
 }
 
-function createComment() {
-    console.log("clicked")
+function addComment() {
+    $.ajax({
+        url: "/add_comment/",
+        type: "POST",
+        data: {
+            user_id: document.getElementById("user_id").value,
+            offer_id: document.getElementById("offer_id").value,
+            content: $(".comment-form").val(),
+        },
+        success: function(c){
+            $('.comment-form').val('');
+            var newComment = '<div class="comment-inside-wrapper" style="display: none">' +
+                        '<pre class="comment-user">' + c.content +
+                        '</pre>' +
+                    '</div>' +
+                        '<div class="comment-time-user">' + c.created_at +
+                        '</div>';
+
+            $('.comment-inside-wrapper2').last().append(newComment);
+            $('.comment-inside-wrapper').fadeIn('slow');
+        }
+    })
+
 }
 
 function fixButton() {

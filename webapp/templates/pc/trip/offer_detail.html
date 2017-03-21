@@ -91,9 +91,7 @@
 
                         </div>
                     {% endif %}
-                    <div class="content">
-                        {{ accom.0.content }}
-                    </div>
+                    <pre class="content">{{ accom.0.content }}</pre>
                     <div class="map" style="width:790px; height: 467px;">{{ accom.0.lat }} {{ accom.0.lng }}</div>
                 </div>
                 {% if accom != a_template_list|last %}
@@ -121,7 +119,7 @@
                         {% if g_template.picture %}
                         <div class="guide-pic"></div>
                         {% endif %}
-                        <div class="guide-content"> {{ g_template.content }}</div>
+                        <pre class="guide-content"> {{ g_template.content }}</pre>
                     {% endfor %}
                 </div>
             {% endfor %}
@@ -160,30 +158,34 @@
 
                         </div>
 
-                        <div class="comment-guide">
+                        <pre class="comment-guide">
                             {{ comment.content }}
-                        </div>
+                        </pre>
                     </div>
                         <div class="comment-time-guide">
                         {{ comment.created_at|date:'Y.m.d H:i' }}
                         </div>
 
                 {% elif comment.writer == guide_offer.request.user_id %}
+                <div class="comment-inside-wrapper2">
                     <div class="comment-inside-wrapper">
-                        <div class="comment-user">
+                        <pre class="comment-user">
                             {{ comment.content }}
-                        </div>
+                        </pre>
                     </div>
                         <div class="comment-time-user">
                             {{ comment.created_at|date:'Y.m.d H:i' }}
                         </div>
+                </div>
 
                 {% endif %}
             {% endfor %}
         </div>
         <div class="comment-form-wrapper">
             <textarea class="comment-form"></textarea>
-            <a class="comment-submit" onclick="createComment()">등록</a>
+            <input type="hidden" value="{{guide_offer.request.user_id}}" id="user_id">
+            <input type="hidden" value="{{guide_offer.id}}" id="offer_id">
+            <a class="comment-submit" onclick="addComment()">등록</a>
         </div>
 
     </div>
