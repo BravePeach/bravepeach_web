@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from bravepeach.util import flavour_render
 from ..forms import RequestForm
-from ..models import Guide, Review, UserRequest, GuideOffer, Like, GuideTemplate, AccomTemplate
+from ..models import Guide, Review, UserRequest, GuideOffer, Like, GuideTemplate, AccomTemplate, Comment
 
 
 def guide_search(request):
@@ -192,8 +192,11 @@ def offer_detail(request, offer_id):
     for i in a_template_list:
         i[0] = AccomTemplate.objects.get(id=i[0])
 
+    comment_q = Comment.objects.select_related('offer').filter(offer_id=offer_id).order_by('created_at')
+
     return flavour_render(request, 'trip/offer_detail.html', {"guide": guide_offer.guide,
                                                               "guide_offer": guide_offer,
                                                               "g_template_qlist": g_template_qlist,
                                                               "a_template_list": a_template_list,
+                                                              "comment_q": comment_q,
                                                               })

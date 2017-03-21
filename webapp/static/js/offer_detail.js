@@ -39,7 +39,7 @@ $(function () {
             var newLatlng = latlng.destinationPoint(randomBring, randomDist);
 
             var myOptions = {
-                zoom: 14,
+                zoom: 15,
                 center: newLatlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 disableDefaultUI: false,

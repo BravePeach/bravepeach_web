@@ -173,7 +173,8 @@
 .gradation-bar{
     width: 880px;
     height: 55px;
-    border-radius: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     background-image: linear-gradient(to right, #f2ad8a, #e64c47);
     font-size: 24px;
     font-weight: normal;
@@ -184,4 +185,315 @@
     color: #ffffff;
     padding: 15px 0px 0px 20px;
     margin-top: 30px;
+}
+
+.accom-date{
+    font-family: NanumSquare;
+    font-size: 24px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+    position: absolute;
+    top: 30px;
+    left: 49px;
+
+}
+
+.accom-city{
+    font-family: NanumSquare;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+    position: absolute;
+    top: 30px;
+    left: 499px;
+}
+
+.accom-type{
+    position: absolute;
+    width: 125px;
+    height: 48px;
+    border-radius: 8px;
+    border: solid 1px #979797;
+    top: 76px;
+    left: 20px;
+    font-family: NanumSquare;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    padding: 13px 0px;
+    text-align: center;
+}
+
+.accom-title{
+    font-family: NanumSquare;
+    font-size: 26px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #dd3537;
+    position: absolute;
+    top: 85px;
+    left: 158px;
+}
+
+.accom-location{
+    font-family: NanumSquare;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+    position: absolute;
+    top: 127px;
+    left: 158px;
+}
+
+.accom-pic{
+    width: 790px;
+    height: 467px;
+    margin: 20px auto;
+}
+
+.content{
+    width: 790px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.5);
+    border: solid 1px #979797;
+    font-family: NanumSquare;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.4;
+    letter-spacing: normal;
+    color: #000000;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.small-circle{
+    width: 8px;
+    height: 8px;
+    background-color: #e64c47;
+    border-radius: 4px;
+    float: left;
+    position: absolute;
+    top: 39px;
+    left: 20px;
+}
+
+.big-circle{
+    width: 50px;
+    height: 50px;
+    background-color: #e64c47;
+    border-radius: 25px;
+    font-family: NanumSquare;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    padding-top: 14px;
+    margin-left: -25px;
+    margin-bottom: 24px;
+    display: inline-block;
+}
+
+.map{
+    margin: 20px auto 30px auto;
+}
+
+hr{margin: 0px;
+    border-top: solid 1px #979797;
+}
+
+.guide-wrapper{
+    margin: 27px 0px 70px 34px;
+    border-left: 2px solid #bbbbbb;
+}
+
+.guide-date{
+    display: inline-block;
+    font-family: NanumSquareOTFR;
+    font-size: 36px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+
+.medium-circle{
+    width: 28px;
+    height: 28px;
+    background-color: #e64c47;
+    border-radius: 14px;
+    margin-left: -14px;
+    display: inline-block;
+}
+
+.guide-title{
+    display: inline-block;
+    font-family: NanumSquare;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #dd3537;
+    position: absolute;
+    top:4px;
+    margin-left: 20px;
+}
+
+.guide-content{
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+    margin: 16px 0px 35px 32px;
+}
+
+.guide-picture{
+    width: 742px;
+    margin: 16px 0px 0px 32px
+}
+
+.request-wrapper{
+    width: 848px;
+    margin: auto;
+}
+
+.comment-title{
+    font-family: NanumSquare;
+  font-size: 36px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #e64c47;
+    margin-left: 15px;
+}
+
+.comment-sub-title{
+    font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+    margin: 10px 0px 0px 15px;
+}
+
+.request-wrapper hr{
+    margin: 25px 0px 29px 0px;
+}
+
+.enroll-trip-button{
+    display: none !important;
+}
+
+.comment-inside-wrapper{
+    overflow: auto;
+    padding: 2px;
+}
+
+.comment-user{
+    max-width: 752px;
+    border-radius: 25px;
+    border: solid 1px #e64c47;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #000000;
+    padding: 10px 20px;
+    float: right;
+    margin-right: 12px;
+}
+
+.comment-time-user{
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #979797;
+    display: inline-block;
+    margin-left: 665px;
+    margin-top: 6px;
+}
+
+.comment-wrapper{
+    overflow: auto;
+}
+
+.comment-guide{
+    max-width: 673px;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #000000;
+    padding: 10px 20px;
+    float: left;
+    margin-left: 10px;
+  background-color: #eeeeee;
+}
+
+.comment-time-guide{
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #979797;
+    display: inline-block;
+    margin-left: 78px;
+    margin-top: 6px;
+}
+
+.guide-comment-pic{
+    width: 54px;
+    height: 54px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5), 2px 2px 2px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 27px;
+    float: left;
+    margin-left: 14px;
 }

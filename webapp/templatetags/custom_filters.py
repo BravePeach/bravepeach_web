@@ -20,3 +20,7 @@ def key(d, key_name):
 def to_list(value):
     return range(value)
 
+
+@register.filter(name="index")
+def index(l, idx):
+    return l[idx]

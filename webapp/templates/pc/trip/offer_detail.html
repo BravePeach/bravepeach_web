@@ -5,104 +5,169 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/pc/offer_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pc/offer_detail.css' %}">
 {% endblock %}
 {% block js %}
-<script src="{% static 'js/offer_detail.js' %}"></script>
+    <script src="{% static 'js/offer_detail.js' %}"></script>
 {% endblock %}
 {% block title %}{% endblock %}
 
 {% block content %}
-<div class="main-container contents-wrapper">
-    <section name="top">
-        <h1 class="sup-title-peach">가이드 견적서</h1>
-        <h2 class="sub-title"></h2>
-    </section>
+    <div class="main-container contents-wrapper">
+        <section name="top">
+            <h1 class="sup-title-peach">가이드 견적서</h1>
+            <h2 class="sub-title">{{ guide_offer.travel_period.0 }} - {{ guide_offer.travel_period|last }}</h2>
+        </section>
 
-    <div class="guide-brief">
-        <div class="brief-image"></div>
-        <div class="brief-contents">
-            <div class="like">{% if request.user.is_authenticated %}
-                {# TODO: heart sticker from like. Make it to a tag and bind js+ajax function #}
-                <img src="{% static 'image/icon/heart_white_shadow.png' %}" alt=""> <img src="" alt="">{% endif %}
-            </div>
-            <div class="brief-title">
-                <span class="guide-name">{{ guide.full_name }}</span> 님은 <span class="highlight">스루 가이드{% if guide.is_local %}, 현지 가이드{% endif %}</span>
-                입니다.
-            </div>
-            <div class="location">
-                <div class="location-title">가능 지역</div>
-                <div class="location-list ellipsis">{% for loc in guide.guide_location %} {{ loc }} {% endfor %}</div>
-            </div>
-            <div class="rating">
-                <div class="rating-title">평점</div>
-                <div class="rating-point">
-                    {% for i in rating %}
-                    <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">
-                    {% endfor %}
-                    {% if guide.clean_rating.1 == 0.5 %}
-                    <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="rating-img">
-                    {% else %}
-                    <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
-                    {% endif %}
-                    {% for i in norating %}
-                    <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
-                    {% endfor %}
-                    {{ guide.clean_rating.0|add:guide.clean_rating.1|floatformat:1 }} / 5.0
+        <div class="guide-brief">
+            <div class="brief-image"></div>
+            <div class="brief-contents">
+                <div class="like">{% if request.user.is_authenticated %}
+                    {# TODO: heart sticker from like. Make it to a tag and bind js+ajax function #}
+                    <img src="{% static 'image/icon/heart_white_shadow.png' %}" alt=""> <img src="" alt="">{% endif %}
+                </div>
+                <div class="brief-title">
+                    <span class="guide-name">{{ guide.full_name }}</span> 님은 <span class="highlight">스루 가이드
+                    {% if guide.is_local %}, 현지 가이드{% endif %}</span>
+                    입니다.
+                </div>
+                <div class="location">
+                    <div class="location-title">가능 지역</div>
+                    <div class="location-list ellipsis">{% for loc in guide.guide_location %}
+                        {{ loc }} {% endfor %}</div>
+                </div>
+                <div class="rating">
+                    <div class="rating-title">평점</div>
+                    <div class="rating-point">
+                        {% for i in rating %}
+                            <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">
+                        {% endfor %}
+                        {% if guide.clean_rating.1 == 0.5 %}
+                            <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="rating-img">
+                        {% else %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endif %}
+                        {% for i in norating %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endfor %}
+                        {{ guide.clean_rating.0|add:guide.clean_rating.1|floatformat:1 }} / 5.0
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="guide-cnt">가이드 {{ guide.guide_cnt }} 건</div>
+                    |
+                    <div class="review-cnt">후기 {{ reviews|length }} 개</div>
                 </div>
             </div>
-            <div class="info">
-                <div class="guide-cnt">가이드 {{ guide.guide_cnt }} 건</div>
-                |
-                <div class="review-cnt">후기 {{ reviews|length }} 개</div>
-            </div>
+        </div>
+
+        <!--이동수단-->
+        {% if guide_offer.trans_info %}
+            <div class="gradation-bar">이동 수단</div>
+            {% for trans_info in guide_offer.trans_info %}
+                {{ trans_info|linebreaks }}
+            {% endfor %}
+        {% endif %}
+
+        <!--숙소-->
+        {% if a_template_list %}
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&"></script>
+
+            <div class="gradation-bar">숙소</div>
+            {% for accom in a_template_list %}
+                <div style="position:relative; padding-top: 149px;">
+                    <div class="small-circle"></div>
+                    <div class="accom-date">{{ accom.1 }} - {{ accom.2 }}</div>
+                    <div class="accom-city">{{ accom.0.country }}, {{ accom.0.city }}</div>
+                    <div class="accom-type">{{ accom.0.type }}</div>
+                    <div class="accom-title">
+                        {{ accom.0.title }}
+                    </div>
+                    <div class="accom-location">
+                        위치: {{ accom.0.small_city }}, {{ accom.0.city }}
+                    </div>
+                    {% if accom.pic_list %}
+                        <div class="accom-pic">
+
+                        </div>
+                    {% endif %}
+                    <div class="content">
+                        {{ accom.0.content }}
+                    </div>
+                    <div class="map" style="width:790px; height: 467px;">{{ accom.0.lat }} {{ accom.0.lng }}</div>
+                </div>
+                {% if accom != a_template_list|last %}
+                    <hr>
+                {% else %}
+                    <div style="height: 30px;"></div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <!--가이드-->
+        {% if guide_offer.guide_template %}
+            <div class="gradation-bar">가이드</div>
+            {% for g_template_q in g_template_qlist %}
+                <div class="guide-wrapper">
+                    <div>
+                        <div class="big-circle">{{ forloop.counter }}일</div>
+                        <div class="guide-date">{{ guide_offer.travel_period|index:forloop.counter0 }}</div>
+                    </div>
+                    {% for g_template in g_template_q %}
+                        <div style="position: relative;">
+                            <div class="medium-circle"></div>
+                            <div class="guide-title">{{ g_template.title }}</div>
+                        </div>
+                        {% if g_template.picture %}
+                        <div class="guide-pic"></div>
+                        {% endif %}
+                        <div class="guide-content"> {{ g_template.content }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!--견적서-->
+        {#% if %#}
+{#        <div class="gradation-bar">견적서</div>#}
+        {#% endif %#}
+
+    <div class="request-wrapper">
+        <div class="comment-title">수정요청 / 문의사항</div>
+        <div class="comment-sub-title">가이드에게 견적서 수정요청 또는 질문을 해보세요. 댓글 기능으로 실시간 소통을 할 수 있습니다.</div>
+        <hr>
+        <div class="comment-wrapper">
+            {% for comment in comment_q %}
+                {% if comment.writer == guide_offer.guide.user_id %}
+                    <div class="comment-inside-wrapper">
+                        <div class="guide-comment-pic">
+
+                        </div>
+
+                        <div class="comment-guide">
+                            {{ comment.content }}
+                        </div>
+                    </div>
+                        <div class="comment-time-guide">
+                        {{ comment.created_at }}
+                        </div>
+
+                {% elif comment.writer == guide_offer.request.user_id %}
+                    <div class="comment-inside-wrapper">
+                        <div class="comment-user">
+                            {{ comment.content }}
+                        </div>
+                    </div>
+                        <div class="comment-time-user">
+                            {{ comment.created_at }}
+                        </div>
+
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 
-    <!--이동수단-->
-    {% if guide_offer.trans_info %}
-    <div class="gradation-bar">이동 수단</div>
-    {% for trans_info in guide_offer.trans_info %}
-        {{trans_info|linebreaks}}
-    {% endfor %}
-    {% endif %}
-
-    <!--숙소-->
-    {% if a_template_list %}
-    <div class="gradation-bar">숙소</div>
-    {% for accom in a_template_list %}
-        {{ accom.1}} - {{accom.2}}
-        {{ accom.0.address.0 }}, {{ accom.0.address.1 }}
-        <br>
-        {{ accom.0.title }}
-        <br>
-        위치: {{ accom.0.address.2 }}, {{ accom.0.address.1 }}
-
-        <div class="map" style="height: 200px;">{{ accom.0.lat}} {{accom.0.lng}}</div>
-
-    <hr>
-    {% endfor %}
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&"></script>
-    {% endif %}
-
-    <!--가이드-->
-    {% if guide_offer.guide_template %}
-    <div class="gradation-bar">가이드</div>
-    {% for g_template_q in g_template_qlist %}
-    {{ forloop.counter }}일
-        {% for g_template in g_template_q %}
-            {{ g_template.title|linebreaks }}
-            {{ g_template.content|linebreaks }}
-        {% endfor %}
-    {% endfor %}
-    {% endif %}
-
-    <!--견적서-->
-    {#% if %#}
-    <div class="gradation-bar">견적서</div>
-    {#% endif %#}
-
-</div>
+    </div>
 
 {% endblock %}

@@ -188,7 +188,8 @@ class AccomTemplate(models.Model):
     lng = models.FloatField(default=0)
     content = models.TextField(blank=True)
     pic_list = JSONField(blank=True, null=True)
-    guide = models.ForeignKey(Guide)
+    guide = models.ForeignKey(Guide, related_name="accom_templates")
+    type_id = models.IntegerField(default=0)
 
     @property
     def country(self):
@@ -202,6 +203,25 @@ class AccomTemplate(models.Model):
     def small_city(self):
         return self.address[2]
 
+    @property
+    def type(self):
+        if self.type_id == 1:
+            return '호텔'
+
+        elif self.type_id == 2:
+            return '한인 민박'
+
+        elif self.type_id == 3:
+            return '현지인 집'
+
+        elif self.type_id == 4:
+            return '리조트'
+
+        elif self.type_id == 5:
+            return '가이드 집'
+
+        else:
+            return '기타'
 
 class GuideTemplate(models.Model):
     title = models.CharField(max_length=100)
@@ -227,3 +247,10 @@ class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     guide = models.ForeignKey(Guide)
     location = models.CharField(max_length=100)
+
+
+class Comment(models.Model):
+    offer = models.ForeignKey(GuideOffer, related_name="comments")
+    content = models.CharField(max_length=300, default="")
+    writer = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
