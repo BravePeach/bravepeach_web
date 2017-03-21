@@ -20,7 +20,7 @@ class Profile(models.Model):
     nationality = models.CharField(max_length=40, blank=True)
     birthday = models.DateField(blank=True, null=True)
     gender = models.IntegerField(null=True)
-    photo = models.ImageField(upload_to='profile/%Y_%m_%d', blank=True)
+    photo = models.ImageField(upload_to='profile/%Y_%m_%d', null=True)
     deleted_at = models.DateTimeField(null=True)
     delete_reason_optional = models.CharField(max_length=100, blank=True)
     mail_certified = models.BooleanField(default=False)
@@ -73,7 +73,7 @@ class Guide(models.Model):
     def clean_rating(self):
         frac_part, int_part = math.modf(self.rating)
         frac_part = 0 if frac_part < 0.5 else 0.5
-        return int(int_part), frac_part, 4-int(int_part)
+        return range(int(int_part)), frac_part, range(4-int(int_part))
 
     @property
     def guide_cnt(self):

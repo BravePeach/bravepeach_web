@@ -39,6 +39,7 @@ urlpatterns = [
     # User2Guide
     url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),
     url(r'^guide_search/filtering/$', views.trip.FilterGuide.as_view(), name='filter_guide'),
+    url(r'^write_review/(?P<offer_id>\d+)/$', views.user.write_review, name="write_user_review"),
 
     # Trip
     url(r'^my_trip/$', views.trip.my_trip, name="my_trip"),
