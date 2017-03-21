@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
-from .models import Guide, Review
+from .models import Guide
 from django.contrib.auth.decorators import login_required
 from dateutil import parser
 from django.db.models import Count, Case, When

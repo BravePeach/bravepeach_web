@@ -1,0 +1,171 @@
+.contents-wrapper {
+  width: 880px;
+  margin: auto;
+}
+.contents-wrapper .page-title {
+  margin-top: 10px;
+  height: 55px;
+  font-family: NanumSquareOTF;
+  font-size: 48px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #e64c47;
+}
+.contents-wrapper .page-subtitle {
+  margin-top: 12px;
+  height: 32px;
+  font-family: NanumSquare;
+  font-size: 22px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.45;
+  letter-spacing: normal;
+  text-align: left;
+}
+.contents-wrapper .sidebar {
+  display: inline-block;
+  width: 200px;
+  margin-top: 14px;
+}
+.contents-wrapper .sidebar .profile-pic {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  background-color: #e64c47;
+  cursor: pointer;
+}
+.contents-wrapper .sidebar .profile-pic img {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+}
+.contents-wrapper .sidebar .view-profile {
+  display: block;
+  margin-top: 15px;
+  height: 18px;
+  width: 100%;
+  font-family: NanumSquare;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #000000;
+}
+.contents-wrapper .sidebar .logout {
+  display: block;
+  margin-top: 13px;
+  height: 18px;
+  width: 100%;
+  font-family: NanumSquare;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #e64c47;
+}
+.contents-wrapper .sidebar .empty {
+  height: 51px;
+  display: block;
+}
+.contents-wrapper .sidebar .side-menu {
+  display: block;
+  height: 22px;
+  width: 100%;
+  text-align: center;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+  margin-bottom: 33px;
+}
+.contents-wrapper .sidebar .side-menu.selected {
+  color: #e64c47;
+}
+.contents-wrapper .mypage-wrapper {
+  float: right;
+  margin-top: 5px;
+  display: inline-block;
+  width: 660px;
+}
+.profile_modal {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  display: none;
+  z-index: 100;
+  top: 65px;
+  background-color: #ffffff;
+}
+.profile_modal.activated {
+  display: block;
+}
+.profile_modal .jcrop-centered {
+  display: inline-block;
+  vertical-align: middle;
+}
+.profile_modal .original-wrapper {
+  width: 600px;
+  height: 600px;
+  margin: 50px auto;
+  border-radius: 16px;
+  text-align: center;
+  background-color: #979797;
+}
+.profile_modal .original-wrapper #original_profile {
+  border-radius: 16px;
+  margin: auto;
+  max-width: 600px;
+  max-height: 600px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+.profile_modal .btn-area {
+  display: block;
+  width: 600px;
+  margin: 31px auto;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+}
+.profile_modal .btn-area .cancel-btn {
+  color: #ffffff;
+  display: inline-block;
+  margin-left: 50px;
+  width: 207px;
+  height: 55px;
+  border-radius: 8px;
+  background-color: #606060;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px #b5b5b6;
+}
+.profile_modal .btn-area .submit-btn {
+  color: #ffffff;
+  margin-left: 20px;
+  width: 207px;
+  height: 55px;
+  border-radius: 8px;
+  background-color: #e64c47;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px #979797;
+}

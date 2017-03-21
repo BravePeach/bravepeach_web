@@ -4,7 +4,7 @@
 {% load custom_filters %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'less/pc/mypage_base.less'|compile %}">
+    <link rel="stylesheet" href="{% static 'less/pc/mypage/base.less'|compile %}">
     <link rel="stylesheet" href="{% static 'css/jquery.Jcrop.min.css'%}">
 {% endblock %}
 
@@ -78,10 +78,14 @@
 {% block content %}
     <div class="contents-wrapper">
         <div class="page-title">마이페이지</div>
+        {{ request.user.profile.photo.url }}
         <div class="page-subtitle">{{ type_dict|key:page_type }}</div>
         <div class="sidebar">
             <div class="profile-pic">
-                <img src="{% if request.user.profile.photo.url is not NULL %}{{ request.user.profile.photo.url }}{% else %}{% static 'image/icon/logo_white.png' %}{% endif %}" alt="" id="profile-image">
+                <img src="{% if request.user.profile.photo.url %}
+                            {{ request.user.profile.photo.url }}{% else %}
+                            {% static 'image/icon/logo_white.png' %}{% endif %}"
+                     alt="Profile" id="profile-image">
             </div>
             <input type="file" id="profile-input" style="display: none;">
             <a href="{% url 'mypage' page_type='account' %}" class="view-profile">프로필 보기</a>

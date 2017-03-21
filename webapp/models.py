@@ -73,7 +73,7 @@ class Guide(models.Model):
     def clean_rating(self):
         frac_part, int_part = math.modf(self.rating)
         frac_part = 0 if frac_part < 0.5 else 0.5
-        return int(int_part), frac_part
+        return int(int_part), frac_part, 4-int(int_part)
 
     @property
     def guide_cnt(self):
@@ -229,6 +229,13 @@ class UserReview(models.Model):
     content = RedactorField()
     writer = models.ForeignKey(settings.AUTH_USER_MODEL)
     receiver = models.ForeignKey(Guide)
+    write_date = models.DateField(null=False, default=datetime.date.today())
+
+    @property
+    def clean_rating(self):
+        frac_part, int_part = math.modf(self.rating)
+        frac_part = 0 if frac_part < 0.5 else 0.5
+        return range(int(int_part)), frac_part, range(4-int(int_part))
 
 
 class Comment(models.Model):
@@ -245,3 +252,10 @@ class GuideReview(models.Model):
     content = RedactorField()
     writer = models.ForeignKey(Guide)
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL)
+    write_date = models.DateField(null=False, default=datetime.date.today())
+
+    @property
+    def clean_rating(self):
+        frac_part, int_part = math.modf(self.rating)
+        frac_part = 0 if frac_part < 0.5 else 0.5
+        return range(int(int_part)), frac_part, range(4-int(int_part))

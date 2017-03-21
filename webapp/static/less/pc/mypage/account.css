@@ -1,0 +1,86 @@
+.greeting {
+  height: 32px;
+  font-family: NanumSquare;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.07;
+  letter-spacing: normal;
+  text-align: left;
+}
+.join_date {
+  margin-top: 7px;
+  height: 14px;
+  font-family: NanumSquare;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #606060;
+}
+.email {
+  margin-top: 30px;
+  height: 22px;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000000;
+}
+.birthday,
+.sex {
+  display: inline-block;
+  margin-top: 15px;
+  margin-right: 22px;
+  height: 22px;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000000;
+}
+.nationality {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  height: 22px;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #000000;
+}
+.hr {
+  width: 100%;
+  height: 2px;
+  border: solid 1px #979797;
+}
+.edit-profile {
+  margin-top: 20px;
+  height: 22px;
+  font-family: NanumSquare;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: #e64c47;
+  float: right;
+}
