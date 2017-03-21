@@ -11,7 +11,10 @@
 {% if request.user.is_authenticated %}
 	<div class="profile_img">
 		<a href="edit/" title="">
-			<img style="width: 50px;height: auto;border-radius: 24px;" {% if request.user.profile.photo.url is not NULL %} src="{{ request.user.profile.photo.url }}" {% else %} src="" {% endif %} alt="프로필 이미지">
+			<img style="width: 50px;height: auto;border-radius: 24px;"
+                    {% if request.user.profile.photo.url %}
+                 src="{{ request.user.profile.photo.url }}"
+                    {% else %} src="" {% endif %} alt="프로필 이미지">
 		</a>
         <span>환영합니다!
             <a href="edit/" title="">{{request.user.first_name}} {{request.user.last_name}}님!</a>

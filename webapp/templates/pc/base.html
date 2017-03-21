@@ -26,7 +26,7 @@
     </div>
     {% if request.user.is_authenticated %}
         <div class="profile_img">
-            <img style="width: 50px;height: auto;border-radius: 24px;" {% if request.user.profile.photo.url is not NULL %} src="{{ request.user.profile.photo.url }}" {% else %} src="" {% endif %} alt="프로필">
+            <img style="width: 50px;height: auto;border-radius: 24px;" {% if request.user.profile.photo.url %} src="{{ request.user.profile.photo.url }}" {% else %} src="" {% endif %} alt="프로필">
             <span>{{request.user.profile.full_name }} 님</span>
         </div>
     {% endif %}
