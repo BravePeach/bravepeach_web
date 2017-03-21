@@ -1,14 +1,6 @@
-var mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-function validate_pw() {
-    var pw_re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/;
-    var pw_val = $("#id_password").val();
-    return (pw_val.length !== 0 && pw_re.test(pw_val));
-}
-
 function submit_register_form() {
     var form = $("#register-form");
-    if (validate_pw()) {
+    if (validate_pw() && $("#id_password").val()===$("#id_password2").val()) {
         form.submit();
     } else {
         swal("Invalid PW format", "Password must contains at least one alphabet/number/special character.", "error");

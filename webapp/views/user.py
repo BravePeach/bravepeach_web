@@ -99,7 +99,7 @@ def password_reset_complete(request):
 @login_required
 def mypage(request, page_type="account"):
     page_type_dict = {"alarm": "알림", "account": "계정 관리", "payment": "결제 내역", "review": "후기 관리",
-                      "cert": "본인 인증하기", "unsub": "회원 탈퇴"}
+                      "cert": "본인 인증하기", "unsub": "회원 탈퇴", "profile": "계정 관리"}
     if page_type not in page_type_dict:
         return redirect("index")
 
@@ -111,9 +111,14 @@ def mypage(request, page_type="account"):
         pass
     elif page_type == "account":
         pass
+    elif page_type == "profile":
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+        param_dict["user_form"] = user_form
+        param_dict["profile_form"] = profile_form
     elif page_type == "payment":
         payment_list = (GuideOffer.objects.filter(request__user_id=request.user.id,
-                                                  request__travel_end_at__lt=datetime.date.today())
+                                                  request__travel_begin_at__gte=datetime.date.today())
                         .prefetch_related('request').prefetch_related('cancel').order_by('-id'))
         wait_list = []
         paid_list = []
@@ -141,11 +146,6 @@ def mypage(request, page_type="account"):
 
 
 @login_required
-def profile(request):
-    return flavour_render(request, "user/profile.html")
-
-
-@login_required
 def edit_profile(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,
@@ -157,10 +157,9 @@ def edit_profile(request):
             request.user.profile.birthday = profile_form.cleaned_data['birthday']
             user_form.save()
             profile_form.save()
-    else:
-        user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
-    return flavour_render(request, 'user/edit_profile.html', {'user_form': user_form, 'profile_form': profile_form})
+        else:
+            pass
+    return redirect("mypage", page_type="profile")
 
 
 @login_required

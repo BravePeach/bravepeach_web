@@ -39,9 +39,19 @@ class UserRegistrationForm(forms.ModelForm):
 
 # 회원정보 변경
 class UserEditForm(forms.ModelForm):
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
+
     class Meta:
         model = User
-        fields = ('first_name','last_name','email')
+        fields = ('first_name', 'last_name', 'email')
+
+    def __init__(self, *args, **kwargs):
+        super(UserEditForm, self).__init__(*args, **kwargs)
+        self.fields['password'].widget.attrs.update({"class": "input-text", "placeholder": "비밀번호*"})
+        self.fields['password2'].widget.attrs.update({"class": "input-text", "placeholder": "비밀번호 확인*"})
+        self.fields['email'].widget.attrs.update({"class": "input-text", "placeholder": "이메일(E-mail)*",
+                                                  "readonly": True})
 
 
 class ProfileEditForm(forms.ModelForm):
