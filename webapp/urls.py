@@ -30,6 +30,7 @@ urlpatterns = [
                                                "set_password_form": SetPasswordCustcomForm,
                                                "post_reset_redirect": "password_reset_complete"}),
     url(r'^password_reset/complete$', views.user.password_reset_complete, name="password_reset_complete"),
+    url(r'^unsub_bp/$', views.user.unsub_bp, name="unsub_bp"),
 
     # Guide
     url(r'^guide/(?P<gid>\d+)/$', views.guide.profile, name='guide_profile'),

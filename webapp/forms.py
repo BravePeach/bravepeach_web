@@ -64,6 +64,33 @@ class ProfileEditForm(forms.ModelForm):
         self.fields["gender"].widget.attrs.update({"class": "input-radio"})
 
 
+class UnsubscribeForm(forms.ModelForm):
+    DELETE_REASON_LIST = (
+        (1, "앞으로 여행갈 일이 없을 것 같습니다."),
+        (2, "다른 BravePeach 계정이 있습니다."),
+        (3, "BravePeach가 유용하지 않습니다."),
+        (4, "가이드와 불화로 인해 BravePeach를 탈퇴하고 싶습니다."),
+        (5, "BravePeach가 보내는 이메일, 초대, 요청이 너무 많습니다."),
+        (6, "BravePeach가 안전하지 않다고 생각합니다."),
+        (7, "내 계정이 해킹당했습니다."),
+        (8, "개인정보가 우려됩니다."),
+        (9, "BravePeach에 너무 많은 시간을 사용합니다."),
+        (10, "기타 내용은 자세히 설명해주세요."),
+    )
+
+    delete_reason = forms.ChoiceField(choices=DELETE_REASON_LIST, widget=forms.RadioSelect())
+
+    class Meta:
+        model = Profile
+        fields = ('delete_reason', 'delete_reason_optional',)
+
+    def __init__(self, *args, **kwargs):
+        super(UnsubscribeForm, self).__init__(*args, **kwargs)
+        self.fields['delete_reason'].widget.attrs.update({"class": "input-radio"})
+        self.fields["delete_reason_optional"].widget.attrs.update({"class": "input-textarea",
+                                                                   "placeholder": "이유를 직접 적어주세요 (200자 이내)"})
+
+
 class PasswordResetCustomForm(PasswordResetForm):
     def __init__(self, *args, **kwargs):
         super(PasswordResetCustomForm, self).__init__(*args, **kwargs)

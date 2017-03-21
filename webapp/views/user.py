@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm
+from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm
 from ..models import Profile, GuideOffer, Review
 from bravepeach.util import flavour_render
 
@@ -134,7 +134,8 @@ def mypage(request, page_type="account"):
     elif page_type == "cert":
         pass
     elif page_type == 'unsub':
-        pass
+        unsub_form = UnsubscribeForm()
+        param_dict["unsub_form"] = unsub_form
 
     return flavour_render(request, "user/mypage/"+page_type+".html", param_dict)
 
@@ -161,3 +162,19 @@ def edit_profile(request):
         profile_form = ProfileEditForm(instance=request.user.profile)
     return flavour_render(request, 'user/edit_profile.html', {'user_form': user_form, 'profile_form': profile_form})
 
+
+@login_required
+def unsub_bp(request):
+    if request.method != "POST":
+        return redirect('mypage', page_type="unsub")
+
+    request.user.profile.deleted_at = datetime.datetime.now()
+    request.user.is_active = False
+    unsub_form = UnsubscribeForm(request.POST, instance=request.user.profile)
+
+    if unsub_form.is_valid():
+        unsub_form.save()
+        request.user.save()
+        return redirect('logout')
+    else:
+        return redirect('mypage', page_type="unsub")
