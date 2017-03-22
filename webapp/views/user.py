@@ -157,6 +157,13 @@ def mypage(request, page_type="account"):
 
 
 @login_required
+def cert_mail(request):
+    # TODO: send mail
+    print(request.POST)
+    return JsonResponse({"ok": True})
+
+
+@login_required
 def edit_profile(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,
