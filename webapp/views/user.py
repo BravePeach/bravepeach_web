@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 from bravepeach import settings
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm, UserReviewForm
-from ..models import Profile, GuideOffer, UserReview
+from ..models import Profile, GuideOffer, UserReview, GuideReview
 from bravepeach.util import flavour_render
 
 
@@ -143,9 +143,10 @@ def mypage(request, page_type="account"):
         param_dict.update(**{"wait_list": wait_list, "paid_list": paid_list, "cancel_list": cancel_list})
 
     elif page_type == "review":
-        # TODO: model change?
-        review_list = UserReview.objects.filter(writer=request.user).order_by('-id')
-        param_dict['review_list'] = review_list
+        my_review_list = UserReview.objects.filter(writer=request.user).order_by('-id')
+        param_dict['my_reviews'] = my_review_list
+        guide_review_list = GuideReview.objects.filter(receiver=request.user).order_by('-id')
+        param_dict['guide_reviews'] = guide_review_list
     elif page_type == "cert":
         pass
     elif page_type == 'unsub':
@@ -225,10 +226,24 @@ def unsub_bp(request):
 
 @login_required
 def write_review(request, offer_id):
-    offer = GuideOffer.objects.get(id=offer_id)
     prev_review = UserReview.objects.filter(offer_id=offer_id)
-    if prev_review:
-        form = UserReviewForm(instance=prev_review)
+    offer = GuideOffer.objects.get(id=offer_id)
+
+    if request.method == "GET":
+        if prev_review:
+            form = UserReviewForm(instance=prev_review)
+        else:
+            form = UserReviewForm()
+        return flavour_render(request, "user/write_review.html", {"offer": offer, "review_form": form})
     else:
-        form = UserReviewForm()
-    return flavour_render(request, "user/write_review.html", {"offer": offer, "review_form": form})
+        if prev_review:
+            form = UserReviewForm(request.POST, instance=prev_review)
+        else:
+            form = UserReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.offer_id = offer_id
+            review.writer = request.user
+            review.receiver = offer.guide
+            review.save()
+        return redirect('my_trip')

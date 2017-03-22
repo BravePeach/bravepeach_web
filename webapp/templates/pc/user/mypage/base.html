@@ -78,11 +78,10 @@
 {% block content %}
     <div class="contents-wrapper">
         <div class="page-title">마이페이지</div>
-        {{ request.user.profile.photo.url }}
         <div class="page-subtitle">{{ type_dict|key:page_type }}</div>
         <div class="sidebar">
             <div class="profile-pic">
-                <img src="{% if request.user.profile.photo.url %}
+                <img src="{% if request.user.profile.photo %}
                             {{ request.user.profile.photo.url }}{% else %}
                             {% static 'image/icon/logo_white.png' %}{% endif %}"
                      alt="Profile" id="profile-image">

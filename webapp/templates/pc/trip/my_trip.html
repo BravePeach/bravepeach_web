@@ -122,21 +122,12 @@
                     <div class="cost">총 경비 <span class="money">{{ past.cost|intcomma }}</span> 만원</div>
                 </div><!--
                 --><div class="tab-content-btn">
-                    {# TODO: add review link #}
-                    {% with reviews=past.reviews.all %}
-                        <a href="" class="guide-review {% if reviews|length < 2 %}disabled-link{% endif %}">후기보기</a>
-                        {% if revies|length == 2%}
-                            <a href="" class="my-review">내가 쓴 후기 보기</a>
-                        {% elif revies|length == 1 %}
-                            {% if revies.0.writer_id == request.user.id %}
-                                <a href="" class="my-review">내가 쓴 후기 보기</a>
-                            {% else %}
-                                <a href="" class="my-review">후기쓰기</a>
-                            {% endif %}
-                        {% else %}
-                            <a href="" class="my-review">후기쓰기</a>
-                        {% endif %}
-                    {% endwith %}
+                    <a href="" class="guide-review {% if not offer.guide_review %}disabled-link{% endif %}">후기보기</a>
+                    {% if past.user_review %}
+                        <a href="{% url 'mypage' page_type='review' %}" class="my-review">내가 쓴 후기 보기</a>
+                    {% else %}
+                        <a href="{% url 'write_user_review' offer_id=past.id %}" class="my-review">후기쓰기</a>
+                    {% endif %}
                 </div>
                 </div>
             {% empty %}

@@ -158,3 +158,7 @@ class UserReviewForm(forms.ModelForm):
         model = UserReview
         fields = ('rating', 'content')
         widgets = {'content': RedactorEditor}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["rating"].widget.attrs.update({"class": "hidden"})

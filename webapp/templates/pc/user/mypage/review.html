@@ -18,12 +18,12 @@
             <div class="review-wrapper {% if forloop.counter > 3 %}hidden{% endif %}">
                 <div class="profile-area">
                     <div class="pic">
-                        <img src="{% if review.guide.user.profile.photo.url %}
+                        <img src="{% if review.guide.user.profile.photo %}
                                 {{ review.guide.user.profile.photo.url }}
-                                {% else %}{% static 'image/icon/logo_white.png' %}{% endif %}"
+                                {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
                              alt="profile">
                     </div>
-                    <div class="name">{{ review.guide.full_name }}</div>
+                    <div class="name">{{ review.writer.full_name }}</div>
                 </div>
                 <div class="contents-area">
                     <div class="rating">
@@ -39,8 +39,8 @@
                             <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
                         {% endfor %}
                     </div>
-                    <div class="write-date">{{ review.write_date|date:"%Y/%m/%d" }}</div>
-                    <div class="review-content ellipsis">{{ review.content }}</div>
+                    <div class="write-date">{{ review.write_date|date:"Y/m/d" }}</div>
+                    <div class="review-content ellipsis">{{ review.content|safe }}</div>
                 </div>
             </div>
             <div class="hr"></div>
@@ -55,16 +55,16 @@
         <div class="show-all">전체보기</div>
     </div>
     <div class="page-contents">
-        {% for review in guide_reviews %}
+        {% for review in my_reviews %}
             <div class="review-wrapper {% if forloop.counter > 3 %}hidden{% endif %}">
                 <div class="profile-area">
                     <div class="pic">
-                        <img src="{% if review.user.profile.photo.url %}
-                                {{ review.user.profile.photo.url }}
-                                {% else %}{% static 'image/icon/logo_white.png' %}{% endif %}"
+                        <img src="{% if review.receiver.user.profile.photo %}
+                                {{ review.receiver.user.profile.photo.url }}
+                                {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
                              alt="profile">
                     </div>
-                    <div class="name">{{ review.user.profile.full_name }}</div>
+                    <div class="name">{{ review.receiver.full_name }}</div>
                 </div>
                 <div class="contents-area">
                     <div class="rating">
@@ -80,8 +80,8 @@
                             <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
                         {% endfor %}
                     </div>
-                    <div class="write-date">{{ review.write_date|date:"%Y/%m/%d" }}</div>
-                    <div class="review-content ellipsis">{{ review.content }}</div>
+                    <div class="write-date">{{ review.write_date|date:"Y/m/d" }}</div>
+                    <div class="review-content ellipsis">{{ review.content|safe }}</div>
                 </div>
                 <div class="hr"></div>
             </div>
