@@ -1,6 +1,7 @@
 {% extends "pc/base.html" %}
 {% load widget_tweaks %}
-{% load staticfiles %}
+{% load static %}
+{% load compile_static %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/select2.css' %}">
@@ -26,21 +27,21 @@
             {% csrf_token %}
             {{ form.user }}
             <div class="white-bar">
-                <img class="icon" src="/static/image/icon/where_black.png" alt="where?">
+                <img class="icon" src="{% static 'image/icon/where_black.png' %}" alt="where?">
                 {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}
             </div>
 
             <div class="white-bar">
-                <img class="icon" src="/static/image/icon/when_black.png" alt="where?">
+                <img class="icon" src="{% static 'image/icon/when_black.png' %}" alt="where?">
                 {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"|attr:"placeholder:시작 날짜"}}
-                <img class="arrow-right" src="">
+                <img class="arrow-right" src="">~
                 {{ form.travel_end_at |add_class:"find-guide-form2 datepicker2"|attr:"readonly"|attr:"placeholder:종료 날짜"}}
             </div>
 
             <div class="white-bar">
-                <img class="icon" src="/static/image/icon/howmany_black.png" alt="where?">
+                <img class="icon" src="{% static 'image/icon/howmany_black.png' %}" alt="where?">
                 {{ form.age_group |add_class:"enroll-trip-form"|attr:"placeholder:인원"|attr:"readonly" }}
-                <img class="arrow-down" src="/static/image/icon/arrow_down_black.png" alt="펼치기 버튼">
+                <img class="arrow-down" src="{% static 'image/icon/arrow_down_black.png' %}" alt="펼치기 버튼">
                 <div class="traveler_cntpicker">
                     <div class="0">
                         0-2세
@@ -97,7 +98,7 @@
 
                 <div class="col-xs-4">
                     <div class="paech-button lodging-button inactive btn2">
-                        <img src="/static/image/icon/logo_empty.png">
+                        <img src="{% static 'image/icon/logo_empty.png' %}">
 
                         <span class="enroll-trip-button-name">숙소 </span>
                     </div>
@@ -105,7 +106,7 @@
 
                 <div class="col-xs-4">
                     <div class="paech-button guide-button inactive btn3">
-                        <img src="/static/image/icon/logo_full.png">
+                        <img src="{% static 'image/icon/logo_full.png' %}">
 
                         <span class="enroll-trip-button-name">가이드</span>
                     </div>
@@ -116,7 +117,7 @@
 
                 <span class="bar-text">이동 수단</span>
 
-                <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+                <img class="arrow-down" src="{% static 'image/icon/arrow_down_white.png' %}" alt="펼치기 버튼">
 
             </div>
 
@@ -158,7 +159,7 @@
 
                 <span class="bar-text">숙소</span>
 
-                <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+                <img class="arrow-down" src="{% static 'image/icon/arrow_down_white.png' %}" alt="펼치기 버튼">
 
             </div>
 
@@ -206,7 +207,7 @@
 
                 <span class="bar-text">가이드</span>
 
-                <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+                <img class="arrow-down" src="{% static 'image/icon/arrow_down_white.png' %}" alt="펼치기 버튼">
 
             </div>
 

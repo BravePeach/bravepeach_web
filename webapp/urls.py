@@ -28,6 +28,7 @@ urlpatterns = [
                                                "set_password_form": SetPasswordCustcomForm,
                                                "post_reset_redirect": "password_reset_complete"}),
     url(r'^password_reset/complete$', views.user.password_reset_complete, name="password_reset_complete"),
+    url(r'^cert_mail/$', views.user.cert_mail, name='cert_mail'),
     url(r'^edit_profile/$', views.user.edit_profile, name="edit_profile"),
     url(r'^upload_original/$', views.user.upload_original, name='upload_original'),
     url(r'^upload_profile/$', views.user.upload_profile, name='upload_profile'),
@@ -47,6 +48,7 @@ urlpatterns = [
     url(r'^offer/(?P<offer_id>\d+)/$', views.trip.offer_detail, name="offer_detail"),
     url(r'^enroll_trip/$', views.trip.enroll_trip, name='enroll_trip'),
     url(r'^cancel_offer/$', views.trip.cancel_offer, name="cancel_offer"),
+    url(r'^payment/(?P<offer_id>\d+)/$', views.trip.payment, name="payment"),
 
     # Like
     url(r'^like/$', views.trip.like, name="like"),

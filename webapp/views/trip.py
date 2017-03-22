@@ -1,6 +1,6 @@
 import json
 import datetime
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 
 from django.shortcuts import redirect, get_object_or_404
 from django.http import JsonResponse
@@ -208,6 +208,31 @@ def offer_detail(request, offer_id):
                                                               "total_cost": total_cost,
                                                               "guide_commission": guide_commission,
                                                               })
+
+
+@login_required
+def payment(request, offer_id):
+    param_dict = defaultdict(list)
+    offer = GuideOffer.objects.select_related("request").get(id=offer_id)
+    param_dict["offer"] = offer
+    costs = Cost.objects.filter(offer=offer).all()
+    for cost in costs:
+        if cost.type == "trans":
+            param_dict["trans_cost"].append(cost)
+        elif cost.type == "accom":
+            param_dict["accom_cost"].append(cost)
+        elif cost.type == "guide":
+            param_dict["guide_cost"].append(cost)
+        else:
+            pass
+    param_dict["trans_total_cost"] = sum([x.cost for x in param_dict['trans_cost']])
+    param_dict["accom_total_cost"] = sum([x.cost for x in param_dict['accom_cost']])
+    param_dict["guide_total_cost"] = sum([x.cost for x in param_dict['guide_cost']])
+    param_dict["guide_commission"] = param_dict["guide_total_cost"] * 0.12
+    param_dict["total_cost"] = (param_dict["trans_total_cost"] + param_dict["accom_total_cost"] +
+                                param_dict["guide_total_cost"] + param_dict["guide_commission"])
+    param_dict["payment_deadline"] = datetime.date.today()+datetime.timedelta(days=2)
+    return flavour_render(request, "trip/payment.html", param_dict)
 
 
 class AddComment(View):

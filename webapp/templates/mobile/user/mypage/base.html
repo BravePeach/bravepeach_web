@@ -1,0 +1,46 @@
+{% extends "mobile/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load custom_filters %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/mypage/base.less'|compile %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.Jcrop.min.css'%}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/mypage.js' %}"></script>
+    <script src="{% static 'js/jquery.Jcrop.min.js' %}"></script>
+    <script>
+    var profile_upload_url = "{% url 'upload_profile' %}";
+    var original_upload_url = "{% url 'upload_original' %}";
+    </script>
+    {# TODO: jcrop does not work at mobile #}
+{#    <script src="{% static 'js/profile_pic.js' %}"></script>#}
+{% endblock %}
+
+{% block content %}
+        <div class="page-title">마이페이지</div>
+        <div class="page-subtitle">{{ type_dict|key:page_type }}</div>
+{#        <div class="sidebar">#}
+{#            <div class="profile-pic">#}
+{#                <img src="{% if request.user.profile.photo.url %}{{ request.user.profile.photo.url }}{% else %}{% static 'image/icon/logo_white.png' %}{% endif %}" alt="" id="profile-image">#}
+{#            </div>#}
+{#            <input type="file" id="profile-input" style="display: none;">#}
+{#            <a href="{% url 'mypage' page_type='account' %}" class="view-profile">프로필 보기</a>#}
+{#            <a href="{% url "logout" %}" class="logout">로그아웃</a>#}
+{#            <div class="empty"></div>#}
+{#            <a href="{% url 'mypage' page_type='alarm' %}" class="side-menu {% if page_type == "alarm" %}selected{% endif %}">알림</a>#}
+{#            <a href="{% url 'mypage' page_type='account' %}" class="side-menu {% if page_type == "account" or page_type == "profile" %}selected{% endif %}">계정 관리</a>#}
+{#            <a href="{% url 'mypage' page_type='payment' %}" class="side-menu {% if page_type == "payment" %}selected{% endif %}">결제 내역</a>#}
+{#            <a href="{% url 'mypage' page_type='review' %}" class="side-menu {% if page_type == "review" %}selected{% endif %}">후기 관리</a>#}
+{#            <a href="{% url 'mypage' page_type='cert' %}" class="side-menu {% if page_type == "cert" %}selected{% endif %}">본인 인증하기</a>#}
+{#            <a href="{% url 'mypage' page_type='unsub' %}" class="side-menu {% if page_type == "unsub" %}selected{% endif %}">회원 탈퇴</a>#}
+{#            <div class="empty"></div>#}
+{#            <div class="empty"></div>#}
+{#        </div>#}
+        <div class="mypage-wrapper">
+            {% block mypage %}{% endblock %}
+        </div>
+
+{% endblock %}

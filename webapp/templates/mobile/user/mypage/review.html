@@ -1,11 +1,11 @@
-{% extends "pc/user/mypage/base.html" %}
+{% extends "mobile/user/mypage/base.html" %}
 {% load compile_static %}
 {% load static %}
 {% load custom_filters %}
 
 {% block css %}
     {{ block.super }}
-    <link rel="stylesheet" href="{% static 'less/pc/mypage/review.less'|compile %}">
+    <link rel="stylesheet" href="{% static 'less/mobile/mypage/review.less'|compile %}">
 {% endblock %}
 
 {% block mypage %}
@@ -83,8 +83,8 @@
                     <div class="write-date">{{ review.write_date|date:"Y/m/d" }}</div>
                     <div class="review-content ellipsis">{{ review.content|safe }}</div>
                 </div>
-                <div class="hr"></div>
             </div>
+            <div class="hr"></div>
         {% empty %}
             <div class="empty-contents">리뷰가 없습니다</div>
             <div class="hr"></div>

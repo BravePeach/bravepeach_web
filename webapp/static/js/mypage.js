@@ -2,9 +2,10 @@ function cert_mail() {
     var mail = $("#cert-mail").val();
 
     if (mail_re.test(mail)) {
-        $.post('/cert_mail', {mail: mail}, function(data){
+        $.post('/cert_mail/', {mail: mail}, function(data){
             if(data.ok === true) {
-                $(".cert-notice").css("display", "block");
+                $(".cert-notice").css("display", "inline-block");
+                $(".m-mail-cert-btn").css("margin-left", "25px");
             } else {
                 swal({
                     type: "warning",
@@ -53,7 +54,7 @@ function edit_profile() {
 }
 
 $(function(){
-        $("#id_password2").on("change keyup", function(){
+    $("#id_password2").on("change keyup", function(){
         var pw_val = $("#id_password").val();
         var pw_val2 = $("#id_password2").val();
 
