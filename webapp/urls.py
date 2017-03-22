@@ -47,6 +47,7 @@ urlpatterns = [
     url(r'^offer/(?P<offer_id>\d+)/$', views.trip.offer_detail, name="offer_detail"),
     url(r'^enroll_trip/$', views.trip.enroll_trip, name='enroll_trip'),
     url(r'^cancel_offer/$', views.trip.cancel_offer, name="cancel_offer"),
+    url(r'^payment/(?P<offer_id>\d+)/$', views.trip.payment, name="payment"),
 
     # Like
     url(r'^like/$', views.trip.like, name="like"),
