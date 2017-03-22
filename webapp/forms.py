@@ -6,6 +6,7 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.forms import extras
 
 from .models import Profile, UserRequest, UserReview
+from redactor.widgets import RedactorEditor
 
 
 class LoginForm(forms.Form):
@@ -151,6 +152,9 @@ class SetPasswordCustcomForm(SetPasswordForm):
 
 
 class UserReviewForm(forms.ModelForm):
+    # content = forms.CharField(widget=RedactorEditor)
+
     class Meta:
         model = UserReview
         fields = ('rating', 'content')
+        widgets = {'content': RedactorEditor}

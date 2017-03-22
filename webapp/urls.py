@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
 
 from .forms import PasswordResetCustomForm, SetPasswordCustcomForm
@@ -56,5 +56,7 @@ urlpatterns = [
     # Guide2User
 
     # Comment
-    url(r'^add_comment/$', views.trip.AddComment.as_view(), name="add_comment")
+    url(r'^add_comment/$', views.trip.AddComment.as_view(), name="add_comment"),
+
+    url(r'^redactor', include('redactor.urls')),
 ]

@@ -230,5 +230,5 @@ def write_review(request, offer_id):
     if prev_review:
         form = UserReviewForm(instance=prev_review)
     else:
-        form = UnsubscribeForm()
+        form = UserReviewForm()
     return flavour_render(request, "user/write_review.html", {"offer": offer, "review_form": form})

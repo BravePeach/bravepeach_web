@@ -226,7 +226,7 @@ class Cost(models.Model):
 class UserReview(models.Model):
     offer = models.ForeignKey(GuideOffer, related_name="user_review")
     rating = models.FloatField(null=False)
-    content = RedactorField()
+    content = RedactorField(verbose_name=u'Content')
     writer = models.ForeignKey(settings.AUTH_USER_MODEL)
     receiver = models.ForeignKey(Guide)
     write_date = models.DateField(null=False, default=datetime.date.today())
