@@ -69,7 +69,13 @@
                         <div class="cancel-offer" onclick="cancel_offer({{ offer.id }}, '{{ offer.guide.user.first_name }}')">
                         </div>
                     {% endif %}
-                    <div class="tab-content-pic">{{ offer.guide.id }}</div><!--
+                    <div class="tab-content-pic">
+                        <img src="{% if past.guide.user.profile.photo %}
+                                    {{ past.guide.user.profile.photo.url }}{% else %}
+                                    {% static 'image/icon/profile_empty.png' %}{% endif %}"
+                             alt="">
+                        <div class="guide-name">{{ past.guide.full_name }}</div>
+                    </div><!--
                 --><div class="tab-content-info">
                     <div class="guide-options">
                         <div class="guide-option {% if offer.request.trans_guided %}guided{% endif %}"></div>
@@ -102,23 +108,29 @@
         <div class="tab-contents tab-past">
             {% for past in past_list %}
                 <div class="tab-content">
-                    <div class="tab-content-pic">picpic</div><!--
+                    <div class="tab-content-pic">
+                        <img src="{% if past.guide.user.profile.photo %}
+                                    {{ past.guide.user.profile.photo.url }}{% else %}
+                                    {% static 'image/icon/profile_empty.png' %}{% endif %}"
+                             alt="">
+                        <div class="guide-name">{{ past.guide.full_name }}</div>
+                    </div><!--
                 --><div class="tab-content-info">
                     <div class="guide-options">
-                        <div class="guide-option {% if past.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-option {% if past.request.trans_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">이동수단</div>
-                        <div class="guide-option {% if past.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-option {% if past.request.accom_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">숙박</div>
-                        <div class="guide-option {% if past.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-option {% if past.request.guide_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">가이드</div>
                     </div>
-                    <div class="schedule">{{ past.travel_begin_at|date:"Y/m/d" }} ~ {{ past.travel_end_at|date:"Y/m/d" }}</div>
+                    <div class="schedule">{{ past.request.travel_begin_at|date:"Y/m/d" }} ~ {{ past.request.travel_end_at|date:"Y/m/d" }}</div>
                     <div class="cities ellipsis">
                         {% for c in past.city %}
                             {% if not forloop.first %} / {% endif %} {{ c }}
                         {% endfor %}
                     </div>
-                    <div class="age-grp"> {{ past.age_group }} </div>
+                    <div class="age-grp"> {{ past.request.age_group }} </div>
                     <div class="cost">총 경비 <span class="money">{{ past.cost|intcomma }}</span> 만원</div>
                 </div><!--
                 --><div class="tab-content-btn">
