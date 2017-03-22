@@ -13,6 +13,7 @@ from bravepeach.util import flavour_render
 from ..forms import RequestForm
 from ..models import (Guide, UserReview, GuideReview, UserRequest, GuideOffer, UserLike, GuideLike, GuideTemplate,
                       AccomTemplate, Comment, Cost)
+from django.utils import timezone
 
 
 def guide_search(request):
@@ -42,12 +43,7 @@ class FilterGuide(View):
             guide_queryset = guide_queryset.order_by('-pay_cnt')
 
         elif sort == "reviewNum":
-            guide_id_list = UserReview.objects.values('receiver').annotate(
-                receiver_cnt=Count(Case(When(receiver__startswith='G', then=1)))
-            ).order_by('-receiver_cnt').values_list('receiver', flat=True)
-
-            guide_id_list = [int(i[1:]) for i in guide_id_list]
-            guide_queryset = [Guide.objects.get(id=i) for i in guide_id_list]
+            guide_queryset = guide_queryset.annotate(num_reviews=Count('userreview')).order_by('num_reviews')
 
         for guide in guide_queryset:
             temp = {'id': guide.id,
@@ -221,5 +217,5 @@ class AddComment(View):
         content = request.POST.get('content')
         Comment.objects.create(writer=writer, content=content, offer_id=offer_id)
         c = Comment.objects.all().last()
-        result = {'content': c.__dict__['content'], 'created_at': formats.date_format(c.__dict__['created_at'], "")}
+        result = {'content': c.__dict__['content'], 'created_at': formats.date_format(timezone.localtime(c.__dict__['created_at']), "Y.m.d H:i")}
         return JsonResponse(result)

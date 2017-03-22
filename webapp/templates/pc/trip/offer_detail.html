@@ -87,8 +87,10 @@
                         위치: {{ accom.0.small_city }}, {{ accom.0.city }}
                     </div>
                     {% if accom.pic_list %}
-                        <div class="accom-pic">
+                        <div class="accom-pic-wrapper">
+                        {% for pic in accom.pic_list %}
 
+                        {% endfor %}
                         </div>
                     {% endif %}
                     <pre class="content">{{ accom.0.content }}</pre>
@@ -158,9 +160,7 @@
 
                         </div>
 
-                        <pre class="comment-guide">
-                            {{ comment.content }}
-                        </pre>
+                        <pre class="comment-guide">{{ comment.content }}</pre>
                     </div>
                         <div class="comment-time-guide">
                         {{ comment.created_at|date:'Y.m.d H:i' }}
@@ -169,9 +169,7 @@
                 {% elif comment.writer == guide_offer.request.user_id %}
                 <div class="comment-inside-wrapper2">
                     <div class="comment-inside-wrapper">
-                        <pre class="comment-user">
-                            {{ comment.content }}
-                        </pre>
+                        <pre class="comment-user">{{ comment.content }}</pre>
                     </div>
                         <div class="comment-time-user">
                             {{ comment.created_at|date:'Y.m.d H:i' }}
@@ -191,8 +189,20 @@
     </div>
 
         <div class="button-wrapper">
-            <a class="pay-button">결제 하기</a>
-            <a class="back-button">리스트로 가기</a>
+            <a class="pay-button" onclick="openTerms()">결제 하기</a>
+            <a class="back-button" href="/my_trip/{{ guide_offer.request_id }}">리스트로 가기</a>
+            <div class="terms">
+                <div class="terms-title">여행자 약관 (필수)</div>
+                <div class="close" onclick="closeTerms()">접기 <img src="{% static 'image/icon/arrow_right_grey.png' %}"></div>
+                <div class="terms-content">
+                    여행자 약관
+
+                    제 1장 목적 및 정의
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" class="checkbox">여행자 약관을 읽었으며, 내용에 동의합니다. (필수)
+                </div>
+            </div>
         </div>
 
     </div>

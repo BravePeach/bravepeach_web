@@ -9,10 +9,10 @@ function submit_enroll_form(){
 $(function() {
     $( window ).scroll(function() {
         if($('#header').offset().top < 204) {
-            $('#header').stop().animate({backgroundColor: "rgba(255, 255, 255, 0)"});
+            $('#header').stop().animate({backgroundColor: "rgba(255, 255, 255, 0)"}, 'fast');
         }
         else if ($('#header').offset().top){
-            $('#header').stop().animate({backgroundColor: "rgb(255, 255, 255)"});
+            $('#header').stop().animate({backgroundColor: "rgb(255, 255, 255)"}, 'fast');
         }
     });
 

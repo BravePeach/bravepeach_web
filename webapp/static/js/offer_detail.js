@@ -24,17 +24,39 @@ function addComment() {
             $('.comment-inside-wrapper').fadeIn('slow');
         }
     })
+}
 
+function openTerms(){
+    var isOpened = $('.terms').css('display') == 'block';
+    var isChecked = $('.checkbox').is(':checked');
+    if(!isOpened && !isChecked){
+        $('.terms').show('slow')
+    }
+
+    else if(isOpened && !isChecked){
+        alert("여행자 약관에 동의해주세요")
+    }
+
+    else {
+        console.log("thanks")
+    }
+}
+
+function closeTerms(){
+    $('.terms').hide('slow')
 }
 
 function fixButton() {
     var container = $('.button-wrapper');
-    var maxTop = $('footer').offset().top - container.outerHeight() - 55;
+    var maxTop = $('footer').offset().top - container.outerHeight() - 222;
     var scrollVal = $(document).scrollTop() + $(window).height() - 223;
 
-    container.css('top', scrollVal);
     if (scrollVal > maxTop) {
         container.css('top', maxTop);
+    }
+
+    else {
+        container.stop().animate({top: scrollVal},'100');
     }
 }
 
