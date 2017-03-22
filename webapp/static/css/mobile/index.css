@@ -1,5 +1,13 @@
 body{width: 100%;}
 
+.nav-bravepeach-logo{
+    display: none;
+}
+
+.side_menu_wrapper, .search_side_menu_wrapper{
+    margin-top: 34px;
+}
+
 .main-header {
   position: relative;
   width: 100%;

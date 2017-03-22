@@ -22,6 +22,50 @@
     {% block js %}{% endblock %}
 </head>
 <body>
+<header class="mobile-header">
+    <img class="nav-menubar" src="{% static 'image/icon/menu_bar.png' %}" alt="메뉴바" onclick="mobileMenu()">
+    <img class="nav-bravepeach-logo" src="{% static 'image/icon/logo_bravepeach.png' %}" alt="용감한 로고">
+    <img class="nav-guide-search-dropdown" src="{% static 'image/icon/Search_Icon.png' %}" alt="검색 아이콘" onclick="mobileSearch()">
+
+    <div class="side_menu_wrapper">
+        <img class="menu-profile-pic" {% if request.user.profile.photo and request.user.profile.photo.url %} src="{{ request.user.profile.photo.url }}" {% else %} src="" {% endif %} alt="프로필">
+        <div style="margin-top: 8px">
+            <span class="menu-profile-name">{{request.user.profile.full_name}}</span>
+            <span class="menu-email">{{request.user.username}}</span>
+        </div>
+            <ul class="menu-list">
+                <li><a href="mypage">마이페이지</a></li>
+                <hr>
+                <li>가이드 하기</li>
+                <hr>
+                <li><a href="like">찜한 가이드</a></li>
+                <hr>
+                <li><a href="my_trip">여행</a></li>
+                <hr>
+                <li>메세지</li>
+                <hr>
+                <li>도움말</li>
+                <hr>
+                <li><a href="logout">로그아웃</a></li>
+            </ul>
+    </div>
+
+    <div class="search_side_menu_wrapper">
+        <h1>가이드 찾기</h1>
+        <h2>원하는 지역의 가이드를 검색해보세요!</h2>
+
+        위치
+        <input type="text">
+        날짜
+        <input type="text">
+        인원
+        <input type="text">
+
+        <button>가이드 찾기</button>
+    </div>
+
+</header>
+
 {% block content %}{% endblock %}
 </body>
 </html>

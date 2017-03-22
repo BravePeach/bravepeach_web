@@ -1,6 +1,30 @@
 var mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-function dropMenu(){
+function mobileMenu() {
+    if ($('.side_menu_wrapper').css('display') == 'none'){
+        $('.nav-guide-search-dropdown').hide('slow');
+        if($('.nav-bravepeach-logo').css('display') == 'none') {
+            $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
+            console.log("asd")
+        }
+    }
+    else {
+        $('.nav-guide-search-dropdown').show('slow');
+    }
+    $('.side_menu_wrapper').slideToggle();
+}
+
+function mobileSearch() {
+    if ($('.search_side_menu_wrapper').css('display') == 'none'){
+        $('.nav-menubar').hide('slow');
+    }
+    else {
+        $('.nav-menubar').show('slow');
+    }
+    $('.search_side_menu_wrapper').slideToggle();
+}
+
+function dropMenu() {
     $('.profile-dropdown').slideToggle('fast')
 }
 
