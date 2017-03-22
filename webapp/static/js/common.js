@@ -1,33 +1,5 @@
 var mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-function mobileMenu() {
-    if ($('.side_menu_wrapper').css('display') == 'none'){
-        $('.nav-guide-search-dropdown').hide('slow');
-        if($('.nav-bravepeach-logo').css('display') == 'none') {
-            $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
-            console.log("asd")
-        }
-    }
-    else {
-        $('.nav-guide-search-dropdown').show('slow');
-    }
-    $('.side_menu_wrapper').slideToggle();
-}
-
-function mobileSearch() {
-    if ($('.search_side_menu_wrapper').css('display') == 'none'){
-        $('.nav-menubar').hide('slow');
-    }
-    else {
-        $('.nav-menubar').show('slow');
-    }
-    $('.search_side_menu_wrapper').slideToggle();
-}
-
-function dropMenu() {
-    $('.profile-dropdown').slideToggle('fast')
-}
-
 function validate_pw() {
     var pw_re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/;
     var pw_val = $("#id_password").val();
@@ -55,9 +27,12 @@ function fixTripButton() {
     var maxTop = $('footer').offset().top - container.outerHeight() - 26.5;
     var scrollVal = $(document).scrollTop() + $(window).height() - 120;
 
-    container.css('top', scrollVal);
     if (scrollVal > maxTop) {
         container.css('top', maxTop);
+    }
+
+    else {
+        container.stop().animate({top: scrollVal},'100');
     }
 }
 
@@ -82,4 +57,17 @@ $(function(){
     $(document).scroll(function() {
         fixTripButton();
     });
+
+    $('.profile_img').click(function(event){
+        console.log("q");
+        event.stopPropagation();
+         $(".profile-dropdown").slideToggle("fast");
+    });
+    $(".profile-dropdown").on("click", function (event) {
+        event.stopPropagation();
+    });
+});
+
+$(document).on("click", function () {
+    $(".profile-dropdown").slideUp('fast');
 });

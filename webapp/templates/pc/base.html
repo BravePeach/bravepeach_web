@@ -25,8 +25,8 @@
         </a>
     </div>
     {% if request.user.is_authenticated %}
-        <div class="profile_img" onclick="dropMenu()">
-            <img style="width: 50px;height: auto;border-radius: 24px;" {% if request.user.profile.photo and request.user.profile.photo.url %} src="{{ request.user.profile.photo.url }}" {% else %} src="" {% endif %} alt="프로필">
+        <div class="profile_img">
+            <img style="width: 50px;height: auto;border-radius: 25px;" {% if request.user.profile.photo and request.user.profile.photo.url %} src="{{ request.user.profile.photo.url }}" {% else %} src="" {% endif %} alt="프로필">
 
             <span>{{request.user.profile.full_name }} 님</span>
         <img class="profile-arrow" src={% static 'image/icon/arrow_down_black.png' %}>

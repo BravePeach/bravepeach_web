@@ -6,7 +6,7 @@ body{width: 100%;}
 }
 
 .main-container {
-    padding-top: 15px;
+    padding-top: 59px;
     position:relative;
 }
 
@@ -300,28 +300,6 @@ body{width: 100%;}
     border: 1px solid #979797;
     padding-top: 3px;
     margin: 0px 6px;
-}
-
-.enroll-trip-button{
-    width: 154px;
-    height: 43px;
-    border-radius: 33px;
-    background-image: linear-gradient(to right, #f2ad8a, #e64c47);
-    box-shadow: 0 2px 4px 0 #606060;
-    color: white;
-    font-family: NanumSquareOTFR;
-    font-size: 16px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: center;
-    padding-top: 13px;
-    position: fixed;
-    bottom: 26.5px;
-    right: 50%;
-    margin-right: -77px;
 }
 
 #ui-datepicker-div {

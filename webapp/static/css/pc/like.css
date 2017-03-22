@@ -1,9 +1,6 @@
 .main-container, .head-container {
-    min-width: 320px;
-    max-width: 904px;
+    width: 880px;
     margin: auto;
-    padding-left: 12px;
-    padding-right: 12px;
 }
 
 .main-container {
@@ -14,9 +11,8 @@
     color: #E64C47;
     margin-top: 0px;
     margin-bottom: 12px;
-    font-family: NanumSquareOTFB;
     font-size: 48px;
-    font-weight: normal;
+    font-weight: bold;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;

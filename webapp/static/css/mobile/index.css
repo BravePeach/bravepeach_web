@@ -1,11 +1,11 @@
 body{width: 100%;}
 
-.nav-bravepeach-logo{
-    display: none;
+header{
+    background-color: transparent;
 }
 
-.side_menu_wrapper, .search_side_menu_wrapper{
-    margin-top: 34px;
+.nav-bravepeach-logo{
+    display: none;
 }
 
 .main-header {
@@ -297,7 +297,8 @@ body{width: 100%;}
 .tt-hint {
     display: none;
 }
-#id_city {
+.find-guide-form {
+    padding-top: 23px;
     display: block;
     padding-left: 83px;
     margin:auto;

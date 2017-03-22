@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="{% static 'css/mobile/index.css' %}">
 {% endblock %}
 {% block js %}
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/jquery-color.js'%}"></script>
+    <script src="{% static 'js/mobile/main.js' %}"></script>
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/jquery.placecomplete.js' %}"></script>
 {% endblock %}
 {% block title %} bravepeach | 나만의 여행을 위한 맞춤형 여행 플랫폼 {% endblock %}
 
@@ -19,7 +22,7 @@
     <div style="width: 50%; float: left; position: relative">
     <img class="search-icon" src="{% static 'image/icon/Search Icon.png' %}">
     </div>
-    {{ form.city |add_class:"find-guide-form"|attr:"placeholder:원하는 지역의 가이드를 검색해 보세요"}}
+    <div class="find-guide-form">원하는 지역의 가이드를 검색해 보세요!</div>
 </div>
 
 <div class="mobile-main main-container">

@@ -35,7 +35,8 @@
             <div class="travel_date_form_main_wrapper">
                 <span class="form-name">날짜</span>
                 {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"|attr:"placeholder:출국일"}}
-                {{ form.travel_end_at |add_class:"find-guide-form datepicker2"|attr:"readonly"|attr:"placeholder:도착일"}}
+                <span style="position:absolute; top:40px; left: 129px; color:#bbbbbb;">-</span>
+                {{ form.travel_end_at |add_class:"find-guide-form datepicker2"|attr:"readonly"|attr:"placeholder:입국일"}}
             </div>
 
             <div class="traveler_cnt_form_main_wrapper">

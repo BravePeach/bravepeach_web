@@ -18,13 +18,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead-addresspicker/0.1.4/typeahead-addresspicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.3/sweetalert2.min.js"></script>
-    <script src="{% static 'js/common.js' %}"></script>
+    <script src="{% static 'js/mobile/common.js' %}"></script>
     {% block js %}{% endblock %}
 </head>
 <body>
 <header class="mobile-header">
     <img class="nav-menubar" src="{% static 'image/icon/menu_bar.png' %}" alt="메뉴바" onclick="mobileMenu()">
-    <img class="nav-bravepeach-logo" src="{% static 'image/icon/logo_bravepeach.png' %}" alt="용감한 로고">
+    <div class="nav-bravepeach-logo-wrapper"><img class="nav-bravepeach-logo" src="{% static 'image/icon/logo_bravepeach.png' %}" alt="용감한 로고"></div>
     <img class="nav-guide-search-dropdown" src="{% static 'image/icon/Search_Icon.png' %}" alt="검색 아이콘" onclick="mobileSearch()">
 
     <div class="side_menu_wrapper">
@@ -67,5 +67,11 @@
 </header>
 
 {% block content %}{% endblock %}
+   <a class="enroll-trip-button" href="{% url 'enroll_trip' %}">
+        여행 요청서 쓰기
+    </a>
+
+
+<footer></footer>
 </body>
 </html>
