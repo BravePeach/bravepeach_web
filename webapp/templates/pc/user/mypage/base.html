@@ -32,6 +32,7 @@
                 },function(data){
                     if (data['ok'] === true) {
                         $("#profile-image").prop("src", data["url"]);
+                        location.reload();
                     }
                 });
         }
