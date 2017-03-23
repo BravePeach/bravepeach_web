@@ -26,11 +26,10 @@
     </div>
     {% if request.user.is_authenticated %}
         <div class="profile_img" onclick="dropMenu()">
-            <img style="width: 50px;height: auto;border-radius: 24px;"
-                    {% if request.user.profile.photo and request.user.profile.photo.url %} src="{{ request.user.profile.photo.url }}"
-                    {% else %} src="" {% endif %}
+            <img id="header-profile" style="width: 50px;height: auto;border-radius: 24px;"
+                 src="{% if request.user.profile.photo %}{{ request.user.profile.photo.url }}
+                        {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
                  alt="프로필">
-
             <span>{{request.user.profile.full_name }} 님</span>
         <img class="profile-arrow" src={% static 'image/icon/arrow_down_black.png' %}>
         <div class="profile-dropdown">

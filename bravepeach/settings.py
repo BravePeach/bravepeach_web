@@ -155,6 +155,16 @@ AWS_S3_CUSTOM_DOMAIN = 'di6a2p2igrt9l.cloudfront.net'   # cdn.bravepeach.com aft
 MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = "http://{domain}/{media}/".format(domain=AWS_S3_CUSTOM_DOMAIN, media=MEDIAFILES_LOCATION)
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+CONTENT_TYPES = ['image']
+MAX_UPLOAD_SIZE = '5242880'     # 5M
+# 2.5MB - 2621440
+# 5MB - 5242880
+# 10MB - 10485760
+# 20MB - 20971520
+# 50MB - 5242880
+# 100MB 104857600
+# 250MB - 214958080
+# 500MB - 429916160
 
 # AWS
 AWS_STORAGE_BUCKET_NAME = 'bravestatics'
