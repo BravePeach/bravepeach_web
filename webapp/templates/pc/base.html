@@ -32,11 +32,11 @@
                  alt="프로필">
 
             <span>{{request.user.profile.full_name }} 님</span>
-        <img class="profile-arrow" src={% static 'image/icon/arrow_down_black.png' %}>
+        <img class="profile-arrow" src="{% static 'image/icon/arrow_down_black.png' %}">
         <div class="profile-dropdown">
-            <a class="dropdown-menu" href="{% url "mypage_default" %}">마이페이지</a>
+            <a class="dropdown-menu" href="{% url 'mypage_default' %}">마이페이지</a>
             <a class="dropdown-menu">도움말</a>
-            <a class="dropdown-menu last" href="{% url "logout" %}">로그아웃</a>
+            <a class="dropdown-menu last" href="{% url 'logout' %}">로그아웃</a>
         </div>
         </div>
     {% endif %}
@@ -46,13 +46,13 @@
                 <li><a href="#" title="메세지">메세지</a></li>
                 <li><a href="{% url 'my_trip' %}" title="여행">여행</a></li>
                 <li><a href="{% url 'like' %}" title="찜한 가이드">찜한 가이드</a></li>
-                <li><a href="#" title="가이드 하기">가이드 하기</a></li>
+                <li><a href="{% url 'guide_index' %}" title="가이드 하기">가이드 하기</a></li>
                 <li><a href="{% url 'enroll_trip' %}" title="여행 요청서 쓰기">여행 요청서 쓰기</a></li>
             {% else %}
                 <li><a href="" title="도움말">도움말</a></li>
                 <li><a href="{% url 'login' %}" title="로그인">로그인</a></li>
                 <li><a href="{% url 'register' %}" title="회원가입">회원가입</a></li>
-                <li><a href="" title="가이드 하기">가이드 하기</a></li>
+                <li><a href="{% url 'guide_index' %}" title="가이드 하기">가이드 하기</a></li>
             {% endif %}
         </ul>
     </div>

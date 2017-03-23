@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^unsub_bp/$', views.user.unsub_bp, name="unsub_bp"),
 
     # Guide
+    url(r'^guide/$', views.guide.guide_index, name='guide_index'),
     url(r'^guide/(?P<gid>\d+)/$', views.guide.profile, name='guide_profile'),
 
     # User2Guide

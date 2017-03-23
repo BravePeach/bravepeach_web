@@ -1,10 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load compile_static %}
+{% load static %}
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href='{% static "less/pc/common.less"|compile %}'>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="//cdn.jsdelivr.net/nanumsquare/1.0/nanumsquare.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/sweetalert2/6.4.3/sweetalert2.min.css">
+    {% block css %}{% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.3/sweetalert2.min.js"></script>
+    <script src="{% static 'js/common.js' %}"></script>
+    {% block js %}{% endblock %}
 </head>
 <body>
-$END$
+<header id="header" class="brave_head">
+    <div class="main_logo">
+        <a href="{% url 'guide_index' %}" title="">
+            <img src="{% static 'image/icon/logo_bravepeach.png' %}" alt="">
+        </a>
+    </div>
+    {% if request.user.is_authenticated %}
+        <div class="profile_img" onclick="dropMenu()">
+            <img style="width: 50px;height: auto;border-radius: 24px;"
+                    {% if request.user.profile.photo and request.user.profile.photo.url %} src="{{ request.user.profile.photo.url }}"
+                    {% else %} src="" {% endif %}
+                 alt="프로필">
+
+            <span>{{request.user.profile.full_name }} 님</span>
+        <img class="profile-arrow" src="{% static 'image/icon/arrow_down_black.png' %}">
+        <div class="profile-dropdown">
+            <a class="dropdown-menu" href="{% url 'mypage_default' %}">마이페이지</a>
+            <a class="dropdown-menu">도움말</a>
+            <a class="dropdown-menu last" href="{% url 'logout' %}">로그아웃</a>
+        </div>
+        </div>
+    {% endif %}
+    <div class="gnb">
+        <ul>
+            {% if request.user.is_authenticated %}
+                <li><a href="#" title="가이드 하기">여행자 하기</a></li>
+            {% else %}
+                <li><a href="" title="도움말">도움말</a></li>
+                <li><a href="{% url 'login' %}" title="로그인">로그인</a></li>
+                <li><a href="{% url 'register' %}" title="회원가입">회원가입</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</header>
+    <div class="contents-wrapper">
+{% block content %}{% endblock %}
+</div>
+<footer>
+    <div class="foot_menu">
+        <ul>
+            <li class="col-xs-3"><a href="#" title="이용방법">이용방법</a></li>
+            <li class="col-xs-3"><a href="#" title="자주 묻는 질문">자주 묻는 질문</a></li>
+            <li class="col-xs-3"><a href="#" title="이용약관">이용약관</a></li>
+            <li class="col-xs-3"><a href="#" title="개인정보 취급방침">개인정보 취급방침</a></li>
+        </ul>
+    </div>
+    <div class="info">
+        <div class="row" style="width:550px; margin:auto;">
+            <span class="col-xs-4">기업명 | 용감한 Yonggamhan</span>
+            <span class="col-xs-4">용감한 복숭아 Bravepeach</span>
+            <span class="col-xs-4">대표자 | 오연주 (Jules Oh)</span>
+        </div>
+        <div style="height: 29px;"></div>
+        <div class="row" style="width: 455px; margin: auto;">
+            <span class="col-xs-6">대표번호 | +82) 10-5133-1564</span>
+            <span class="col-xs-6">일반 문의 | bravepeach.trip@gmail.com</span>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="copyright">
+            Copyright (C) bravepeach All rights reserved
+        </div>
+    </div>
+</footer>
 </body>
 </html>
