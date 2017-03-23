@@ -38,7 +38,7 @@
                         <div class="guide-option {% if enroll.guide_guided %}guided{% endif %}"></div>
                         <div class="guide-txt">가이드</div>
                     </div>
-                    <div class="schedule">{{ enroll.travel_begin_at }} ~ {{ enroll.travel_end_at }}</div>
+                    <div class="schedule">{{ enroll.travel_begin_at|date:"Y/m/d" }} ~ {{ enroll.travel_end_at|date:"Y/m/d" }}</div>
                     <div class="cities ellipsis">
                         {% for c in enroll.city %}
                             {% if not forloop.first %} / {% endif %} {{ c }}

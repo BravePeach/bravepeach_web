@@ -1,0 +1,62 @@
+{% extends "mobile/guide/base.html" %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/mobile/guide/index_not_login.css' %}">
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/jquery-color.js'%}"></script>
+<script src="{% static 'js/mobile/guide_index.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="main-header">
+    <div class="head-container">
+    </div>
+    <img class="main-logo" src="{% static 'image/icon/logo_bravepeach.png' %}">
+    <div class="title">세상에 없는 여행을 제시하고<br>고수익 가이드가 되어보세요</div>
+</div>
+
+<div class="howto">BravePeach에서<br>전문가이드로 활동하는법</div>
+
+<div class="card">
+    <div class="card-title">Step.1 전문가이드 등록</div>
+    <img class="card-img" src="{% static 'image/images/waiting.jpg'%}">
+    <span style="top: 243px;">먼저 사이트에서 가이드의 경력과 자격증, 성격, 가이드 가능 지역 등을 등록해주세요.</span>
+</div>
+
+<div class="card">
+    <div class="card-title">Step.2 여행자 찾기</div>
+    <img class="card-img" src="{% static 'image/images/hiking.jpg'%}">
+    <span style="top: 243px;">나만의 매력을 충분히<br>발산할 수 있는 여행자를 찾고 지원해보세요.</span>
+</div>
+
+<div class="card">
+    <div class="card-title">Step.3 가이드 제공하기</div>
+    <img class="card-img" src="{% static 'image/images/sunset1.jpg'%}">
+    <span style="top: 243px;">계약이 된 여행자에게<br>가이드를 제공하여 뜻깊은 여행을 만들어 보세요.</span>
+</div>
+
+<span class="benefit">전문가이드가 되면 좋은점</span>
+
+<div class="card-wrapper">
+    <div class="card2">
+        <div class="title2">고수익</div>
+        <div class="content">경력과 전문성을 어필하여 프리미엄 여행을 제공함으로써 고수익을 창출할 수 있습니다.</div>
+    </div>
+    <div class="card2">
+        <div class="title2">자율성</div>
+        <div class="content">가이드가 원하는 날짜에 가이드<br>활동을 할 수 있으며, 여행자의 요청에 맞게 자율적으로 일정을 짤 수 있습니다.</div>
+    </div>
+    <div class="card2">
+        <div class="title2">정보교류</div>
+        <div class="content" style="margin-bottom: 150px">BravePeach가 제공하는 다양한<br>정보와 전문가이드들이 제공하는 다양한 정보를 얻을 수 있습니다.</div>
+    </div>
+</div>
+
+<a class="guide-button" href="{% url 'login' %}?next={{request.path}}">전문가이드로 등록하기</a>
+</div>
+
+{% endblock %}
