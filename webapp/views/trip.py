@@ -41,8 +41,9 @@ def guide_search(request):
 class FilterGuide(View):
     def get(self, request):
         result = []
-        location = request.GET.get('location')
+        location = request.GET.getlist('location[]')
         print(location)
+        print(request.GET)
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')

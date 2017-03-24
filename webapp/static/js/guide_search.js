@@ -1,7 +1,6 @@
-
-
-var city_list = []
-var traveler_list = [0, 0, 0, 0, 0, 0];
+var city_list = localStorage.getItem("city_list").split(',');
+console.log(localStorage.getItem("city_list"));
+console.log(city_list);
 
 function changeOrder(val) {
     if (val != $('.order-active').id) {
@@ -38,18 +37,19 @@ function like(e){
 }
 
 function filterGuide(sort) {
+    console.log(city_list);
         $.ajax({
-            url: "filtering/",
+            url: "/filtering/",
             type: "GET",
             data: {
-                location: $('#location_form').val(),
+                location: city_list,
                 start_date: $('#start_date_form').val(),
                 end_date: $('#end_date_form').val(),
                 traveler_cnt: $('#traveler_cnt_form').val(),
                 sort: sort,
             },
             success: function (object) {
-                console.log(object)
+                console.log(object);
                 var user = object[object.length - 1];
                 $('.guide-card-wrapper').html("");
                 $('.search-filter-result').html(object.length - 1);
@@ -165,21 +165,14 @@ $(function() {
         'placecomplete:selected': function (evt, placeResult) {
             console.log(placeResult);
             city_list.push(placeResult['name']);
-            console.log(city_list);
+            filterGuide($('.order-active').attr('id'));
         },
         'placecomplete:cleared': function(evt, placeResult) {
             console.log(placeResult);
             city_list.pop();
-            console.log(city_list)
+            filterGuide($('.order-active').attr('id'));
         }
     });
-
-    // $(addressPicker).on('addresspicker:selected', function (event, result) {
-    //     console.log(result.nameForType('country'))
-    //     console.log("form submitted")
-    //     console.log($('#location_form').val())
-    //     filterGuide($('.order-active').attr('id'));
-    // })
 
 
 // 인원 증가
