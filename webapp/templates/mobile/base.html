@@ -70,18 +70,18 @@
         <h1>가이드 찾기</h1>
         <span>원하는 지역의 가이드를 검색해보세요!</span>
 
-        <form id="enroll-form" method="get" action="{% url 'guide_search' %}">
+        <form id="enroll-form" method="get" action="{% url 'guide_search' %}" value="{{ city }}">
             위치
             <input type="text" name="city" id="id_city" placeholder="목적지, 도시명, 주소" required>
             <hr>
             날짜
             <div>
-            <input type="text" name="travel_begin_at" class="datepicker1" readonly placeholder="출국일">
-            <input type="text" name="travel_end_at" class="datepicker2" readonly placeholder="입국일">
+            <input type="text" name="travel_begin_at" class="datepicker1" readonly placeholder="출국일" value="{{ travel_begin_at }}">
+            <input type="text" name="travel_end_at" class="datepicker2" readonly placeholder="입국일" value="{{ travel_end_at }}">
             </div>
             <hr>
             인원
-            <input type="text" name="age_group" class="traveler_cnt_main" id="traveler_cnt_main" readonly placeholder="여행자 수">
+            <input type="text" name="age_group" class="traveler_cnt_main" id="traveler_cnt_main" readonly placeholder="여행자 수" value="{{ age_group }}">
             <hr>
             <div class="traveler_cntpicker">
                     <div>

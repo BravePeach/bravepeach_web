@@ -32,3 +32,8 @@ function mobileSearch() {
     $('.search_side_menu_wrapper').slideToggle();
 }
 
+$(function () {
+    $('.find-guide-form, .find-guide-form2').click(function () {
+        mobileSearch();
+    });
+});

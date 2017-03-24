@@ -17,7 +17,8 @@ from django.utils import timezone
 
 
 def guide_search(request):
-    if request.method == 'GET':
+    if request.GET:
+        print(request.GET)
         form = GuideSearchFrom(request.GET)
         if request.GET.__contains__('city'):
             city = request.GET.__getitem__('city')
@@ -29,20 +30,19 @@ def guide_search(request):
             age_group = request.GET.__getitem__('age_group')
         if form.is_valid():
             return flavour_render(request, "trip/guide_search.html", {'city': city,
-                                                                      'travel_begin_at': travel_begin_at,
-                                                                      'travel_end_at':travel_end_at,
-                                                                      'age_group': age_group,
-                                                                      })
-        else:
-            return flavour_render(request, "index.html")
+                                                                          'travel_begin_at': travel_begin_at,
+                                                                          'travel_end_at':travel_end_at,
+                                                                          'age_group': age_group,
+                                                                          })
     else:
-        return flavour_render(request, 'trip/guide_search.html', {})
+        return flavour_render(request, "trip/guide_search.html")
 
 
 class FilterGuide(View):
     def get(self, request):
         result = []
         location = request.GET.get('location')
+        print(location)
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')

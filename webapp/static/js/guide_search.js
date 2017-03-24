@@ -167,7 +167,8 @@ $(function() {
             city_list.push(placeResult['name']);
             console.log(city_list);
         },
-        'placecomplete:cleared': function() {
+        'placecomplete:cleared': function(evt, placeResult) {
+            console.log(placeResult);
             city_list.pop();
             console.log(city_list)
         }
