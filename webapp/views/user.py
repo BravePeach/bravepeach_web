@@ -30,7 +30,7 @@ def user_login(request):
             login(request, user)
             if not remember:
                 request.session.set_expiry(0)
-            return redirect("index")
+            return HttpResponseRedirect(request.GET.get('next', '/'))
         else:
             return flavour_render(request, "user/login.html", {"login": "fail"})
     else:

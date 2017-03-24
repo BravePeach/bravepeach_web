@@ -54,7 +54,7 @@
             <div class="detail-content">{{ guide.introduction }}</div>
             <div class="detail-title">경력</div>
             <div class="hr"></div>
-            <div class="detail-content">{{ guide.career }}</div>
+            <div class="detail-content">{{ guide.career|linebreaks }}</div>
             <div class="detail-title">여행 테마</div>
             <div class="hr"></div>
             <div class="detail-content">{% for theme in guide.theme_list %}

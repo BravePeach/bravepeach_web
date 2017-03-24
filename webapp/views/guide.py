@@ -15,3 +15,10 @@ def profile(request, gid):
     return flavour_render(request, "guide/profile.html", {"guide": guide, "recent_trip": recent_trip,
                                                           "reviews": review_list,
                                                           "review_ids": [x.offer_id for x in review_list]})
+
+
+def guide_index(request):
+    if request.user.is_authenticated:
+        return flavour_render(request, "guide/index.html", {})
+    else:
+        return flavour_render(request, "guide/index_not_login.html", {})
