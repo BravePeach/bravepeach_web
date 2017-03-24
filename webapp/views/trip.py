@@ -30,10 +30,10 @@ def guide_search(request):
             age_group = request.GET.__getitem__('age_group')
         if form.is_valid():
             return flavour_render(request, "trip/guide_search.html", {'city': city,
-                                                                          'travel_begin_at': travel_begin_at,
-                                                                          'travel_end_at':travel_end_at,
-                                                                          'age_group': age_group,
-                                                                          })
+                                                                      'travel_begin_at': travel_begin_at,
+                                                                      'travel_end_at':travel_end_at,
+                                                                      'age_group': age_group,
+                                                                      })
     else:
         return flavour_render(request, "trip/guide_search.html")
 
@@ -43,7 +43,6 @@ class FilterGuide(View):
         result = []
         location = request.GET.getlist('location[]')
         print(location)
-        print(request.GET)
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')

@@ -70,9 +70,9 @@
         <h1>가이드 찾기</h1>
         <span>원하는 지역의 가이드를 검색해보세요!</span>
 
-        <form id="enroll-form" method="get" action="{% url 'guide_search' %}" value="{{ city }}">
+        <form id="enroll-form" method="get" action="{% url 'guide_search' %}">
             위치
-            <input type="text" name="city" id="id_city" placeholder="목적지, 도시명, 주소" required>
+            <input type="text" name="city" id="id_city" placeholder="목적지, 도시명, 주소" required value="{{ city }}">
             <hr>
             날짜
             <div>
