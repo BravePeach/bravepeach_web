@@ -273,6 +273,7 @@ body {
   width: 100%;
   background-color: white;
   text-align: left;
+  font-weight: bold;
 }
 
 .search_side_menu_wrapper h1 {
@@ -284,20 +285,25 @@ body {
 }
 
 .search_side_menu_wrapper span {
-  font-size: 16px;
-  line-height: 32px;
   padding: 0px;
   margin: 0px;
-  display: block;
-  color: #606060;
   margin-bottom: 27px;
+  display: inline-block;
 }
 
 .search_side_menu_wrapper input {
   display: block;
-  margin: 30px 0px;
-  border-width: 0px 0px 1px;
-  width: 100%;
+}
+
+.datepicker1, .datepicker2{
+  display: inline-block !important;
+  width: 110px;
+  margin: 15px 20px 5px 10px;
+}
+
+.search_side_menu_wrapper hr{
+  margin-top: 0px;
+  margin-bottom: 20px;
 }
 
 .search_side_menu_wrapper button {
@@ -428,4 +434,169 @@ footer ul {
   padding-top: 9px;
   margin: 2px 0px 0px 20px;
 
+}
+
+.traveler_cnt_main{
+  margin: 15px 0px 5px 10px;
+}
+
+.traveler_cntpicker {
+  margin-top: 20px;
+  display: none;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  color: #000000;
+}
+
+.traveler_cntpicker div {
+  margin-bottom: 20px;
+  position: relative;
+}
+.adult_num,
+.child_num,
+.toddler_num {
+  position: absolute;
+  right: 164px;
+}
+
+.increase_button,
+.decrease_button {
+  position: absolute;
+  text-align: center;
+  font-size: 25px;
+  display: inline-block;
+  margin-left: 17px;
+  width: 29px;
+  height: 29px;
+  border: 1px solid;
+  border-radius: 14.5px;
+  cursor: pointer;
+}
+
+.increase_button{
+  right: 48px;
+}
+
+.decrease_button{
+  right: 0px;
+}
+
+#ui-datepicker-div {
+  display: none;
+}
+.ui-datepicker {
+  position: fixed !important;
+  left: 50% !important;
+  top: 353px !important;
+  margin-left: -178.5px;
+  /* approx half the height of the datepicker div - adjust based on your size */
+  text-align: center;
+  width: 355px;
+  height: 397px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: solid 1px #d4d4d4;
+
+}
+.ui-datepicker a {
+  color: black;
+}
+.ui-datepicker-header {
+  width: 190px;
+  margin: auto;
+  margin-top: 11.5px;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-align: center;
+  color: #000000;
+}
+
+.ui-datepicker-month{
+  margin-left: 15px;
+}
+.ui-datepicker-prev {
+  float: left;
+  color: #606060 !important;
+}
+.ui-datepicker-next {
+  float: right;
+  color: #606060 !important;
+}
+.ui-datepicker-calendar {
+  margin: 13px auto;
+  width: 95%;
+  height: 82%;
+  font-size: 16px;
+}
+
+.ui-state-default{
+  display: block;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  padding-top: 10px;
+}
+
+a.ui-state-default:hover {
+    background-color: #e64c47;
+    color: white;
+}
+
+.ui-datepicker-unselectable {
+    color: #d3d3d3;
+}
+
+.select2-choices{
+  padding: 0px;
+  margin: 0px;
+  height: auto !important;
+}
+
+.select2-input{
+  margin: 15px 0px 5px 10px;
+  width: 100% !important;
+  font-family: NanumSquare !important;
+}
+
+.select2-container{
+  display: block;
+}
+
+.select2-search-field{
+  width: 100%;
+}
+
+.select2-drop{
+  width: 96% !important;
+  max-width: 400px;
+  left: 50% !important;
+  margin-left: -48%;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+}
+
+.select2-result:before{
+  width: 95%;
+  margin: 46px auto;
+}
+
+.select2-no-results{
+  font-size: 18px;
 }

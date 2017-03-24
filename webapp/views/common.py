@@ -1,13 +1,13 @@
 # from django.shortcuts import render
 
 from bravepeach.util import flavour_render
-from ..forms import IndexGuideSearchFrom
+from ..forms import GuideSearchFrom
 from django.shortcuts import redirect
 
 
 def index(request):
     if request.method == 'GET':
-        form = IndexGuideSearchFrom(request.GET)
+        form = GuideSearchFrom(request.GET)
         if request.GET.__contains__('city'):
             city = request.GET.__getitem__('city')
         if request.GET.__contains__('travel_begin_at'):
@@ -23,6 +23,6 @@ def index(request):
                                                                       'age_group': age_group,
                                                                       })
     else:
-        form = IndexGuideSearchFrom()
+        form = GuideSearchFrom()
 
     return flavour_render(request, "index.html", {'form': form})

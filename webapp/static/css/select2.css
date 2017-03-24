@@ -352,13 +352,15 @@ html[dir="rtl"] .select2-results {
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .select2-result:before {
     content : "";
     position: absolute;
-    left: 20px;
-    margin-top: 46px;
+    margin: 46px auto;
     height : 1px;
     width : 425px;
     border-bottom:2px solid #979797;

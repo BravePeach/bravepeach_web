@@ -44,107 +44,11 @@ header{
     background-color: rgba(255, 255, 255, 0.85);
     border: solid 1px #c7c7cd;
 }
+
 .main-form-wrapper .col-xs-3 {
   height: 100%;
 }
-.location_form_main_wrapper {
-  margin-left: 1px;
-  margin-top: 1px;
-  position: relative;
-  float: left;
-  display: inline-block;
-  width: 483px;
-  height: 75px;
-  border-radius: 8px 0 0 8px;
-  background-color: #ffffff;
-  border: solid 1px #ddd9d9;
-}
-.travel_date_form_main_wrapper {
-  margin-top: 1px;
-  width: 264.9px;
-  height: 75px;
-  background-color: #ffffff;
-  border: solid 1px #ddd9d9;
-  position: relative;
-  display: inline-block;
-  float: left;
-  margin-left: 5px;
-}
-.traveler_cnt_form_main_wrapper {
-  margin-top: 1px;
-  width: 235px;
-  height: 75px;
-  background-color: #ffffff;
-  border: solid 1px #ddd9d9;
-  display: inline-block;
-  float: left;
-  margin-left: 5px;
-  position: relative;
-}
-.location_form_main {
-  position: absolute;
-  border: none;
-  top: 38px;
-  left: 11px;
-  width: 95%;
-  height: 30px;
-  font-size: 18px;
-}
-#id_travel_begin_at {
-  position: absolute;
-  border: none;
-  top: 38px;
-  left: 8px;
-  font-size: 18px;
-  width: 50%;
-  cursor: pointer;
-}
-#id_travel_end_at {
-  position: absolute;
-  border: none;
-  top: 38px;
-  left: 70px;
-  font-size: 18px;
-  width: 50%;
-  cursor: pointer;
-}
-.traveler_cnt_main {
-  position: absolute;
-  top: 38px;
-  left: 7px;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
-.main-form-button {
-  position: absolute;
-  top: 8px;
-  left: 106px;
-  width: 120px;
-  height: 60px;
-  border-radius: 5px;
-  background-color: #e64c47;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
-  border: solid 1px #979797;
-  font-size: 20px;
-  color: white;
-}
-.form-name {
-  font-size: 16px;
-  position: absolute;
-  top: 13px;
-  left: 11px;
-}
-.main-form {
-  border: 1px solid #ddd9d9;
-}
-.main-form .form-name {
-  font-size: 16px;
-  color: #606060;
-  position: absolute;
-  top: 15px;
-  left: 11px;
-}
+
 .main-mobile-form-wrapper {
   display: none;
 }
@@ -238,69 +142,7 @@ header{
 .main-mobile-logo-wrapper {
   display: none;
 }
-.traveler_cntpicker {
-  display: none;
-  position: absolute;
-  top: 77px;
-  left: -148px;
-  width: 385px;
-  height: 235px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  border: solid 1px #d4d4d4;
-  font-size: 20px;
-}
-.traveler_cntpicker div {
-  margin: 32px 0 17px 26px;
-}
-.adult_num,
-.child_num,
-.toddler_num {
-  margin-right: 46px;
-}
-.adult_num,
-.toddler_num {
-  margin-left: 122px;
-}
-.child_num {
-  margin-left: 103px;
-}
-.increase_button,
-.decrease_button {
-  text-align: center;
-  font-size: 25px;
-  display: inline-block;
-  margin-left: 17px;
-  width: 29px;
-  height: 29px;
-  border: 1px solid;
-  border-radius: 14.5px;
-  cursor: pointer;
-}
-.twitter-typeahead {
-    width: 100%;
-    margin-top: 115px;
-}
-.tt-dropdown-menu {
-  font-size: 20px;
-  width: 470px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  border: solid 1px #d4d4d4;
-}
-.tt-suggestion.tt-cursor {
-  color: #fff;
-  background-color: #e64c47;
-}
-.tt-suggestion {
-  height: 58px;
-  padding: 0px 24px 5px 24px;
-  border-bottom: 1px solid #979797;
-  margin: 0px;
-}
-.tt-hint {
-    display: none;
-}
+
 .find-guide-form {
     padding-top: 23px;
     display: block;
@@ -329,45 +171,6 @@ header{
     right: 100px;
     top: 136px;
     z-index: 100;
-}
-
-#ui-datepicker-div {
-  display: none;
-}
-.ui-datepicker {
-  position: absolute !important;
-  left: 50% !important;
-  margin-left: -344px;
-  /* approx half the height of the datepicker div - adjust based on your size */
-  width: 689px;
-  height: 430px;
-  border-radius: 8px;
-  border: 1px solid #d4d4d4;
-  text-align: center;
-  background-color: white;
-}
-.ui-datepicker a {
-  color: black;
-}
-.ui-datepicker-header {
-  width: 235px;
-  margin: auto;
-  margin-top: 30px;
-  font-size: 32px;
-}
-.ui-datepicker-prev {
-  float: left;
-  color: #606060 !important;
-}
-.ui-datepicker-next {
-  float: right;
-  color: #606060 !important;
-}
-.ui-datepicker-calendar {
-  margin-top: 20px;
-  width: 95%;
-  height: 75%;
-  font-size: 24px;
 }
 
 .enroll-trip-button{
