@@ -386,3 +386,7 @@ a.ui-state-default:hover {
 }
 
 .page-up-icon{width:100%}
+
+.enroll-trip-button{
+  display: none !important;
+}

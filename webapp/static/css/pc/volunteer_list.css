@@ -374,3 +374,7 @@ hr{
 .guide-score {
     height: 100%;
 }
+
+.enroll-trip-button{
+  display: none !important;
+}

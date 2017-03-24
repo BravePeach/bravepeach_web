@@ -386,3 +386,7 @@ body{width: 100%;}
 }
 
 .tt-hint{opacity: 0.3 !important;}
+
+.enroll-trip-button{
+  display: none !important;
+}
