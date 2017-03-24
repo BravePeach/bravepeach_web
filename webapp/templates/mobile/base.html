@@ -33,10 +33,16 @@
                                             {% static 'image/icon/profile_empty.png' %} {% endif %}"
                                             alt="프로필">
         <div style="margin-top: 8px">
+            {% if request.user.is_authenticated %}
             <span class="menu-profile-name">{{request.user.profile.full_name}}</span>
             <span class="menu-email">{{request.user.username}}</span>
+            {% else %}
+            <a class="login-button" href="{% url 'login' %}">로그인</a>
+            <a class="register-button" href="{% url 'register' %}">회원가입</a>
+            {% endif %}
         </div>
             <ul class="menu-list">
+                {% if request.user.is_authenticated %}
                 <li><a href="{% url 'mypage_default' %}">마이페이지</a></li>
                 <hr>
                 <li><a href="{% url 'guide_index' %}">가이드 하기</a></li>
@@ -50,6 +56,12 @@
                 <li>도움말</li>
                 <hr>
                 <li><a href="{% url 'logout' %}">로그아웃</a></li>
+                {% else %}
+                <li><a href="{% url 'guide_index' %}">가이드 하기</a></li>
+                <hr>
+                <li><a href="{% url 'like' %}">찜한 가이드</a></li>
+                <hr>
+                {% endif %}
             </ul>
     </div>
 

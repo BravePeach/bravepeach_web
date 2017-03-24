@@ -43,8 +43,9 @@
     <div class="gnb">
         <ul>
             {% if request.user.is_authenticated %}
-                <li><a href="#" title="가이드 하기">여행자 하기</a></li>
+                <li><a href="{% url 'index' %}" >여행자 하기</a></li>
             {% else %}
+                <li><a href="{% url 'index' %}">여행자 하기</a></li>
                 <li><a href="" title="도움말">도움말</a></li>
                 <li><a href="{% url 'login' %}" title="로그인">로그인</a></li>
                 <li><a href="{% url 'register' %}" title="회원가입">회원가입</a></li>
