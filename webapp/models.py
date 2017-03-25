@@ -20,7 +20,7 @@ class Profile(models.Model):
     nationality = models.CharField(max_length=40, blank=True)
     birthday = models.DateField(blank=True, null=True)
     gender = models.IntegerField(null=True)
-    photo = models.ImageField(upload_to='profile/%Y_%m_%d', null=True)
+    photo = models.ImageField(upload_to='profile/%Y_%m_%d', default='profile/2017_03_22/2__15_12_33_307511.jpg')
     deleted_at = models.DateTimeField(null=True)
     delete_reason_optional = models.CharField(max_length=100, blank=True)
     mail_certified = models.BooleanField(default=False)
