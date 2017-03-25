@@ -29,15 +29,15 @@
 }
 
 .side_menu_wrapper {
-    position: relative;
+    position: absolute;
+    right: 0px;
     z-index: 1000;
     display: none;
-    width: 90%;
+    width: 82%;
     margin: auto;
     padding-top: 21px;
     height: 100vh;
     background-color: white;
-    width: 100%;
 }
 
 .menu-profile-pic {

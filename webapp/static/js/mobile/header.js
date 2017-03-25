@@ -13,7 +13,7 @@ function mobileMenu() {
             $('.mobile-header').animate({backgroundColor: "rgba(255, 255, 255, 0)"});
         }
     }
-    $('.side_menu_wrapper').slideToggle();
+    $('.side_menu_wrapper').toggle("slide", { direction: "right" })
 }
 
 function mobileSearch() {
@@ -29,7 +29,7 @@ function mobileSearch() {
             $('.mobile-header').animate({backgroundColor: "rgba(255, 255, 255, 0)"});
         }
     }
-    $('.search_side_menu_wrapper').slideToggle();
+    $('.search_side_menu_wrapper').toggle("slide", { direction: "left" })
 }
 
 $(function () {
