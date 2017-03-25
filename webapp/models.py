@@ -82,13 +82,13 @@ class Guide(models.Model):
 
     @property
     def theme_list(self):
-        theme_names = ("맛집", "역사", "골목")
+        theme_names = ("현지 꿀팁", "액티비티", "문화/예술", "골목 여행", "자연 경관", "맛집 기행", "역사여행")
         theme_lst = [theme_names[idx] for idx, v in enumerate(bin(self.guide_theme)[2:]) if v == '1']
         return theme_lst
 
     @property
     def style_list(self):
-        style_names = ("quite", "noisy")
+        style_names = ("유쾌한", "차분한", "지적인", "유머러스한", "감성적인", "설명을 잘하는", "경제적인")
         style_lst = [style_names[idx] for idx, v in enumerate(bin(self.guide_type)[2:]) if v == '1']
         return style_lst
 
@@ -99,22 +99,22 @@ class UserRequest(models.Model):
     travel_begin_at = models.DateField(null=True, blank=True)
     travel_end_at = models.DateField(null=True, blank=True)
     age_group = JSONField(null=True, blank=True)
-    trans_type = models.IntegerField(null=True, blank=True)
-    trans_via = models.IntegerField(null=True, blank=True)
-    trans_class = models.IntegerField(null=True, blank=True)
+    trans_type = models.IntegerField(default=0, blank=True)
+    trans_via = models.IntegerField(default=0, blank=True)
+    trans_class = models.IntegerField(default=0, blank=True)
     trans_comment = models.CharField(max_length=200, blank=True)
-    accom_location = models.IntegerField(null=True, blank=True)
+    accom_location = models.IntegerField(default=0, blank=True)
     accom_location_optional = models.CharField(null=True, max_length=100, blank=True)
-    accom_type = models.IntegerField(null=True, blank=True)
+    accom_type = models.IntegerField(default=0, blank=True)
     accom_comment = models.CharField(max_length=100, blank=True)
-    start_time = models.IntegerField(null=True, blank=True)
-    end_time = models.IntegerField(null=True, blank=True)
+    start_time = models.IntegerField(default=0, blank=True)
+    end_time = models.IntegerField(default=0, blank=True)
     landmark = models.CharField(max_length=200, blank=True)
-    theme = models.IntegerField(null=True, blank=True)
-    local_trans = models.CharField(max_length=200, blank=True)
-    guide_type = models.IntegerField(null=True, blank=True)
-    importance = models.IntegerField(null=True, blank=True)
-    cost = models.IntegerField(null=True, blank=True)
+    theme = models.IntegerField(default=0, blank=True)
+    local_trans = models.IntegerField(default=0, blank=True)
+    guide_type = models.IntegerField(default=0, blank=True)
+    importance = models.IntegerField(default=0, blank=True)
+    cost = models.IntegerField(default=0, blank=True)
     published = models.BooleanField(default=True, blank=True)
     additional_request = models.CharField(max_length=200, blank=True)
 
@@ -148,6 +148,54 @@ class UserRequest(models.Model):
     @property
     def child_traveler(self):
         return sum(self.age_group[:3])
+
+    @property
+    def trans_via_list(self):
+        options = ("직항", "경유 1회", "경유 2회")
+        trans_via_list = [options[idx] for idx, v in enumerate(bin(self.trans_via)[2:]) if v == '1']
+        return trans_via_list
+
+    @property
+    def trans_class_list(self):
+        options = ("이코노미 석", "비즈니스 석", "퍼스트 석")
+        trans_class_list = [options[idx] for idx, v in enumerate(bin(self.trans_class)[2:]) if v == '1']
+        return trans_class_list
+
+    @property
+    def accom_locat_list(self):
+        options = ("공항 근처", "시내", "여행지 근처", "기타")
+        accom_locat_list = [options[idx] for idx, v in enumerate(bin(self.accom_location)[2:]) if v == '1']
+        return accom_locat_list
+
+    @property
+    def accom_type_list(self):
+        options = ("호텔", "한인 민박", "현지인 집", "리조트", "가이드 집")
+        accom_type_list = [options[idx] for idx, v in enumerate(bin(self.accom_type)[2:]) if v == '1']
+        return accom_type_list
+
+    @property
+    def theme_list(self):
+        options = ("현지 꿀팁", "액티비티", "문화/예술", "골목 여행", "자연 경관", "맛집 기행", "역사여행")
+        theme_list = [options[idx] for idx, v in enumerate(bin(self.theme)[2:]) if v == '1']
+        return theme_list
+
+    @property
+    def local_trans_list(self):
+        options = ("자동차", "대중교통", "자전거", "상관없음")
+        local_trans_list = [options[idx] for idx, v in enumerate(bin(self.local_trans)[2:]) if v == '1']
+        return local_trans_list
+
+    @property
+    def guide_type_list(self):
+        options = ("유쾌한", "차분한", "지적인", "유머러스한", "감성적인", "설명을 잘하는", "경제적인")
+        guide_type_list = [options[idx] for idx, v in enumerate(bin(self.guide_type)[2:]) if v == '1']
+        return guide_type_list
+
+    @property
+    def importance_list(self):
+        options = ("맛집", "인생사진", "적절한 휴식", "친구같은 가이드", "역사 공부", "기타")
+        importance_list = [options[idx] for idx, v in enumerate(bin(self.importance)[2:]) if v == '1']
+        return importance_list
 
 
 class GuideOffer(models.Model):
