@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.forms import extras
 
-from .models import Profile, UserRequest, UserReview
+from .models import Profile, UserRequest, UserReview, GuideOffer
 from redactor.widgets import RedactorEditor
 
 
@@ -162,3 +162,9 @@ class UserReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["rating"].widget.attrs.update({"class": "hidden"})
+
+
+class WriteOfferForm(forms.ModelForm):
+    class Meta:
+        model = GuideOffer
+        fields = ['trans_info', 'accom_template', 'guide_template']

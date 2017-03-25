@@ -1,13 +1,16 @@
 import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
 from bravepeach.util import flavour_render
-from ..models import Guide, GuideOffer, UserReview, UserRequest, GuideLike
+from ..models import Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate
+from ..forms import WriteOfferForm
 from django.views.generic import View
 from django.utils.dateparse import parse_date
 from django.http import JsonResponse
 from django.utils import formats
+from django.shortcuts import redirect
 
 
 def profile(request, gid):
@@ -40,7 +43,7 @@ class FilterTrip(View):
         traveler_cnt = request.GET.get('traveler_cnt')
         sort = request.GET.get('sort')
 
-        req_queryset = UserRequest.objects.all()
+        req_queryset = UserRequest.objects.select_related('user').all()
         if traveler_cnt:
             req_queryset = req_queryset.filter(total_traveler__lte=int(traveler_cnt.split()[1][:-1]))
 
@@ -74,3 +77,43 @@ class FilterTrip(View):
             result.append(temp)
         result += [guide_id]
         return JsonResponse(result, safe=False)
+
+
+@login_required
+def write_offer(request, req_id):
+    guide_id = Guide.objects.get(user_id=request.user.id).id
+    req = get_object_or_404(UserRequest.objects.select_related('user'), id=req_id)
+    is_liked = GuideLike.objects.filter(guide_id=guide_id, request_id=req.id)
+
+    if AccomTemplate.objects.filter(guide_id=guide_id).exists():
+        accom_template_set = AccomTemplate.objects.get(guide_id=guide_id)
+
+    else:
+        accom_template_set = ''
+
+    if GuideTemplate.objects.filter(guide_id=guide_id).exists():
+        guide_template_set = GuideTemplate.objects.get(guide_id=guide_id)
+
+    else:
+        guide_template_set = ''
+
+    if request.method == 'POST':
+        # form 채우기
+        form = WriteOfferForm()
+
+        if form.is_valid():
+            form.save()
+            # 자기가 쓴 제안서 관리하는 페이지로 리다이렉트
+            return redirect('index')
+        else:
+            print(form.errors)
+            # 폼이 invalid 할때는 어떻게?
+            return redirect("enroll_trip")
+    else:
+        form = WriteOfferForm()
+        return flavour_render(request, 'guide/write_offer.html', {'form': form,
+                                                                  'req': req,
+                                                                  'accom_template_set': accom_template_set,
+                                                                  'guide_template_set': guide_template_set,
+                                                                  'is_liked': is_liked
+                                                                  })

@@ -1,0 +1,55 @@
+{% extends "pc/guide/base.html" %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href='{% static "css/pc/guide/write_offer.css" %}'>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+    <div class="main-container">
+        <section name="top">
+            <h1 class="sup-title-peach">견적서 작성하기</h1>
+            <h2 class="sub-title">여행 요청서에 딱 맞는 가이드님의 개성넘치는 여행 계획을 작성해주세요!</h2>
+        </section>
+        <div class="req-card">
+            <div class="trans">
+                <div class="{% if req.trans_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                <span>이동수단</span>
+            </div>
+            <div class="accom">
+                <div class="{% if req.accom_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                <span>숙박</span>
+            </div>
+            <div class="guide">
+                <div class="{% if req.guide_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                <span>가이</span>
+            </div>
+            <img class="user-pic" src="{{ req.user.profile.photo.url }}">
+            <div class="user-name">{{ req.user.profile.full_name }}</div>
+            <div class="travel-city">
+                {% for c in req.city %}
+                    {% if not forloop.first %} / {% endif %} {{ c }}
+                {% endfor %}
+            </div>
+            <div class="travel-date">{{ req.travel_begin_at|date:"Y/m/d" }} - {{ req.travel_end_at|date:"Y/m/d" }}</div>
+            <div class="traveler-num">성인 {{ req.adult_traveler }}명 | 아동 {{ req.child_traveler }}명</div>
+            <div class="cost">희망 경비 <span>{{ req.cost|intcomma }}</span> 만원</div>
+            <div class="like-button {% if is_liked %}liked{% else %}unliked{% endif %}"></div>
+        </div>
+
+        <div class="request-wrapper">
+            <div class="request-bar"></div>
+            <div class="request-content">
+                {% if req.trans_guided %}
+                    <span>이동수단</span>
+                    <hr>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

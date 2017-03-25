@@ -37,6 +37,8 @@ urlpatterns = [
     # Guide
     url(r'^guide/$', views.guide.guide_index, name='guide_index'),
     url(r'^guide/(?P<gid>\d+)/$', views.guide.profile, name='guide_profile'),
+    url(r'^trip_filtering/', views.guide.FilterTrip.as_view(), name='filter_trip'),
+    url(r'^guide/write_offer/(?P<req_id>\d+)/$', views.guide.write_offer, name='write_offer'),
 
     # User2Guide
     url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),
@@ -57,7 +59,6 @@ urlpatterns = [
     url(r'^delete_like/$', views.trip.DeleteLike.as_view(), name="delete_like"),
 
     # Guide2User
-    url(r'^trip_filtering/', views.guide.FilterTrip.as_view(), name='filter_trip'),
 
     # Comment
     url(r'^add_comment/$', views.trip.AddComment.as_view(), name="add_comment"),
