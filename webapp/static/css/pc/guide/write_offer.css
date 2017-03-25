@@ -201,7 +201,107 @@ margin-top: -1px;
 }
 
 .request-wrapper{
+    font-size: 15px;
   width: 375px;
   border-radius: 8px;
   border: solid 1px #979797;
+    position: absolute;
+    top: 291px;
+    left: 6%;
+    background: white;
+    z-index: 100;
+}
+
+.request-bar{
+      width: 375px;
+  height: 37px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #e64c47;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+    padding: 9px 0px 0px 11px;
+    margin: -2px 0px 0px -2px;
+}
+
+.request-head{
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #e64c47;
+    margin: 16px 0px 5px 10px;
+}
+
+.request-wrapper hr{
+    margin: 0px 10px;
+      border-top: solid 1px #979797;
+
+}
+
+.red-circle{
+    display: inline-block;
+      width: 8px;
+  height: 8px;
+  background-color: #e64c47;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    margin-right: 11px;
+}
+
+.request-wrapper span{
+    margin: 16px 0px 0px 20px;
+}
+
+.request-wrapper .row{
+    padding-top: 1px;
+    width: 320px;
+    margin: 15px 0px 0px 43px;
+}
+
+.request-wrapper .comment{
+      width: 335px;
+  border-radius: 8px;
+  border: solid 1px #979797;
+ padding: 10px;
+      font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.46;
+  letter-spacing: normal;
+  color: #000000;
+  margin: 20px auto 40px auto;
+}
+
+.request-guide div{
+    margin: 15px 0px 15px 20px;
+}
+
+.request-guide span{
+    margin: 0px;
+      color: #dd3537;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.request-guide .row div{
+    margin:0px;
+}
+
+.request-guide .row{
+    margin:-10px 0px 15px 29px;
+}
+
+.request-guide .red-circle{
+    margin-right: 11px !important;
 }

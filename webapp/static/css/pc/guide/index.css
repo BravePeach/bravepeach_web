@@ -9,7 +9,7 @@
 
 .sup-title-peach {
     color: #E64C47;
-    margin: 0px 0px 0px 3px;
+    margin: 0px 0px 3px -3px;
     font-size: 48px;
     font-weight: bold;
     font-style: normal;
@@ -297,15 +297,6 @@ a.ui-state-default:hover {
 .select2-container-multi .select2-choices .select2-search-field input{
     padding-top: 3px;
     color: w;
-}
-.liked{
-    background: url(../../../image/icon/heart_full.png);
-    background-size: cover;
-}
-
-.unliked{
-    background: url(../../../image/icon/heart_white_shadow.png);
-    background-size: cover;
 }
 
 .user-name{
