@@ -137,6 +137,18 @@ class UserRequest(models.Model):
             return False
         return True
 
+    @property
+    def total_traveler(self):
+        return sum(self.age_group)
+
+    @property
+    def adult_traveler(self):
+        return sum(self.age_group[3:])
+
+    @property
+    def child_traveler(self):
+        return sum(self.age_group[:3])
+
 
 class GuideOffer(models.Model):
     paid = models.BooleanField(default=False)

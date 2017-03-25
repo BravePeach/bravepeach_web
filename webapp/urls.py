@@ -57,6 +57,7 @@ urlpatterns = [
     url(r'^delete_like/$', views.trip.DeleteLike.as_view(), name="delete_like"),
 
     # Guide2User
+    url(r'^trip_filtering/', views.guide.FilterTrip.as_view(), name='filter_trip'),
 
     # Comment
     url(r'^add_comment/$', views.trip.AddComment.as_view(), name="add_comment"),

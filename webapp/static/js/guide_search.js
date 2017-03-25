@@ -31,8 +31,8 @@ function like(e){
         type: "GET",
         data: {
             user_id: $(e).siblings("#user_id").val(),
-            guide_id: $(e).siblings('#guide_id').val(),
-        },
+            guide_id: $(e).siblings('#guide_id').val()
+        }
     })
 }
 
@@ -196,8 +196,18 @@ $(function() {
         });
     });
 
-    $('.arrow-down, #traveler_cnt_form').click(function () {
-        $('.traveler_cntpicker').slideToggle(200)
+    $('#traveler_cnt_form, .arrow-down').click(function(event){
+        event.stopPropagation();
+         $(".traveler_cntpicker").slideToggle("fast");
+    });
+    $(".traveler_cntpicker").on("click", function (event) {
+        event.stopPropagation();
     });
 
+
 });
+
+$(document).on("click", function () {
+    $(".traveler_cntpicker").slideUp('fast');
+});
+
