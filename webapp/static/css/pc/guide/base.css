@@ -43,6 +43,7 @@ header form{
 .guide-tab{
     margin: 0px 35.2px;
     display: inline-block;
+    cursor: pointer;
 }
 
 .guide-tab.activated{

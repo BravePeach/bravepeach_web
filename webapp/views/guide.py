@@ -66,7 +66,10 @@ class FilterTrip(View):
                     'child_traveler': req.child_traveler,
                     'cost': req.cost,
                     'is_liked': GuideLike.objects.filter(guide_id=guide_id,
-                                                         request_id=req.id).exists()
+                                                         request_id=req.id).exists(),
+                    'trans_guided': req.trans_guided,
+                    'accom_guided': req.accom_guided,
+                    'guide_guided': req.guide_guided
                     }
             result.append(temp)
         result += [guide_id]
