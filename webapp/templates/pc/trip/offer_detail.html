@@ -86,9 +86,9 @@
                     <div class="accom-location">
                         위치: {{ accom.0.small_city }}, {{ accom.0.city }}
                     </div>
-                    {% if accom.pic_list %}
+                    {% if accom.photo %}
                         <div class="accom-pic-wrapper">
-                        {% for pic in accom.pic_list %}
+                        {% for photo in accom.photo %}
 
                         {% endfor %}
                         </div>
@@ -118,7 +118,7 @@
                             <div class="medium-circle"></div>
                             <div class="guide-title">{{ g_template.title }}</div>
                         </div>
-                        {% if g_template.picture %}
+                        {% if g_template.photo %}
                         <div class="guide-pic"></div>
                         {% endif %}
                         <pre class="guide-content"> {{ g_template.content }}</pre>

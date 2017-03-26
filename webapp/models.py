@@ -120,19 +120,19 @@ class UserRequest(models.Model):
 
     @property
     def trans_guided(self):
-        if self.trans_via is None and self.trans_class is None and not self.trans_comment:
+        if not self.trans_via and not self.trans_class and not self.trans_comment:
             return False
         return True
 
     @property
     def accom_guided(self):
-        if self.accom_location is None and self.accom_type is None and not self.accom_comment:
+        if not self.accom_location and not self.accom_type and not self.accom_comment:
             return False
         return True
 
     @property
     def guide_guided(self):
-        if (self.start_time is None and self.end_time is None and not self.landmark and not self.theme and
+        if (self.start_time == 1 and self.end_time == 1 and not self.landmark and not self.theme and
                 not self.guide_type and not self.importance):
             return False
         return True
@@ -233,15 +233,17 @@ class CancelledOffer(models.Model):
 class AccomTemplate(models.Model):
     title = models.CharField(max_length=100)
     # JSONField로 하려 했으나 migrate 과정에서 에러가 나서 일단은 ListField로..
+    # 견적서 상세보기 페이지에서 숙소에 대한 위치를 국가, 시, 구 정도까지 보여주는데 그 주소를 저장하기 위한 필드입니다.
     address = ListCharField(
         base_field=models.CharField(max_length=20),
         size=3,
         max_length=(3*21)
     )
+    # 위도와 경도를 저장하는 필드입니다.
     lat = models.FloatField(default=0)
     lng = models.FloatField(default=0)
     content = models.TextField(blank=True)
-    pic_list = JSONField(blank=True, null=True)
+    photo = models.FileField(upload_to='accom_photos/%Y_%m_%d')
     guide = models.ForeignKey(Guide, related_name="accom_templates")
     type_id = models.IntegerField(default=0)
 
@@ -266,7 +268,7 @@ class AccomTemplate(models.Model):
 class GuideTemplate(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True)
-    picture = models.CharField(max_length=200)
+    photo = models.FileField(upload_to='guide_photos/%Y_%m_%d')
     guide = models.ForeignKey(Guide)
 
 
