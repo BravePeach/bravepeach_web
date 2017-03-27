@@ -204,7 +204,7 @@ class GuideOffer(models.Model):
     request = models.ForeignKey(UserRequest)
     etc = models.CharField(max_length=300, blank=True)
     travel_period = JSONField(null=True)
-    trans_info = JSONField(null=True)
+    trans_info = models.CharField(max_length=500)
     accom_template = JSONField(null=True)
     guide_template = JSONField(null=True)
     is_canceled = models.BooleanField(default=False)
@@ -246,6 +246,7 @@ class AccomTemplate(models.Model):
     photo = models.FileField(upload_to='accom_photos/%Y_%m_%d')
     guide = models.ForeignKey(Guide, related_name="accom_templates")
     type_id = models.IntegerField(default=0)
+    overwritten = models.BooleanField(default=False)
 
     @property
     def country(self):
@@ -261,15 +262,21 @@ class AccomTemplate(models.Model):
 
     @property
     def type(self):
-        type_list = ['호텔', '한인 민박', '현지인 집', '리조트', '가이드 집', '기타']
+        type_list = ['기타', '호텔', '한인 민박', '현지인 집', '리조트', '가이드 집']
         return type_list[self.type_id]
+
+
+class AccomPhoto(models.Model):
+    accom_template = models.ForeignKey(AccomTemplate, related_name='accom_photos')
+    photo = models.ImageField(upload_to='accom_photos/%Y/%m/%d')
 
 
 class GuideTemplate(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True)
-    photo = models.FileField(upload_to='guide_photos/%Y_%m_%d')
+    photo = models.ImageField(upload_to='guide_photos/%Y/%m/%d')
     guide = models.ForeignKey(Guide, related_name="guide_templates")
+    overwritten = models.BooleanField(default=False)
 
 
 class Cost(models.Model):
