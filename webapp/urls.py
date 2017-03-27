@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^guide/write_offer/(?P<req_id>\d+)/$', views.guide.write_offer, name='write_offer'),
     url(r'^guide/write_offer/(?P<req_id>\d+)/search_accom/$', views.guide.search_accom, name='search_accom'),
     url(r'^guide/write_offer/(?P<req_id>\d+)/search_guide/$', views.guide.search_guide, name='search_guide'),
+    url(r'^guide/write_offer/(?P<req_id>\d+)/save_trans/$', views.guide.save_trans, name='save_trans'),
 
     # User2Guide
     url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),

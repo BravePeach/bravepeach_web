@@ -208,6 +208,7 @@ class GuideOffer(models.Model):
     accom_template = JSONField(null=True)
     guide_template = JSONField(null=True)
     is_canceled = models.BooleanField(default=False)
+    published = models.BooleanField(default=False)
 
 
 # User2Guide

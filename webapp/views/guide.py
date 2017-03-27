@@ -85,6 +85,7 @@ class FilterTrip(View):
 def write_offer(request, req_id):
     guide_id = Guide.objects.prefetch_related('accom_templates').prefetch_related('guide_templates').get(user_id=request.user.id).id
     req = get_object_or_404(UserRequest.objects.select_related('user'), id=req_id)
+    offer = GuideOffer.objects.create(guide_id=guide_id, request_id=req_id)
     is_liked = GuideLike.objects.filter(guide_id=guide_id, request_id=req.id)
 
     if request.method == 'POST':
@@ -112,7 +113,7 @@ def search_accom(request, req_id):
     if request.is_ajax():
         guide_id = request.GET.get('guide_id')
         title = request.GET.get('title')
-        accom_template_result = AccomTemplate.objects.filter(title__icontains=title, guide_id=guide_id)
+        accom_template_result = AccomTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False)
         paginator = Paginator(accom_template_result, 5)
         if accom_template_result:
             page = request.GET.get('page')
@@ -137,7 +138,7 @@ def search_guide(request, req_id):
     if request.is_ajax():
         guide_id = request.GET.get('guide_id')
         title = request.GET.get('title')
-        guide_template_result = GuideTemplate.objects.filter(title__icontains=title, guide_id=guide_id)
+        guide_template_result = GuideTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False)
         paginator = Paginator(guide_template_result, 5)
         if guide_template_result:
             page = request.GET.get('page')
@@ -155,3 +156,7 @@ def search_guide(request, req_id):
 
         html = render_to_string('pc/guide/guide_result.html', {'guide_template_set': guide_template_set})
         return HttpResponse(html)
+
+
+# 이동수단 폼 저장
+def save_trans(request, req_id):

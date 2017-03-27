@@ -17,15 +17,15 @@
             <h2 class="sub-title">여행 요청서에 딱 맞는 가이드님의 개성넘치는 여행 계획을 작성해주세요!</h2>
         </section>
         <div class="req-card">
-            <div class="trans">
+            <div class="trans-light">
                 <div class="{% if req.trans_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
                 <span>이동수단</span>
             </div>
-            <div class="accom">
+            <div class="accom-light">
                 <div class="{% if req.accom_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
                 <span>숙박</span>
             </div>
-            <div class="guide">
+            <div class="guide-light">
                 <div class="{% if req.guide_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
                 <span>가이드</span>
             </div>
@@ -38,7 +38,7 @@
             </div>
             <div class="travel-date">{{ req.travel_begin_at|date:"Y/m/d" }} - {{ req.travel_end_at|date:"Y/m/d" }}</div>
             <div class="traveler-num">성인 {{ req.adult_traveler }}명 | 아동 {{ req.child_traveler }}명</div>
-            <div class="cost">희망 경비 <span>{{ req.cost|intcomma }}</span> 만원</div>
+            <div class="req-cost">희망 경비 <span>{{ req.cost|intcomma }}</span> 만원</div>
             <input type="hidden" id="guide_id" value="{{ guide_id }}">
             <input type="hidden" id="req_id" value="{{ req.id }}">
             <div class="like-button {% if is_liked %}liked{% else %}unliked{% endif %}"></div>
@@ -161,8 +161,6 @@
             </div>
         </div>
 
-        <div class="template-wrapper"></div>
-
         <div class="status-bar-wrapper">
             <span>단계별 작성시 꼭 저장을 해주세요. 저장 후 다음 단계를 작성해주세요.</span>
             <div class="status-bar">
@@ -176,6 +174,27 @@
                 <div class="cost text guided">견적서</div>
                 <div class="horizontal-line"></div>
             </div>
+        </div>
+
+        <div class="template-wrapper">
+            <div class="trans template">
+                <textarea type="text" class="trans-form" name="trans-form" placeholder="항공권/기차/해운권에 대한 정보를 상세히 작성해주세요.
+
+예)
+- 여행 시작일
+대한항공 KE110 / 직항 / 이코노미 좌석 2개
+출발 : 인천(ICH) 2017/05/12 09:00
+도착 : 뉴욕(JFK) 2017/05/12 13:00
+
+-여행 마지막일
+대한항공 KE110 / 직항 / 비지니스 좌석 2개
+출발 : 워싱턴D.C(DCA) 2017/05/29 18:30
+도착 : 인천(ICH) 2017/05/30 16:00 "></textarea>
+                <div class="trans-form-button">저장 후 다음으로</div>
+            </div>
+            <div class="accom template"></div>
+            <div class="guide template"></div>
+            <div class="cost template"></div>
         </div>
 
         <div class="search-wrapper">
