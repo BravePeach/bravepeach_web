@@ -46,7 +46,7 @@ class Notice(models.Model):
 
 class Guide(models.Model):
     # id = HashidAutoField(primary_key=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='guide')
     pay_cnt = models.IntegerField(default=0)
     total_traveler_cnt = models.IntegerField(default=0)
     total_guide_day = models.IntegerField(default=0)
@@ -269,7 +269,7 @@ class GuideTemplate(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True)
     photo = models.FileField(upload_to='guide_photos/%Y_%m_%d')
-    guide = models.ForeignKey(Guide)
+    guide = models.ForeignKey(Guide, related_name="guide_templates")
 
 
 class Cost(models.Model):

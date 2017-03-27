@@ -83,21 +83,9 @@ class FilterTrip(View):
 
 @login_required
 def write_offer(request, req_id):
-    guide_id = Guide.objects.get(user_id=request.user.id).id
+    guide_id = Guide.objects.prefetch_related('accom_templates').prefetch_related('guide_templates').get(user_id=request.user.id).id
     req = get_object_or_404(UserRequest.objects.select_related('user'), id=req_id)
     is_liked = GuideLike.objects.filter(guide_id=guide_id, request_id=req.id)
-
-    if AccomTemplate.objects.filter(guide_id=guide_id).exists():
-        accom_template_set = AccomTemplate.objects.get(guide_id=guide_id)
-
-    else:
-        accom_template_set = ''
-
-    if GuideTemplate.objects.filter(guide_id=guide_id).exists():
-        guide_template_set = GuideTemplate.objects.get(guide_id=guide_id)
-
-    else:
-        guide_template_set = ''
 
     if request.method == 'POST':
         # form 채우기
@@ -115,16 +103,16 @@ def write_offer(request, req_id):
         form = WriteOfferForm()
         return flavour_render(request, 'guide/write_offer.html', {'form': form,
                                                                   'req': req,
-                                                                  'accom_template_set': accom_template_set,
-                                                                  'guide_template_set': guide_template_set,
-                                                                  'is_liked': is_liked
-                                                                  })
+                                                                  'is_liked': is_liked,
+                                                                  'guide_id': guide_id})
 
 
+# 숙소 템플릿 검색
 def search_accom(request, req_id):
     if request.is_ajax():
+        guide_id = request.GET.get('guide_id')
         title = request.GET.get('title')
-        accom_template_result = AccomTemplate.objects.filter(title__icontains=title)
+        accom_template_result = AccomTemplate.objects.filter(title__icontains=title, guide_id=guide_id)
         paginator = Paginator(accom_template_result, 5)
         if accom_template_result:
             page = request.GET.get('page')
@@ -141,4 +129,29 @@ def search_accom(request, req_id):
             accom_template_set = ''
 
         html = render_to_string('pc/guide/accom_result.html', {'accom_template_set': accom_template_set})
+        return HttpResponse(html)
+
+
+# 가이드 템플릿 검색
+def search_guide(request, req_id):
+    if request.is_ajax():
+        guide_id = request.GET.get('guide_id')
+        title = request.GET.get('title')
+        guide_template_result = GuideTemplate.objects.filter(title__icontains=title, guide_id=guide_id)
+        paginator = Paginator(guide_template_result, 5)
+        if guide_template_result:
+            page = request.GET.get('page')
+            try:
+                guide_template_set = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                guide_template_set = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                guide_template_set = paginator.page(paginator.num_pages)
+
+        else:
+            guide_template_set = ''
+
+        html = render_to_string('pc/guide/guide_result.html', {'guide_template_set': guide_template_set})
         return HttpResponse(html)

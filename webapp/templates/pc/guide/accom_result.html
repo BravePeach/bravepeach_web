@@ -9,15 +9,15 @@
 {% if accom_template_set.paginator.num_pages > 1 %}
 <div class="pagination">
         {% if accom_template_set.has_previous %}
-            <div class="page-prev" onclick="paginate({{ accom_template_set.previous_page_number }})""><</div>
+            <div class="page-prev" onclick="accomPaginate({{ accom_template_set.previous_page_number }})""><</div>
         {% endif %}
 
         <div class="page inactive">{{ accom_template_set.number }}</div>
 
         {% if accom_template_set.has_next %}
-        <div class="page active" onclick="paginate({{ accom_template_set.next_page_number }})">{{ accom_template_set.next_page_number }}</div>
+        <div class="page active" onclick="accomPaginate({{ accom_template_set.next_page_number }})">{{ accom_template_set.next_page_number }}</div>
 
-            <div class="page-next"onclick="paginate({{ accom_template_set.next_page_number }})">></div>
+            <div class="page-next"onclick="accomPaginate({{ accom_template_set.next_page_number }})">></div>
         {% endif %}
 </div>
 {% endif %}

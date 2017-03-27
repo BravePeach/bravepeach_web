@@ -39,6 +39,8 @@
             <div class="travel-date">{{ req.travel_begin_at|date:"Y/m/d" }} - {{ req.travel_end_at|date:"Y/m/d" }}</div>
             <div class="traveler-num">성인 {{ req.adult_traveler }}명 | 아동 {{ req.child_traveler }}명</div>
             <div class="cost">희망 경비 <span>{{ req.cost|intcomma }}</span> 만원</div>
+            <input type="hidden" id="guide_id" value="{{ guide_id }}">
+            <input type="hidden" id="req_id" value="{{ req.id }}">
             <div class="like-button {% if is_liked %}liked{% else %}unliked{% endif %}"></div>
         </div>
 
@@ -192,6 +194,12 @@
             </div>
             <div class="guide">
                 <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+                <div class="content">
+                    <input type="text" class="search-form" name="accom_search_form" placeholder="타이틀로 검색해보세요.">
+                    <div class="search-button"><img src="{% static 'image/icon/Search Icon.png' %}"></div>
+                    <img class="loading display-none" src="{% static 'image/icon/ajax-loader.gif' %}">
+                    <div class="search-result"></div>
+                </div>
             </div>
             <div class="cost">
                 <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>

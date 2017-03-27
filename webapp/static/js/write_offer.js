@@ -1,9 +1,11 @@
-function searchAccom(val, page){
+function searchAccomTemp(val, page){
     $.ajax({
         url: "search_accom/",
         type: "GET",
         data: {title: val,
-               page: page}
+               page: page,
+               guide_id: $('#guide_id').val()
+               }
         ,beforeSend: function () {
             $('.search-wrapper .accom .search-result').html('');
             $('.loading').removeClass('display-none');
@@ -17,8 +19,33 @@ function searchAccom(val, page){
     })
 }
 
-function paginate(page){
-    searchAccom($('.accom .search-form').val(), page)
+function searchGuideTemp(val, page){
+    $.ajax({
+        url: "search_guide/",
+        type: "GET",
+        data: {title: val,
+               page: page,
+               guide_id: $('#guide_id').val()
+              }
+        ,beforeSend: function () {
+            $('.search-wrapper .guide .search-result').html('');
+            $('.loading').removeClass('display-none');
+        }
+        ,complete: function () {
+            $('.loading').addClass('display-none');
+        },
+        success : function(data) {
+             $('.search-wrapper .guide .search-result').html(data);
+         }
+    })
+}
+
+function accomPaginate(page){
+    searchAccomTemp($('.accom .search-form').val(), page)
+}
+
+function guidePaginate(page){
+    searchGuideTemp($('.guide .search-form').val(), page)
 }
 
 $(function () {
@@ -63,19 +90,24 @@ $(function () {
 
     // search accom template: if click button or press enter, submit
     $('.accom .search-button').click(function(){
-       searchAccom($(this).prev().val(), 1);
+       searchAccomTemp($(this).prev().val(), 1);
     });
 
     $('.accom .search-form').keydown(function(e){
         if (e.which ==13){
-            searchAccom($(this).val(), 1);
+            searchAccomTemp($(this).val(), 1);
         }
     });
 
-    // // pagination
-    // $('.page.active').click(function () {
-    //     console.log("a");
-    //     var nextPage = parseInt($('.accom-pagination .page.active').html());
-    //     searchAccom($('.accom .search-form').val(), nextPage);
-    // });
+    // search guied template
+    $('.guide .search-button').click(function(){
+       searchGuideTemp($(this).prev().val(), 1);
+    });
+
+    $('.guide .search-form').keydown(function(e){
+        if (e.which ==13){
+            searchGuideTemp($(this).val(), 1);
+        }
+    });
+
 });
