@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block js %}
+    <script src="{% static 'js/write_offer.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -42,7 +43,7 @@
         </div>
 
         <div class="request-wrapper">
-            <div class="request-bar">여행 요청서</div>
+            <div class="request-bar">여행 요청서 <img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
             <div class="request-content">
                 {% if req.trans_guided %}
                     <div class="request-head">이동수단</div>
@@ -155,6 +156,46 @@
                         <div class="comment" style="margin-bottom: 16px;">{{ req.additional_request }}</div>
                     {% endif %}
                 {% endif %}
+            </div>
+        </div>
+
+        <div class="template-wrapper"></div>
+
+        <div class="status-bar-wrapper">
+            <span>단계별 작성시 꼭 저장을 해주세요. 저장 후 다음 단계를 작성해주세요.</span>
+            <div class="status-bar">
+                <div class="trans big-circle {% if req.trans_guided %}guided{% else %}unguided{% endif %}"></div>
+                <div class="trans text {% if req.trans_guided %}guided{% else %}unguided{% endif %}">이동수단</div>
+                <div class="accom big-circle {% if req.accom_guided %}guided{% else %}unguided{% endif %}"></div>
+                <div class="accom text {% if req.accom_guided %}guided{% else %}unguided{% endif %}">숙소</div>
+                <div class="guide big-circle {% if req.guide_guided %}guided{% else %}unguided{% endif %}"></div>
+               <div class="guide text {% if req.guide_guided %}guided{% else %}unguided{% endif %}">가이드</div>
+                <div class="cost big-circle guided"></div>
+                <div class="cost text guided">견적서</div>
+                <div class="horizontal-line"></div>
+            </div>
+        </div>
+
+        <div class="search-wrapper">
+            <div class="trans">
+                <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+                <div class="content">검색이 필요하지 않습니다.</div>
+            </div>
+            <div class="accom">
+                <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+                <div class="content">
+                    <input type="text" class="search-form" name="accom_search_form" placeholder="타이틀로 검색해보세요.">
+                    <div class="search-button"><img src="{% static 'image/icon/Search Icon.png' %}"></div>
+                    <img class="loading display-none" src="{% static 'image/icon/ajax-loader.gif' %}">
+                    <div class="search-result"></div>
+                </div>
+            </div>
+            <div class="guide">
+                <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+            </div>
+            <div class="cost">
+                <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+                <div class="content">검색이 필요하지 않습니다.</div>
             </div>
         </div>
     </div>

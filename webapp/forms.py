@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.forms import extras
 
-from .models import Profile, UserRequest, UserReview, GuideOffer
+from .models import Profile, UserRequest, UserReview, GuideOffer, AccomTemplate, GuideTemplate
 from redactor.widgets import RedactorEditor
 
 
@@ -168,3 +168,9 @@ class WriteOfferForm(forms.ModelForm):
     class Meta:
         model = GuideOffer
         fields = ['trans_info', 'accom_template', 'guide_template']
+
+
+# class AccomTemplateForm(forms.ModelForm):
+#     class Meta:
+#         model = AccomTemplate
+#         # fields =

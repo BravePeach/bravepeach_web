@@ -30,7 +30,7 @@
             <img class="search-icon" src="{% static 'image/icon/Search Icon.png' %}">
             <input type="text" class="traveler-search-form" placeholder="여행자를 찾을 도시를 검색하세요">
         </form>
-        <div class="profile_img" onclick="dropMenu()">
+        <div class="profile_img">
             <img style="width: 50px;height: auto;border-radius: 25px;"
                     {% if request.user.profile.photo %} src="{{ request.user.profile.photo.url }}"
                     {% else %} src="{% static 'image/icon/profile_empty.png' %}" {% endif %}

@@ -8,9 +8,11 @@ from ..models import Guide, GuideOffer, UserReview, UserRequest, GuideLike, Acco
 from ..forms import WriteOfferForm
 from django.views.generic import View
 from django.utils.dateparse import parse_date
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.utils import formats
 from django.shortcuts import redirect
+from django.template.loader import render_to_string
+from django.core.paginator import Paginator
 
 
 def profile(request, gid):
@@ -104,11 +106,11 @@ def write_offer(request, req_id):
         if form.is_valid():
             form.save()
             # 자기가 쓴 제안서 관리하는 페이지로 리다이렉트
-            return redirect('index')
+            return redirect('guide_index')
         else:
             print(form.errors)
             # 폼이 invalid 할때는 어떻게?
-            return redirect("enroll_trip")
+            return redirect("guide_index")
     else:
         form = WriteOfferForm()
         return flavour_render(request, 'guide/write_offer.html', {'form': form,
@@ -117,3 +119,12 @@ def write_offer(request, req_id):
                                                                   'guide_template_set': guide_template_set,
                                                                   'is_liked': is_liked
                                                                   })
+
+
+def search_accom(request, req_id):
+    if request.is_ajax():
+        print(request.GET.get('page'))
+        title = request.GET.get('title')
+        accom_template_set = AccomTemplate.objects.filter(title__icontains=title)
+        html = render_to_string('pc/guide/accom_result.html', {'accom_template_set': accom_template_set})
+        return HttpResponse(html)

@@ -32,7 +32,6 @@
     text-align: left;
 }
 
-
 .req-card-wrapper {
     overflow-y: hidden;
     white-space: nowrap;
@@ -41,121 +40,122 @@
 
 .req-card {
     position: relative;
-      width: 880px;
-  height: 184px;
-  border-radius: 8px;
-  border: solid 1px #ddd9d9;
+    width: 880px;
+    height: 184px;
+    border-radius: 8px;
+    border: solid 1px #ddd9d9;
     margin-bottom: 20px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
 }
 
-.req-card div{
+.req-card div {
     position: absolute;
 }
 
-.user-name{
-      font-size: 20px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: center;
+.user-name {
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
     top: 126px;
     left: 50px;
     width: 100px;
 }
 
-.travel-date{
-      font-size: 20px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
+.travel-date {
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
     top: 54px;
     left: 189px;
 }
 
-.travel-city{
-      font-size: 20px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
+.travel-city {
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
     top: 83px;
     left: 189px;
 }
 
-.traveler-num{
-      font-size: 15px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #000000;
+.traveler-num {
+    font-size: 15px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
     top: 125px;
     left: 189px;
 }
 
-.user-pic{
-      width: 79px;
-  height: 79.5px;
+.user-pic {
+    width: 79px;
+    height: 79.5px;
     border-radius: 39.5px;
     position: absolute;
     top: 33px;
     left: 60px;
 }
 
-.cost{
-  font-size: 28px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #000000;
+.cost {
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
     bottom: 17px;
     right: 25px;
 }
 
-.cost span{
+.cost span {
     color: #dd3537;
 }
 
-
-.trans{
+.trans {
     top: 24px;
     left: 189px;
 }
 
-.accom{
+.accom {
     top: 24px;
     left: 275px;
 }
 
-.guide{
+.guide {
     top: 24px;
     left: 337px;
 }
 
-.guide-activated{
-      width: 10px;
-  height: 10px;
-  background-image: linear-gradient(to right, #f2ad8a, #e64c47);
+.guide-activated {
+    width: 10px;
+    height: 10px;
+    background-image: linear-gradient(to right, #f2ad8a, #e64c47);
     border-radius: 5px;
 }
 
-.guide-deactivated{
-  width: 8px;
-  height: 8px;
+.guide-deactivated {
+    width: 8px;
+    height: 8px;
     background: white;
     border-radius: 5px;
 }
 
-.guide-deactivated:before{
-        width: 100%;
+.guide-deactivated:before {
+    width: 100%;
     height: 100%;
     top: -1px;
     left: -1px;
@@ -167,30 +167,31 @@
     padding: 5px;
 }
 
-.trans span, .guide span, .accom span{
+.trans span, .guide span, .accom span {
     display: block;
-margin-top: -1px;
+    margin-top: -1px;
     margin-left: 15px;
-  font-size: 13px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #000000;
+    font-size: 13px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
 
 }
 
-.liked{
+.liked {
     background: url(../../../image/icon/heart_full.png);
     background-size: cover;
 }
 
-.unliked{
+.unliked {
     background: url(../../../image/icon/heart_white_shadow.png);
     background-size: cover;
 }
-.like-button{
+
+.like-button {
     position: absolute;
     top: 25px;
     right: 25px;
@@ -200,11 +201,11 @@ margin-top: -1px;
     border: none;
 }
 
-.request-wrapper{
+.request-wrapper {
     font-size: 15px;
-  width: 375px;
-  border-radius: 8px;
-  border: solid 1px #979797;
+    width: 375px;
+    border-radius: 8px;
+    border: solid 1px #979797;
     position: absolute;
     top: 291px;
     left: 6%;
@@ -212,96 +213,356 @@ margin-top: -1px;
     z-index: 100;
 }
 
-.request-bar{
-      width: 375px;
-  height: 37px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  background-color: #e64c47;
-  font-size: 18px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #ffffff;
+.request-bar {
+    cursor: pointer;
+    position: relative;
+    width: 375px;
+    height: 37px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    -webkit-border-top-left-radius: 8px;
+
+    background-color: #e64c47;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
     padding: 9px 0px 0px 11px;
-    margin: -2px 0px 0px -2px;
+    margin: -2px 0px 0px -1px;
 }
 
-.request-head{
-  font-size: 20px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: #e64c47;
+.request-head {
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #e64c47;
     margin: 16px 0px 5px 10px;
 }
 
-.request-wrapper hr{
+.request-wrapper hr {
     margin: 0px 10px;
-      border-top: solid 1px #979797;
+    border-top: solid 1px #979797;
 
 }
 
-.red-circle{
+.red-circle {
     display: inline-block;
-      width: 8px;
-  height: 8px;
-  background-color: #e64c47;
+    width: 8px;
+    height: 8px;
+    background-color: #e64c47;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
     margin-right: 11px;
 }
 
-.request-wrapper span{
+.request-wrapper span {
     margin: 16px 0px 0px 20px;
 }
 
-.request-wrapper .row{
+.request-wrapper .row {
     padding-top: 1px;
     width: 320px;
     margin: 15px 0px 0px 43px;
 }
 
-.request-wrapper .comment{
-      width: 335px;
-  border-radius: 8px;
-  border: solid 1px #979797;
- padding: 10px;
-      font-size: 13px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.46;
-  letter-spacing: normal;
-  color: #000000;
-  margin: 20px auto 40px auto;
+.request-wrapper .comment {
+    width: 335px;
+    border-radius: 8px;
+    border: solid 1px #979797;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.46;
+    letter-spacing: normal;
+    color: #000000;
+    margin: 20px auto 40px auto;
 }
 
-.request-guide div{
+.request-guide div {
     margin: 15px 0px 15px 20px;
 }
 
-.request-guide span{
+.request-guide span {
     margin: 0px;
-      color: #dd3537;
+    color: #dd3537;
     font-weight: bold;
     text-decoration: underline;
 }
 
-.request-guide .row div{
-    margin:0px;
+.request-guide .row div {
+    margin: 0px;
 }
 
-.request-guide .row{
-    margin:-10px 0px 15px 29px;
+.request-guide .row {
+    margin: -10px 0px 15px 29px;
 }
 
-.request-guide .red-circle{
+.request-guide .red-circle {
     margin-right: 11px !important;
+}
+
+.arrow {
+    width: 20px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+.rotate {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+
+}
+
+.status-bar-wrapper {
+    margin: 15px 0px 30px 3px;
+}
+
+.status-bar-wrapper span {
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #e64c47;
+}
+
+.status-bar {
+    width: 600px;
+    height: 76px;
+    margin: 15px auto 0px auto;
+    position: relative;
+}
+
+.big-circle {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    background-color: #ffffff;
+    top: 0px !important;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 23px;
+    z-index: 99;
+}
+
+.guided {
+    cursor: pointer;
+}
+
+.big-circle.guided {
+    border: solid 3px #e64c47;
+}
+
+.big-circle.unguided {
+    border: solid 3px #979797;
+}
+
+.trans.big-circle {
+    left: 21px;
+}
+
+.accom.big-circle {
+    left: 198px;
+}
+
+.guide.big-circle {
+    left: 374px;
+}
+
+.cost.big-circle {
+    left: 550px;
+}
+
+.status-bar-wrapper .trans, .status-bar-wrapper .accom, .status-bar-wrapper .guide, .status-bar-wrapper .cost {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+    position: absolute;
+    top: 57px;
+}
+
+.trans.text {
+    left: 3px;
+}
+
+.accom.text {
+    left: 201px;
+}
+
+.guide.text {
+    left: 367px;
+}
+
+.cost.text {
+    left: 543px;
+    width: 71px;
+    height: 20px;
+}
+
+.text {
+    cursor: pointer
+}
+
+.text.unguided {
+    cursor: default;
+    color: #979797;
+}
+
+.horizontal-line {
+    width: 533px;
+    border: solid 2px #979797;
+    position: absolute;
+    top: 22px;
+    left: 39px;
+}
+
+.selected {
+    background-color: #e64c47;
+}
+
+.search-wrapper {
+    width: 375px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    position: absolute;
+    top: 291px;
+    right: 6%;
+    border: solid 1px #979797;
+    background: white;
+    z-index: 100;
+}
+
+.search-bar {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    -webkit-border-top-left-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    width: 375px;
+    height: 37px;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+    padding: 9px 0px 0px 11px;
+    margin: -2px 0px 0px -1px;
+}
+
+.search-wrapper .trans, .search-wrapper .accom, .search-wrapper .guide, .search-wrapper .cost {
+    display: none;
+}
+
+.search-wrapper .activated {
+    display: block !important;
+}
+
+.search-wrapper .trans .search-bar, .search-wrapper .cost .search-bar {
+    background: #979797;
+}
+
+.search-wrapper .accom .search-bar, .search-wrapper .guide .search-bar {
+    background: #e64c47;
+}
+
+.search-wrapper .trans .content, .search-wrapper .cost .content {
+    height: 111px;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+    padding: 45px 0px 0px 90px;
+}
+
+.search-form {
+    width: 282px;
+    height: 42px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    border: solid 1px #979797;
+    margin: 16px 14px 10px 18px;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.search-button {
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    border: solid 1px #979797;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-button img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.loading {
+    display: block;
+    margin: 10px auto;
+}
+
+.display-none {
+    display: none;
+}
+
+.result-number {
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #e64c47;
+    margin-left: 17px;
+}
+
+.result-card {
+    width: 338px;
+    height: 245px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    border: solid 1px #979797;
+    margin: 10px 0px 10px 17px;
+    padding: 14px 10px 11px 10px;
+}
+
+.result-title {
+    font-size: 20px;
+    color: #000000;
 }

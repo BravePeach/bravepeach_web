@@ -25,7 +25,7 @@
         </a>
     </div>
     {% if request.user.is_authenticated %}
-        <div class="profile_img" onclick="dropMenu()">
+        <div class="profile_img">
             <img id="header-profile" style="width: 50px;height: auto;border-radius: 24px;"
                  src="{% if request.user.profile.photo %}{{ request.user.profile.photo.url }}
                         {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"

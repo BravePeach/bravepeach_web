@@ -59,7 +59,6 @@ $(function(){
     });
 
     $('.profile_img').click(function(event){
-        console.log("q");
         event.stopPropagation();
          $(".profile-dropdown").slideToggle("fast");
     });
