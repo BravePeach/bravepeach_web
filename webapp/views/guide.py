@@ -12,7 +12,7 @@ from django.http import JsonResponse, HttpResponse
 from django.utils import formats
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def profile(request, gid):
@@ -123,8 +123,22 @@ def write_offer(request, req_id):
 
 def search_accom(request, req_id):
     if request.is_ajax():
-        print(request.GET.get('page'))
         title = request.GET.get('title')
-        accom_template_set = AccomTemplate.objects.filter(title__icontains=title)
+        accom_template_result = AccomTemplate.objects.filter(title__icontains=title)
+        paginator = Paginator(accom_template_result, 5)
+        if accom_template_result:
+            page = request.GET.get('page')
+            try:
+                accom_template_set = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                accom_template_set = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range (e.g. 9999), deliver last page of results.
+                accom_template_set = paginator.page(paginator.num_pages)
+
+        else:
+            accom_template_set = ''
+
         html = render_to_string('pc/guide/accom_result.html', {'accom_template_set': accom_template_set})
         return HttpResponse(html)

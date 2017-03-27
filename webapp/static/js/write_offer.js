@@ -1,8 +1,9 @@
-function searchAccom(val){
+function searchAccom(val, page){
     $.ajax({
         url: "search_accom/",
         type: "GET",
-        data: {title: val}
+        data: {title: val,
+               page: page}
         ,beforeSend: function () {
             $('.search-wrapper .accom .search-result').html('');
             $('.loading').removeClass('display-none');
@@ -14,6 +15,10 @@ function searchAccom(val){
              $('.search-wrapper .accom .search-result').html(data);
          }
     })
+}
+
+function paginate(page){
+    searchAccom($('.accom .search-form').val(), page)
 }
 
 $(function () {
@@ -56,16 +61,21 @@ $(function () {
         $('.search-wrapper .' +select_trg).addClass('activated');
     });
 
-    // if click button or press enter, submit
-    $('.search-button').click(function(){
-       console.log($(this).prev().val());
-       searchAccom($(this).prev().val());
+    // search accom template: if click button or press enter, submit
+    $('.accom .search-button').click(function(){
+       searchAccom($(this).prev().val(), 1);
     });
 
-    $('.search-form').keydown(function(e){
+    $('.accom .search-form').keydown(function(e){
         if (e.which ==13){
-            console.log($(this).val());
-            searchAccom($(this).val());
+            searchAccom($(this).val(), 1);
         }
     });
+
+    // // pagination
+    // $('.page.active').click(function () {
+    //     console.log("a");
+    //     var nextPage = parseInt($('.accom-pagination .page.active').html());
+    //     searchAccom($('.accom .search-form').val(), nextPage);
+    // });
 });

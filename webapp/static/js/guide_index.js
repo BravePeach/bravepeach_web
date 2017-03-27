@@ -79,7 +79,7 @@ function filterTrip(sort) {
                     '<div class="travel-city">' + object[i].city + '</div>' +
                     '<div class="traveler-num">' + '성인 ' + object[i].adult_traveler + '명 | 아동' + object[i].child_traveler + '명' + '</div>' +
                     '<div class="cost">' + '희망 경비 ' + '<span>' + object[i].cost + '</span>' + ' 만원' + '</div>' +
-                    '<div class="offer-button">' + '견적서 작성하기' + '</div>' + heart_image +
+                    '<a class="offer-button" href="write_offer/' + object[i].id + '">' + '견적서 작성하기' + '</a>' + heart_image +
                     '</div>';
 
                 $('.req-card-wrapper').append(req_card);

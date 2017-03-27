@@ -388,7 +388,8 @@ a.ui-state-default:hover {
     cursor: pointer;
     padding-top: 13px;
     text-align: center;
-
+    display: block;
+    position: absolute;
 }
 
 .trans{
@@ -457,4 +458,8 @@ margin-top: -1px;
 
 .display-none{
     display: none;
+}
+
+header{
+    background: white !important;
 }
