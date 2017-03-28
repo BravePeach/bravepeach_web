@@ -8,6 +8,7 @@
 
 {% block js %}
     <script src="{% static 'js/write_offer.js' %}"></script>
+    <script src="{% static 'js/select2.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -40,7 +41,6 @@
             <div class="traveler-num">성인 {{ req.adult_traveler }}명 | 아동 {{ req.child_traveler }}명</div>
             <div class="req-cost">희망 경비 <span>{{ req.cost|intcomma }}</span> 만원</div>
             <input type="hidden" id="guide_id" value="{{ guide_id }}">
-            <input type="hidden" id="req_id" value="{{ req.id }}">
             <div class="like-button {% if is_liked %}liked{% else %}unliked{% endif %}"></div>
         </div>
 
@@ -190,9 +190,16 @@
 대한항공 KE110 / 직항 / 비지니스 좌석 2개
 출발 : 워싱턴D.C(DCA) 2017/05/29 18:30
 도착 : 인천(ICH) 2017/05/30 16:00 "></textarea>
-                <div class="trans-form-button">저장 후 다음으로</div>
+                <div class="trans-form-button">저장하기</div>
             </div>
-            <div class="accom template"></div>
+            <div class="accom template">
+                <div class="wrapper">
+                {% include "pc/guide/accom_template_form.html" %}
+                </div>
+                <div class="accom-add-button">+ 추가하기</div>
+                <hr>
+                <div class="accom-form-button">저장하기</div>
+            </div>
             <div class="guide template"></div>
             <div class="cost template"></div>
         </div>
@@ -202,25 +209,14 @@
                 <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
                 <div class="content">검색이 필요하지 않습니다.</div>
             </div>
-            <div class="accom">
+            <div class="accom search">
                 <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
-                <div class="content">
-                    <input type="text" class="search-form" name="accom_search_form" placeholder="타이틀로 검색해보세요.">
-                    <div class="search-button"><img src="{% static 'image/icon/Search Icon.png' %}"></div>
-                    <img class="loading display-none" src="{% static 'image/icon/ajax-loader.gif' %}">
-                    <div class="search-result"></div>
-                </div>
+                {% include "pc/guide/accom_result.html" %}
             </div>
-            <div class="guide">
+            <div class="guide search">
                 <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
-                <div class="content">
-                    <input type="text" class="search-form" name="accom_search_form" placeholder="타이틀로 검색해보세요.">
-                    <div class="search-button"><img src="{% static 'image/icon/Search Icon.png' %}"></div>
-                    <img class="loading display-none" src="{% static 'image/icon/ajax-loader.gif' %}">
-                    <div class="search-result"></div>
-                </div>
             </div>
-            <div class="cost">
+            <div class="cost search">
                 <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
                 <div class="content">검색이 필요하지 않습니다.</div>
             </div>

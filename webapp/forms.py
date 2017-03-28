@@ -162,15 +162,3 @@ class UserReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["rating"].widget.attrs.update({"class": "hidden"})
-
-
-class WriteOfferForm(forms.ModelForm):
-    class Meta:
-        model = GuideOffer
-        fields = ['trans_info', 'accom_template', 'guide_template']
-
-
-# class AccomTemplateForm(forms.ModelForm):
-#     class Meta:
-#         model = AccomTemplate
-#         # fields =

@@ -1,23 +1,41 @@
-<div class="result-number">{% if accom_template_set.paginator %}{{ accom_template_set.paginator.count }}{% else %}0{% endif %}개의 불러올 정보가 있습니다.</div>
-{% for accom in accom_template_set %}
-    <div class="result-card">
-        <div class="result-title">{{ accom.title }}</div>
-        <img class="result-photo" src="{{ accom.photo }}">
+{% load staticfiles %}
+
+<div id="{% if id %}{{ id }}{% else %}accom_search1{% endif %}" class="accom-search">
+
+    <div class="content">
+        검색이 필요하지 않습니다.
     </div>
-{% endfor %}
 
-{% if accom_template_set.paginator.num_pages > 1 %}
-<div class="pagination">
-        {% if accom_template_set.has_previous %}
-            <div class="page-prev" onclick="accomPaginate({{ accom_template_set.previous_page_number }})""><</div>
+    <div class="accom-result display-none">
+        <input type="text" class="search-form" name="accom_search_form" placeholder="타이틀로 검색해보세요." {% if title %}value="{{ title }}" {% endif %}>
+        <div class="search-button"><img src="{% static 'image/icon/Search Icon.png' %}"></div>
+        <img class="loading display-none" src="{% static 'image/icon/ajax-loader.gif' %}">
+
+        <div class="result-number">{% if accom_template_set.paginator %}{{ accom_template_set.paginator.count }}{% else %}0{% endif %}개의 불러올 정보가 있습니다.
+        </div>
+        {% for accom in accom_template_set %}
+        <div class="result-card">
+            <input type="hidden" value="{{ accom.id}}">
+            <div class="result-title">{{ accom.title }}</div>
+            <img class="result-photo" src="{{ accom.photo }}">
+        </div>
+        {% endfor %}
+
+        {% if accom_template_set.paginator.num_pages > 1 %}
+        <div class="pagination">
+            {% if accom_template_set.has_previous %}
+            <div class="page-prev"><</div>
+            {% endif %}
+
+            <div class="page inactive">{{ accom_template_set.number }}</div>
+
+            {% if accom_template_set.has_next %}
+            <div class="page active">{{ accom_template_set.next_page_number }}
+            </div>
+
+            <div class="page-next">></div>
+            {% endif %}
+        </div>
         {% endif %}
-
-        <div class="page inactive">{{ accom_template_set.number }}</div>
-
-        {% if accom_template_set.has_next %}
-        <div class="page active" onclick="accomPaginate({{ accom_template_set.next_page_number }})">{{ accom_template_set.next_page_number }}</div>
-
-            <div class="page-next"onclick="accomPaginate({{ accom_template_set.next_page_number }})">></div>
-        {% endif %}
+    </div>
 </div>
-{% endif %}

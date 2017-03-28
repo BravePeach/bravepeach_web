@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404
 
 from bravepeach.util import flavour_render
 from ..models import Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate
-from ..forms import WriteOfferForm
 from django.views.generic import View
 from django.utils.dateparse import parse_date
 from django.http import JsonResponse, HttpResponse
@@ -85,27 +84,12 @@ class FilterTrip(View):
 def write_offer(request, req_id):
     guide_id = Guide.objects.prefetch_related('accom_templates').prefetch_related('guide_templates').get(user_id=request.user.id).id
     req = get_object_or_404(UserRequest.objects.select_related('user'), id=req_id)
-    offer = GuideOffer.objects.create(guide_id=guide_id, request_id=req_id)
+    # offer = GuideOffer.objects.create(guide_id=guide_id, request_id=req_id)
     is_liked = GuideLike.objects.filter(guide_id=guide_id, request_id=req.id)
 
-    if request.method == 'POST':
-        # form 채우기
-        form = WriteOfferForm()
-
-        if form.is_valid():
-            form.save()
-            # 자기가 쓴 제안서 관리하는 페이지로 리다이렉트
-            return redirect('guide_index')
-        else:
-            print(form.errors)
-            # 폼이 invalid 할때는 어떻게?
-            return redirect("guide_index")
-    else:
-        form = WriteOfferForm()
-        return flavour_render(request, 'guide/write_offer.html', {'form': form,
-                                                                  'req': req,
-                                                                  'is_liked': is_liked,
-                                                                  'guide_id': guide_id})
+    return flavour_render(request, 'guide/write_offer.html', {'req': req,
+                                                              'is_liked': is_liked,
+                                                              'guide_id': guide_id})
 
 
 # 숙소 템플릿 검색
@@ -113,6 +97,7 @@ def search_accom(request, req_id):
     if request.is_ajax():
         guide_id = request.GET.get('guide_id')
         title = request.GET.get('title')
+        s_id = 'accom_search' + str(request.GET.get('s_id'))
         accom_template_result = AccomTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False)
         paginator = Paginator(accom_template_result, 5)
         if accom_template_result:
@@ -129,7 +114,7 @@ def search_accom(request, req_id):
         else:
             accom_template_set = ''
 
-        html = render_to_string('pc/guide/accom_result.html', {'accom_template_set': accom_template_set})
+        html = render_to_string('pc/guide/accom_result.html', {'accom_template_set': accom_template_set, 'id': s_id, 'title': title})
         return HttpResponse(html)
 
 
@@ -160,3 +145,29 @@ def search_guide(request, req_id):
 
 # 이동수단 폼 저장
 def save_trans(request, req_id):
+    if request.is_ajax():
+        guide_id = request.GET.get('guide_id')
+        trans_info = request.GET.get('trans_info')
+        offer = GuideOffer.objects.filter(guide_id=guide_id, request_id=req_id).last()
+        offer.trans_info = trans_info
+        offer.save()
+        return HttpResponse()
+
+
+def new_accom_form(request, req_id):
+    if request.is_ajax():
+        form_id = 'accom_form' + str(request.GET.get('id'))
+        search_id = 'accom_search' + str(request.GET.get('id'))
+        accom_form = render_to_string('pc/guide/accom_template_form.html', {'id': form_id}) + '<!--!>'
+        accom_search = render_to_string('pc/guide/accom_result.html', {'id': search_id})
+        return HttpResponse(accom_form + accom_search)
+
+
+def load_accom(request, req_id):
+    if request.is_ajax():
+        accom_id = request.GET.get('accom_id')
+        form_id = 'accom_form' + str(request.GET.get('id'))
+
+        accom_template = AccomTemplate.objects.get(id=accom_id)
+        html = render_to_string('pc/guide/accom_template_form.html', {'id': form_id, 'accom_template': accom_template})
+        return HttpResponse(html)

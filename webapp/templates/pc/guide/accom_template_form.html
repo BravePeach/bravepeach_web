@@ -1,0 +1,38 @@
+{% load staticfiles %}
+
+<div class="accom-form-wrapper" id="{% if id %}{{ id }}{% else %}accom_form1{% endif %}">
+    <div class="overlay">
+        <img src="{% static 'image/icon/ajax-loader.gif' %}" class="loading display-none" style="margin-top: 351px;">
+        <div class="load">불러오기</div>
+        <div class="new">새로 작성하기</div>
+    </div>
+    <input class="accom-date" type="text" placeholder="예) 2017/05/04 - 2017/05/08 (4박 5일)">
+    <img class="accom-delete" src="{% static 'image/icon/cancel.png'%}">
+    <select class="accom-type" type="select">
+        <option value="" disabled selected>숙소유형</option>
+        <option value="1" {% if accom_template.type_id == 1 %}selected{% endif %}>호텔</option>
+        <option value="2" {% if accom_template.type_id == 2 %}selected{% endif %}>한인 민박</option>
+        <option value="3" {% if accom_template.type_id == 3 %}selected{% endif %}>현지인 집</option>
+        <option value="4" {% if accom_template.type_id == 4 %}selected{% endif %}>리조트</option>
+        <option value="4" {% if accom_template.type_id == 5 %}selected{% endif %}>가이드 집</option>
+    </select>
+    <input class="accom-title-form" type="text" placeholder="숙소 타이틀 (검색이 쉽게 지역과 숙소 유형으로 저장해주세요)" value="{{ accom_template.title }}">
+    <input class="accom-address" placeholder="주소" readonly value = "{% for address in accom_template.address %}{{ address }} {% endfor %}">
+    <input class="accom-postcode" placeholder="우편번호" readonly>
+    <div class="accom-photo-wrapper">
+        <div class="photo-title">숙소 사진을 최대 4장까지 추가해주세요.</div>
+        <div class="photo" id="photo1"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+        <div class="photo" id="photo2"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+        <div class="photo" id="photo3"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+        <div class="photo" id="photo4"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+    </div>
+    <textarea class="accom-content">{% if not accom_template.content %}숙소 정보를 자세하게 작성해주세요.
+
+예) 숙소 유형 : 스위트룸
+침실 : 1개
+침대 : 2개
+체크인 : 10:00 - 17:00
+체크아웃 : 14:00{% else %}{{ accom_template.content }}{% endif %}</textarea>
+    <div class="accom-comment">불러온 내용을 수정한 뒤 저장하면 최신내용만이 저장됩니다.</div>
+    <div class="">저장</div>
+</div>
