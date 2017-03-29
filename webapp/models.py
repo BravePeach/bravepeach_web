@@ -10,6 +10,8 @@ from django.dispatch import receiver
 from django.conf import settings
 from redactor.fields import RedactorField
 
+from bravepeach.const import GUIDE_THEME, GUIDE_TYPE
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
@@ -36,12 +38,36 @@ class Profile(models.Model):
         else:
             return "".join([self.user.last_name, self.user.first_name])
 
+    @property
+    def is_volunteer(self):
+        vol = self.user.volunteer.all()
+        if len(vol) == 0:
+            return False
+        return True
+
 
 class Notice(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True, null=True)
+
+
+# class GuideVolunteer(models.Model):
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="volunteer")
+#     real_name = models.TextField(null=False, blank=False, max_length=10)
+#     is_thru = models.BooleanField(default=False)
+#     is_local = models.BooleanField(default=False)
+#     guide_location = JSONField(null=False, blank=False)
+#     introduction = models.TextField(null=False, blank=False)
+#     career = JSONField(null=False, blank=False)
+#     certificate = JSONField(blank=True)
+#     appeal = JSONField(null=False, blank=False)
+#     guide_type = models.IntegerField(null=False, blank=False)
+#     guide_theme = models.IntegerField(null=False, blank=False)
+#     essay = models.TextField(null=False, blank=False)
+#     experience = JSONField(blank=True)
+#     published = models.BooleanField(default=False)
 
 
 class Guide(models.Model):
@@ -56,11 +82,18 @@ class Guide(models.Model):
     max_traveler_cnt = models.IntegerField(null=True, blank=True)
     introduction = models.TextField(blank=True)
     license = models.BooleanField(default=False)
-    is_local = models.BooleanField(default=False)   # 기본값은 스루가이드
-    activated = models.BooleanField(default=True)
+    is_thru = models.BooleanField(default=False, verbose_name="스루 가이드")
+    is_local = models.BooleanField(default=False, verbose_name="현지 가이드")   # 둘다 비어있으면 안됨
+    activated = models.BooleanField(default=False)
     guide_location = JSONField(null=True, blank=True)
     off_day = JSONField(null=True, blank=True)
     career = JSONField(null=True, blank=True)
+    real_name = models.TextField(null=False, blank=False, default="")
+    certificate = JSONField(blank=True)
+    appeal = JSONField(null=True, blank=True)
+    essay = models.TextField(null=False, blank=False, default="")
+    experience = JSONField(null=True, blank=True)
+    is_volunteer = models.BooleanField(default=True)
 
     @property
     def full_name(self):
@@ -82,13 +115,13 @@ class Guide(models.Model):
 
     @property
     def theme_list(self):
-        theme_names = ("현지 꿀팁", "액티비티", "문화/예술", "골목 여행", "자연 경관", "맛집 기행", "역사여행")
+        theme_names = (x[1] for x in GUIDE_THEME)
         theme_lst = [theme_names[idx] for idx, v in enumerate(bin(self.guide_theme)[2:]) if v == '1']
         return theme_lst
 
     @property
     def style_list(self):
-        style_names = ("유쾌한", "차분한", "지적인", "유머러스한", "감성적인", "설명을 잘하는", "경제적인")
+        style_names = (x[1] for x in GUIDE_TYPE)
         style_lst = [style_names[idx] for idx, v in enumerate(bin(self.guide_type)[2:]) if v == '1']
         return style_lst
 

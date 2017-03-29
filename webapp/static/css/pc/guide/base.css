@@ -1,35 +1,34 @@
 .contents-wrapper{
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .traveler-search-form{
-    width: 485px;
+  width: 485px;
   height: 39px;
   border-radius: 5px;
   border: solid 1px #d9dada;
-    margin: 12.5px 0px 0px 63px;
-    padding-left: 57px;
+  margin: 13px 0 0 63px;
+  padding-left: 57px;
 }
 
 .search-icon{
-    width: 18px;
-    position: absolute;
-    top:23px;
-    left: 374px;
-    opacity: 0.5;
+  width: 18px;
+  position: absolute;
+  top:23px;
+  left: 374px;
+  opacity: 0.5;
 }
 
 header form{
-    display: inline-block;
+  display: inline-block;
 }
 
 .guide-header{
   height: 60px;
   background-color: #e64c47;
   box-shadow: 0 2px 8px 0 #bbbbbb;
-    text-align: center;
-    color: white;
-      font-size: 19px;
+  text-align: center;
+  font-size: 19px;
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -37,17 +36,23 @@ header form{
   letter-spacing: normal;
   color: #ffffff;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-    padding: 19px 0px;
+  padding: 19px 0;
 }
 
 .guide-tab{
-    margin: 0px 35.2px;
-    display: inline-block;
-    cursor: pointer;
+  margin: 0 35px;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
 }
 
 .guide-tab.activated{
-        padding-bottom: 12.5px;
-    border-bottom: 6px solid;
-    font-weight: bold;
+  padding-bottom: 13px;
+  border-bottom: 6px solid;
+  font-weight: bold;
+}
+
+.guide-tab.disabled {
+  cursor: default !important;
+  pointer-events: none !important;
 }
