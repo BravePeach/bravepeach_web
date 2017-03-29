@@ -3,6 +3,11 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
+import boto3
+from PIL import Image
+from uuid import uuid4
+
+from bravepeach import settings
 from bravepeach.util import flavour_render
 from ..models import Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate
 from django.views.generic import View
@@ -171,3 +176,20 @@ def load_accom(request, req_id):
         accom_template = AccomTemplate.objects.get(id=accom_id)
         html = render_to_string('pc/guide/accom_template_form.html', {'id': form_id, 'accom_template': accom_template})
         return HttpResponse(html)
+
+
+def upload_accom_photo(request):
+    if request.method == "POST":
+        files = request.FILES
+        s3 = boto3.resource("s3", aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+        file_ext = files['accom_photo'].name.split(".")[-1]
+        tmp_name = datetime.datetime.now().strftime("%Y_%m_%d/%H_%M_%S_%f")+"."+file_ext
+        img = Image.open(files['accom_photo'])
+        tmp_file = "/tmp/{}.jpg".format(uuid4())
+        img.save(tmp_file, format="jpeg")
+        s3.meta.client.upload_file(tmp_file, settings.AWS_STORAGE_BUCKET_NAME,
+                                      "accom_photo/{}".format(tmp_name))
+        url = "http://" + "/".join([settings.AWS_S3_CUSTOM_DOMAIN, "accom_photo", tmp_name])
+        return JsonResponse({"ok": True, "url": url})
+    return JsonResponse({"ok": False})

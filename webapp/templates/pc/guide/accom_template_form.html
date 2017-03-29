@@ -6,8 +6,16 @@
         <div class="load">불러오기</div>
         <div class="new">새로 작성하기</div>
     </div>
+    <input type="hidden" class="accom-id" value="{{ accom_template.id }}">
     <input class="accom-date" type="text" placeholder="예) 2017/05/04 - 2017/05/08 (4박 5일)">
     <img class="accom-delete" src="{% static 'image/icon/cancel.png'%}">
+    <div class="delete-modal display-none">
+        <img class="delete-out" src="{% static 'image/icon/cancel.png' %}">
+        <div class="delete-title">정말로 삭제하시겠습니까?</div>
+        <div class="delete-no">아니오</div>
+        <div class="delete-ok">예</div>
+    </div>
+    <div class="allover display-none"></div>
     <select class="accom-type" type="select">
         <option value="" disabled selected>숙소유형</option>
         <option value="1" {% if accom_template.type_id == 1 %}selected{% endif %}>호텔</option>
@@ -21,10 +29,19 @@
     <input class="accom-postcode" placeholder="우편번호" readonly>
     <div class="accom-photo-wrapper">
         <div class="photo-title">숙소 사진을 최대 4장까지 추가해주세요.</div>
-        <div class="photo" id="photo1"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
-        <div class="photo" id="photo2"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
-        <div class="photo" id="photo3"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
-        <div class="photo" id="photo4"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+        {{ photo_form.photo }}
+        <div class="photo photo1"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+        <input type="file" accept="image/*" style="display: none" required>
+        <input type="hidden"class="photo1">
+        <div class="photo photo2"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+        <input type="file" accept="image/*" style="display: none">
+        <input type="hidden"class="photo2">
+        <div class="photo photo3"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+        <input type="file" accept="image/*" style="display: none">
+        <input type="hidden"class="photo3">
+        <div class="photo photo4"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+        <input type="file" accept="image/*" style="display: none">
+        <input type="hidden"class="photo4">
     </div>
     <textarea class="accom-content">{% if not accom_template.content %}숙소 정보를 자세하게 작성해주세요.
 

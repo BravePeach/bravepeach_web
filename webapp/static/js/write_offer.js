@@ -128,10 +128,10 @@ $(function () {
 
     // change search id
     $('.accom.template').on("click", ".accom-form-wrapper input", function () {
-        var f_id = $(this).parent()[0].id.replace('accom_form', '');
+        var f_id = $(this).parents('.accom-form-wrapper')[0].id.replace('accom_form', '');
         $('.accom-search:not(.display-none)').addClass('display-none');
         $('#accom_search' + f_id).removeClass('display-none');
-        $('.search-wrapper').animate({top: $(this).parent().offset().top});
+        $('.search-wrapper').animate({top: $(this).parents('.accom-form-wrapper').offset().top});
     });
 
     // 템플릿 클릭하면 내용 로드하기
@@ -246,9 +246,65 @@ $(function () {
 
     // x 버튼 눌렀을때 폼과 검색 바 지우기.
     $('.accom.template').on("click", ".accom-delete", function () {
-        var f_id = $(this).parent()[0].id.replace('accom_form', '');
-        $(this).parent().remove();
-        $('#accom_search' + f_id).remove()
-    })
+        // var f_id = $(this).parent()[0].id.replace('accom_form', '');
+        // $(this).parent().remove();
+        // $('#accom_search' + f_id).remove()
 
+        $(this).next().show();
+        $(this).next().next().show();
+    });
+
+    $('.accom.template').on("click", ".delete-out, .delete-no", function(){
+       $(this).parent().hide();
+       $(this).parent().next().hide();
+    });
+
+    $('.accom.template').on("click", ".delete-ok", function(){
+        $(this).parent().hide();
+        $(this).parent().next().hide();
+        var f_id = $(this).parents('.accom-form-wrapper')[0].id.replace('accom_form', '');
+        $(this).parents('.accom-form-wrapper').remove();
+        $('#accom_search' + f_id).remove()
+    });
+
+    // 숙소 이미지 업로드
+    $('.accom.template').on("click", ".photo", function(){
+        var clickedDiv = $(this);
+        $(this).next().click();
+        $(this).next().change(function () {
+            console.log($(this)[0].files[0]);
+
+            var formdata = new FormData();
+            formdata.append("accom_photo", $(this)[0].files[0]);
+
+            $.ajax({
+                url: "/upload_accom_photo/",
+                processData: false,
+                contentType: false,
+                data: formdata,
+                type: "POST",
+                success: function(data){
+                    if (data["ok"] === true) {
+                        clickedDiv.next().next().val(data['url']);
+                        clickedDiv.children().addClass('display-none');
+                        clickedDiv.css({"background-image": 'url(' + data['url'] + ')',
+                                        "opacity": 1});
+                    }
+                }
+            });
+        });
+    });
+
+    // 숙소 템플릿 저장
+    $('.accom.template').on("click", ".accom-save-button", function(){
+        var photoList = [];
+        for (var i = 1; i < 5; i++ ){
+            if ($(this).siblings('.accom-photo-wrapper').children('input.photo' + i.toString()).val() != ""){
+                photoList.push($(this).siblings('.accom-photo-wrapper').children('input.photo' + i.toString()).val())
+            }
+        }
+        console.log(photoList);
+
+
+    });
 });
