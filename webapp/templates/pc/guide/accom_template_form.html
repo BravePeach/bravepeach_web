@@ -26,7 +26,16 @@
     </select>
     <input class="accom-title-form" type="text" placeholder="숙소 타이틀 (검색이 쉽게 지역과 숙소 유형으로 저장해주세요)" value="{{ accom_template.title }}">
     <input class="accom-address" placeholder="주소" readonly value = "{% for address in accom_template.address %}{{ address }} {% endfor %}">
-    <input class="accom-postcode" placeholder="우편번호" readonly>
+    <div class="address-modal display-none">
+        <img class="delete-out" src="{% static 'image/icon/cancel.png' %}">
+        <div class="address-title">숙소의 위치를 알려주세요</div>
+        <span>여행자에게는 정확한 위치는 알려지지 않습니다.</span>
+        <input type="text" class="address-modal-form" />
+        <div class="map"></div>
+        <div class="address-ok">확인</div>
+    </div>
+    <div class="allover display-none"></div>
+
     <div class="accom-photo-wrapper">
         <div class="photo-title">숙소 사진을 최대 4장까지 추가해주세요.</div>
         {{ photo_form.photo }}

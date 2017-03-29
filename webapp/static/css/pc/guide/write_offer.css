@@ -748,7 +748,7 @@
 }
 
 .accom-address {
-    width: 544px;
+    width: 799px;
     margin-right: 6px;
     cursor: pointer;
 }
@@ -1013,4 +1013,80 @@ footer{
 
 .contents-wrapper{
     padding-bottom: 20px;
+}
+
+.address-modal{
+        position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: -400px 0 0 -405px;
+      width: 811px;
+  height: 800px;
+  border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+  background-color: #ffffff;
+  border: solid 1px #979797;
+    z-index: 1000;
+}
+
+.address-title{
+      font-size: 35px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+    margin: 77px 0 0 115px;
+}
+
+.address-modal span{
+    display: block;
+      font-size: 22px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #4d4d4d;
+    margin: 14px 0 0 115px;
+}
+
+.address-modal-form{
+    display: block;
+      width: 581px;
+  height: 55px;
+    margin: 45px 0 0 115px;
+      border-radius: 8px;
+  background-color: #ffffff;
+  border: solid 1px #979797 !important;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+
+.address-ok{
+      width: 219px;
+  height: 65px;
+  border-radius: 8px;
+  background-color: #e64c47;
+  border: solid 1px #979797;
+    position: absolute;
+    bottom: 77px;
+    right: 114px;
+      font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.map{
+    width: 581px;
+    height: 343px;
+    margin: 25px 0 0 115px;
 }
