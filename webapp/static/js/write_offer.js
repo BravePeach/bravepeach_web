@@ -128,10 +128,10 @@ $(function () {
 
     // change search id
     $('.accom.template').on("click", ".accom-form-wrapper input", function () {
-        var f_id = $(this).parent()[0].id.replace('accom_form', '');
+        var f_id = $(this).parents('.accom-form-wrapper')[0].id.replace('accom_form', '');
         $('.accom-search:not(.display-none)').addClass('display-none');
         $('#accom_search' + f_id).removeClass('display-none');
-        $('.search-wrapper').animate({top: $(this).parent().offset().top});
+        $('.search-wrapper').animate({top: $(this).parents('.accom-form-wrapper').offset().top});
     });
 
     // 템플릿 클릭하면 내용 로드하기
@@ -246,9 +246,155 @@ $(function () {
 
     // x 버튼 눌렀을때 폼과 검색 바 지우기.
     $('.accom.template').on("click", ".accom-delete", function () {
-        var f_id = $(this).parent()[0].id.replace('accom_form', '');
-        $(this).parent().remove();
-        $('#accom_search' + f_id).remove()
-    })
+        $(this).next().show();
+        $(this).next().next().show();
+    });
 
+    $('.accom.template').on("click", ".delete-out, .delete-no", function () {
+        $(this).parent().hide();
+        $(this).parent().next().hide();
+    });
+
+    $('.accom.template').on("click", ".delete-ok", function () {
+        $(this).parent().hide();
+        $(this).parent().next().hide();
+        var f_id = $(this).parents('.accom-form-wrapper')[0].id.replace('accom_form', '');
+        $(this).parents('.accom-form-wrapper').remove();
+        $('#accom_search' + f_id).remove()
+    });
+
+    // 주소 입력창 클릭했을떄
+    $('.accom.template').on("click", ".accom-address", function () {
+        $(this).next().show();
+        $(this).next().next().show();
+
+        // google maps
+        var map = new google.maps.Map($(this).next().children('.map')[0], {
+            center: {lat: -33.8688, lng: 151.2195},
+            zoom: 13
+        });
+
+        var input = $(this).next().children('.address-modal-form')[0];
+        var options = {
+            types: ['(regions)']
+        };
+
+        autocomplete = new google.maps.places.Autocomplete(input, options);
+        autocomplete.bindTo('bounds', map);
+
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
+            map: map,
+            anchorPoint: new google.maps.Point(0, -29)
+        });
+
+        google.maps.event.addListener(map, 'click', function(event) {
+            if (marker && marker.setMap) {
+                marker.setMap(null);
+            }
+            marker = new google.maps.Marker({
+            position: event.latLng,
+            map: map
+            });
+            var geocoder = new google.maps.Geocoder;
+              geocoder.geocode({'location': event.latLng}, function(results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                  if (results[1]) {
+                    infowindow.setContent(results[1].formatted_address);
+                    infowindow.open(map, marker);
+                  } else {
+                    window.alert('No results found');
+                  }
+                } else {
+                  window.alert('Geocoder failed due to: ' + status);
+                }
+              });
+
+        });
+
+        autocomplete.addListener('place_changed', function () {
+            infowindow.close();
+            marker.setVisible(false);
+            var place = autocomplete.getPlace();
+            console.log(place);
+            if (!place.geometry) {
+                window.alert("Autocomplete's returned place contains no geometry");
+                return;
+            }
+
+            // If the place has a geometry, then present it on a map.
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);  // Why 17? Because it looks good.
+            }
+            marker.setIcon(/** @type {google.maps.Icon} */({
+                url: place.icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(17, 34),
+                scaledSize: new google.maps.Size(35, 35)
+            }));
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+
+            var address = '';
+            if (place.address_components) {
+                address = [
+                    (place.address_components[0] && place.address_components[0].short_name || ''),
+                    (place.address_components[1] && place.address_components[1].short_name || ''),
+                    (place.address_components[2] && place.address_components[2].short_name || '')
+                ].join(' ');
+            }
+
+            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+            infowindow.open(map, marker);
+        });
+
+
+    });
+
+    // 숙소 이미지 업로드
+    $('.accom.template').on("click", ".photo", function () {
+        var clickedDiv = $(this);
+        $(this).next().click();
+        $(this).next().change(function () {
+            console.log($(this)[0].files[0]);
+
+            var formdata = new FormData();
+            formdata.append("accom_photo", $(this)[0].files[0]);
+
+            $.ajax({
+                url: "/upload_accom_photo/",
+                processData: false,
+                contentType: false,
+                data: formdata,
+                type: "POST",
+                success: function (data) {
+                    if (data["ok"] === true) {
+                        clickedDiv.next().next().val(data['url']);
+                        clickedDiv.children().addClass('display-none');
+                        clickedDiv.css({
+                            "background-image": 'url(' + data['url'] + ')',
+                            "opacity": 1
+                        });
+                    }
+                }
+            });
+        });
+    });
+
+    // 숙소 템플릿 저장
+    $('.accom.template').on("click", ".accom-save-button", function () {
+        var photoList = [];
+        for (var i = 1; i < 5; i++) {
+            if ($(this).siblings('.accom-photo-wrapper').children('input.photo' + i.toString()).val() != "") {
+                photoList.push($(this).siblings('.accom-photo-wrapper').children('input.photo' + i.toString()).val())
+            }
+        }
+        console.log(photoList);
+
+
+    });
 });

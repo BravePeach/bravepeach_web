@@ -25,7 +25,7 @@
 
         function save_profile(){
             cancel_profile();
-            $.post('{% url 'upload_profile' %}',
+            $.post("{% url 'upload_profile' %}",
                 {
                     img: img_url,
                     coord: img_coord

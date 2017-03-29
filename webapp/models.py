@@ -4,7 +4,7 @@ import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
-from django_mysql.models import JSONField, ListCharField
+from django_mysql.models import JSONField, ListCharField, ListTextField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
@@ -266,6 +266,9 @@ class CancelledOffer(models.Model):
 
 class AccomTemplate(models.Model):
     title = models.CharField(max_length=100)
+    photo = ListTextField(
+        base_field=models.TextField()
+    )
     # JSONField로 하려 했으나 migrate 과정에서 에러가 나서 일단은 ListField로..
     # 견적서 상세보기 페이지에서 숙소에 대한 위치를 국가, 시, 구 정도까지 보여주는데 그 주소를 저장하기 위한 필드입니다.
     address = ListCharField(
@@ -298,11 +301,6 @@ class AccomTemplate(models.Model):
     def type(self):
         type_list = ['기타', '호텔', '한인 민박', '현지인 집', '리조트', '가이드 집']
         return type_list[self.type_id]
-
-
-class AccomPhoto(models.Model):
-    accom_template = models.ForeignKey(AccomTemplate, related_name='accom_photos')
-    photo = models.ImageField(upload_to='accom_photos/%Y/%m/%d')
 
 
 class GuideTemplate(models.Model):
