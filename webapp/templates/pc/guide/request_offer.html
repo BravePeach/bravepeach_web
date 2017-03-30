@@ -1,0 +1,138 @@
+{% extends "pc/guide/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/pc/guide/request_offer.less'|compile %}">
+{% endblock %}
+
+{% block js%}
+    <script src="{% static 'js/guide/request_offer.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="tabs">
+        <div class="tab request active">받은요청서</div>
+        <div class="tab zzim">찜한요청서</div>
+        <div class="tab offer">보낸견적서</div>
+    </div>
+    <div class="counter request active">{{ request_list|length }}개의 받은 요청서가 있습니다.</div>
+    <div class="counter zzim">{{ zzim_list|length }}개의 찜한 요청서가 있습니다.</div>
+    <div class="counter offer">{{ offer_list|length }}개의 보낸 견적서가 있습니다.</div>
+    <div class="tab-contents request active">
+        {% for request in request_list %}
+            <div class="tab-content">
+                <div class="tab-content-label {% if not request.published %}done{% endif %}">
+                    {% if not request.published %}마감{% endif %} </div>
+                <div class="tab-content-pic">picpic</div><!--
+                --><div class="tab-content-info">
+                <div class="guide-options">
+                    <div class="guide-option {% if request.trans_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">이동수단</div>
+                    <div class="guide-option {% if request.accom_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">숙박</div>
+                    <div class="guide-option {% if request.guide_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">가이드</div>
+                </div>
+                <div class="schedule">{{ request.travel_begin_at|date:"Y/m/d" }} ~ {{ request.travel_end_at|date:"Y/m/d" }}</div>
+                <div class="cities ellipsis">
+                    {% for c in request.city %}
+                        {% if not forloop.first %} / {% endif %} {{ c }}
+                    {% endfor %}
+                </div>
+                <div class="age-grp"> {{ request.age_group }} </div>
+                <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>
+            </div><!--
+                --><div class="tab-content-btn">
+                <div class="like">
+                    {% if request.id in request.user.guide.all.0.like %}
+                        <img src="{% static 'image/icon/heart_full.png' %}" alt="like">
+                    {% endif %}
+                </div>
+
+                <a href="{% url 'write_offer' req_id=request.id %}" class="write-btn {% if offer_cnt == 0 %}disabled-link{% endif %}"> 견적서 작성하기</a>
+                <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>
+            </div>
+            </div>
+        {% empty %}
+            <div class="empty">받은 요청서가 없습니다.</div>
+        {% endfor %}
+    </div>
+    <div class="tab-contents zzim">
+        {% for request in zzim_list %}
+            <div class="tab-content">
+                <div class="tab-content-label {% if not request.published %}done{% endif %}">
+                    {% if not request.published %}마감{% endif %} </div>
+                <div class="tab-content-pic">picpic</div><!--
+                --><div class="tab-content-info">
+                <div class="guide-options">
+                    <div class="guide-option {% if request.trans_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">이동수단</div>
+                    <div class="guide-option {% if request.accom_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">숙박</div>
+                    <div class="guide-option {% if request.guide_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">가이드</div>
+                </div>
+                <div class="schedule">{{ request.travel_begin_at|date:"Y/m/d" }} ~ {{ request.travel_end_at|date:"Y/m/d" }}</div>
+                <div class="cities ellipsis">
+                    {% for c in request.city %}
+                        {% if not forloop.first %} / {% endif %} {{ c }}
+                    {% endfor %}
+                </div>
+                <div class="age-grp"> {{ request.age_group }} </div>
+                <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>
+            </div><!--
+                --><div class="tab-content-btn">
+                <div class="like">
+                    {% if request.id in request.user.guide.all.0.like %}
+                        <img src="{% static 'image/icon/heart_full.png' %}" alt="like">
+                    {% endif %}
+                </div>
+
+                <a href="{% url 'write_offer' req_id=request.id %}" class="write-btn {% if offer_cnt == 0 %}disabled-link{% endif %}"> 견적서 작성하기</a>
+                <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>
+            </div>
+            </div>
+        {% empty %}
+            <div class="empty">찜한 요청서가 없습니다.</div>
+        {% endfor %}
+    </div>
+    <div class="tab-contents offer">
+        {% for offer in offer_list %}
+            <div class="tab-content">
+                <div class="tab-content-pic">
+                    <img src="{% if offer.guide.user.profile.photo %}
+                                    {{ offer.guide.user.profile.photo.url }}{% else %}
+                                    {% static 'image/icon/profile_empty.png' %}{% endif %}"
+                         alt="">
+                    <div class="guide-name">{{ offer.guide.full_name }}</div>
+                </div><!--
+                --><div class="tab-content-info">
+                <div class="guide-options">
+                    <div class="guide-option {% if offer.request.trans_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">이동수단</div>
+                    <div class="guide-option {% if offer.request.accom_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">숙박</div>
+                    <div class="guide-option {% if offer.request.guide_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">가이드</div>
+                </div>
+                <div class="schedule">{{ offer.request.travel_begin_at|date:"Y/m/d" }} ~ {{ offer.request.travel_end_at|date:"Y/m/d" }}</div>
+                <div class="cities ellipsis">
+                    {% for c in offer.city %}
+                        {% if not forloop.first %} / {% endif %} {{ c }}
+                    {% endfor %}
+                </div>
+                <div class="age-grp"> {{ offer.request.age_group }} </div>
+                <div class="cost">총 경비 <span class="money">{{ offer.cost|intcomma }}</span> 만원</div>
+            </div><!--
+                --><div class="tab-content-btn">
+                <a href="" class="request-detail">여행 요청서 보기</a>
+                <a href="" class="offer-detail">보낸 견적서 보기</a>
+            </div>
+            </div>
+        {% empty %}
+            <div class="empty">보낸 견적서가 없습니다.</div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -131,7 +131,7 @@ def schedule(request):
 
 @user_passes_test(guide_required)
 def request(request):
-    return flavour_render(request, "guide/find.html", {"tab": "request"})
+    return flavour_render(request, "guide/request_offer.html", {"tab": "request"})
 
 
 @user_passes_test(guide_required)
