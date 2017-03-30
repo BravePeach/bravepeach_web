@@ -268,6 +268,7 @@ $(function () {
         $(this).next().show();
         $(this).next().next().show();
 
+        var mapElement = $(this).next().children('.map');
         // google maps
         var map = new google.maps.Map($(this).next().children('.map')[0], {
             center: {lat: -33.8688, lng: 151.2195},
@@ -302,6 +303,7 @@ $(function () {
                   if (results[1]) {
                     infowindow.setContent(results[1].formatted_address);
                     infowindow.open(map, marker);
+
                   } else {
                     window.alert('No results found');
                   }
@@ -316,12 +318,6 @@ $(function () {
             infowindow.close();
             marker.setVisible(false);
             var place = autocomplete.getPlace();
-            console.log(place);
-            if (!place.geometry) {
-                window.alert("Autocomplete's returned place contains no geometry");
-                return;
-            }
-
             // If the place has a geometry, then present it on a map.
             if (place.geometry.viewport) {
                 map.fitBounds(place.geometry.viewport);
@@ -329,13 +325,6 @@ $(function () {
                 map.setCenter(place.geometry.location);
                 map.setZoom(17);  // Why 17? Because it looks good.
             }
-            marker.setIcon(/** @type {google.maps.Icon} */({
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(35, 35)
-            }));
             marker.setPosition(place.geometry.location);
             marker.setVisible(true);
 
