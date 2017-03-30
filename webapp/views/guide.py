@@ -1,16 +1,14 @@
 import datetime
 from dateutil.rrule import rrule, DAILY
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
+import json
+from uuid import uuid4
 
 import boto3
 from PIL import Image
-from uuid import uuid4
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
-from bravepeach import settings
-from bravepeach.util import flavour_render
-from ..models import Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate
 from django.views.generic import View
 from django.utils.dateparse import parse_date
 from django.http import JsonResponse, HttpResponse
@@ -18,6 +16,18 @@ from django.utils import formats
 from django.shortcuts import redirect
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import user_passes_test
+from bravepeach import settings
+
+from bravepeach.util import flavour_render
+from ..models import (Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate,
+                       Notice)
+from ..forms import WriteOfferForm, VolunteerForm
+from bravepeach.const import GUIDE_TYPE, GUIDE_THEME
+
+
+def guide_required(user):
+    return user.profile.is_guide
 
 
 def profile(request, gid):
@@ -31,11 +41,128 @@ def profile(request, gid):
                                                           "review_ids": [x.offer_id for x in review_list]})
 
 
-def guide_index(request):
+def index(request):
     if request.user.is_authenticated:
-        return flavour_render(request, "guide/index.html", {})
+        if request.user.profile.is_guide:
+            return redirect(find)
+        else:
+            return redirect(dashboard)
     else:
         return flavour_render(request, "guide/index_not_login.html", {})
+
+
+@login_required
+def volunteer(request):
+    prev_vol = Guide.objects.filter(user=request.user).all()
+
+    if request.method == "POST":
+        cert_link_list = []
+        exp_link_list = []
+        s3 = boto3.resource("s3", aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+        for f in request.FILES.getlist('certificate'):
+            ext = f.name.split('.')[-1]
+            key = "volunteer/{}/cert/{}.{}".format(request.user.id,
+                                                   datetime.datetime.now().strftime("%Y_%m_%d/%H_%M_%S_%f"), ext)
+            s3.meta.client.upload_fileobj(f, settings.AWS_STORAGE_BUCKET_NAME, key)
+            cert_link_list.append("http://"+settings.AWS_S3_CUSTOM_DOMAIN+'/'+key)
+
+        for f in request.FILES.getlist('experience'):
+            ext = f.name.split('.')[-1]
+            key = "volunteer/{}/exp/{}.{}".format(request.user.id,
+                                                  datetime.datetime.now().strftime("%Y_%m_%d/%H_%M_%S_%f"), ext)
+            s3.meta.client.upload_fileobj(f, settings.AWS_STORAGE_BUCKET_NAME, key)
+            exp_link_list.append("http://"+settings.AWS_S3_CUSTOM_DOMAIN+'/'+key)
+
+        exp_data = list(zip(exp_link_list, json.loads(request.POST['exp'])))
+
+        if len(prev_vol) == 0:
+            vol = VolunteerForm(request.POST)
+        else:
+            vol = VolunteerForm(request.POST, instance=prev_vol[0])
+
+        if vol.is_valid():
+            new_vol = vol.save(commit=False)
+            new_vol.user = request.user
+            new_vol.certificate = cert_link_list
+            new_vol.experience = exp_data
+            new_vol.save()
+            return JsonResponse({"ok": True, "vid": new_vol.id})
+            # return redirect('view_volunteer', gid=new_vol.id)
+        else:
+            print(vol.errors)
+            return JsonResponse({"ok": False})
+
+    else:
+        if prev_vol:
+            form = VolunteerForm(instance=prev_vol[0])
+        else:
+            form = VolunteerForm()
+        return flavour_render(request, "guide/volunteer.html", {"form": form, "type_list": GUIDE_TYPE,
+                                                                'theme_list': GUIDE_THEME})
+
+
+def view_volunteer(request, gid):
+    guide = Guide.objects.get(id=gid)
+    return flavour_render(request, "guide/view_volunteer.html", {'guide': guide})
+
+
+def enroll_volunteer(request, gid):
+    volunteer = Guide.objects.get(id=gid)
+    volunteer.is_volunteer = True
+    volunteer.save()
+    return redirect(dashboard)
+
+
+@user_passes_test(guide_required)
+def find(request):
+    return flavour_render(request, "guide/find.html", {"tab": "find"})
+
+
+def dashboard(request):
+    notice_list = Notice.objects.order_by('-modified_at')
+    stats = (("누적활동일수", "0일"), ("누적예약수", "0건"), ("누적여행자수", "0명"))
+    return flavour_render(request, "guide/dashboard.html", {"tab": "dashboard", "notice_list": notice_list,
+                                                            "stats": stats, "review_cnt": 0})
+
+
+@user_passes_test(guide_required)
+def schedule(request):
+    return flavour_render(request, "guide/find.html", {"tab": "schedule"})
+
+
+@user_passes_test(guide_required)
+def request(request):
+    return flavour_render(request, "guide/find.html", {"tab": "request"})
+
+
+@user_passes_test(guide_required)
+def adjust(request):
+    return flavour_render(request, "guide/find.html", {"tab": "adjust"})
+
+
+@user_passes_test(guide_required)
+def review(request):
+    return flavour_render(request, "guide/find.html", {"tab": "review"})
+
+
+@user_passes_test(guide_required)
+def message(request):
+    return flavour_render(request, "guide/find.html", {"tab": "message"})
+
+
+def inactivate(request):
+    guide = request.user.guide.all()[0]
+    guide.activated = False
+    guide.save()
+    return redirect(dashboard)
+
+
+def activate(request):
+    guide = request.user.guide.all()[0]
+    guide.activated = True
+    guide.save()
+    return redirect(dashboard)
 
 
 class FilterTrip(View):

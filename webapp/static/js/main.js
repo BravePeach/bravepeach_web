@@ -32,7 +32,7 @@ $(function() {
         },
         'placecomplete:cleared': function() {
             city_list.pop();
-            console.log(city_list)
+            console.log(city_list);
             localStorage.setItem("city_list",city_list);
         }
     });

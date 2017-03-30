@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.forms import extras
 
-from .models import Profile, UserRequest, UserReview
+from .models import Profile, UserRequest, UserReview, GuideOffer, AccomTemplate, GuideTemplate, Guide
 from redactor.widgets import RedactorEditor
 
 
@@ -163,3 +163,29 @@ class UserReviewForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["rating"].widget.attrs.update({"class": "hidden"})
 
+
+class WriteOfferForm(forms.ModelForm):
+    class Meta:
+        model = GuideOffer
+        fields = ['trans_info', 'accom_template', 'guide_template']
+
+
+# class AccomTemplateForm(forms.ModelForm):
+#     class Meta:
+#         model = AccomTemplate
+#         # fields =
+
+
+class VolunteerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['real_name'].widget.attrs.update({"class": "input-text", "placeholder": "실명"})
+        self.fields['essay'].widget.attrs.update({"class": "input-textarea", "placeholder": "BravePeach에서 진행하고 싶은 여행 혹은 원하는 여행자에 대해서 적어주세요."})
+        self.fields['is_thru'].widget.attrs.update({"class": "input-checkbox"})
+        self.fields['is_local'].widget.attrs.update({"class": "input-checkbox"})
+        self.fields['introduction'].widget.attrs.update({"class": "input-textarea", "placeholder": "자기소개"})
+
+    class Meta:
+        model = Guide
+        fields = ["real_name", "is_thru", "is_local", "guide_location", "introduction", "career", "certificate",
+                  "appeal", "guide_type", "guide_theme", "essay", "experience"]

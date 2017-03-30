@@ -1,0 +1,215 @@
+{% extends "pc/guide/base.html" %}
+{% load static %}
+{% load compile_static %}
+
+{% block css%}
+    <link rel="stylesheet" href="{% static 'less/pc/guide/volunteer.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script> var volunteer_url = "{% url 'guide_volunteer' %}"; </script>
+    <script src="{% static 'js/guide/volunteer.js' %}"></script>
+{#    {% if form.guide_location %}#}
+{#    <script>#}
+{#    city_list = eval({{ form.guide_location.value|escape }});#}
+{#    </script>#}
+{#    {% endif %}#}
+    <script>
+    var target, j;
+    $(function(){
+        {% for c in form.career %}
+            j = eval({{ c.value|safe }});
+            target = $("#career-block").clone();
+            target.removeClass("hidden-div");
+            target.addClass('career-block');
+            target.removeAttr("id");
+            target.find('.career-date').val(j[0]);
+            target.find('.career-company').val(j[1]);
+            target.find('.career-info').val(j[2]);
+            $('#add-career-btn').before(target);
+        {% endfor %}
+{#        {% for cert in form.certifitate %}#}
+{#            target = $("#certificate-block").clone();#}
+{#            target.removeClass("hidden-div");#}
+{#            target.addClass('certificate-block');#}
+{#            target.removeAttr("id");#}
+{#            target.find('file').val('{{ cert.value|safe }}');#}
+{#            $('#add-certificate-btn').before(target);#}
+{#        {% endfor %}#}
+        {% for a in form.appeal %}
+            target = $("#appeal-block").clone();
+            target.removeClass("hidden-div");
+            target.addClass("appeal-block");
+            target.removeAttr('id');
+            target.find('input').val({{ a.value|safe }});
+            $("#add-appeal-btn").before(target);
+        {% endfor %}
+        {% for exp in form.experience %}
+            j = eval({{ exp.value|safe }});
+            target = $("#exp-block").clone();
+            target.removeClass("hidden-div");
+            target.addClass('exp-block');
+            target.removeAttr("id");
+{#            target.find("img").prop("src", j[0]);#}
+            target.find("textarea").val(j[1]);
+            $('#add-exp-btn').before(target);
+        {% endfor %}
+    });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="page-title">전문가이드 등록 하기</div>
+    <form action="" method="post">
+        {{ form.real_name }}
+        <label for="is_thru" class="checkbox-label"><input type="checkbox" name="is_thru" class="input-checkbox" id="is_thru" {% if form.is_thru%}checked{% endif %}>스루가이드</label>
+        <label for="is_local" class="checkbox-label"><input type="checkbox" name="is_local" class="input-checkbox" id="is_local" {% if form.is_local %}checked{% endif %}>현지가이드</label>
+        <input type="hidden" name="guide_location">
+        <input type="text" id="id_city" class="input-text">
+        {{ form.introduction }}
+        <div class="section-wrapper" id="career-section">
+            <div class="subtitle">경력</div>
+            <div class="hidden-div" id="career-block">
+                <div class="career-delete" onclick="delete_block(this)"><img src="{% static 'image/icon/cancel.png' %}" alt=""></div>
+                <input type="text" class="input-text career-date" placeholder="예) 2017/01/23 - 2019/02/13">
+                <input type="text" class="input-text career-company" placeholder="예) 하나투어">
+                <input type="text" class="input-text career-info" placeholder="예) 9박 10일 로마/피렌체/베니스 투어">
+            </div>
+            {% if form.career|length == 0 %}
+            <div class="career-block">
+                {# at least one career #}
+                {#        <div class="career-delete" onclick="delete_career(this)"><img src="{% static 'image/icon/cancel.png' %}" alt=""></div>#}
+                <input type="text" class="input-text career-date" placeholder="예) 2017/01/23 - 2019/02/13">
+                <input type="text" class="input-text career-company" placeholder="예) 하나투어">
+                <input type="text" class="input-text career-info" placeholder="예) 9박 10일 로마/피렌체/베니스 투어">
+            </div>
+            {% endif %}
+            <button class="add-btn" id="add-career-btn" onclick="add_block('career')" type="button">+ 추가하기</button>
+        </div>
+        <div class="section-wrapper" id="certificate-section">
+            <div class="subtitle">자격증</div>
+            <div class="hidden-div" id="certificate-block">
+                <img src="{% static 'image/icon/profile_photo.png' %}" alt="">
+                <input type="file" class="certificate-img input-text" placeholder="자격증 이미지">
+                <div class="certificate-delete" onclick="delete_block(this)">
+                    <img src="{% static 'image/icon/cancel.png' %}" alt="">
+                </div>
+            </div>
+{#            {% if form.certificate|length == 0 %}#}
+            <div class="certificate-block">
+                <img src="{% static 'image/icon/profile_photo.png' %}" alt="">
+                <input type="file" class="certificate-img input-text" placeholder="자격증 이미지">
+{#                <div class="certificate-delete" onclick="delete_block(this)">#}
+{#                    <img src="{% static 'image/icon/cancel.png' %}" alt="">#}
+{#                </div>#}
+            </div>
+{#            {% endif %}#}
+            <button class="add-btn" id="add-certificate-btn" onclick="add_block('certificate')" type="button">+ 추가하기</button>
+        </div>
+    <div class="section-wrapper" id="appeal-section">
+        <div class="subtitle">가이드님 어필이 가능한 블로그나 영상 링크를 걸어주세요.</div>
+        <div class="hidden-div" id="appeal-block">
+            <input type="text" class="input-text appeal-link">
+            <div class="appeal-delete" onclick="delete_block(this)">
+                <img src="{% static 'image/icon/cancel.png' %}" alt="">
+            </div>
+        </div>
+        {% if form.appeal|length == 0 %}
+        <div class="appeal-block">
+            <input type="text" class="input-text appeal-link">
+{#            <div class="appeal-delete" onclick="delete_block(this)">#}
+{#                <img src="{% static 'image/icon/cancel.png' %}" alt="">#}
+{#            </div>#}
+        </div>
+        {% endif %}
+        <button class="add-btn" id="add-appeal-btn" onclick="add_block('appeal')" type="button">+ 추가하기</button>
+    </div>
+        <div class="section-wrapper">
+            <div class="subtitle">성격</div>
+            <div class="title-comment">(중복 선택이 가능합니다! 모두 해당할 경우 전체를 선택해 주세요.)</div>
+            <div class="checkbox-wrapper">
+                <label for="">
+                    <input id="type-all" type="checkbox" class="input-checkbox" value="127" {% if form.guide_type.value == 127 %}checked{% endif %}>
+                    전체
+                </label>
+                    {% for val, txt in type_list %}
+                        <label for="">
+                        <input type="checkbox" class="input-checkbox" name="guide-type" value="{{ val }}" {% if txt in form.style_list %}checked{% endif %}>
+                        {{ txt }}
+                        </label>
+                    {% endfor %}
+            </div>
+        </div>
+    <div class="section-wrapper">
+        <div class="subtitle">여행 테마</div>
+        <div class="title-comment">(중복 선택이 가능합니다! 모두 해당할 경우 전체를 선택해 주세요.)</div>
+        <div class="checkbox-wrapper">
+            <label for="">
+                <input id="theme-all" type="checkbox" class="input-checkbox" value="127" {% if form.guide_theme.value == 127 %}checked{% endif %}>
+                전체
+            </label>
+            {% for val, txt in theme_list %}
+                <label for="">
+                    <input type="checkbox" class="input-checkbox" name="guide-theme" value="{{ val }}" {% if txt in form.theme_list %}checked{% endif %}>
+                    {{ txt }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="subtitle essay-title">브레이브피치에서 어떤 가이드가 되실건가요?</div>
+    {{ form.essay }}
+    <div class="section-wrapper">
+        <div class="subtitle">전화번호 인증</div>
+        <div class="cert-block">
+            <input type="text" class="input-text" placeholder="전화번호">
+            <button type="button" class="btn">인증 요청</button>
+        </div>
+        <div class="cert-block">
+            <input type="text" class="input-text" placeholder="인증번호">
+            <button type="button" class="btn">인증 하기</button>
+        </div>
+    </div>
+    <div class="section-wrapper">
+        <div class="subtitle">가이드 경험 사진 (선택)</div>
+        <div class="hidden-div" id="exp-block">
+            <img src="{% static 'image/icon/profile_photo.png' %}" alt="">
+            <input type="file" class="input-text">
+            <div class="exp-delete" onclick="delete_block(this)"><img src="{% static 'image/icon/cancel.png' %}" alt=""></div>
+            <textarea name="exp-essay" cols="30" rows="10" placeholder="사진에 대해 간략히 소개해주세요. (300자)"></textarea>
+        </div>
+        {% if form.experience|length == 0 %}
+        <div class="exp-block">
+            <img src="{% static 'image/icon/profile_photo.png' %}" alt="">
+            <input type="file" class="input-text">
+{#            <div class="exp-delete" onclick="delete_block(this)"><img src="{% static 'image/icon/cancel.png' %}" alt=""></div>#}
+            <textarea name="exp-essay" cols="30" rows="10" placeholder="사진에 대해 간략히 소개해주세요. (300자)"></textarea>
+        </div>
+        {% endif %}
+        <button class="add-btn" id="add-exp-btn" onclick="add_block('exp')" type="button">+ 추가하기</button>
+    </div>
+    <div class="terms">
+    <div class="title">가이드 약관 (필수)</div>
+    <div class="content">가이드 약관 <br>
+        <br>
+        제 1장 목적 및 정의 <br>
+        <br>
+        브레이브피치는 자격증을 갖춘 전문 가이드(이하 가이드)를 위한 여행자 매칭 정보통신 중매업을 진행한다. 가이드는 한국 또는 해외 현지에서 여행자에게 가이드 제공 및 다양한 액티비티, 항공, 숙소 등을 제공합니다.
+        <br>
+        <br>
+        자사에서 일컫는 전문가이드는 가이드를 진행하는 지역에서 법적으로 문제가 되지 않으며 인솔자 행위가 가능한 사람을 뜻한다. <br>
+    </div>
+        <label for="">
+            <input type="checkbox" name="agreement" class="input-checkbox" required id="agree-terms">
+            가이드 약관을 읽었으며, 내용에 동의합니다.
+        </label>
+    </div>
+    <div class="save-notice">저장하기 버튼을 눌러도 최종 지원이 되지 않습니다. <br>
+        저장 후 미리보기 페이지에서 최종 가이드 지원이 가능합니다.</div>
+    <div class="btn-area">
+        <a href="{% url 'guide_index' %}" class="cancel">취소</a>
+    <button type="button" class="submit" onclick="submit_form()">저장하기</button>
+{#        <button class="hidden-div" type="submit" name="submit-form"></button>#}
+    </div>
+    </form>
+    <div id="modal" class="hidden-div"></div>
+{% endblock %}

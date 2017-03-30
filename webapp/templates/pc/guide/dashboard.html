@@ -1,0 +1,115 @@
+{% extends "pc/guide/base.html" %}
+{% load compile_static %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/pc/guide/dashboard.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/guide/dashboard.js' %}"></script>
+{% endblock%}
+
+{% block content %}
+    <div class="header">
+        <div class="profile">
+            <img src="{% if request.user.profile.photo %}
+                {{ request.user.profile.photo.url }}{% else %}
+                {% static 'image/icon/profile_empty.png' %}{% endif %}"
+                 alt="profile">
+            <a href="{% url 'edit_profile' %}">프로필 수정</a>
+        </div>
+        {% if request.user.profile.is_guide %}
+            <div class="page-title">
+                <div class="name">{{ request.user.profile.full_name }} 가이드님은</div>
+                <div class="txt">Bravepeach 전문가이드 이십니다.</div>
+                <div class="btn-area">
+                    <a class="btn-grad" href="{% url 'guide_volunteer' %}">등록내용 수정하기</a>
+                    <a class="btn-grad" href="{% url 'guide_volunteer' %}">등록내용 보기</a>
+                    {% if request.user.guide.all.0.activated %}
+                    <button class="btn-grey" onclick="inactivate_guide()">비활성화 하기</button>
+                        {% else %}
+                        <a href="{% url 'guide_activate' %}" class="btn-grad" style="width: 170px; margin-right: 0;">활성화 하기</a>
+{#                        <button class="btn-grey" onclick="activate_guide()">활성화 하기</button>#}
+                        {% endif %}
+                </div>
+            </div>
+            <div class="page-contents">
+                <div class="box">
+                    <div class="title">공지사항</div>
+                    <div class="view-all">전체보기 <img src="{% static 'image/icon/arrow_down_black.png' %}" alt="V"></div>
+                    {% for notice in notice_list%}
+                        <div class="content">
+                            <div class="title">{{ notice.title|safe }}</div>
+                            <div class="date">{{ notice.modified_at|date:"Y/m/d" }}</div>
+                        </div>
+                    {% empty %}
+                        <div class="content">
+                            <div class="empty">공지사항이 없습니다</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="box">
+                    <div class="title">알림</div>
+                    <div class="view-all">전체보기 <img src="{% static 'image/icon/arrow_down_black.png' %}" alt="V"></div>
+                    {% for alarm in alarm_list%}
+                        <div class="content">
+                            <div class="title">{{ alarm.title|safe }}</div>
+                            <div class="date">{{ alarm.modified_at|date:"Y/m/d" }}</div>
+                        </div>
+                    {% empty %}
+                        <div class="content">
+                            <div class="empty">알림이 없습니다</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="box">
+                    <div class="activity">
+                        <div class="title">나의 가이드 활동</div>
+                        {% for stat in stats %}<div class="inner-box">
+                            <div class="inner-title">{{ stat.0 }}</div>
+                            <div class="inner-data">{{ stat.1 }}</div>
+                        </div>
+                        {% endfor %}
+                    </div><!--
+            --><div class="rating">
+                    {% for i in request.user.guide.all.0.clean_rating.0 %}
+                        <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">
+                    {% endfor %}
+                    {% if reauest.user.guide.all.0.clean_rating.1 == 0.5 %}
+                        <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="rating-img">
+                    {% else %}
+                        <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                    {% endif %}
+                    {% for i in request.user.guide.all.0.clean_rating.2 %}
+                        <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                    {% endfor %}
+                    <div class="stat">
+                        <div class="inner-box">
+                            <div class="inner-title">후기</div>
+                            <div class="inner-data">{{ review_cnt }} 개</div>
+                        </div><!--
+            --><div class="inner-box">
+                        <div class="inner-title">평점</div>
+                        <div class="inner-data">{{ request.user.guide.all.0.rating }} 점</div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        {% elif request.user.guide.all.0.is_volunteer %}
+            <div class="page-title">
+                <div class="name">{{ request.user.profile.full_name }} 가이드님</div>
+                <div class="txt">전문가이드 심사중입니다.</div>
+                <div class="comment">이메일을 통해서 등록절차를 상세히 안내하였습니다.</div>
+                <a class="volunteer-btn" href="{% url 'view_volunteer' gid=request.user.guide.all.0.id %}">등록 내용보기</a>
+            </div>
+        {% else %}
+            <div class="page-title">
+                <div class="name">{{ request.user.profile.full_name }} 가이드님</div>
+                <div class="txt">아직 전문가이드 등록을 안하셨네요!</div>
+                <a class="volunteer-btn" href="{% url 'guide_volunteer' %}">전문가이드로 등록하기</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

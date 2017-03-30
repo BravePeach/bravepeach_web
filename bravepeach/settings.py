@@ -177,7 +177,8 @@ APT_PACKAGE_LIST = ("git", "build-essential", "python3-dev", "python3-pip",
                     )
 
 # Session
-SESSION_COOKIE_AGE = 60*60  # 60min. After that, auto logout
+# SESSION_COOKIE_AGE = 60*60  # 60min. After that, auto logout
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # browser-length session
 
 # wysiwyg-redactor
 # https://pypi.python.org/pypi/django-wysiwyg-redactor
