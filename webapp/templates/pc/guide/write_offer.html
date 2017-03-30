@@ -9,6 +9,7 @@
 {% block js %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&libraries=places&language=ko"></script>
     <script src="{% static 'js/write_offer.js' %}"></script>
+    <script src="{% static 'js/accom_template.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -201,7 +202,15 @@
                 <div class="accom-form-button">저장하기</div>
             </div>
             <div class="guide template"></div>
-            <div class="cost template"></div>
+            <div class="cost template">
+                <div class="wrapper">
+                {% include "pc/guide/cost_form.html" %}
+                </div>
+                <div class="cost-add-button">+ 추가하기</div>
+                <hr>
+                <div class="cost-form-button">저장하기</div>
+
+            </div>
         </div>
 
         <div class="search-wrapper">

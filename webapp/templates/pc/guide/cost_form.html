@@ -1,0 +1,23 @@
+{% load staticfiles %}
+
+<div class="cost-form-wrapper" id="{% if id %}{{ id }}{% else %}cost_form1{% endif %}">
+    <select class="cost-type" type="select">
+        <option value="" disabled selected>항목</option>
+            <option value="0">이동수단</option>
+            <option value="1">숙소</option>
+            <option value="2">가이드/수고비</option>
+            <option value="3">입장료/티켓</option>
+            <option value="4">교통비</option>
+            <option value="5">식비</option>
+    </select>
+    <img class="cost-delete" src="{% static 'image/icon/cancel.png'%}">
+    <div class="delete-modal display-none">
+        <img class="delete-out" src="{% static 'image/icon/cancel.png' %}">
+        <div class="delete-title">정말로 삭제하시겠습니까?</div>
+        <div class="delete-no">아니오</div>
+        <div class="delete-ok">예</div>
+    </div>
+    <div class="allover display-none"></div>
+    <input class="cost-content" type="text" placeholder="(예) 대한항공 KE101 비즈니스석 X 2개">
+    <input class="cost-cost" type="number" placeholder="(예) 2,500,000" onchange="getNumber(this);" onkeyup="getNumber(this);">
+</div>
