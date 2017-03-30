@@ -250,7 +250,7 @@ $(function () {
         $(this).next().next().show();
     });
 
-    $('.accom.template').on("click", ".delete-out, .delete-no", function () {
+    $('.accom.template').on("click", ".delete-out, .delete-no, .address-ok", function () {
         $(this).parent().hide();
         $(this).parent().next().hide();
     });
@@ -265,29 +265,49 @@ $(function () {
 
     // 주소 입력창 클릭했을떄
     $('.accom.template').on("click", ".accom-address", function () {
+        var modalInput = $(this).next().children('.address-modal-form');
+        var input = $(this);
+        var inputCountry = $(this).siblings('.country');
+        var inputCity = $(this).siblings('.city');
+        var inputSmallCity = $(this).siblings('.small_city');
+        var inputLat = $(this).siblings('.lat');
+        var inputLng = $(this).siblings('.lng');
+
         $(this).next().show();
         $(this).next().next().show();
 
-        var mapElement = $(this).next().children('.map');
-        // google maps
-        var map = new google.maps.Map($(this).next().children('.map')[0], {
-            center: {lat: -33.8688, lng: 151.2195},
-            zoom: 13
-        });
+        // google maps 처음 클릭 하는 거면 초기화
+        if (inputLat.val() == "" && inputLng.val() == "") {
+            var map = new google.maps.Map($(this).next().children('.map')[0], {
+                center: {lat: -33.8688, lng: 151.2195},
+                zoom: 17
+            });
+            var marker = new google.maps.Marker({
+                map: map,
+                anchorPoint: new google.maps.Point(0, -29)
+            });
+        }
 
-        var input = $(this).next().children('.address-modal-form')[0];
+        // 한번 도시를 선택했던적이 있으면 그 위치로
+        else {
+            var map = new google.maps.Map($(this).next().children('.map')[0], {
+                center: {lat: parseFloat(inputLat.val()), lng: parseFloat(inputLng.val())},
+                zoom: 17
+            });
+            var marker = new google.maps.Marker({
+                position: {lat: parseFloat(inputLat.val()), lng: parseFloat(inputLng.val())},
+                map: map
+            })
+
+        }
         var options = {
             types: ['(regions)']
         };
 
-        autocomplete = new google.maps.places.Autocomplete(input, options);
+        autocomplete = new google.maps.places.Autocomplete(modalInput[0], options);
         autocomplete.bindTo('bounds', map);
 
         var infowindow = new google.maps.InfoWindow();
-        var marker = new google.maps.Marker({
-            map: map,
-            anchorPoint: new google.maps.Point(0, -29)
-        });
 
         google.maps.event.addListener(map, 'click', function(event) {
             if (marker && marker.setMap) {
@@ -301,8 +321,18 @@ $(function () {
               geocoder.geocode({'location': event.latLng}, function(results, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
                   if (results[1]) {
-                    infowindow.setContent(results[1].formatted_address);
-                    infowindow.open(map, marker);
+                      console.log(results);
+                      modalInput.val(results[results.length - 3].formatted_address);
+                      input.val(results[results.length - 3].formatted_address);
+                      var addressLen = results[results.length - 3].address_components.length;
+                      inputCountry.val(results[results.length - 3].address_components[addressLen - 1].long_name);
+                      inputCity.val(results[results.length - 3].address_components[addressLen - 2].long_name);
+                      inputSmallCity.val(results[results.length - 3].address_components[addressLen -3].long_name);
+                      inputLat.val(event.latLng['lat']);
+                      inputLng.val(event.latLng['lng']);
+
+                      infowindow.setContent(results[1].formatted_address);
+                      infowindow.open(map, marker);
 
                   } else {
                     window.alert('No results found');
@@ -315,8 +345,8 @@ $(function () {
         });
 
         autocomplete.addListener('place_changed', function () {
-            infowindow.close();
-            marker.setVisible(false);
+            // infowindow.close();
+            // marker.setVisible(false);
             var place = autocomplete.getPlace();
             // If the place has a geometry, then present it on a map.
             if (place.geometry.viewport) {
@@ -325,20 +355,6 @@ $(function () {
                 map.setCenter(place.geometry.location);
                 map.setZoom(17);  // Why 17? Because it looks good.
             }
-            marker.setPosition(place.geometry.location);
-            marker.setVisible(true);
-
-            var address = '';
-            if (place.address_components) {
-                address = [
-                    (place.address_components[0] && place.address_components[0].short_name || ''),
-                    (place.address_components[1] && place.address_components[1].short_name || ''),
-                    (place.address_components[2] && place.address_components[2].short_name || '')
-                ].join(' ');
-            }
-
-            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-            infowindow.open(map, marker);
         });
 
 
