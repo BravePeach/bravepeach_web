@@ -37,6 +37,8 @@ urlpatterns = [
     # Guide
     url(r'^guide/$', views.guide.index, name='guide_index'),
     url(r'^guide/volunteer/$', views.guide.volunteer, name='guide_volunteer'),
+    url(r'^guide/view-volunteer/(?P<gid>\d+)/$', views.guide.view_volunteer, name='view_volunteer'),
+    url(r'^guide/enroll-volunteer/(?P<gid>\d+)/$', views.guide.enroll_volunteer, name='enroll_volunteer'),
     url(r'^guide/find/$', views.guide.find, name='guide_find'),
     url(r'^guide/dashboard/$', views.guide.dashboard, name='guide_dashboard'),
     url(r'^guide/schedule/$', views.guide.schedule, name='guide_schedule'),
@@ -44,6 +46,8 @@ urlpatterns = [
     url(r'^guide/adjust/$', views.guide.adjust, name='guide_adjust'),
     url(r'^guide/review/$', views.guide.review, name='guide_review'),
     url(r'^guide/message/$', views.guide.message, name='guide_message'),
+    url(r'^guide/inactivate/$', views.guide.inactivate, name='guide_inactivate'),
+    url(r'^guide/activate/$', views.guide.activate, name='guide_activate'),
     url(r'^guide/(?P<gid>\d+)/$', views.guide.profile, name='guide_profile'),
     url(r'^trip_filtering/', views.guide.FilterTrip.as_view(), name='filter_trip'),
     url(r'^guide/write_offer/(?P<req_id>\d+)/$', views.guide.write_offer, name='write_offer'),

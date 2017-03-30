@@ -93,7 +93,7 @@ class Guide(models.Model):
     appeal = JSONField(null=True, blank=True)
     essay = models.TextField(null=False, blank=False, default="")
     experience = JSONField(null=True, blank=True)
-    is_volunteer = models.BooleanField(default=True)
+    is_volunteer = models.BooleanField(default=False)
 
     @property
     def full_name(self):
@@ -115,15 +115,21 @@ class Guide(models.Model):
 
     @property
     def theme_list(self):
-        theme_names = (x[1] for x in GUIDE_THEME)
-        theme_lst = [theme_names[idx] for idx, v in enumerate(bin(self.guide_theme)[2:]) if v == '1']
-        return theme_lst
+        lst = [v for k, v in GUIDE_THEME if self.guide_type & k == k]
+        print(lst)
+        return lst
+        # theme_names = (x[1] for x in GUIDE_THEME)
+        # theme_lst = [theme_names[idx] for idx, v in enumerate(bin(self.guide_theme)[2:]) if v == '1']
+        # return theme_lst
 
     @property
     def style_list(self):
-        style_names = (x[1] for x in GUIDE_TYPE)
-        style_lst = [style_names[idx] for idx, v in enumerate(bin(self.guide_type)[2:]) if v == '1']
-        return style_lst
+        lst = [v for k, v in GUIDE_TYPE if self.guide_type & k == k]
+        return lst
+        # style_names = (x[1] for x in GUIDE_TYPE)
+        # print(bin(self.guide_type)[2:])
+        # style_lst = [style_names[idx] for idx, v in enumerate(bin(self.guide_type)[2:]) if v == '1']
+        # return style_lst
 
 
 class UserRequest(models.Model):
