@@ -229,7 +229,7 @@ def search_accom(request, req_id):
         guide_id = request.GET.get('guide_id')
         title = request.GET.get('title')
         s_id = 'accom_search' + str(request.GET.get('s_id'))
-        accom_template_result = AccomTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False)
+        accom_template_result = AccomTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False).order_by('title')
         paginator = Paginator(accom_template_result, 5)
         if accom_template_result:
             page = request.GET.get('page')
@@ -254,7 +254,7 @@ def search_guide(request, req_id):
     if request.is_ajax():
         guide_id = request.GET.get('guide_id')
         title = request.GET.get('title')
-        guide_template_result = GuideTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False)
+        guide_template_result = GuideTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False).order_by('title')
         paginator = Paginator(guide_template_result, 5)
         if guide_template_result:
             page = request.GET.get('page')
@@ -272,6 +272,7 @@ def search_guide(request, req_id):
 
         html = render_to_string('pc/guide/guide_result.html', {'guide_template_set': guide_template_set})
         return HttpResponse(html)
+    return JsonResponse({"ok": False})
 
 
 # 이동수단 폼 저장
@@ -283,6 +284,7 @@ def save_trans(request, req_id):
         offer.trans_info = trans_info
         offer.save()
         return HttpResponse()
+    return JsonResponse({"ok": False})
 
 
 def new_accom_form(request, req_id):
@@ -292,6 +294,15 @@ def new_accom_form(request, req_id):
         accom_form = render_to_string('pc/guide/accom_template_form.html', {'id': form_id}) + '<!--!>'
         accom_search = render_to_string('pc/guide/accom_result.html', {'id': search_id})
         return HttpResponse(accom_form + accom_search)
+    return JsonResponse({"ok": False})
+
+
+def new_cost_form(request, req_id):
+    if request.is_ajax():
+        form_id = 'cost_form' + str(request.GET.get('id'))
+        cost_form = render_to_string('pc/guide/cost_form.html', {'id': form_id})
+        return HttpResponse(cost_form)
+    return JsonResponse({"ok": False})
 
 
 def load_accom(request, req_id):
@@ -302,6 +313,7 @@ def load_accom(request, req_id):
         accom_template = AccomTemplate.objects.get(id=accom_id)
         html = render_to_string('pc/guide/accom_template_form.html', {'id': form_id, 'accom_template': accom_template})
         return HttpResponse(html)
+    return JsonResponse({"ok": False})
 
 
 def upload_accom_photo(request):
@@ -318,4 +330,26 @@ def upload_accom_photo(request):
                                       "accom_photo/{}".format(tmp_name))
         url = "http://" + "/".join([settings.AWS_S3_CUSTOM_DOMAIN, "accom_photo", tmp_name])
         return JsonResponse({"ok": True, "url": url})
+    return JsonResponse({"ok": False})
+
+
+def save_accom_template(request):
+    if request.method == "POST":
+        guide_id = request.POST.get('guide_id')
+        accom_template_id = request.POST.get('accom_template_id')
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        address = [request.POST.get('country'), request.POST.get('city'), request.POST.get('small_city')]
+        lat = request.POST.get('lat')
+        lng = request.POST.get('lng')
+        type_id = int(request.POST.get('type_id'))
+
+        # 이전 내용 덮어쓰기
+        if accom_template_id:
+            a = AccomTemplate.objects.get(id=accom_template_id, guide_id=guide_id)
+            a.overwritten = True
+            a.save()
+        # 새로 저장
+        a = AccomTemplate.objects.create(guide_id=guide_id, title=title, content=content, address=address, lat=lat, lng=lng, type_id=type_id)
+        return JsonResponse({"ok": True, "new_id": a.id})
     return JsonResponse({"ok": False})

@@ -34,6 +34,12 @@
         <div class="map"></div>
         <div class="address-ok">확인</div>
     </div>
+    <input type="hidden" class="country" value="{{ accom_template.address.0 }}">
+    <input type="hidden" class="city" value="{{ accom_template.address.1 }}">
+    <input type="hidden" class="small_city" value="{{ accom_template.address.2 }}">
+    <input type="hidden" class="lat" value="{{ accom_template.lat }}">
+    <input type="hidden" class="lng" value="{{ accom_template.lng }}">
+
     <div class="allover display-none"></div>
 
     <div class="accom-photo-wrapper">
@@ -41,16 +47,16 @@
         {{ photo_form.photo }}
         <div class="photo photo1"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
         <input type="file" accept="image/*" style="display: none" required>
-        <input type="hidden"class="photo1">
+        <input type="hidden" class="photo1">
         <div class="photo photo2"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
         <input type="file" accept="image/*" style="display: none">
-        <input type="hidden"class="photo2">
+        <input type="hidden" class="photo2">
         <div class="photo photo3"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
         <input type="file" accept="image/*" style="display: none">
-        <input type="hidden"class="photo3">
+        <input type="hidden" class="photo3">
         <div class="photo photo4"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
         <input type="file" accept="image/*" style="display: none">
-        <input type="hidden"class="photo4">
+        <input type="hidden" class="photo4">
     </div>
     <textarea class="accom-content">{% if not accom_template.content %}숙소 정보를 자세하게 작성해주세요.
 

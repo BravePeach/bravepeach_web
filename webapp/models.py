@@ -273,7 +273,7 @@ class CancelledOffer(models.Model):
 class AccomTemplate(models.Model):
     title = models.CharField(max_length=100)
     photo = ListTextField(
-        base_field=models.TextField()
+        base_field=models.CharField(max_length=100)
     )
     # JSONField로 하려 했으나 migrate 과정에서 에러가 나서 일단은 ListField로..
     # 견적서 상세보기 페이지에서 숙소에 대한 위치를 국가, 시, 구 정도까지 보여주는데 그 주소를 저장하기 위한 필드입니다.
@@ -286,7 +286,6 @@ class AccomTemplate(models.Model):
     lat = models.FloatField(default=0)
     lng = models.FloatField(default=0)
     content = models.TextField(blank=True)
-    photo = models.FileField(upload_to='accom_photos/%Y_%m_%d')
     guide = models.ForeignKey(Guide, related_name="accom_templates")
     type_id = models.IntegerField(default=0)
     overwritten = models.BooleanField(default=False)

@@ -15,6 +15,7 @@
         </div>
         {% for accom in accom_template_set %}
         <div class="result-card">
+            <div class="card-selected display-none"><span>선택</span></div>
             <input type="hidden" value="{{ accom.id}}">
             <div class="result-title">{{ accom.title }}</div>
             <img class="result-photo" src="{{ accom.photo }}">
