@@ -1,4 +1,5 @@
 import datetime
+from dateutil.rrule import rrule, DAILY
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
@@ -92,9 +93,12 @@ def write_offer(request, req_id):
     # offer = GuideOffer.objects.create(guide_id=guide_id, request_id=req_id)
     is_liked = GuideLike.objects.filter(guide_id=guide_id, request_id=req.id)
 
+    date_list = [i.strftime("%Y/%m/%d") for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+
     return flavour_render(request, 'guide/write_offer.html', {'req': req,
                                                               'is_liked': is_liked,
-                                                              'guide_id': guide_id})
+                                                              'guide_id': guide_id,
+                                                              'date_list': date_list})
 
 
 # 숙소 템플릿 검색
@@ -128,6 +132,7 @@ def search_guide(request, req_id):
     if request.is_ajax():
         guide_id = request.GET.get('guide_id')
         title = request.GET.get('title')
+        s_id = 'guide_search' + str(request.GET.get('s_id'))
         guide_template_result = GuideTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False).order_by('title')
         paginator = Paginator(guide_template_result, 5)
         if guide_template_result:
@@ -144,7 +149,7 @@ def search_guide(request, req_id):
         else:
             guide_template_set = ''
 
-        html = render_to_string('pc/guide/guide_result.html', {'guide_template_set': guide_template_set})
+        html = render_to_string('pc/guide/guide_result.html', {'guide_template_set': guide_template_set, 'id': s_id, 'title': title})
         return HttpResponse(html)
     return JsonResponse({"ok": False})
 
@@ -179,6 +184,17 @@ def new_cost_form(request, req_id):
     return JsonResponse({"ok": False})
 
 
+def new_guide_form(request, req_id):
+    if request.is_ajax():
+        form_id = 'guide_form' + str(request.GET.get('id'))
+        search_id = 'guide_search' + str(request.GET.get('id'))
+        date = request.GET.get('date')
+        guide_form = render_to_string('pc/guide/guide_template_form.html', {'id': form_id, 'date': date}) + '<!--!>'
+        guide_search = render_to_string('pc/guide/guide_result.html', {'id': search_id, 'date': date})
+        return HttpResponse(guide_form + guide_search)
+    return JsonResponse({"ok": False})
+
+
 def load_accom(request, req_id):
     if request.is_ajax():
         accom_id = request.GET.get('accom_id')
@@ -188,6 +204,18 @@ def load_accom(request, req_id):
         html = render_to_string('pc/guide/accom_template_form.html', {'id': form_id, 'accom_template': accom_template})
         return HttpResponse(html)
     return JsonResponse({"ok": False})
+
+
+def load_guide(request, req_id):
+    if request.is_ajax():
+        guide_template_id = request.GET.get('guide_id')
+        form_id = 'guide_form' + str(request.GET.get('id'))
+
+        guide_template = GuideTemplate.objects.get(id=guide_template_id)
+        html = render_to_string('pc/guide/guide_template_form.html', {'id': form_id, 'guide_template': guide_template})
+        return HttpResponse(html)
+    return JsonResponse({"ok": False})
+
 
 
 def upload_accom_photo(request):
@@ -203,6 +231,23 @@ def upload_accom_photo(request):
         s3.meta.client.upload_file(tmp_file, settings.AWS_STORAGE_BUCKET_NAME,
                                       "accom_photo/{}".format(tmp_name))
         url = "http://" + "/".join([settings.AWS_S3_CUSTOM_DOMAIN, "accom_photo", tmp_name])
+        return JsonResponse({"ok": True, "url": url})
+    return JsonResponse({"ok": False})
+
+
+def upload_guide_photo(request):
+    if request.method == "POST":
+        files = request.FILES
+        s3 = boto3.resource("s3", aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+        file_ext = files['guide_photo'].name.split(".")[-1]
+        tmp_name = datetime.datetime.now().strftime("%Y_%m_%d/%H_%M_%S_%f")+"."+file_ext
+        img = Image.open(files['guide_photo'])
+        tmp_file = "/tmp/{}.jpg".format(uuid4())
+        img.save(tmp_file, format="jpeg")
+        s3.meta.client.upload_file(tmp_file, settings.AWS_STORAGE_BUCKET_NAME,
+                                      "guide_photo/{}".format(tmp_name))
+        url = "http://" + "/".join([settings.AWS_S3_CUSTOM_DOMAIN, "guide_photo", tmp_name])
         return JsonResponse({"ok": True, "url": url})
     return JsonResponse({"ok": False})
 
@@ -225,5 +270,23 @@ def save_accom_template(request):
             a.save()
         # 새로 저장
         a = AccomTemplate.objects.create(guide_id=guide_id, title=title, content=content, address=address, lat=lat, lng=lng, type_id=type_id)
+        return JsonResponse({"ok": True, "new_id": a.id})
+    return JsonResponse({"ok": False})
+
+
+def save_guide_template(request):
+    if request.method == "POST":
+        guide_id = request.POST.get('guide_id')
+        guide_template_id = request.POST.get('guide_template_id')
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+
+        # 이전 내용 덮어쓰기
+        if guide_template_id:
+            a = GuideTemplate.objects.get(id=guide_template_id, guide_id=guide_id)
+            a.overwritten = True
+            a.save()
+        # 새로 저장
+        a = GuideTemplate.objects.create(guide_id=guide_id, title=title, content=content, photo="")
         return JsonResponse({"ok": True, "new_id": a.id})
     return JsonResponse({"ok": False})

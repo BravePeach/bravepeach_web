@@ -1,0 +1,35 @@
+{% load staticfiles %}
+
+<div class="guide-form-wrapper {% if date %}{{date}}{% else %}0{% endif %}" id="{% if id %}{{ id }}{% else %}guide_form1{% endif %}">
+    <div class="overlay">
+        <img src="{% static 'image/icon/ajax-loader.gif' %}" class="loading display-none" style="margin-top: 351px;">
+        <div class="load">불러오기</div>
+        <div class="new">새로 작성하기</div>
+    </div>
+    <input type="hidden" class="guide-id" value="{{ guide_template.id }}">
+    <input class="guide-title-form" type="text" placeholder="일정 타이틀 (예) 에펠탑에서 점심먹기" value="{{ guide_template.title }}">
+    <img class="guide-delete" src="{% static 'image/icon/cancel.png'%}">
+    <div class="delete-modal display-none">
+        <img class="delete-out" src="{% static 'image/icon/cancel.png' %}">
+        <div class="delete-title">정말로 삭제하시겠습니까?</div>
+        <div class="delete-no">아니오</div>
+        <div class="delete-ok">예</div>
+    </div>
+    <div class="allover display-none"></div>
+    <div class="guide-photo">
+        <div class="add-photo-button">
+            <img class="photo-pic" src="{% static 'image/icon/profile_photo.png' %}">
+            <span>사진 추가 하기</span>
+        </div>
+        <input type="file" accept="image/*" style="display: none" required>
+        <input type="hidden" class="photo">
+    </div>
+    <textarea class="guide-content">{% if not guide_template.content %}가이드 일정에 대한 정보를 자세하게 작성해주세요.
+
+예)
+낮 12시 도착. 에펠탑 공원에서 싸온 도시락을 먹고 포토타임을 가질 것입니다.
+에펠탑은 파리를 상징하는 가장 큰 조형물입니다.{% else %}{{ guide_template.content }}{% endif %}</textarea>
+
+    <div class="guide-comment">불러온 내용을 수정한 뒤 저장하면 최신내용만이 저장됩니다.</div>
+    <div class="guide-save-button">저장</div>
+</div>

@@ -1,23 +1,42 @@
-<div class="result-number">{% if guide_template_set.paginator %}{{ guide_template_set.paginator.count }}{% else %}0{% endif %}개의 불러올 정보가 있습니다.</div>
-{% for guide in guide_template_set %}
-    <div class="result-card">
-        <div class="result-title">{{ guide.title }}</div>
-        <img class="result-photo" src="{{ guide.photo }}">
+{% load staticfiles %}
+
+<div id="{% if id %}{{ id }}{% else %}guide_search1{% endif %}" class="guide-search {% if date %}{{date}}{% else %}0{% endif %}">
+
+    <div class="content">
+        검색이 필요하지 않습니다.
     </div>
-{% endfor %}
 
-{% if guide_template_set.paginator.num_pages > 1 %}
-<div class="pagination">
-        {% if guide_template_set.has_previous %}
-            <div class="page-prev" onclick="guidePaginate({{ guide_template_set.previous_page_number }})""><</div>
+    <div class="guide-result display-none">
+        <input type="text" class="search-form" name="guide_search_form" placeholder="타이틀로 검색해보세요." {% if title %}value="{{ title }}" {% endif %}>
+        <div class="search-button"><img src="{% static 'image/icon/Search Icon.png' %}"></div>
+        <img class="loading display-none" src="{% static 'image/icon/ajax-loader.gif' %}">
+
+        <div class="result-number">{% if guide_template_set.paginator %}{{ guide_template_set.paginator.count }}{% else %}0{% endif %}개의 불러올 정보가 있습니다.
+        </div>
+        {% for guide in guide_template_set %}
+        <div class="result-card">
+            <div class="card-selected display-none"><span>선택</span></div>
+            <input type="hidden" value="{{ guide.id}}">
+            <div class="result-title">{{ guide.title }}</div>
+            <img class="result-photo" src="{{ guide.photo }}">
+        </div>
+        {% endfor %}
+
+        {% if guide_template_set.paginator.num_pages > 1 %}
+        <div class="pagination">
+            {% if guide_template_set.has_previous %}
+            <div class="page-prev"><</div>
+            {% endif %}
+
+            <div class="page inactive">{{ guide_template_set.number }}</div>
+
+            {% if guide_template_set.has_next %}
+            <div class="page active">{{ guide_template_set.next_page_number }}
+            </div>
+
+            <div class="page-next">></div>
+            {% endif %}
+        </div>
         {% endif %}
-
-        <div class="page inactive">{{ guide_template_set.number }}</div>
-
-        {% if guide_template_set.has_next %}
-        <div class="page active" onclick="guidePaginate({{ guide_template_set.next_page_number }})">{{ guide_template_set.next_page_number }}</div>
-
-            <div class="page-next"onclick="guidePaginate({{ guide_template_set.next_page_number }})">></div>
-        {% endif %}
+    </div>
 </div>
-{% endif %}

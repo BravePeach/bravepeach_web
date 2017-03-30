@@ -24,6 +24,9 @@ function guidePaginate(page) {
     searchGuideTemp($('.guide .search-form').val(), page)
 }
 
+var rgx1 = /\D/g;  // /[^0-9]/g 와 같은 표현
+var rgx2 = /(\d+)(\d{3})/;
+
 function getNumber(obj){
 
      var num01;

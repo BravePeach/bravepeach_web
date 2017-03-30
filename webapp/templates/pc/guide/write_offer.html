@@ -10,6 +10,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&libraries=places&language=ko"></script>
     <script src="{% static 'js/write_offer.js' %}"></script>
     <script src="{% static 'js/accom_template.js' %}"></script>
+    <script src="{% static 'js/guide_template.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -201,7 +202,19 @@
                 <hr>
                 <div class="accom-form-button">저장하기</div>
             </div>
-            <div class="guide template"></div>
+            <div class="guide template">
+                <select class="guide-date">
+                    {% for date in date_list %}
+                    <option value="{{ forloop.counter0 }}">{{ forloop.counter }}일 ({{ date }})</option>
+                    {% endfor %}
+                </select>
+                <div class="wrapper">
+                {% include "pc/guide/guide_template_form.html" %}
+                </div>
+                <div class="guide-add-button">+ 추가하기</div>
+                <hr>
+                <div class="guide-form-button">저장하기</div>
+            </div>
             <div class="cost template">
                 <div class="wrapper">
                 {% include "pc/guide/cost_form.html" %}
@@ -224,6 +237,7 @@
             </div>
             <div class="guide search">
                 <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+                {% include "pc/guide/guide_result.html" %}
             </div>
             <div class="cost search">
                 <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>

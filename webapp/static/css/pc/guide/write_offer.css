@@ -489,7 +489,7 @@
     background: #e64c47;
 }
 
-.search-wrapper .trans .content, .search-wrapper .cost .content, .accom-search .content {
+.search-wrapper .trans .content, .search-wrapper .cost .content, .accom-search .content, .guide-search .content {
     height: 111px;
     font-size: 18px;
     font-weight: bold;
@@ -646,7 +646,7 @@
     border-radius: 8px;
 }
 
-.trans-form-button, .accom-form-button, .cost-form-button {
+.trans-form-button, .accom-form-button, .cost-form-button, .guide-form-button {
     width: 219px;
     height: 64px;
     -webkit-border-radius: 8px;
@@ -672,7 +672,7 @@
     display: none;
 }
 
-.accom-add-button, .cost-add-button{
+.accom-add-button, .cost-add-button, .guide-add-button{
     width: 280px;
     height: 65px;
     -webkit-border-radius: 5px;
@@ -759,7 +759,7 @@
     cursor: pointer;
 }
 
-.accom-delete {
+.accom-delete, .guide-delete {
     width: 20px;
     height: 20px;
     object-fit: contain;
@@ -789,6 +789,7 @@
     border: none !important;
     font-size: 20px;
     line-height: 1.35;
+    border: none;
 }
 
 .overlay {
@@ -824,11 +825,11 @@
 }
 
 .overlay .new {
-    left: 178px;
+    right: 178px;
 }
 
 .overlay .load {
-    right: 178px;
+    left: 178px;
 }
 
 select {
@@ -897,7 +898,7 @@ option {
     left: 70px;
 }
 
-.accom-save-button {
+.accom-save-button, .guide-save-button {
     display: inline-block;
     bottom: 15px;
     right: 20px;
@@ -916,7 +917,7 @@ option {
     padding-top: 10px;
 }
 
-.accom-comment {
+.accom-comment, .guide-comment {
     display: inline-block;
     font-size: 20px;
     font-weight: normal;
@@ -929,6 +930,10 @@ option {
     bottom: 26px;
     right: 116px;
     margin: 20px 12px 0 208px;
+}
+
+.guide-comment{
+    margin-left: 171px;
 }
 
 .delete-modal {
@@ -1092,7 +1097,7 @@ footer {
     margin: 25px 0 0 115px;
 }
 
-.accom-save-button.activated {
+.accom-save-button.activated, .guide-save-button.activated{
     color: #e64c47;
     border: solid 1px #e64c47;
     cursor: pointer;
@@ -1195,3 +1200,108 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+.won{
+    position: absolute;
+  width: 19px;
+  height: 22px;
+  font-size: 20px;
+    margin-top: 17px;
+    margin-left: -30px;
+}
+
+.guide-date{
+      width: 211px;
+  height: 42px;
+}
+
+.guide-form-wrapper{
+      width: 797px;
+  height: 787px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    margin: 10px 0 10px 43px;
+    padding: 20px 0 0 20px;
+}
+
+.guide-form-wrapper .overlay{
+      width: 797px;
+  height: 787px;
+}
+
+.guide-title-form{
+      width: 721px;
+  height: 42px;
+  border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+  background-color: #ffffff;
+    -webkit-box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px #979797;
+    padding: 10px;
+      font-size: 20px;
+}
+
+.guide-form-wrapper .new{
+    right: 156px;
+}
+
+.guide-form-wrapper .load{
+    left: 156px;
+}
+
+.guide-photo{
+      width: 757px;
+  height: 471px;
+    margin: 10px 0;
+      border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+    padding-top: 218px;
+    background-size: cover;
+}
+
+.guide-content{
+      width: 759px;
+  height: 159px;
+    border:none;
+  border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    padding: 10px;
+      font-size: 20px;
+
+}
+
+.add-photo-button{
+    width: 250px;
+    cursor: pointer;
+    margin: auto;
+}
+
+.photo-pic{
+      width: 50px;
+  height: 37px;
+}
+
+.add-photo-button span{
+    display: inline-block;
+      font-size: 30px;
+      color: #979797;
+
+}
+
