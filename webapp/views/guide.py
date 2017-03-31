@@ -134,7 +134,16 @@ def schedule(request):
 
 @user_passes_test(guide_required)
 def request(request):
-    return flavour_render(request, "guide/request_offer.html", {"tab": "request"})
+    page_type = request.GET.get("type", '')
+    guide = request.user.guide.all()[0]
+
+    request_list = UserRequest.objects.all()
+    zzim_list = GuideLike.objects.filter(guide=guide.id).all()
+    offer_list = GuideOffer.objects.filter(guide=guide.id).all()
+
+    return flavour_render(request, "guide/request_offer.html", {"tab": "request", "page_type": page_type,
+                                                                "request_list": request_list, "zzim_list": zzim_list,
+                                                                "offer_list": offer_list})
 
 
 @user_passes_test(guide_required)

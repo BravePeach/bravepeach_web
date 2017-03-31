@@ -244,6 +244,10 @@ class GuideOffer(Model):
     adjust_requested_at = models.DateField(null=True)
     adjust_done_at = models.DateField(null=True)
 
+    @property
+    def total_cost(self):
+        return sum([x.price for x in self.costs])
+
 
 # User2Guide
 class UserLike(Model):

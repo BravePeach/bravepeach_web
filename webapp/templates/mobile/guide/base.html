@@ -56,7 +56,10 @@
                 <li><a href="">여행자 찾기</a></li>
                 <li><a href="">알림판</a></li>
                 <li>일정관리</li>
-                <li>요청서/견적서</li>
+                <li class="offer folding">요청서/견적서 <img src="{% static 'image/icon/arrow_down_white.png' %}" alt="V"></li>
+                    <li class="offer folded second"><a href="{% url 'guide_request' %}?type=request">받은 요청서</a></li>
+                    <li class="offer folded second"><a href="{% url 'guide_request' %}?type=zzim">찜한 요청서</a></li>
+                    <li class="offer folded second"><a href="{% url 'guide_request' %}?type=offer">보낸 견적서</a></li>
                 <li>정산관리</li>
                 <li>후기/여행기</li>
                 <li>메세지</li>
