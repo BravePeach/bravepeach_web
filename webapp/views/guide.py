@@ -119,6 +119,7 @@ def find(request):
     return flavour_render(request, "guide/find.html", {"tab": "find"})
 
 
+@login_required
 def dashboard(request):
     notice_list = Notice.objects.order_by('-modified_at')
     stats = (("누적활동일수", "0일"), ("누적예약수", "0건"), ("누적여행자수", "0명"))
