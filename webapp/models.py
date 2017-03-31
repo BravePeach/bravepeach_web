@@ -5,9 +5,7 @@ import datetime
 from django.db import models
 from django_mysql.models import Model
 from django.contrib.auth.models import User
-from django_mysql.models import JSONField, ListCharField, ListTextField
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django_mysql.models import JSONField, ListCharField
 from django.conf import settings
 from redactor.fields import RedactorField
 
@@ -54,23 +52,6 @@ class Notice(Model):
     modified_at = models.DateTimeField(auto_now=True, null=True)
 
 
-# class GuideVolunteer(Model):
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="volunteer")
-#     real_name = models.TextField(null=False, blank=False, max_length=10)
-#     is_thru = models.BooleanField(default=False)
-#     is_local = models.BooleanField(default=False)
-#     guide_location = JSONField(null=False, blank=False)
-#     introduction = models.TextField(null=False, blank=False)
-#     career = JSONField(null=False, blank=False)
-#     certificate = JSONField(blank=True)
-#     appeal = JSONField(null=False, blank=False)
-#     guide_type = models.IntegerField(null=False, blank=False)
-#     guide_theme = models.IntegerField(null=False, blank=False)
-#     essay = models.TextField(null=False, blank=False)
-#     experience = JSONField(blank=True)
-#     published = models.BooleanField(default=False)
-
-
 class Guide(Model):
     # id = HashidAutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='guide')
@@ -92,7 +73,6 @@ class Guide(Model):
     real_name = models.TextField(null=False, blank=False, default="")
     certificate = JSONField(blank=True)
     appeal = JSONField(null=True, blank=True)
-
     essay = models.TextField(null=False, blank=False, default="")
     experience = JSONField(null=True, blank=True)
     is_volunteer = models.BooleanField(default=False)
@@ -132,6 +112,17 @@ class Guide(Model):
         # print(bin(self.guide_type)[2:])
         # style_lst = [style_names[idx] for idx, v in enumerate(bin(self.guide_type)[2:]) if v == '1']
         # return style_lst
+
+
+class GuideAdjust(Model):
+    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, related_name='adjust')
+    name = models.TextField(null=False, blank=False, verbose_name="수취인 이름*")
+    bank = models.TextField(null=False, blank=False, verbose_name="은행 이름*")
+    account_num = models.TextField(null=False, blank=False, verbose_name="계좌번호 (유럽은행의 경우 IBAN CODE를 적어주세요)*")
+    swift_bic_code = models.TextField(null=False, blank=True, default="", verbose_name="SWIFT BIC CODE (해외 계좌일 경우)")
+    branch = models.TextField(null=False, blank=True, default="", verbose_name="은행 지점명 (해외 계좌일 경우)")
+    addr = models.TextField(null=False, blank=True, default="", verbose_name="수취인 주소 (해외 계좌일 경우)")
+    routing_num = models.TextField(null=False, blank=True, default="", verbose_name="Routing Number (미국 은행일 경우)")
 
 
 class UserRequest(Model):
@@ -250,6 +241,8 @@ class GuideOffer(Model):
     guide_template = JSONField(null=True)
     is_canceled = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
+    adjust_requested_at = models.DateField(null=True)
+    adjust_done_at = models.DateField(null=True)
 
 
 # User2Guide

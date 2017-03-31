@@ -21,8 +21,8 @@ from bravepeach import settings
 
 from bravepeach.util import flavour_render
 from ..models import (Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate,
-                       Notice, Cost)
-from ..forms import WriteOfferForm, VolunteerForm
+                       Notice, Cost, GuideAdjust)
+from ..forms import WriteOfferForm, VolunteerForm, GuideAdjustForm
 from bravepeach.const import GUIDE_TYPE, GUIDE_THEME
 
 
@@ -119,6 +119,7 @@ def find(request):
     return flavour_render(request, "guide/find.html", {"tab": "find"})
 
 
+@login_required
 def dashboard(request):
     notice_list = Notice.objects.order_by('-modified_at')
     stats = (("누적활동일수", "0일"), ("누적예약수", "0건"), ("누적여행자수", "0명"))
@@ -133,12 +134,47 @@ def schedule(request):
 
 @user_passes_test(guide_required)
 def request(request):
-    return flavour_render(request, "guide/find.html", {"tab": "request"})
+    return flavour_render(request, "guide/request_offer.html", {"tab": "request"})
 
 
 @user_passes_test(guide_required)
 def adjust(request):
-    return flavour_render(request, "guide/find.html", {"tab": "adjust"})
+    prev_form = GuideAdjust.objects.filter(guide=request.user.guide.first()).first()
+    if prev_form:
+        form = GuideAdjustForm(instance=prev_form)
+    else:
+        form = GuideAdjustForm()
+
+    revenue_list = GuideOffer.objects.filter(request__travel_end_at__lt=datetime.date.today(),
+                                             adjust_done_at__isnull=False).order_by('-request__travel_end_at').all()
+    expect_list = GuideOffer.objects.filter(request__travel_end_at__lt=datetime.date.today(),
+                                            adjust_done_at__isnull=True).order_by('-request__travel_end_at').all()
+    return flavour_render(request, "guide/adjust.html", {"tab": "adjust", "form": form, 'revenue_list': revenue_list,
+                                                         'expect_list': expect_list})
+
+
+def set_adjust_method(request):
+    if request.method == "POST":
+        prev_form = GuideAdjust.objects.filter(guide=request.user.guide.first()).first()
+        if prev_form:
+            form = GuideAdjustForm(request.POST, instance=prev_form)
+        else:
+            form = GuideAdjustForm(request.POST)
+
+        if form.is_valid():
+            new_form = form.save(commit=False)
+            new_form.guide = request.user.guide.first()
+            new_form.save()
+        else:
+            print(form.errors)
+    return redirect(adjust)
+
+
+def request_adjust(request, oid):
+    offer = GuideOffer.objects.filter(id=oid).first()
+    offer.adjust_requested_at = datetime.date.today()
+    offer.save()
+    return redirect(adjust)
 
 
 @user_passes_test(guide_required)

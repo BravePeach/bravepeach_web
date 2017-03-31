@@ -113,4 +113,6 @@ webapp/static/less/pc/*.css
 webapp/static/less/mobile/*.css
 webapp/static/less/pc/mypage/*.css
 webapp/static/less/mobile/mypage/*.css
+webapp/static/less/pc/guide/*.css
+webapp/static/less/mobile/guide/*.css
 static/*

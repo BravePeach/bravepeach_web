@@ -17,17 +17,17 @@
     <script>
     var target, j;
     $(function(){
-        {% for c in form.career %}
-            j = eval({{ c.value|safe }});
+        j = eval('{{ form.career.value|safe }}');
+        for(var i=0; i<j.length; i++) {
             target = $("#career-block").clone();
             target.removeClass("hidden-div");
             target.addClass('career-block');
             target.removeAttr("id");
-            target.find('.career-date').val(j[0]);
-            target.find('.career-company').val(j[1]);
-            target.find('.career-info').val(j[2]);
+            target.find('.career-date').val(j[i][0]);
+            target.find('.career-company').val(j[i][1]);
+            target.find('.career-info').val(j[i][2]);
             $('#add-career-btn').before(target);
-        {% endfor %}
+        }
 {#        {% for cert in form.certifitate %}#}
 {#            target = $("#certificate-block").clone();#}
 {#            target.removeClass("hidden-div");#}
