@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.forms import extras
 
-from .models import Profile, UserRequest, UserReview, GuideOffer, AccomTemplate, GuideTemplate, Guide
+from .models import (Profile, UserRequest, UserReview, GuideOffer, AccomTemplate, GuideTemplate, Guide, GuideAdjust)
 from redactor.widgets import RedactorEditor
 
 
@@ -189,3 +189,14 @@ class VolunteerForm(forms.ModelForm):
         model = Guide
         fields = ["real_name", "is_thru", "is_local", "guide_location", "introduction", "career", "certificate",
                   "appeal", "guide_type", "guide_theme", "essay", "experience"]
+
+
+class GuideAdjustForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for f in self.fields.values():
+            f.widget.attrs.update({"class": "input-text", "placeholder": f.label})
+
+    class Meta:
+        model = GuideAdjust
+        fields = ['name', 'bank', 'account_num', 'swift_bic_code', 'branch', 'addr', 'routing_num']
