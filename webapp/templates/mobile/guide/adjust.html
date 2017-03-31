@@ -1,0 +1,124 @@
+{% extends "mobile/guide/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/guide/adjust.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/guide/adjust.js' %}"></script>
+{% endblock %}
+
+{% block content%}
+    <div class="breadcrumb">
+        <span class="title">정산관리</span> >
+        {% if page_type == "revenue" %}수익내역{% elif page_type == "expect" %}수익예정내역
+        {% elif page_type == "method" %}입금방식설정{% else %}{% endif %}
+    </div>
+    <div class="info">
+        * 송금 신청 기간 : 여행 종료일 다음 날부터 원하는 날짜에 언제든지 송금을 요청할 수 있습니다. <br>
+        * 수수료 안내 : 해외 송금 수수료는 나라마다 상이하며, 이는 가이드 본인 부담입니다. <br>
+        * 송금 방식 : 마지막 송금 이후 누적되어 있는 비용을 한꺼번에 신청할 수도 있고, 개별 건을 각각 신청할 수도 있습니다. 송금 신청 후 입금까지 국내 계좌의 경우 최대 4일, 해외 계좌의 경우 최대 2주 정도가 소요될 수 있으니 양해 부탁 드립니다.     <br>
+        * 세금 : 대한민국에서 활동 중인 가이드의 경우 대한민국 법에 따라 원천 징수세가 부과되며, 따라서 송금 금액의 3.3%가 공제되고 송금될 예정입니다 <br>
+    </div>
+    {% if page_type == 'revenue' %}
+        <div class="tab-contents revenue active">
+            {% if revenue_list|length > 0 %}
+                <table>
+                    <thead>
+                    <tr>
+                        <th>여행자</th>
+                        <th>여행시작일</th>
+                        <th>여행지</th>
+                        <th>결제금</th>
+                        <th>수익금</th>
+                        <th>입금일</th>
+                        <th>견적서보기</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for revenue in revenue_list %}
+                        <tr>
+                            <td>{{ revenue.request.user.profile.full_name }}</td>
+                            <td>{{ revenue.request.user.profile.full_name }}</td>
+                            <td>{{ revenue.request.travel_begin_at|date:"Y/m/d" }}</td>
+                            <td class="ellipsis">{% for c in revenue.request.city %}
+                                {% if not forloop.first %}/{% endif %}{{ c }}
+                            {% endfor %}</td>
+                            <td>{{ revenue.total_cost|intcomma }} 만원</td>
+                            <td>{{ revenue.revenue|intcomma }} 원</td>
+                            <td>{{ revenue.adjust_done_at|date:"Y/m/d" }}</td>
+                            <td><a href="">바로가기</a></td>
+                            {#                        <td>{% if revenue.adjust_requested_at %}{{ revenue.adjust_request_at|date:'Y/m/d' }}#}
+                            {#                            <a href="{% url 'request_adjust' oid=revenue.id %}">신청</a>{% endif %}</td>#}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="empty">
+                    아직 수익내역이 없습니다. <br>
+                    여행을 마치면 2~3일 내에 수익내역이 생성됩니다.
+                </div>
+            {% endif %}
+        </div>
+    {% elif page_type == 'expect' %}
+        <div class="tab-contents expect">
+            {% if expect_list|length > 0 %}
+                <table>
+                    <thead>
+                    <tr>
+                        <th>여행자</th>
+                        <th>여행시작일</th>
+                        <th>여행지</th>
+                        <th>결제금</th>
+                        <th>예정수익금</th>
+                        <th>견적서보기</th>
+                        <th>송금신청</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for expect in expect_list %}
+                        <tr>
+                            <td>{{ expect.request.user.profile.full_name }}</td>
+                            <td>{{ expect.request.user.profile.full_name }}</td>
+                            <td>{{ expect.request.travel_begin_at|date:"Y/m/d" }}</td>
+                            <td class="ellipsis">{% for c in expect.request.city %}
+                                {% if not forloop.first %}/{% endif %}{{ c }}
+                            {% endfor %}</td>
+                            <td>{{ expect.total_cost|intcomma }} 만원</td>
+                            <td>{{ expect.revenue|intcomma }} 원</td>
+                            <td><a href="">바로가기</a></td>
+                            <td>{% if expect.adjust_requested_at %}{{ expect.adjust_request_at|date:'Y/m/d' }}
+                                <a href="">신청</a>{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="empty">
+                    아직 수익내역이 없습니다. <br>
+                    여행을 마치면 2~3일 내에 수익내역이 생성됩니다.
+                </div>
+            {% endif %}
+        </div>
+    {% elif page_type == "method" %}
+        <div class="tab-contents method">
+            <form action="{% url 'set_adjust' %}" method="post">
+                {% csrf_token %}
+                {{ form.name }}
+                {{ form.bank }}
+                {{ form.account_num }}
+                {{ form.swift_bic_code }}
+                {{ form.branch }}
+                {{ form.addr }}
+                {{ form.routing_num }}
+                <button type="submit" class="btn btn-pink">저장하기</button>
+                <a href="{% url 'guide_adjust' %}" class="btn btn-grey">취소</a>
+            </form>
+        </div>
+    {% else %}
+    {% endif %}
+{% endblock %}

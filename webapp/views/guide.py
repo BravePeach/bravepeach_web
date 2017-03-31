@@ -148,6 +148,7 @@ def request(request):
 
 @user_passes_test(guide_required)
 def adjust(request):
+    page_type = request.GET.get('type', '')
     prev_form = GuideAdjust.objects.filter(guide=request.user.guide.first()).first()
     if prev_form:
         form = GuideAdjustForm(instance=prev_form)
@@ -159,7 +160,7 @@ def adjust(request):
     expect_list = GuideOffer.objects.filter(request__travel_end_at__lt=datetime.date.today(),
                                             adjust_done_at__isnull=True).order_by('-request__travel_end_at').all()
     return flavour_render(request, "guide/adjust.html", {"tab": "adjust", "form": form, 'revenue_list': revenue_list,
-                                                         'expect_list': expect_list})
+                                                         'expect_list': expect_list, "page_type": page_type})
 
 
 def set_adjust_method(request):
