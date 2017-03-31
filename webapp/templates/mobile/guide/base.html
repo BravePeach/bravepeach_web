@@ -38,37 +38,39 @@
         <img class="menu-profile-pic" src="{% if request.user.profile.photo %}
                                             {{ request.user.profile.photo.url }} {% else %}
                                             {% static 'image/icon/profile_empty.png' %} {% endif %}"
-                                            alt="프로필">
+             alt="프로필">
         <div style="margin-top: 8px">
             {% if request.user.is_authenticated %}
-            <span class="menu-profile-name">{{request.user.profile.full_name}}</span>
-            <span class="menu-email">{{request.user.username}}</span>
-            <a class="trip-button" href="{% url 'index' %}">여행자 하기</a>
-            <a class="logout-button" href="{% url 'logout' %}">로그아웃</a>
+                <span class="menu-profile-name">{{request.user.profile.full_name}}</span>
+                <span class="menu-email">{{request.user.username}}</span>
+                <a class="trip-button" href="{% url 'index' %}">여행자 하기</a>
+                <a class="logout-button" href="{% url 'logout' %}">로그아웃</a>
 
             {% else %}
-            <a class="login-button" href="{% url 'login' %}?next={% url 'guide_index' %}">로그인</a>
-            <a class="register-button" href="{% url 'register' %}">회원가입</a>
+                <a class="login-button" href="{% url 'login' %}?next={% url 'guide_index' %}">로그인</a>
+                <a class="register-button" href="{% url 'register' %}">회원가입</a>
             {% endif %}
         </div>
-            <ul class="menu-list">
-                {% if request.user.is_authenticated %}
+        <ul class="menu-list">
+            {% if request.user.is_authenticated %}
                 <li><a href="">여행자 찾기</a></li>
                 <li><a href="">알림판</a></li>
                 <li>일정관리</li>
                 <li class="offer folding">요청서/견적서 <img src="{% static 'image/icon/arrow_down_white.png' %}" alt="V"></li>
-                    <li class="offer folded second"><a href="{% url 'guide_request' %}?type=request">받은 요청서</a></li>
-                    <li class="offer folded second"><a href="{% url 'guide_request' %}?type=zzim">찜한 요청서</a></li>
-                    <li class="offer folded second"><a href="{% url 'guide_request' %}?type=offer">보낸 견적서</a></li>
-                <li>정산관리</li>
+                <li class="offer folded second"><a href="{% url 'guide_request' %}?type=request">받은 요청서</a></li>
+                <li class="offer folded second"><a href="{% url 'guide_request' %}?type=zzim">찜한 요청서</a></li>
+                <li class="offer folded second"><a href="{% url 'guide_request' %}?type=offer">보낸 견적서</a></li>
+                <li class="adjust folding">정산관리 <img src="{% static 'image/icon/arrow_down_white.png' %}" alt="V"></li>
+                <li class="adjust folded second"><a href="{% url 'guide_adjust' %}?type=revenue">수익내역</a></li>
+                <li class="adjust folded second"><a href="{% url 'guide_adjust' %}?type=expect">수익예정내역</a></li>
+                <li class="adjust folded second"><a href="{% url 'guide_adjust' %}?type=method">입금방식설정</a></li>
                 <li>후기/여행기</li>
                 <li>메세지</li>
-                {% else %}
+            {% else %}
                 <li><a href="{% url 'index' %}">여행자 하기</a></li>
                 <hr>
-                {% endif %}
-
-            </ul>
+            {% endif %}
+        </ul>
     </div>
 
     <div class="search_side_menu_wrapper">
@@ -89,7 +91,7 @@
 </header>
 
 <div class="body-contents-wrapper">
-{% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 </div>
 <footer>
     <ul>
