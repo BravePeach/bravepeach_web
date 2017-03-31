@@ -100,33 +100,23 @@ $(function () {
     // save trans
     $('.trans-form-button').click(function () {
         if (!$('.trans-form').val()) {
-            alert("내용을 작성해 주세요!")
+            swal({
+                title: "이동수단 정보를 작성해주세요!",
+                type: "error"
+            })
         }
         else {
             $.ajax({
-                url: "save_trans/",
-                type: "GET",
+                url: "save_trans_offer/",
+                type: "POST",
                 data: {
                     guide_id: $('#guide_id').val(),
                     trans_info: $('.trans-form').val()
                 },
                 success: function () {
-                    $('.trans.big-circle').removeClass('selected');
-                    if ($('.accom.big-circle').hasClass('guided')) {
-                        $('.accom.big-circle').addClass('selected');
-                        $('.search-wrapper .activated').removeClass('activated');
-                        $('.search-wrapper .accom').addClass('activated');
-                        $('.template.activated').removeClass('activated');
-                        $('.accom.template').addClass('activated');
-                    }
-                    else {
-                        $('.guide.big-circle').addClass('selected');
-                        $('.search-wrapper .activated').removeClass('activated');
-                        $('.search-wrapper .guide').addClass('activated');
-                        $('.template.activated').removeClass('activated');
-                        $('.guide.template').addClass('activated');
-
-                    }
+                    swal({
+                        title: "저장되었습니다!"
+                    })
                 }
             })
         }
@@ -167,5 +157,49 @@ $(function () {
         })
     });
 
+    // save cost_offer
+    $('.cost-form-button').click(function () {
+        if ($('.cost-type').val() == null){
+            swal({
+                title: "견적서 항목을 선택해주세요!",
+                type: "error"
+            })
+        }
+
+        // else if ($('.cost-content[value=""]').length + $('.cost-cost[value=""]').length){
+        //     swal({
+        //         title: "견적서 내용을 작성해주세요!",
+        //         type: "error"
+        //     })
+        //
+        // }
+
+        else{
+            var type_id_list = [];
+            var price_list = [];
+            var info_list = [];
+            $('.cost-form-wrapper').each(function(){
+                type_id_list.push($(this).children('.cost-type').val());
+                price_list.push(parseInt($(this).children('.cost-cost').val().replace(/,/g , "")));
+                info_list.push($(this).children('.cost-content').val());
+            });
+
+            $.ajax({
+                url: "save_cost_offer/",
+                type: "POST",
+                data: {
+                    guide_id : $('#guide_id').val(),
+                    type_id_list: type_id_list.toString(),
+                    price_list: price_list.toString(),
+                    info_list: info_list.toString()
+                },
+                success: function () {
+                    swal({
+                        title: "저장되었습니다!"
+                    })
+                }
+            })
+        }
+    });
 
 });

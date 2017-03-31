@@ -321,23 +321,38 @@ $(function () {
         }
 
         if (accomType == null){
-            alert("숙소유형을 선택해주세요.")
+            swal({
+                title: "숙소유형을 선택해주세요.",
+                type: "error"
+            })
         }
 
         else if (accomTitle == ""){
-            alert("숙소 타이틀을 입력해주세요.")
+            swal({
+                title: "숙소 타이틀을 입력해주세요.",
+                type: "error"
+            })
         }
 
         else if (country == ""){
-            alert("숙소 위치를 선택해주세요.")
+            swal({
+                title: "숙소 위치를 선택해주세요.",
+                type: "error"
+            })
         }
 
         else if (accomContent == ""){
-            alert("숙소 정보를 작성해주세요.")
+            swal({
+                title: "숙소 정보를 작성해주세요.",
+                type: "error"
+            })
         }
 
         else if(photoList == []){
-            alert("숙소 사진을 적어도 한장 올려주세요.")
+            swal({
+                title: "숙소사진을 적어도 한장 올려주세요.",
+                type: "error"
+            })
         }
 
         else {
@@ -367,10 +382,49 @@ $(function () {
                         $('#accom_search' + s_id).find('.activated input').val(data["new_id"]);
                         $('#accom_search' + s_id).find('.activated .result-title').html(accomTitle);
                         // $('#accom_search' + s_id).find('.activated img')
+                        swal({
+                            title: "저장되었습니다!",
+                        })
                     }
                 }
             })
         }
 
+    });
+
+    // save_accom
+    $('.accom-form-button').click(function () {
+        if ($('input[value=""].accom-id').length || $('.accom-save-button').hasClass('activated')) {
+            swal({
+                title: "새로 작성한 내용을 먼저 저장해주세요!",
+                type: "error"
+            })
+        }
+
+        else if ($('input.accom-date').filter(function() { return $(this).val() == "" }).length){
+            swal({
+                title: "숙박 일정을 입력해주세요!",
+                type: "error"
+            })
+        }
+        else {
+            var accomIdArray = $("input.accom-id").map(function() { return $(this).val() }).get();
+            var accomDateArray = $("input.accom-date").map(function() { return $(this).val() }).get();
+            console.log(accomDateArray, accomIdArray);
+            $.ajax({
+                url: "save_accom_offer/",
+                type: "POST",
+                data: {
+                    guide_id: $('#guide_id').val(),
+                    accom_id: accomIdArray.toString(),
+                    accom_date: accomDateArray.toString()
+                },
+                success: function () {
+                    swal({
+                        title: "저장되었습니다!"
+                    })
+                }
+            })
+        }
     });
 });

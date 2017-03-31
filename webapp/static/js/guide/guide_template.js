@@ -79,6 +79,7 @@ $(function () {
     $('.guide.search').on("click", ".result-card", function () {
         var guide_id = $(this).children('input').val();
         var s_id = $(this).parent().parent()[0].id.replace('guide_search', '');
+        var date = $('#guide_form' + s_id).parent().prev().val();
         $(this).siblings().removeClass('activated');
         $(this).siblings().children('.card-selected').addClass('display-none');
         $(this).addClass('activated');
@@ -86,7 +87,7 @@ $(function () {
         $.ajax({
             url: "load_guide",
             type: "GET",
-            data: {guide_id: guide_id, id: s_id},
+            data: {guide_id: guide_id, id: s_id, date: date},
             success: function (data) {
                 $('#guide_form' + s_id).replaceWith(data);
             }
@@ -203,7 +204,7 @@ $(function () {
         $(this).next().children().addClass('display-none');
         $(this).next().children('.' + date).removeClass('display-none');
         $('.guide-search').addClass('display-none');
-        $('.guide.search').find('.' + data).removeClass('display-none');
+        $('.guide.search').find('.' + date).removeClass('display-none');
     });
 
     // 가이드 템플릿 저장
@@ -222,11 +223,17 @@ $(function () {
         // }
         //
         if (guideTitle == ""){
-            alert("일정 타이틀을 입력해주세요.")
+            swal({
+                title: "일정 타이틀을 입력해주세요.",
+                type: "error"
+            })
         }
 
         else if (guideContent == ""){
-            alert("일정 정보를 작성해주세요.")
+            swal({
+                title: "일정 정보를 입력해주세요.",
+                type: "error"
+            })
         }
 
         else {
@@ -248,10 +255,70 @@ $(function () {
                         $('#guide_search' + s_id).find('.activated input').val(data["new_id"]);
                         $('#guide_search' + s_id).find('.activated .result-title').html(guideTitle);
                         // $('#guide_search' + s_id).find('.activated img')
+                        swal({
+                            title: "저장되었습니다!"
+                        })
                     }
                 }
             })
         }
 
     });
+
+    $('.guide-form-button').click(function () {
+        var missingDate
+        var isMissed = false
+        for (var i=0; i<$('.guide-date').children().length; i++){
+            if (!$('.guide-form-wrapper').hasClass(i)) {
+                isMissed=true;
+                missingDate = i + 1;
+                break;
+            }
+        }
+
+
+        if ($('.guide-save-button').hasClass('activated')){
+            swal({
+                title: (parseInt($('.guide-save-button.activated').parent().attr('class').split(' ')[1]) + 1).toString() + "일의 새로 작성한 내용을 모두 저장해주세요!",
+                type: "error"
+            })
+        }
+
+        else if($('input[value=""].guide-id').length){
+            swal({
+                title: (parseInt($('input[value=""].guide-id').parent().attr('class').split(' ')[1]) + 1).toString() + "일의 새로 작성한 내용을 모두 저장해주세요!",
+                type: "error"
+            })
+        }
+
+        else if (isMissed) {
+            swal({
+                title: missingDate.toString() + "일 내용을 작성해주세요!",
+                type: "error"
+            })
+        }
+
+        else {
+            var result = [];
+
+            for (var i=0; i<$('.guide-date').children().length; i++){
+                result += ($('.guide-form-wrapper.' + i).children('.guide-id').map(function() {return $(this).val()}).get() + 'dumpstring')
+            }
+            console.log(result.toString());
+            $.ajax({
+                url: "save_guide_offer/",
+                type: "POST",
+                data: {
+                    guide_id: $('#guide_id').val(),
+                    guide_template: result.toString()
+                },
+                success: function () {
+                    swal({
+                        title: "저장되었습니다!"
+                    })
+                }
+            })
+        }
+    });
+
 });

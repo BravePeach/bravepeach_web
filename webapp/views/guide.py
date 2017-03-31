@@ -21,7 +21,7 @@ from bravepeach import settings
 
 from bravepeach.util import flavour_render
 from ..models import (Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate,
-                       Notice)
+                       Notice, Cost)
 from ..forms import WriteOfferForm, VolunteerForm
 from bravepeach.const import GUIDE_TYPE, GUIDE_THEME
 
@@ -281,18 +281,6 @@ def search_guide(request, req_id):
     return JsonResponse({"ok": False})
 
 
-# 이동수단 폼 저장
-def save_trans(request, req_id):
-    if request.is_ajax():
-        guide_id = request.GET.get('guide_id')
-        trans_info = request.GET.get('trans_info')
-        offer = GuideOffer.objects.filter(guide_id=guide_id, request_id=req_id).last()
-        offer.trans_info = trans_info
-        offer.save()
-        return HttpResponse()
-    return JsonResponse({"ok": False})
-
-
 def new_accom_form(request, req_id):
     if request.is_ajax():
         form_id = 'accom_form' + str(request.GET.get('id'))
@@ -337,12 +325,11 @@ def load_guide(request, req_id):
     if request.is_ajax():
         guide_template_id = request.GET.get('guide_id')
         form_id = 'guide_form' + str(request.GET.get('id'))
-
+        date = request.GET.get('date')
         guide_template = GuideTemplate.objects.get(id=guide_template_id)
-        html = render_to_string('pc/guide/guide_template_form.html', {'id': form_id, 'guide_template': guide_template})
+        html = render_to_string('pc/guide/guide_template_form.html', {'id': form_id, 'guide_template': guide_template, 'date':date})
         return HttpResponse(html)
     return JsonResponse({"ok": False})
-
 
 
 def upload_accom_photo(request):
@@ -416,4 +403,86 @@ def save_guide_template(request):
         # 새로 저장
         a = GuideTemplate.objects.create(guide_id=guide_id, title=title, content=content, photo="")
         return JsonResponse({"ok": True, "new_id": a.id})
+    return JsonResponse({"ok": False})
+
+
+def save_trans_offer(request, req_id):
+    if request.method == "POST":
+        guide_id = request.POST.get('guide_id')
+        trans_info = request.POST.get('trans_info')
+
+        if not GuideOffer.objects.filter(guide_id=guide_id, request_id=req_id).exists():
+            req = UserRequest.objects.get(id=req_id)
+            travel_period = [i for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+            GuideOffer.objects.create(guide_id=guide_id, request_id=req_id, trans_info=trans_info, travel_period=travel_period)
+
+        else:
+            g = GuideOffer.objects.get(guide_id=guide_id, request_id=req_id)
+            g.trans_info = trans_info
+            g.save()
+
+        return JsonResponse({"ok": True})
+    return JsonResponse({"ok": False})
+
+
+def get_weekday(i):
+    weekday = ('월', '화', '수', '목', '금', '토', '일')
+    return weekday[i]
+
+
+def save_accom_offer(request, req_id):
+    if request.method == "POST":
+        guide_id = request.POST.get('guide_id')
+        accom_id = request.POST.get('accom_id').split(',')
+        accom_date = request.POST.get('accom_date').split(',')
+        accom_template = list(zip(accom_date, accom_id))
+
+        if not GuideOffer.objects.filter(guide_id=guide_id, request_id=req_id).exists():
+            req = UserRequest.objects.get(id=req_id)
+            travel_period = [i for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+            GuideOffer.objects.create(guide_id=guide_id, request_id=req_id, accom_template=accom_template, travel_period=travel_period)
+
+        else:
+            g = GuideOffer.objects.get(guide_id=guide_id, request_id=req_id)
+            g.accom_template = accom_template
+            g.save()
+
+        return JsonResponse({"ok": True})
+    return JsonResponse({"ok": False})
+
+
+def save_guide_offer(request, req_id):
+    if request.method == "POST":
+        guide_id = request.POST.get('guide_id')
+        guide_template = request.POST.get('guide_template').split('dumpstring')[:-1]
+
+        for i, j in enumerate(guide_template):
+            guide_template[i] = j.split(',')
+
+        if not GuideOffer.objects.filter(guide_id=guide_id, request_id=req_id).exists():
+            req = UserRequest.objects.get(id=req_id)
+            travel_period = [i for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+            GuideOffer.objects.create(guide_id=guide_id, request_id=req_id, guide_template=guide_template, travel_period=travel_period)
+
+        else:
+            g = GuideOffer.objects.get(guide_id=guide_id, request_id=req_id)
+            g.guide_template = guide_template
+            g.save()
+
+        return JsonResponse({"ok": True})
+    return JsonResponse({"ok": False})
+
+
+def save_cost_offer(request, req_id):
+    if request.method == "POST":
+        guide_id = request.POST.get('guide_id')
+        type_id_list = request.POST.get('type_id_list').split(',')
+        price_list = request.POST.get('price_list').split(',')
+        info_list = request.POST.get('info_list').split(',')
+        offer_id = GuideOffer.objects.get(guide_id=guide_id, request_id=req_id).id
+        print(type_id_list)
+        for i in range(len(type_id_list)):
+            Cost.objects.get_or_create(offer_id=offer_id, type_id=type_id_list[i], price=price_list[i], info=info_list[i])
+
+        return JsonResponse({"ok": True})
     return JsonResponse({"ok": False})

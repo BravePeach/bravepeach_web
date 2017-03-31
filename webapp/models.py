@@ -72,8 +72,6 @@ class Notice(Model):
 
 
 class Guide(Model):
-#    objects = QuerySet.as_manager()
-
     # id = HashidAutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='guide')
     pay_cnt = models.IntegerField(default=0)
