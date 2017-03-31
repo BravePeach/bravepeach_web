@@ -3,6 +3,7 @@ from decimal import Decimal
 import datetime
 
 from django.db import models
+from django_mysql.models import Model
 from django.contrib.auth.models import User
 from django_mysql.models import JSONField, ListCharField, ListTextField
 from django.db.models.signals import post_save
@@ -13,7 +14,7 @@ from redactor.fields import RedactorField
 from bravepeach.const import GUIDE_THEME, GUIDE_TYPE
 
 
-class Profile(models.Model):
+class Profile(Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     phone_num = models.CharField(max_length=11, blank=True)
     is_guide = models.BooleanField(default=False)
@@ -46,14 +47,14 @@ class Profile(models.Model):
         return True
 
 
-class Notice(models.Model):
+class Notice(Model):
     title = models.CharField(max_length=100)
     content = models.TextField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True, null=True)
 
 
-# class GuideVolunteer(models.Model):
+# class GuideVolunteer(Model):
 #     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="volunteer")
 #     real_name = models.TextField(null=False, blank=False, max_length=10)
 #     is_thru = models.BooleanField(default=False)
@@ -70,7 +71,9 @@ class Notice(models.Model):
 #     published = models.BooleanField(default=False)
 
 
-class Guide(models.Model):
+class Guide(Model):
+#    objects = QuerySet.as_manager()
+
     # id = HashidAutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='guide')
     pay_cnt = models.IntegerField(default=0)
@@ -91,6 +94,7 @@ class Guide(models.Model):
     real_name = models.TextField(null=False, blank=False, default="")
     certificate = JSONField(blank=True)
     appeal = JSONField(null=True, blank=True)
+
     essay = models.TextField(null=False, blank=False, default="")
     experience = JSONField(null=True, blank=True)
     is_volunteer = models.BooleanField(default=False)
@@ -132,7 +136,7 @@ class Guide(models.Model):
         # return style_lst
 
 
-class UserRequest(models.Model):
+class UserRequest(Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     city = JSONField(null=True)
     travel_begin_at = models.DateField(null=True, blank=True)
@@ -237,7 +241,7 @@ class UserRequest(models.Model):
         return importance_list
 
 
-class GuideOffer(models.Model):
+class GuideOffer(Model):
     paid = models.BooleanField(default=False)
     guide = models.ForeignKey(Guide, related_name="offers")
     request = models.ForeignKey(UserRequest)
@@ -251,18 +255,18 @@ class GuideOffer(models.Model):
 
 
 # User2Guide
-class UserLike(models.Model):
+class UserLike(Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     guide = models.ForeignKey(Guide)
 
 
 # Guide2User
-class GuideLike(models.Model):
+class GuideLike(Model):
     guide = models.ForeignKey(Guide)
     request = models.ForeignKey(UserRequest)
 
 
-class CancelledOffer(models.Model):
+class CancelledOffer(Model):
     offer = models.ForeignKey(GuideOffer, related_name="cancel")
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     guide = models.IntegerField(null=True)
@@ -270,11 +274,8 @@ class CancelledOffer(models.Model):
     is_completed = models.BooleanField(default=False)
 
 
-class AccomTemplate(models.Model):
+class AccomTemplate(Model):
     title = models.CharField(max_length=100)
-    photo = ListTextField(
-        base_field=models.CharField(max_length=100)
-    )
     # JSONField로 하려 했으나 migrate 과정에서 에러가 나서 일단은 ListField로..
     # 견적서 상세보기 페이지에서 숙소에 대한 위치를 국가, 시, 구 정도까지 보여주는데 그 주소를 저장하기 위한 필드입니다.
     address = ListCharField(
@@ -308,7 +309,12 @@ class AccomTemplate(models.Model):
         return type_list[self.type_id]
 
 
-class GuideTemplate(models.Model):
+class AccomPhoto(Model):
+    accom_template = models.ForeignKey(AccomTemplate, related_name="accom_photos")
+    photo = models.ImageField(upload_to='accom_photos/%Y_%m_%d')
+
+
+class GuideTemplate(Model):
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True)
     photo = models.ImageField(upload_to='guide_photos/%Y/%m/%d')
@@ -316,7 +322,7 @@ class GuideTemplate(models.Model):
     overwritten = models.BooleanField(default=False)
 
 
-class Cost(models.Model):
+class Cost(Model):
     offer = models.ForeignKey(GuideOffer, related_name="costs")
     type_id = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
@@ -329,7 +335,7 @@ class Cost(models.Model):
 
 
 # User2Guide
-class UserReview(models.Model):
+class UserReview(Model):
     offer = models.ForeignKey(GuideOffer, related_name="user_review")
     rating = models.FloatField(null=False)
     content = RedactorField(verbose_name=u'Content')
@@ -344,7 +350,7 @@ class UserReview(models.Model):
         return range(int(int_part)), frac_part, range(4-int(int_part))
 
 
-class Comment(models.Model):
+class Comment(Model):
     offer = models.ForeignKey(GuideOffer, related_name="comments")
     content = models.CharField(max_length=300, default="")
     writer = models.IntegerField(default=0)
@@ -352,7 +358,7 @@ class Comment(models.Model):
 
 
 # Guide2User
-class GuideReview(models.Model):
+class GuideReview(Model):
     offer = models.ForeignKey(GuideOffer, related_name="guide_review")
     rating = models.FloatField(null=False)
     content = RedactorField()
