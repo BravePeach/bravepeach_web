@@ -246,10 +246,10 @@ class GuideOffer(Model):
 
     @property
     def total_cost(self):
-        return sum([x.price for x in self.costs if x.type_id != 2]) + self.guide_cost()
+        return sum([x.price for x in self.costs.all() if x.type_id != 2]) + self.guide_cost()
 
     def guide_cost(self):
-        return int(sum([x.price for x in self.costs if x.type_id == 2]) * 0.12)
+        return int(sum([x.price for x in self.costs.all() if x.type_id == 2]) * 0.12)
 
 
 # User2Guide
