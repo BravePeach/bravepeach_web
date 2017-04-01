@@ -36,4 +36,18 @@ $(function () {
     $('.find-guide-form, .find-guide-form2').click(function () {
         mobileSearch();
     });
+
+    $(".folding").click(function(){
+        var target = $(this);
+        var target_class = target.attr("class").split(" ")[0];
+        if(target.hasClass("folding")) {
+            target.removeClass("folding");
+            $(".second."+target_class).removeClass("folded");
+            target.find("img").addClass("turn");
+        } else {
+            target.addClass("folding");
+            $(".second."+target_class).addClass("folded");
+            target.find("img").removeClass("turn");
+        }
+    });
 });

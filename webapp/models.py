@@ -246,11 +246,11 @@ class GuideOffer(Model):
 
     @property
     def total_cost(self):
-        none_guide_cost = sum(Cost.objects.filter(offer_id=self.id, type_id__in=[0, 1, 3, 4, 5]).values_list('price', flat=True))
-        return none_guide_cost + self.guide_cost()
+        return sum([x.price for x in self.costs if x.type_id != 2]) + self.guide_cost()
 
     def guide_cost(self):
-        return int(sum(Cost.objects.filter(offer_id=self.id, type_id=2).values_list('price', flat=True)) * 0.12)
+        return int(sum([x.price for x in self.costs if x.type_id == 2]) * 0.12)
+
 
 # User2Guide
 class UserLike(Model):

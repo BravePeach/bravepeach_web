@@ -1,0 +1,144 @@
+{% extends "mobile/guide/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/guide/request_offer.less'|compile %}">
+{% endblock %}
+
+{% block js%}
+    <script src="{% static 'js/guide/request_offer.js' %}"></script>
+    <script>
+        $(function(){
+            $("button").click(function(){
+                swal({
+                    title: "Mobile",
+                    text: "견적서 작성은 PC 버전에서만 지원됩니다.",
+                    type: "info"
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="breadcrumb">
+        <span class="title">요청서/견적서</span> >
+        {% if page_type == "request" %}받은 요청서{% elif page_type == "zzim" %}찜한 요청서
+        {% elif page_type == "offer" %}보낸 견적서{% else %}{% endif %}
+    </div>
+    {% if page_type == "request" %}
+        <div class="counter">{{ request_list|length }} 개의 받은 요청서가 있습니다.</div>
+        {% for request in request_list %}
+            <div class="box">
+                {% if not request.published %} <div class="label">마감</div>{% endif %}
+                <div class="profile">
+                    <img src="
+            {% if request.user.profile.photo %}{{ request.user.profile.photo.url }}
+                {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+                         alt="">
+                    <div class="name">{{ request.user.profile.full_name }}</div>
+                </div>
+                <div class="info">
+                    <div class="guide-options">
+                        <div class="guide-option {% if request.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">이동수단</div>
+                        <div class="guide-option {% if request.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">숙박</div>
+                        <div class="guide-option {% if request.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">가이드</div>
+                    </div>
+                    <div class="schedule">{{ request.travel_begin_at|date:"Y/m/d" }} ~ {{ request.travel_end_at|date:"Y/m/d" }}</div>
+                    <div class="cities ellipsis">
+                        {% for c in request.city %}
+                            {% if not forloop.first %} / {% endif %} {{ c }}
+                        {% endfor %}
+                    </div>
+                    <div class="age-grp"> {{ request.age_group }} </div>
+                    <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>
+                </div>
+                <button {% if not request.published %}class="disabled-link"{% endif %}>견적서 작성하기</button>
+            </div>
+        {% empty %}
+            <div class="box">
+                <div class="empty">받은 요청서가 없습니다.</div>
+            </div>
+        {% endfor %}
+    {% elif page_type == "zzim" %}
+        <div class="counter">{{ zzim_list|length }} 개의 찜한 요청서가 있습니다.</div>
+        {% for request in zzim_list %}
+            <div class="box">
+                {% if not request.published %} <div class="label">마감</div>{% endif %}
+                <div class="profile">
+                    <img src="
+            {% if request.user.profile.photo %}{{ request.user.profile.photo.url }}
+                {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+                         alt="">
+                    <div class="name">{{ request.user.profile.full_name }}</div>
+                </div>
+                <div class="info">
+                    <div class="guide-options">
+                        <div class="guide-option {% if request.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">이동수단</div>
+                        <div class="guide-option {% if request.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">숙박</div>
+                        <div class="guide-option {% if request.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">가이드</div>
+                    </div>
+                    <div class="schedule">{{ request.travel_begin_at|date:"Y/m/d" }} ~ {{ request.travel_end_at|date:"Y/m/d" }}</div>
+                    <div class="cities ellipsis">
+                        {% for c in request.city %}
+                            {% if not forloop.first %} / {% endif %} {{ c }}
+                        {% endfor %}
+                    </div>
+                    <div class="age-grp"> {{ request.age_group }} </div>
+                    <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>
+                </div>
+                <button {% if not request.published %}class="disabled-link"{% endif %}>견적서 작성하기</button>
+            </div>
+        {% empty %}
+            <div class="box">
+                <div class="empty">찜한 요청서가 없습니다.</div>
+            </div>
+        {% endfor %}
+    {% elif page_type == "offer" %}
+        <div class="counter">{{ offer_list|length }} 개의 보낸 견적서가 있습니다.</div>
+        {% for offer in offer_list %}
+            <div class="box">
+                {% if not offer.request.published %} <div class="label">마감</div>{% endif %}
+                <div class="profile">
+                    <img src="
+            {% if offer.guide.user.profile.photo %}{{ offer.guide.user.profile.photo.url }}
+                {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+                         alt="">
+                    <div class="name">{{ offer.guide.full_name }}</div>
+                </div>
+                <div class="info">
+                    <div class="guide-options">
+                        <div class="guide-option {% if offer.request.trans_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">이동수단</div>
+                        <div class="guide-option {% if offer.request.accom_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">숙박</div>
+                        <div class="guide-option {% if offer.request.guide_guided %}guided{% endif %}"></div>
+                        <div class="guide-txt">가이드</div>
+                    </div>
+                    <div class="schedule">{{ offer.request.travel_begin_at|date:"Y/m/d" }} ~ {{ offer.request.travel_end_at|date:"Y/m/d" }}</div>
+                    <div class="cities ellipsis">
+                        {% for c in offer.request.city %}
+                            {% if not forloop.first %} / {% endif %} {{ c }}
+                        {% endfor %}
+                    </div>
+                    <div class="age-grp"> {{ offer.request.age_group }} </div>
+                    <div class="cost">총 경비 <span class="money">{{ offer.total_cost|intcomma }}</span> 원</div>
+                </div>
+            </div>
+            <button class="left {% if not request.published %}disabled-link{% endif %}">요청서 보기</button><!--
+            --><button class="right {% if not request.published %}disabled-link{% endif %}">견적서 보기</button>
+        {% empty %}
+            <div class="box">
+                <div class="empty">보낸 견적서가 없습니다.</div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

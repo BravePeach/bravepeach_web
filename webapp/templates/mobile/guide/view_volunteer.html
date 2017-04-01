@@ -1,0 +1,85 @@
+{% extends "mobile/guide/base.html" %}
+{% load compile_static %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/guide/view-volunteer.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content%}
+    <div class="title">전문가이드 등록</div>
+    <div class="profile-section">
+        <div class="profile"><img src=" {% if guide.user.profile.photo %}{{ guide.user.profile.photo.url }}{% else %}
+                                       {% static 'image/icon/profile_empty.png' %}{% endif %}"
+                                  alt="">
+            <div class="type-info"><span class="name">{{ guide.real_name }}</span> 님은
+                <span class="red">{% if guide.is_thru %}스루가이드 {% endif %}
+                    {% if guide.is_local %}현지가이드{% endif %}</span>입니다.</div>
+        </div>
+        <div class="info-section">
+            <div class="location">
+                <div class="header">가능지역</div>
+                <div class="red">{% for c in guide.guide_location %} {{ c }} {% endfor %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="section-title">소개</div>
+    <div class="hr"></div>
+    <div class="section-content">{{ guide.introduction }}</div>
+    <div class="section-title">경력</div>
+    <div class="hr"></div>
+    <div class="section-content">
+        <ul>
+            {% for date, company, info in guide.career %}
+                <li>{{ date }} {{ company }} <div>{{ info }}</div></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="section-title">자격증</div>
+    <div class="hr"></div>
+    <div class="section-content">
+        <ul>
+            {% for cert in guide.certificate %}
+                <li><img src="{{ cert }}" alt="certificate"></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="section-title">성격</div>
+    <div class="hr"></div>
+    <div class="section-content">
+        <ul>{% for style in guide.style_list %}
+            <li class="inline">{{ style }}</li>
+        {% endfor %}</ul>
+    </div>
+    <div class="section-title">여행 테마</div>
+    <div class="hr"></div>
+    <div class="section-content">
+        <ul>{% for theme in guide.theme_list %}
+            <li class="inline">{{ theme }}</li>
+        {% endfor %}</ul>
+    </div>
+    <div class="section-title">브레이브피치에서 어떤 가이드가 되실 건가요?</div>
+    <div class="hr"></div>
+    <div class="section-content">{{ guide.essay|safe }}</div>
+    <div class="section-title">전화번호 인증</div>
+    <div class="hr"></div>
+    <div class="section-content"></div>
+    <div class="section-title">가이드 경험 사진</div>
+    <div class="hr"></div>
+    <div class="section-content">
+        {% for pic, txt in guide.experience %}
+            <div class="exp-wrapper">
+                <img src="{{ pic }}" alt="experience">
+                <div class="txt">{{ txt }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="btn-area">
+        <button class="tmp-save btn-grey">임시저장</button>
+        <a href="{% url 'guide_volunteer' %}" class="edit btn-grey">수정하기</a>
+        <a href="{% url 'enroll_volunteer' gid=guide.id %}" class="enroll btn-pink">최종 제출하기</a>
+    </div>
+{% endblock %}
