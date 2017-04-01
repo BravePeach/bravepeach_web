@@ -129,6 +129,7 @@ def dashboard(request):
 
 @user_passes_test(guide_required)
 def schedule(request):
+    page_type = request.GET.get("type", '')
     guide = Guide.objects.get(user=request.user)
     fixed_offer_set = GuideOffer.objects.filter(guide=guide, paid=True, request__travel_end_at__gte=datetime.date.today(), is_canceled=False)
     fixed_offer_price = [o.total_cost for o in fixed_offer_set]
@@ -139,7 +140,7 @@ def schedule(request):
     canceled_offer_set = GuideOffer.objects.filter(guide=guide, is_canceled=True)
     canceled_trip_set = UserRequest.objects.filter(id__in=[r.request_id for r in canceled_offer_set])
     canceled_offer_price = [o.total_cost for o in canceled_offer_set]
-    return flavour_render(request, "guide/schedule.html", {"tab": "schedule",
+    return flavour_render(request, "guide/schedule.html", {"tab": "schedule", "page_type": page_type,
                                                            "fixed_trip_set": fixed_trip_set,
                                                            "fixed_offer_price": fixed_offer_price,
                                                            "ended_trip_set": ended_trip_set,

@@ -10,11 +10,13 @@ $(function () {
    $('.delete-button').click(function(){
       $('.allover').removeClass('display-none');
       $('.delete-modal').removeClass('display-none');
+      $('body').css('overflow', 'hidden')
    });
 
    $('.modal-exit, .delete-no').click(function () {
       $('.allover').addClass('display-none');
       $('.delete-modal').addClass('display-none');
+      $('body').css('overflow', 'auto')
    });
 
    $('.delete-yes').click(function () {
