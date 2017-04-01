@@ -1,0 +1,148 @@
+{% extends "pc/guide/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load custom_filters %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/pc/guide/schedule.css' %}">
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/guide/schedule.js' %}"></script>
+{% endblock%}
+
+{% block content %}
+<div class="allover display-none"></div>
+<div class="schedule-top">
+    <span class="calendar">캘린더</span>
+    <span class="fixed-trip clicked">확정된 예약</span>
+    <span class="ended-trip">지난 여행</span>
+    <span class="canceled-trip">취소된 여행</span>
+</div>
+<hr>
+
+<div class="wrapper">
+    <div class="calendar">
+
+    </div>
+
+    <div class="fixed-trip">
+        {% if fixed_trip_set %}
+        {% for fixed_trip in fixed_trip_set %}
+            <div class="trip-card-wrapper">
+                <div class="trans-light">
+                    <div class="{% if fixed_trip.trans_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                    <span>이동수단</span>
+                </div>
+                <div class="accom-light">
+                    <div class="{% if fixed_trip.accom_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                    <span>숙박</span>
+                </div>
+                <div class="guide-light">
+                    <div class="{% if fixed_trip.guide_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                    <span>가이드</span>
+                </div>
+                <img class="user-pic" src="{{ fixed_trip.user.profile.photo.url }}">
+                <div class="user-name">{{ fixed_trip.user.profile.full_name }}</div>
+                <div class="travel-city">
+                    {% for c in fixed_trip.city %}
+                    {% if not forloop.first %} / {% endif %} {{ c }}
+                    {% endfor %}
+                </div>
+                <div class="travel-date">{{ fixed_trip.travel_begin_at|date:"Y/m/d" }} - {{ fixed_trip.travel_end_at|date:"Y/m/d" }}</div>
+                <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명</div>
+                <div class="req-cost">총 경비 <span>{{ fixed_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
+                <div class="show-request-button">여행 요청서 보기</div>
+                <div class="show-offer-button">최종 견적서 보기</div>
+                <img class="delete-button" src="{% static 'image/icon/cancel.png' %}">
+                <div class="delete-modal display-none">
+                    <div class="title">여행 취소하기</div>
+                    <div class="content">확정된 예약을 취소 요청 하시겠습니까?</div>
+                    <div class="delete-no">아니오</div>
+                    <div class="delete-yes">네</div>
+                    <img class="modal-exit" src="{% static 'image/icon/cancel.png' %}">
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <div class="no-result">
+            아직 확정된 여행이 없습니다.
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="ended-trip display-none">
+        {% if ended_trip_set %}
+        {% for ended_trip in ended_trip_set %}
+            <div class="trip-card-wrapper">
+                <div class="trans-light">
+                    <div class="{% if ended_trip.trans_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                    <span>이동수단</span>
+                </div>
+                <div class="accom-light">
+                    <div class="{% if ended_trip.accom_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                    <span>숙박</span>
+                </div>
+                <div class="guide-light">
+                    <div class="{% if ended_trip.guide_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                    <span>가이드</span>
+                </div>
+                <img class="user-pic" src="{{ ended_trip.user.profile.photo.url }}">
+                <div class="user-name">{{ ended_trip.user.profile.full_name }}</div>
+                <div class="travel-city">
+                    {% for c in ended_trip.city %}
+                    {% if not forloop.first %} / {% endif %} {{ c }}
+                    {% endfor %}
+                </div>
+                <div class="travel-date">{{ ended_trip.travel_begin_at|date:"Y/m/d" }} - {{ ended_trip.travel_end_at|date:"Y/m/d" }}</div>
+                <div class="traveler-num">성인 {{ ended_trip.adult_traveler }}명 | 아동 {{ ended_trip.child_traveler }}명</div>
+                <div class="req-cost">총 경비 <span>{{ ended_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
+                <div class="show-request-button">받은 후기 보기</div>
+                <div class="show-offer-button">여행기 쓰기</div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <div class="no-result">
+            지난 여행이 없습니다.
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="canceled-trip display-none">
+        {% if canceled_trip_set %}
+        {% for canceled_trip in canceled_trip_set %}
+            <div class="trip-card-wrapper">
+                <div class="trans-light">
+                    <div class="{% if canceled_trip.trans_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                    <span>이동수단</span>
+                </div>
+                <div class="accom-light">
+                    <div class="{% if canceled_trip.accom_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                    <span>숙박</span>
+                </div>
+                <div class="guide-light">
+                    <div class="{% if canceled_trip.guide_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                    <span>가이드</span>
+                </div>
+                <img class="user-pic" src="{{ canceled_trip.user.profile.photo.url }}">
+                <div class="user-name">{{ canceled_trip.user.profile.full_name }}</div>
+                <div class="travel-city">
+                    {% for c in canceled_trip.city %}
+                    {% if not forloop.first %} / {% endif %} {{ c }}
+                    {% endfor %}
+                </div>
+                <div class="travel-date">{{ canceled_trip.travel_begin_at|date:"Y/m/d" }} - {{ canceled_trip.travel_end_at|date:"Y/m/d" }}</div>
+                <div class="traveler-num">성인 {{ canceled_trip.adult_traveler }}명 | 아동 {{ canceled_trip.child_traveler }}명</div>
+                <div class="req-cost">총 경비 <span>{{ canceled_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
+                <div class="show-request-button">제안 견적서 보기</div>
+                <div class="show-offer-button">취소 내용 보기</div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <div class="no-result">
+            취소된 여행이 없습니다.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

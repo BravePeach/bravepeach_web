@@ -129,7 +129,29 @@ def dashboard(request):
 
 @user_passes_test(guide_required)
 def schedule(request):
-    return flavour_render(request, "guide/find.html", {"tab": "schedule"})
+    guide = Guide.objects.get(user=request.user)
+    fixed_offer_set = GuideOffer.objects.filter(guide=guide, paid=True, request__travel_end_at__gte=datetime.date.today(), is_canceled=False)
+    fixed_offer_price = [o.total_cost for o in fixed_offer_set]
+    fixed_trip_set = UserRequest.objects.filter(id__in=[r.request_id for r in fixed_offer_set])
+    ended_offer_set = GuideOffer.objects.filter(guide=guide, paid=True, request__travel_end_at__lt=datetime.date.today(), is_canceled=False)
+    ended_offer_price = [o.total_cost for o in ended_offer_set]
+    ended_trip_set = UserRequest.objects.filter(id__in=[r.request_id for r in ended_offer_set])
+    canceled_offer_set = GuideOffer.objects.filter(guide=guide, is_canceled=True)
+    canceled_trip_set = UserRequest.objects.filter(id__in=[r.request_id for r in canceled_offer_set])
+    canceled_offer_price = [o.total_cost for o in canceled_offer_set]
+    return flavour_render(request, "guide/schedule.html", {"tab": "schedule",
+                                                           "fixed_trip_set": fixed_trip_set,
+                                                           "fixed_offer_price": fixed_offer_price,
+                                                           "ended_trip_set": ended_trip_set,
+                                                           "ended_offer_price": ended_offer_price,
+                                                           "canceled_trip_set": canceled_trip_set,
+                                                           "canceled_offer_price": canceled_offer_price,
+                                                           })
+
+
+@user_passes_test(guide_required)
+def template(request):
+    return
 
 
 @user_passes_test(guide_required)
@@ -249,7 +271,7 @@ class FilterTrip(View):
         return JsonResponse(result, safe=False)
 
 
-@login_required
+@user_passes_test(guide_required)
 def write_offer(request, req_id):
     guide_id = Guide.objects.prefetch_related('accom_templates').prefetch_related('guide_templates').get(user_id=request.user.id).id
     req = get_object_or_404(UserRequest.objects.select_related('user'), id=req_id)
@@ -264,7 +286,7 @@ def write_offer(request, req_id):
                                                               'date_list': date_list})
 
 
-# 숙소 템플릿 검색
+@user_passes_test(guide_required)
 def search_accom(request, req_id):
     if request.is_ajax():
         guide_id = request.GET.get('guide_id')
@@ -290,7 +312,7 @@ def search_accom(request, req_id):
         return HttpResponse(html)
 
 
-# 가이드 템플릿 검색
+@user_passes_test(guide_required)
 def search_guide(request, req_id):
     if request.is_ajax():
         guide_id = request.GET.get('guide_id')
@@ -317,6 +339,7 @@ def search_guide(request, req_id):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def new_accom_form(request, req_id):
     if request.is_ajax():
         form_id = 'accom_form' + str(request.GET.get('id'))
@@ -327,6 +350,7 @@ def new_accom_form(request, req_id):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def new_cost_form(request, req_id):
     if request.is_ajax():
         form_id = 'cost_form' + str(request.GET.get('id'))
@@ -335,6 +359,7 @@ def new_cost_form(request, req_id):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def new_guide_form(request, req_id):
     if request.is_ajax():
         form_id = 'guide_form' + str(request.GET.get('id'))
@@ -346,6 +371,7 @@ def new_guide_form(request, req_id):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def load_accom(request, req_id):
     if request.is_ajax():
         accom_id = request.GET.get('accom_id')
@@ -357,6 +383,7 @@ def load_accom(request, req_id):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def load_guide(request, req_id):
     if request.is_ajax():
         guide_template_id = request.GET.get('guide_id')
@@ -368,6 +395,7 @@ def load_guide(request, req_id):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def upload_accom_photo(request):
     if request.method == "POST":
         files = request.FILES
@@ -385,6 +413,7 @@ def upload_accom_photo(request):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def upload_guide_photo(request):
     if request.method == "POST":
         files = request.FILES
@@ -402,6 +431,7 @@ def upload_guide_photo(request):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def save_accom_template(request):
     if request.method == "POST":
         guide_id = request.POST.get('guide_id')
@@ -424,6 +454,7 @@ def save_accom_template(request):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def save_guide_template(request):
     if request.method == "POST":
         guide_id = request.POST.get('guide_id')
@@ -442,6 +473,7 @@ def save_guide_template(request):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def save_trans_offer(request, req_id):
     if request.method == "POST":
         guide_id = request.POST.get('guide_id')
@@ -466,6 +498,7 @@ def get_weekday(i):
     return weekday[i]
 
 
+@user_passes_test(guide_required)
 def save_accom_offer(request, req_id):
     if request.method == "POST":
         guide_id = request.POST.get('guide_id')
@@ -487,6 +520,7 @@ def save_accom_offer(request, req_id):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def save_guide_offer(request, req_id):
     if request.method == "POST":
         guide_id = request.POST.get('guide_id')
@@ -509,6 +543,7 @@ def save_guide_offer(request, req_id):
     return JsonResponse({"ok": False})
 
 
+@user_passes_test(guide_required)
 def save_cost_offer(request, req_id):
     if request.method == "POST":
         guide_id = request.POST.get('guide_id')
