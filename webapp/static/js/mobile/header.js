@@ -2,12 +2,14 @@
 
 function mobileMenu() {
     if ($('.side_menu_wrapper').css('display') == 'none'){
+        $('body').css('overflow', 'hidden');
         $('.nav-guide-search-dropdown').hide('slow');
         if($('.nav-bravepeach-logo').css('display') == 'none') {
             $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
         }
     }
     else {
+        $('body').css('overflow', 'auto');
         $('.nav-guide-search-dropdown').show('slow');
         if($('.nav-bravepeach-logo').css('display') == 'none') {
             $('.mobile-header').animate({backgroundColor: "rgba(255, 255, 255, 0)"});
@@ -18,12 +20,14 @@ function mobileMenu() {
 
 function mobileSearch() {
     if ($('.search_side_menu_wrapper').css('display') == 'none'){
+        $('body').css('overflow', 'hidden');
         $('.nav-menubar').hide('slow');
         if($('.nav-bravepeach-logo').css('display') == 'none') {
             $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
         }
     }
     else {
+        $('body').css('overflow', 'auto');
         $('.nav-menubar').show('slow');
         if($('.nav-bravepeach-logo').css('display') == 'none') {
             $('.mobile-header').animate({backgroundColor: "rgba(255, 255, 255, 0)"});
