@@ -116,7 +116,7 @@ def enroll_volunteer(request, gid):
 
 @user_passes_test(guide_required)
 def find(request):
-    return flavour_render(request, "guide/find.html", {"tab": "find"})
+    return flavour_render(request, "guide/index.html", {"tab": "find"})
 
 
 @login_required

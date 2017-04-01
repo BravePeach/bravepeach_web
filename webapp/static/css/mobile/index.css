@@ -1,5 +1,9 @@
 body{width: 100%;}
 
+.body-contents-wrapper{
+    padding: 0 0 273px 0;
+}
+
 header{
     background-color: transparent;
 }

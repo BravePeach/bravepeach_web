@@ -21,18 +21,18 @@
 }
 
 .no-result{
-  width: 880px;
-  height: 200px;
+ width: 94.7%;
+    max-width: 355px;
+  height: 197px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
-  border: solid 1px #ddd9d9;
-      font-size: 24px;
+  border: solid 1px #979797;
+      font-size: 20px;
   font-weight: bold;
     text-align: center;
-    padding-top: 63px;
-    line-height: 3.08;
-    margin-bottom: 20px;
+    padding-top: 88px;
+    margin-bottom: 30px;
 }
 
 .trip-card-wrapper{

@@ -55,6 +55,7 @@ $(function(){
     fixTripButton();
     $('.enroll-trip-button').fadeIn('slow');
     $(document).scroll(function() {
+        $('.enroll-trip-button').stop().fadeIn('slow');
         fixTripButton();
     });
 

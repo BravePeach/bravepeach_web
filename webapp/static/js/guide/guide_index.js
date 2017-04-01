@@ -110,7 +110,7 @@ $(function () {
     fixGuideButton();
     $('.guide-button').fadeIn('slow');
     $(document).scroll(function () {
-        $('.guide-button').fadeIn('slow');
+        $('.guide-button').stop().fadeIn('slow');
         fixGuideButton();
     });
 
