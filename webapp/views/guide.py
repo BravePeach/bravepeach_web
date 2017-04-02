@@ -152,7 +152,7 @@ def schedule(request):
 
 @user_passes_test(guide_required)
 def template(request):
-    return
+    return flavour_render(request, "guide/template.html", {})
 
 
 @user_passes_test(guide_required)

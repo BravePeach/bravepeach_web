@@ -1,0 +1,133 @@
+{% extends "pc/guide/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/pc/guide/write_offer.css' %}">
+<link rel="stylesheet" href="{% static 'css/pc/guide/template.css' %}">
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/guide/template.js' %}"></script>
+{% endblock%}
+
+{% block content %}
+<div class="template-top">
+    <span class="accom clicked">숙소</span>
+    <span class="guide">가이드</span>
+    <span class="product">여행상품</span>
+</div>
+<hr>
+
+<div class="wrapper">
+    <div class="accom">
+        <div class="title">여행자에게 견적서에서 제시할 가이드 일정 정보를 관리하세요!<br>미리 작성하거나, 수정/삭제가 가능합니다.</div>
+        <div class="accom-form-wrapper" id="accom_form1">
+            <input type="hidden" class="accom-id" value="{{ accom_template.id }}">
+            <input class="accom-date" type="text" placeholder="예) 2017/05/04 - 2017/05/08 (4박 5일)">
+            <img class="accom-delete" src="{% static 'image/icon/cancel.png'%}">
+            <div class="delete-modal display-none">
+                <img class="delete-out" src="{% static 'image/icon/cancel.png' %}">
+                <div class="delete-title">정말로 삭제하시겠습니까?</div>
+                <div class="delete-no">아니오</div>
+                <div class="delete-ok">예</div>
+            </div>
+            <div class="allover display-none"></div>
+            <select class="accom-type" type="select">
+                <option value="" disabled selected>숙소유형</option>
+                <option value="1" {% if accom_template.type_id == 1 %}selected{% endif %}>호텔</option>
+                <option value="2" {% if accom_template.type_id == 2 %}selected{% endif %}>한인 민박</option>
+                <option value="3" {% if accom_template.type_id == 3 %}selected{% endif %}>현지인 집</option>
+                <option value="4" {% if accom_template.type_id == 4 %}selected{% endif %}>리조트</option>
+                <option value="4" {% if accom_template.type_id == 5 %}selected{% endif %}>가이드 집</option>
+            </select>
+            <input class="accom-title-form" type="text" placeholder="숙소 타이틀 (검색이 쉽게 지역과 숙소 유형으로 저장해주세요)"
+                   value="{{ accom_template.title }}">
+            <input class="accom-address" placeholder="주소" readonly
+                   value="{% for address in accom_template.address %}{{ address }} {% endfor %}">
+            <div class="address-modal display-none">
+                <img class="delete-out" src="{% static 'image/icon/cancel.png' %}">
+                <div class="address-title">숙소의 위치를 알려주세요</div>
+                <span>여행자에게는 정확한 위치는 알려지지 않습니다.</span>
+                <input type="text" class="address-modal-form"/>
+                <div class="map"></div>
+                <div class="address-ok">확인</div>
+            </div>
+            <input type="hidden" class="country" value="{{ accom_template.address.0 }}">
+            <input type="hidden" class="city" value="{{ accom_template.address.1 }}">
+            <input type="hidden" class="small_city" value="{{ accom_template.address.2 }}">
+            <input type="hidden" class="lat" value="{{ accom_template.lat }}">
+            <input type="hidden" class="lng" value="{{ accom_template.lng }}">
+
+            <div class="allover display-none"></div>
+
+            <div class="accom-photo-wrapper">
+                <div class="photo-title">숙소 사진을 최대 4장까지 추가해주세요.</div>
+                {{ photo_form.photo }}
+                <div class="photo photo1"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+                <input type="file" accept="image/*" style="display: none" required>
+                <input type="hidden" class="photo1">
+                <div class="photo photo2"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+                <input type="file" accept="image/*" style="display: none">
+                <input type="hidden" class="photo2">
+                <div class="photo photo3"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+                <input type="file" accept="image/*" style="display: none">
+                <input type="hidden" class="photo3">
+                <div class="photo photo4"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
+                <input type="file" accept="image/*" style="display: none">
+                <input type="hidden" class="photo4">
+            </div>
+            <textarea class="accom-content">{% if not accom_template.content %}숙소 정보를 자세하게 작성해주세요.
+
+예) 숙소 유형 : 스위트룸
+침실 : 1개
+침대 : 2개
+체크인 : 10:00 - 17:00
+체크아웃 : 14:00{% else %}{{ accom_template.content }}{% endif %}</textarea>
+            <div class="accom-comment">※ 불러온 내용을 수정한 뒤 ‘저장하기’ 버튼을 누르시면 최신내용만이 저장됩니다.
+                <br>※ 미리보기 버튼을 통해 저장 전에 여행자에게 어떻게 정보가 보이는지 알 수 있습니다.
+            </div>
+        </div>
+    </div>
+
+    <div class="guide display-none">
+        <div class="title">여행자에게 견적서에서 제시할 가이드 일정 정보를 관리하세요!<br>미리 작성하거나, 수정/삭제가 가능합니다.</div>
+
+        <div class="guide-form-wrapper {% if date %}{{date}}{% else %}0{% endif %}" id="{% if id %}{{ id }}{% else %}guide_form1{% endif %}">
+            <input type="hidden" class="guide-id" value="{{ guide_template.id }}">
+            <input class="guide-title-form" type="text" placeholder="일정 타이틀 (예) 에펠탑에서 점심먹기"
+                   value="{{ guide_template.title }}">
+            <img class="guide-delete" src="{% static 'image/icon/cancel.png'%}">
+            <div class="delete-modal display-none">
+                <img class="delete-out" src="{% static 'image/icon/cancel.png' %}">
+                <div class="delete-title">정말로 삭제하시겠습니까?</div>
+                <div class="delete-no">아니오</div>
+                <div class="delete-ok">예</div>
+            </div>
+            <div class="allover display-none"></div>
+            <div class="guide-photo">
+                <div class="add-photo-button">
+                    <img class="photo-pic" src="{% static 'image/icon/profile_photo.png' %}">
+                    <span>사진 추가 하기</span>
+                </div>
+                <input type="file" accept="image/*" style="display: none" required>
+                <input type="hidden" class="photo">
+            </div>
+            <textarea class="guide-content">{% if not guide_template.content %}가이드 일정에 대한 정보를 자세하게 작성해주세요.
+
+예)
+낮 12시 도착. 에펠탑 공원에서 싸온 도시락을 먹고 포토타임을 가질 것입니다.
+에펠탑은 파리를 상징하는 가장 큰 조형물입니다.{% else %}{{ guide_template.content }}{% endif %}</textarea>
+
+            <div class="guide-comment">※ 불러온 내용을 수정한 뒤 ‘저장하기’ 버튼을 누르시면 최신내용만이 저장됩니다.<br>
+※ 미리보기 버튼을 통해 저장 전에 여행자에게 어떻게 정보가 보이는지 알 수 있습니다.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="product display-none">
+
+    </div>
+</div>
+{% endblock %}
+

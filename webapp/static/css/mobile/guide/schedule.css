@@ -32,7 +32,7 @@
   font-weight: bold;
     text-align: center;
     padding-top: 88px;
-    margin-bottom: 30px;
+    margin: 0 auto 30px auto;
 }
 
 .trip-card-wrapper{
