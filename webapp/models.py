@@ -373,7 +373,7 @@ class GuideReview(Model):
 
 class Journal(Model):
     offer = models.ForeignKey(GuideOffer, related_name='journal')
-    thumbnail = models.ImageField()
-    content = RedactorField()
+    thumbnail = models.ImageField(upload_to='journal/%Y_%m_%d')
+    content = RedactorField(verbose_name="Content")
     writer = models.ForeignKey(Guide)
     write_date = models.DateField(null=False)

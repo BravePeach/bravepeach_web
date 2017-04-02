@@ -212,3 +212,14 @@ class GuideReviewForm(forms.ModelForm):
         model = GuideReview
         fields = ['rating', 'content']
         widgets = {'content': RedactorEditor}
+
+
+class JournalForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['thumbnail'].widget.attrs.update({"class": "hidden"})
+
+    class Meta:
+        model = Journal
+        fields = ['thumbnail', 'content']
+        widgets = {'content': RedactorEditor}

@@ -107,7 +107,7 @@
     <div class="tab-contents journal">
         <div class="journal-write">
             <div class="title">여행기를 작성해주세요!</div>
-        <div class="arrow arrow-left"><img src="{% static 'image/icon/arrow_side_grey.png' %}" alt=""></div>
+            <div class="arrow arrow-left"><img src="{% static 'image/icon/arrow_side_grey.png' %}" alt=""></div>
             <div class="arrow arrow-right"><img src="{% static 'image/icon/arrow_side_grey.png' %}" alt=""></div>
             <div class="journal-list">
                 {% for journal_write in journal_write_list %}
@@ -137,20 +137,20 @@
                 </div><!--
                 --><div class="journal-box-info">
                 <div class="guide-options">
-                    <div class="guide-option {% if offer.request.trans_guided %}guided{% endif %}"></div>
+                    <div class="guide-option {% if journal.offer.request.trans_guided %}guided{% endif %}"></div>
                     <div class="guide-txt">이동수단</div>
-                    <div class="guide-option {% if offer.request.accom_guided %}guided{% endif %}"></div>
+                    <div class="guide-option {% if journal.offer.request.accom_guided %}guided{% endif %}"></div>
                     <div class="guide-txt">숙박</div>
-                    <div class="guide-option {% if offer.request.guide_guided %}guided{% endif %}"></div>
+                    <div class="guide-option {% if journal.offer.request.guide_guided %}guided{% endif %}"></div>
                     <div class="guide-txt">가이드</div>
                 </div>
-                <div class="schedule">{{ offer.request.travel_begin_at|date:"Y/m/d" }} ~ {{ offer.request.travel_end_at|date:"Y/m/d" }}</div>
+                <div class="schedule">{{ journal.offer.request.travel_begin_at|date:"Y/m/d" }} ~ {{ journal.offer.request.travel_end_at|date:"Y/m/d" }}</div>
                 <div class="cities ellipsis">
-                    {% for c in offer.request.city %}
+                    {% for c in journal.offer.request.city %}
                         {% if not forloop.first %} / {% endif %} {{ c }}
                     {% endfor %}
                 </div>
-                <div class="age-grp"> {{ offer.request.age_group }} </div>
+                <div class="age-grp"> {{ journal.offer.request.age_group }} </div>
                 {#                                      <div class="rating">#}
                 {#                        {% for i in send.clean_rating.0 %}#}
                 {#                            <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">#}

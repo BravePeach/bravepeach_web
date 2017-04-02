@@ -49,6 +49,7 @@ urlpatterns = [
     url(r'^guide/review/$', views.guide.review, name='guide_review'),
     url(r'^guide/write_review/(?P<oid>\d+)/$', views.guide.write_review, name="guide_write_review"),
     url(r'^guide/view_review/(?P<oid>\d+)/$', views.guide.view_review, name="guide_view_review"),
+    url(r'^guide/write_journal/(?P<oid>\d+)/$', views.guide.write_journal, name="guide_write_journal"),
     url(r'^guide/template/$', views.guide.template, name='guide_template'),
     url(r'^guide/inactivate/$', views.guide.inactivate, name='guide_inactivate'),
     url(r'^guide/activate/$', views.guide.activate, name='guide_activate'),

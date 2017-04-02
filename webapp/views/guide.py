@@ -247,6 +247,27 @@ def view_review(request, rid):
     return flavour_render(request, "guide/view_review.html", {"review": review})
 
 
+def write_journal(request, oid):
+    offer = get_object_or_404(GuideOffer, id=oid)
+
+    if request.method == "POST":
+        print(request.FILES)
+        print(request.POST)
+        form = JournalForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_journal = form.save(commit=False)
+            new_journal.write_date = datetime.date.today()
+            new_journal.writer = request.user.guide.first()
+            new_journal.offer = offer
+            new_journal.save()
+        else:
+            print(form.errors)
+        return redirect(review)
+    else:
+        form = JournalForm()
+        return flavour_render(request, "guide/write_journal.html", {"offer": offer, "form": form})
+
+
 @user_passes_test(guide_required)
 def message(request):
     return flavour_render(request, "guide/find.html", {"tab": "message"})
