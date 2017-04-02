@@ -21,8 +21,8 @@ from bravepeach import settings
 
 from bravepeach.util import flavour_render
 from ..models import (Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate,
-                       Notice, Cost, GuideAdjust)
-from ..forms import WriteOfferForm, VolunteerForm, GuideAdjustForm
+                       Notice, Cost, GuideAdjust, GuideReview, Journal)
+from ..forms import (WriteOfferForm, VolunteerForm, GuideAdjustForm, GuideReviewForm, JournalForm)
 from bravepeach.const import GUIDE_TYPE, GUIDE_THEME
 
 
@@ -212,7 +212,66 @@ def request_adjust(request, oid):
 
 @user_passes_test(guide_required)
 def review(request):
-    return flavour_render(request, "guide/find.html", {"tab": "review"})
+    page_type = request.GET.get("type", "")
+    guide = Guide.objects.filter(user_id=request.user.id).all()[0]
+    review_list = UserReview.objects.filter(receiver=guide).order_by('-id').all()
+    write_list = GuideOffer.objects.filter(guide_review__isnull=True).order_by('id').all()
+    send_list = GuideReview.objects.filter(writer=guide).order_by('-id').all()
+    journal_write_list = GuideOffer.objects.filter(journal__isnull=True).order_by('id').all()
+    journal_list = Journal.objects.filter(writer=guide).order_by('-id').all()
+    return flavour_render(request, "guide/review.html", {"tab": "review", 'review_list': review_list,
+                                                         "write_list": write_list, "send_list": send_list,
+                                                         "journal_write_list": journal_write_list,
+                                                         "journal_list": journal_list, "page_type": page_type})
+
+
+def write_review(request, oid):
+    offer = get_object_or_404(GuideOffer, id=oid)
+
+    if request.method == "POST":
+        form = GuideReviewForm(request.POST)
+        if form.is_valid():
+            new_review = form.save(commit=False)
+            new_review.write_date = datetime.date.today()
+            new_review.writer = request.user.guide.all()[0]
+            new_review.offer_id = oid
+            new_review.receiver = offer.request.user
+            new_review.save()
+        return redirect(review)
+    else:
+        form = GuideReviewForm()
+        return flavour_render(request, "guide/write_review.html", {"offer": offer, "form": form})
+
+
+def view_review(request, rid):
+    review = GuideReview.objects.filter(id=rid).first()
+    return flavour_render(request, "guide/view_review.html", {"review": review})
+
+
+def write_journal(request, oid):
+    offer = get_object_or_404(GuideOffer, id=oid)
+
+    if request.method == "POST":
+        print(request.FILES)
+        print(request.POST)
+        form = JournalForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_journal = form.save(commit=False)
+            new_journal.write_date = datetime.date.today()
+            new_journal.writer = request.user.guide.first()
+            new_journal.offer = offer
+            new_journal.save()
+        else:
+            print(form.errors)
+        return redirect(review)
+    else:
+        form = JournalForm()
+        return flavour_render(request, "guide/write_journal.html", {"offer": offer, "form": form})
+
+
+def view_journal(request, jid):
+    journal = Journal.objects.filter(id=jid).first()
+    return flavour_render(request, "guide/view_journal.html", {"journal": journal})
 
 
 @user_passes_test(guide_required)

@@ -359,7 +359,7 @@ class Comment(Model):
 class GuideReview(Model):
     offer = models.ForeignKey(GuideOffer, related_name="guide_review")
     rating = models.FloatField(null=False)
-    content = RedactorField()
+    content = RedactorField(verbose_name="Content")
     writer = models.ForeignKey(Guide)
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL)
     write_date = models.DateField(null=False, default=datetime.date.today())
@@ -369,3 +369,11 @@ class GuideReview(Model):
         frac_part, int_part = math.modf(self.rating)
         frac_part = 0 if frac_part < 0.5 else 0.5
         return range(int(int_part)), frac_part, range(4-int(int_part))
+
+
+class Journal(Model):
+    offer = models.ForeignKey(GuideOffer, related_name='journal')
+    thumbnail = models.ImageField(upload_to='journal/%Y_%m_%d')
+    content = RedactorField(verbose_name="Content")
+    writer = models.ForeignKey(Guide)
+    write_date = models.DateField(null=False)

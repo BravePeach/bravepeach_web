@@ -1,0 +1,174 @@
+{% extends "pc/guide/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/pc/guide/review.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/guide/review.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="tabs">
+        <div class="tab receive active">받은 후기</div>
+        <div class="tab write">후기 쓰기</div>
+        <div class="tab send">보낸 후기</div>
+        <div class="tab journal">여행기</div>
+    </div>
+    <div class="tab-contents receive active">
+        {% for review in review_list %}
+            <div class="review-box">
+                <div class="profile">
+                    <img src="{% if review.writer.profile.photo %}{{ review.writer.profile.photo.url }}
+                        {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+                         alt="profile">
+                    <div class="name">{{ review.writer.profile.full_name }}</div>
+                </div>
+                <div class="content">
+                    <div class="rating">
+                        {% for i in review.clean_rating.0 %}
+                            <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">
+                        {% endfor %}
+                        {% if review.clean_rating.1 == 0.5 %}
+                            <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="rating-img">
+                        {% else %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endif %}
+                        {% for i in review.clean_rating.2 %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endfor %}
+                    </div>
+                    <div class="date">{{ review.write_date|date:"Y/m/d"}}</div>
+                    <div class="content ellipsis">{{ review.content }}</div>
+                </div>
+            </div>
+            <div class="hr"></div>
+        {% empty %}
+            <div class="empty">받은 후기가 없습니다</div>
+            <div class="hr"></div>
+        {% endfor %}
+    </div>
+    <div class="tab-contents write">
+        <div class="contents-header">
+            아직 후기를 남기지 않은 지난 여행입니다! <br>
+            여행자에게 후기를 작성해주세요.
+        </div>
+        {% for write in write_list %}
+            <a href="{% url 'guide_write_review' oid=write.id %}" class="write-box">
+                <div class="profile"><img src="{% if write.request.user.profile.photo %}{{ write.request.user.profile.photo.url }}
+                                        {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+                                          alt="profile">
+                </div>
+                <div class="name">{{ write.request.user.profile.full_name }}</div>
+                <div class="date">{{ write.request.travel_begin_at|date:"Y/m/d" }} - {{ write.request.travel_end_at|date:"Y/m/d" }}</div>
+                <div class="city ellipsis">{% for c in write.request.city %}{% if not forloop.first%} / {% endif %}{{ c }}{% endfor %}</div>
+            </a>
+        {% empty %}
+            <div class="empty">작성할 후기가 없습니다</div>
+            <div class="hr"></div>
+        {% endfor %}
+    </div>
+    <div class="tab-contents send">
+        {% for send in send_list %}
+            <div class="send-box">
+                <div class="profile">
+                    <img src="{% if send.receiver.profile.photo %}{{ send.receiver.profile.photo.url }}
+                        {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+                         alt="profile">
+                    <div class="name">{{ send.receiver.profile.full_name }}</div>
+                </div>
+                <div class="content">
+                    <div class="rating">
+                        {% for i in send.clean_rating.0 %}
+                            <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">
+                        {% endfor %}
+                        {% if send.clean_rating.1 == 0.5 %}
+                            <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="rating-img">
+                        {% else %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endif %}
+                        {% for i in send.clean_rating.2 %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endfor %}
+                    </div>
+                    <div class="date">{{ send.write_date|date:"Y/m/d"}}</div>
+                    <div class="review-content ellipsis">{{ send.content|safe }}</div>
+                </div>
+            </div>
+            <div class="hr"></div>
+        {% empty %}
+            <div class="empty">작성한 후기가 없습니다</div>
+            <div class="hr"></div>
+        {% endfor %}
+    </div>
+    <div class="tab-contents journal">
+        <div class="journal-write">
+            <div class="title">여행기를 작성해주세요!</div>
+            <div class="arrow arrow-left"><img src="{% static 'image/icon/arrow_side_grey.png' %}" alt=""></div>
+            <div class="arrow arrow-right"><img src="{% static 'image/icon/arrow_side_grey.png' %}" alt=""></div>
+            <div class="journal-list">
+                {% for journal_write in journal_write_list %}
+                    <a href="{% url 'guide_write_journal' oid=journal_write.id %}" class="write-box">
+                        <div class="profile"><img src="{% if journal_write.request.user.profile.photo %}{{ journal_write.request.user.profile.photo.url }}
+                                        {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+                                                  alt="profile">
+                        </div>
+                        <div class="name">{{ journal_write.request.user.profile.full_name }}</div>
+                        <div class="date">{{ journal_write.request.travel_begin_at|date:"Y/m/d" }} - {{ journal_write.request.travel_end_at|date:"Y/m/d" }}</div>
+                        <div class="city ellipsis">{% for c in journal_write.request.city %}{% if not forloop.first%} / {% endif %}{{ c }}{% endfor %}</div>
+                    </a>
+                {% empty %}
+                    <div class="empty">작성할 여행기가 없습니다</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="title" style="margin-bottom: 20px;">작성된 여행기</div>
+        {% for journal in journal_list%}
+            <a href="{% url 'guide_view_journal' jid=journal.id %}" class="journal-box">
+                <div class="journal-box-pic">
+                    picpic
+                    {#                        <img src="{% if past.guide.user.profile.photo %}#}
+                    {#                                    {{ past.guide.user.profile.photo.url }}{% else %}#}
+                    {#                                    {% static 'image/icon/profile_empty.png' %}{% endif %}"#}
+                    {#                             alt="">#}
+                </div><!--
+                --><div class="journal-box-info">
+                <div class="guide-options">
+                    <div class="guide-option {% if journal.offer.request.trans_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">이동수단</div>
+                    <div class="guide-option {% if journal.offer.request.accom_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">숙박</div>
+                    <div class="guide-option {% if journal.offer.request.guide_guided %}guided{% endif %}"></div>
+                    <div class="guide-txt">가이드</div>
+                </div>
+                <div class="schedule">{{ journal.offer.request.travel_begin_at|date:"Y/m/d" }} ~ {{ journal.offer.request.travel_end_at|date:"Y/m/d" }}</div>
+                <div class="cities ellipsis">
+                    {% for c in journal.offer.request.city %}
+                        {% if not forloop.first %} / {% endif %} {{ c }}
+                    {% endfor %}
+                </div>
+                <div class="age-grp"> {{ journal.offer.request.age_group }} </div>
+                {#                                      <div class="rating">#}
+                {#                        {% for i in send.clean_rating.0 %}#}
+                {#                            <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">#}
+                {#                        {% endfor %}#}
+                {#                        {% if send.clean_rating.1 == 0.5 %}#}
+                {#                            <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="rating-img">#}
+                {#                        {% else %}#}
+                {#                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">#}
+                {#                        {% endif %}#}
+                {#                        {% for i in send.clean_rating.2 %}#}
+                {#                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">#}
+                {#                        {% endfor %}#}
+            </div>
+            </a>
+        {% empty %}
+            <div class="journal-box">
+                <div class="empty">작성한 여행기가 없습니다</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

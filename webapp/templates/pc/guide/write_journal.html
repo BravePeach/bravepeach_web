@@ -1,0 +1,54 @@
+{% extends "pc/guide/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/pc/guide/write_journal.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/guide/write_journal.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="tabs">
+        <div class="tab receive">받은 후기</div>
+        <div class="tab write">후기 쓰기</div>
+        <div class="tab send">보낸 후기</div>
+        <div class="tab journal active">여행기</div>
+    </div>
+    <div class="title">가이드를 제공한 여행기를 작성해주세요!</div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.thumbnail }}
+        <img id="thumbnail-img" style="display: none;">
+        <div class="thumbnail">
+            <img src="{% static 'image/icon/profile_photo.png' %}" alt="">
+            <div class="txt">썸네일로 사용할 <br>사진을 넣어주세요.</div>
+        </div>
+        <div class="content-info">
+            <div class="guide-options">
+                <div class="guide-option {% if offer.request.trans_guided %}guided{% endif %}"></div>
+                <div class="guide-txt">이동수단</div>
+                <div class="guide-option {% if offer.request.accom_guided %}guided{% endif %}"></div>
+                <div class="guide-txt">숙박</div>
+                <div class="guide-option {% if offer.request.guide_guided %}guided{% endif %}"></div>
+                <div class="guide-txt">가이드</div>
+            </div>
+            <div class="schedule">{{ offer.request.travel_begin_at|date:"Y/m/d" }} ~ {{ offer.request.travel_end_at|date:"Y/m/d" }}</div>
+            <div class="cities ellipsis">
+                {% for c in offer.request.city %}
+                    {% if not forloop.first %} / {% endif %} {{ c }}
+                {% endfor %}
+            </div>
+            <div class="age-grp"> {{ offer.request.age_group }} </div>
+        </div>
+        <div class="review-content">{{ form.content }}</div>
+        <div class="btn-area">
+            <a href="{% url 'guide_review' %}" class="cancel-btn">취소</a>
+            <button type="submit" class="submit-btn">여행기 올리기</button>
+        </div>
+    </form>
+{% endblock %}
