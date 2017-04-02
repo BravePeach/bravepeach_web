@@ -21,7 +21,7 @@ from bravepeach import settings
 
 from bravepeach.util import flavour_render
 from ..models import (Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate,
-                       Notice, Cost, GuideAdjust)
+                       Notice, Cost, GuideAdjust, GuideReview, Journal)
 from ..forms import WriteOfferForm, VolunteerForm, GuideAdjustForm
 from bravepeach.const import GUIDE_TYPE, GUIDE_THEME
 
@@ -212,7 +212,16 @@ def request_adjust(request, oid):
 
 @user_passes_test(guide_required)
 def review(request):
-    return flavour_render(request, "guide/find.html", {"tab": "review"})
+    guide = Guide.objects.filter(user_id=request.user.id).all()[0]
+    review_list = UserReview.objects.filter(receiver=guide).order_by('-id').all()
+    write_list = GuideOffer.objects.filter(guide_review__isnull=True).order_by('id').all()
+    send_list = GuideReview.objects.filter(writer=guide).order_by('-id').all()
+    journal_write_list = GuideOffer.objects.filter(journal__isnull=True).order_by('id').all()
+    journal_list = Journal.objects.filter(writer=guide).order_by('-id').all()
+    return flavour_render(request, "guide/review.html", {"tab": "review", 'review_list': review_list,
+                                                         "write_list": write_list, "send_list": send_list,
+                                                         "journal_write_list": journal_write_list,
+                                                         "journal_list": journal_list})
 
 
 @user_passes_test(guide_required)
