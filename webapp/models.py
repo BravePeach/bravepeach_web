@@ -359,7 +359,7 @@ class Comment(Model):
 class GuideReview(Model):
     offer = models.ForeignKey(GuideOffer, related_name="guide_review")
     rating = models.FloatField(null=False)
-    content = RedactorField()
+    content = RedactorField(verbose_name="Content")
     writer = models.ForeignKey(Guide)
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL)
     write_date = models.DateField(null=False, default=datetime.date.today())

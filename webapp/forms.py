@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.forms import extras
 
-from .models import (Profile, UserRequest, UserReview, GuideOffer, AccomTemplate, GuideTemplate, Guide, GuideAdjust)
+from .models import (Profile, UserRequest, UserReview, GuideOffer, AccomTemplate, GuideTemplate, Guide, GuideAdjust,
+                     GuideReview, Journal)
 from redactor.widgets import RedactorEditor
 
 
@@ -200,3 +201,14 @@ class GuideAdjustForm(forms.ModelForm):
     class Meta:
         model = GuideAdjust
         fields = ['name', 'bank', 'account_num', 'swift_bic_code', 'branch', 'addr', 'routing_num']
+
+
+class GuideReviewForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["rating"].widget.attrs.update({"class": "hidden"})
+
+    class Meta:
+        model = GuideReview
+        fields = ['rating', 'content']
+        widgets = {'content': RedactorEditor}

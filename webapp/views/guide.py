@@ -22,7 +22,7 @@ from bravepeach import settings
 from bravepeach.util import flavour_render
 from ..models import (Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate,
                        Notice, Cost, GuideAdjust, GuideReview, Journal)
-from ..forms import WriteOfferForm, VolunteerForm, GuideAdjustForm
+from ..forms import (WriteOfferForm, VolunteerForm, GuideAdjustForm, GuideReviewForm, JournalForm)
 from bravepeach.const import GUIDE_TYPE, GUIDE_THEME
 
 
@@ -222,6 +222,29 @@ def review(request):
                                                          "write_list": write_list, "send_list": send_list,
                                                          "journal_write_list": journal_write_list,
                                                          "journal_list": journal_list})
+
+
+def write_review(request, oid):
+    offer = get_object_or_404(GuideOffer, id=oid)
+
+    if request.method == "POST":
+        form = GuideReviewForm(request.POST)
+        if form.is_valid():
+            new_review = form.save(commit=False)
+            new_review.write_date = datetime.date.today()
+            new_review.writer = request.user.guide.all()[0]
+            new_review.offer_id = oid
+            new_review.receiver = offer.request.user
+            new_review.save()
+        return redirect(review)
+    else:
+        form = GuideReviewForm()
+        return flavour_render(request, "guide/write_review.html", {"offer": offer, "form": form})
+
+
+def view_review(request, rid):
+    review = GuideReview.objects.filter(id=rid).first()
+    return flavour_render(request, "guide/view_review.html", {"review": review})
 
 
 @user_passes_test(guide_required)

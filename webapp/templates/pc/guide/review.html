@@ -57,15 +57,15 @@
             여행자에게 후기를 작성해주세요.
         </div>
         {% for write in write_list %}
-            <div class="write-box">
+            <a href="{% url 'guide_write_review' oid=write.id %}" class="write-box">
                 <div class="profile"><img src="{% if write.request.user.profile.photo %}{{ write.request.user.profile.photo.url }}
                                         {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
                                           alt="profile">
                 </div>
-                <div class="name">{{ write.user.profile.full_name }}</div>
+                <div class="name">{{ write.request.user.profile.full_name }}</div>
                 <div class="date">{{ write.request.travel_begin_at|date:"Y/m/d" }} - {{ write.request.travel_end_at|date:"Y/m/d" }}</div>
                 <div class="city ellipsis">{% for c in write.request.city %}{% if not forloop.first%} / {% endif %}{{ c }}{% endfor %}</div>
-            </div>
+            </a>
         {% empty %}
             <div class="empty">작성할 후기가 없습니다</div>
             <div class="hr"></div>
@@ -75,10 +75,10 @@
         {% for send in send_list %}
             <div class="send-box">
                 <div class="profile">
-                    <img src="{% if send.receiver.profile.photo %}{{ send.reciever.profile.photo.url }}
+                    <img src="{% if send.receiver.profile.photo %}{{ send.receiver.profile.photo.url }}
                         {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
                          alt="profile">
-                    <div class="name">{{ send.reciever.profile.full_name }}</div>
+                    <div class="name">{{ send.receiver.profile.full_name }}</div>
                 </div>
                 <div class="content">
                     <div class="rating">
@@ -94,10 +94,11 @@
                             <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
                         {% endfor %}
                     </div>
-                    <div class="date">{{ review.write_date|date:"Y/m/d"}}</div>
-                    <div class="content ellipsis">{{ review.content }}</div>
+                    <div class="date">{{ send.write_date|date:"Y/m/d"}}</div>
+                    <div class="review-content ellipsis">{{ send.content|safe }}</div>
                 </div>
             </div>
+            <div class="hr"></div>
         {% empty %}
             <div class="empty">작성한 후기가 없습니다</div>
             <div class="hr"></div>
@@ -106,17 +107,19 @@
     <div class="tab-contents journal">
         <div class="journal-write">
             <div class="title">여행기를 작성해주세요!</div>
+        <div class="arrow arrow-left"><img src="{% static 'image/icon/arrow_side_grey.png' %}" alt=""></div>
+            <div class="arrow arrow-right"><img src="{% static 'image/icon/arrow_side_grey.png' %}" alt=""></div>
             <div class="journal-list">
                 {% for journal_write in journal_write_list %}
-                    <div class="write-box">
-                        <div class="profile"><img src="{% if write.request.user.profile.photo %}{{ write.request.user.profile.photo.url }}
+                    <a href="{% url 'guide_write_journal' oid=journal_write.id %}" class="write-box">
+                        <div class="profile"><img src="{% if journal_write.request.user.profile.photo %}{{ journal_write.request.user.profile.photo.url }}
                                         {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
                                                   alt="profile">
                         </div>
-                        <div class="name">{{ write.user.profile.full_name }}</div>
-                        <div class="date">{{ write.request.travel_begin_at|date:"Y/m/d" }} - {{ write.request.travel_end_at|date:"Y/m/d" }}</div>
-                        <div class="city ellipsis">{% for c in write.request.city %}{% if not forloop.first%} / {% endif %}{{ c }}{% endfor %}</div>
-                    </div>
+                        <div class="name">{{ journal_write.request.user.profile.full_name }}</div>
+                        <div class="date">{{ journal_write.request.travel_begin_at|date:"Y/m/d" }} - {{ journal_write.request.travel_end_at|date:"Y/m/d" }}</div>
+                        <div class="city ellipsis">{% for c in journal_write.request.city %}{% if not forloop.first%} / {% endif %}{{ c }}{% endfor %}</div>
+                    </a>
                 {% empty %}
                     <div class="empty">작성할 여행기가 없습니다</div>
                 {% endfor %}

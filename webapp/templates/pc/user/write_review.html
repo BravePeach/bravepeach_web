@@ -24,8 +24,8 @@
             {% if not forloop.first %}/{% endif %}
             {{ c }}{% endfor %}’ 여행의 가이드 후기를 작성해주세요</div>
         <div class="profile">
-            <img src="{% if offer.review.user.profile.photo %}
-                    {{ offer.review.user.profile.photo }}{% else %}
+            <img src="{% if offer.guide.user.profile.photo %}
+                    {{ offer.guide.user.profile.photo.url }}{% else %}
                     {% static 'image/icon/logo_white.png' %}{% endif %}"
                  alt="profile">
         </div>
