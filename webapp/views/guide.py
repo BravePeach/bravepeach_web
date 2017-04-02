@@ -268,6 +268,11 @@ def write_journal(request, oid):
         return flavour_render(request, "guide/write_journal.html", {"offer": offer, "form": form})
 
 
+def view_journal(request, jid):
+    journal = Journal.objects.filter(id=jid).first()
+    return flavour_render(request, "guide/view_journal.html", {"journal": journal})
+
+
 @user_passes_test(guide_required)
 def message(request):
     return flavour_render(request, "guide/find.html", {"tab": "message"})
