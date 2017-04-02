@@ -212,6 +212,7 @@ def request_adjust(request, oid):
 
 @user_passes_test(guide_required)
 def review(request):
+    page_type = request.GET.get("type", "")
     guide = Guide.objects.filter(user_id=request.user.id).all()[0]
     review_list = UserReview.objects.filter(receiver=guide).order_by('-id').all()
     write_list = GuideOffer.objects.filter(guide_review__isnull=True).order_by('id').all()
@@ -221,7 +222,7 @@ def review(request):
     return flavour_render(request, "guide/review.html", {"tab": "review", 'review_list': review_list,
                                                          "write_list": write_list, "send_list": send_list,
                                                          "journal_write_list": journal_write_list,
-                                                         "journal_list": journal_list})
+                                                         "journal_list": journal_list, "page_type": page_type})
 
 
 def write_review(request, oid):
