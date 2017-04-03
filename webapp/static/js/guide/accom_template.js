@@ -6,7 +6,8 @@ function searchAccomTemp(s_id, val, page) {
             title: val,
             page: page,
             guide_id: $('#guide_id').val(),
-            s_id: s_id
+            s_id: s_id,
+            urls: window.location.pathname
         }
         , beforeSend: function () {
             $('.search-wrapper .accom .search-result').html('');
@@ -86,7 +87,11 @@ $(function () {
         $.ajax({
             url: "/load_accom",
             type: "GET",
-            data: {accom_id: accom_id, id: s_id},
+            data: {
+                accom_id: accom_id,
+                id: s_id,
+                urls: window.location.pathname
+            },
             success: function (data) {
                 $('#accom_form' + s_id).replaceWith(data);
             }
@@ -114,7 +119,10 @@ $(function () {
         $.ajax({
             url: "/new_accom_form/",
             type: "GET",
-            data: {id: f_id},
+            data: {
+                id: f_id,
+                urls: window.location.pathname
+            },
             success: function (data) {
                 $('.accom.template .wrapper').append(data.split('<!--!>')[0]);
                 console.log(data.split('<!--!>')[1]);

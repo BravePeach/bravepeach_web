@@ -152,7 +152,7 @@ def schedule(request):
 
 @user_passes_test(guide_required)
 def template(request):
-    urls = request.path.split('/')[2]
+    urls = 'template'
     accom_template_result = AccomTemplate.objects.filter(guide=request.user.guide.all()[0].id, overwritten=False)
     guide_template_result = GuideTemplate.objects.filter(guide=request.user.guide.all()[0].id, overwritten=False)
     a_paginator = Paginator(accom_template_result, 5)
@@ -378,6 +378,7 @@ class FilterTrip(View):
 
 @user_passes_test(guide_required)
 def write_offer(request, req_id):
+    urls = 'write_offer'
     guide_id = Guide.objects.prefetch_related('accom_templates').prefetch_related('guide_templates').get(user_id=request.user.id).id
     req = get_object_or_404(UserRequest.objects.select_related('user'), id=req_id)
     # offer = GuideOffer.objects.create(guide_id=guide_id, request_id=req_id)
@@ -388,7 +389,8 @@ def write_offer(request, req_id):
     return flavour_render(request, 'guide/write_offer.html', {'req': req,
                                                               'is_liked': is_liked,
                                                               'guide_id': guide_id,
-                                                              'date_list': date_list})
+                                                              'date_list': date_list,
+                                                              'url': urls})
 
 
 @user_passes_test(guide_required)
@@ -447,9 +449,10 @@ def search_guide(request):
 @user_passes_test(guide_required)
 def new_accom_form(request):
     if request.is_ajax():
+        urls = request.GET.get('urls').split('/')[2]
         form_id = 'accom_form' + str(request.GET.get('id'))
         search_id = 'accom_search' + str(request.GET.get('id'))
-        accom_form = render_to_string('pc/guide/accom_template_form.html', {'id': form_id}) + '<!--!>'
+        accom_form = render_to_string('pc/guide/accom_template_form.html', {'id': form_id, 'url': urls}) + '<!--!>'
         accom_search = render_to_string('pc/guide/accom_result.html', {'id': search_id})
         return HttpResponse(accom_form + accom_search)
     return JsonResponse({"ok": False})
@@ -467,10 +470,11 @@ def new_cost_form(request, req_id):
 @user_passes_test(guide_required)
 def new_guide_form(request):
     if request.is_ajax():
+        urls = request.GET.get('urls').split('/')[2]
         form_id = 'guide_form' + str(request.GET.get('id'))
         search_id = 'guide_search' + str(request.GET.get('id'))
         date = request.GET.get('date')
-        guide_form = render_to_string('pc/guide/guide_template_form.html', {'id': form_id, 'date': date}) + '<!--!>'
+        guide_form = render_to_string('pc/guide/guide_template_form.html', {'id': form_id, 'date': date, 'url': urls}) + '<!--!>'
         guide_search = render_to_string('pc/guide/guide_result.html', {'id': search_id, 'date': date})
         return HttpResponse(guide_form + guide_search)
     return JsonResponse({"ok": False})

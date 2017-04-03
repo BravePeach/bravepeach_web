@@ -121,7 +121,11 @@ $(function () {
         $.ajax({
             url: "/new_guide_form/",
             type: "GET",
-            data: {id: f_id, date: date},
+            data: {
+                id: f_id,
+                date: date,
+                urls: window.location.pathname
+            },
             success: function (data) {
                 $('.guide.template .wrapper').append(data.split('<!--!>')[0]);
                 console.log(data.split('<!--!>')[1]);
