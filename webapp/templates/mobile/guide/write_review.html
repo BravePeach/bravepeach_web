@@ -1,0 +1,54 @@
+{% extends "mobile/guide/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/guide/write_review.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script>
+        var empty_img = "{% static 'image/icon/logo_empty.png' %}";
+        var full_img = "{% static 'image/icon/logo_full.png' %}";
+    </script>
+    <script src="{% static 'js/review.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="breadcrumb">
+        <span class="title">후기/여행기</span> >
+        {% if page_type == "receive" %}받은 후기{% elif page_type == "write" %}후기 쓰기
+        {% elif page_type == "send" %}보낸 후기{% elif page_type == "journal" %}여행기{% else %}{% endif %}
+    </div>
+    <div class="title">
+        {{ offer.request.travel_begin_at|date:"Y/m/d" }} ~ {{ offer.request.travel_end_at|date:"Y/m/d" }}<br>
+        {% for c in offer.request.city %}{% if not forloop.first%} / {% endif %}{{ c }}{%endfor %}
+    </div>
+    <div class="subtitle">{{ offer.request.user.profile.full_name }} 여행자에게 후기를 남겨보세요. 어떤 여행자인가요?</div>
+    <form method="post">
+    {% csrf_token %}
+    <div class="profile">
+        <img src="{% if offer.request.user.profile.photo %}{{ offer.request.user.profile.photo.url }}
+                    {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+             alt="">
+    </div>
+    <div class="user-info">
+        <div class="name">{{ offer.request.user.profile.full_name }}</div>
+        {{ form.rating }}
+    <div class="rating">
+        <img class="rating-img rating-1" src="{% static 'image/icon/logo_empty.png' %}" alt="">
+        <img class="rating-img rating-2" src="{% static 'image/icon/logo_empty.png' %}" alt="">
+        <img class="rating-img rating-3" src="{% static 'image/icon/logo_empty.png' %}" alt="">
+        <img class="rating-img rating-4" src="{% static 'image/icon/logo_empty.png' %}" alt="">
+        <img class="rating-img rating-5" src="{% static 'image/icon/logo_empty.png' %}" alt="">
+    </div>
+    </div>
+    <div class="review-content">{{ form.content }}</div>
+    <div class="btn-area">
+        <a href="{% url 'guide_review' %}" class="cancel-btn">취소</a>
+        <button type="submit" class="submit-btn">후기 남기기</button>
+    </div>
+    </form>
+{% endblock %}
