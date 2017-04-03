@@ -1,0 +1,60 @@
+{% extends 'mobile/guide/base.html' %}
+{% load compile_static %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/guide/view_journal.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+    <div class="breadcrumb">
+        <span class="title">후기/여행기</span> >
+        {% if page_type == "receive" %}받은 후기{% elif page_type == "write" %}후기 쓰기
+        {% elif page_type == "send" %}보낸 후기{% elif page_type == "journal" %}여행기{% else %}{% endif %}
+    </div>
+    <div class="journal-box">
+        <div class="journal-box-pic">
+            <img src="{% if journal.thumbnail %}{{ journal.thumbnail.url }}{% endif %}" alt="thumbnail">
+        </div><!--
+                --><div class="journal-box-info">
+        <div class="guide-options">
+            <div class="guide-option {% if journal.offer.request.trans_guided %}guided{% endif %}"></div>
+            <div class="guide-txt">이동수단</div>
+            <div class="guide-option {% if journal.offer.request.accom_guided %}guided{% endif %}"></div>
+            <div class="guide-txt">숙박</div>
+            <div class="guide-option {% if journal.offer.request.guide_guided %}guided{% endif %}"></div>
+            <div class="guide-txt">가이드</div>
+        </div>
+        <div class="schedule">{{ journal.offer.request.travel_begin_at|date:"Y/m/d" }} ~ {{ journal.offer.request.travel_end_at|date:"Y/m/d" }}</div>
+        <div class="cities ellipsis">
+            {% for c in journal.offer.request.city %}
+                {% if not forloop.first %} / {% endif %} {{ c }}
+            {% endfor %}
+        </div>
+        <div class="age-grp"> {{ journal.offer.request.age_group }} </div>
+        {#                                      <div class="rating">#}
+        {#                        {% for i in send.clean_rating.0 %}#}
+        {#                            <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">#}
+        {#                        {% endfor %}#}
+        {#                        {% if send.clean_rating.1 == 0.5 %}#}
+        {#                            <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="rating-img">#}
+        {#                        {% else %}#}
+        {#                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">#}
+        {#                        {% endif %}#}
+        {#                        {% for i in send.clean_rating.2 %}#}
+        {#                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">#}
+        {#                        {% endfor %}#}
+    </div>
+    </div>
+    <div class="journal-content">
+        <div class="write">{{ journal.write_date|date:"Y/m/d" }} 작성</div>
+        <div class="content">{{ journal.content|safe }}</div>
+    </div>
+    <div class="btn-area">
+        <a href="javascript:history.back()" class="back">뒤로가기</a>
+        <a href="{% url 'guide_review' %}?type=journal" class="list">여행기 리스트로 가기</a>
+    </div>
+{% endblock %}
