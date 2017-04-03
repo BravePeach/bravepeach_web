@@ -26,7 +26,7 @@ function setComma(inNum){
 $(function () {
 
     // make side menu draggable
-    $('.request-wrapper, .search-wrapper').draggable();
+    // $('.request-wrapper, .search-wrapper').draggable();
 
     $('.request-bar').click(function () {
         $('.request-content').slideToggle();

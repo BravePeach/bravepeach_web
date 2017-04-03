@@ -154,8 +154,8 @@
                 {% endif %}
         </div>
         <div class="button-wrapper">
-            <div class="edit-button">수정하기</div>
-            <div class="ok-button">확인</div>
+            <a class="edit-button" href="javascript:history.go(-1)">수정하기</a>
+            <a class="ok-button" href="{% url 'my_trip' %}">확인</a>
         </div>
     </div>
 {% endblock %}
