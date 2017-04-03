@@ -97,13 +97,19 @@ def enroll_trip(request):
 
         if form.is_valid():
             form.save()
-            return redirect('index')
+            user_request = UserRequest.objects.last()
+            return flavour_render(request, 'trip/enroll_trip_detail.html', {'req': user_request})
         else:
             print(form.errors)
             return redirect("enroll_trip")
     else:
         form = RequestForm()
         return flavour_render(request, 'trip/enroll_trip.html', {'form': form})
+
+
+@login_required
+def my_trip_detail(request):
+    return
 
 
 @login_required

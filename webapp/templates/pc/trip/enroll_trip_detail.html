@@ -1,0 +1,161 @@
+{% extends "pc/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href='{% static "css/pc/enroll_trip_detail.css" %}'>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+    <div class="main-container">
+        <section>
+            <h1 class="sup-title-peach">나의 여행 요청서</h1>
+        </section>
+        <div class="req-card">
+            <div class="trans-light">
+                <div class="{% if req.trans_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                <span>이동수단</span>
+            </div>
+            <div class="accom-light">
+                <div class="{% if req.accom_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                <span>숙박</span>
+            </div>
+            <div class="guide-light">
+                <div class="{% if req.guide_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
+                <span>가이드</span>
+            </div>
+            <img class="user-pic" src="{% static 'image/images/winter_castle.jpg' %}">
+            <div class="travel-city">
+                {% for c in req.city %}
+                    {% if not forloop.first %} / {% endif %} {{ c }}
+                {% endfor %}
+            </div>
+            <div class="travel-date">{{ req.travel_begin_at|date:"Y/m/d" }} - {{ req.travel_end_at|date:"Y/m/d" }}</div>
+            <div class="traveler-num">성인 {{ req.adult_traveler }}명 | 아동 {{ req.child_traveler }}명</div>
+            <div class="req-cost">희망 경비 <span>{{ req.cost|intcomma }}</span> 만원</div>
+            <input type="hidden" id="guide_id" value="{{ guide_id }}">
+            <div class="like-button {% if is_liked %}liked{% else %}unliked{% endif %}"></div>
+        </div>
+
+        <div class="wrapper">
+                    {% if req.trans_guided %}
+                    <div class="request-head">이동수단</div>
+                    <hr>
+                    <span style="float:left">1.</span>
+                    <div class="row">
+                        {% if req.trans_via_list %}
+                            {% for trans_via in req.trans_via_list %}
+                            <div class="col-xs-3"><div class="red-circle"></div>{{ trans_via }}</div>
+                            {% endfor %}
+                        {% else %}
+                            없음
+                        {% endif %}
+                    </div>
+
+                    <span style="float:left">2.</span>
+                    <div class="row">
+                        {% if req.trans_class_list %}
+                            {% for trans_class in req.trans_class_list %}
+                            <div class="col-xs-3"><div class="red-circle"></div>{{ trans_class }}</div>
+                            {% endfor %}
+                        {% else %}
+                            없음
+                        {% endif %}
+                    </div>
+                    {% if req.trans_comment %}
+                        <div class="comment">{{ req.trans_comment }}</div>
+                    {% endif %}
+                {% endif %}
+
+                {% if req.accom_guided %}
+                    <div class="request-head">숙소</div>
+                    <hr>
+                    <span style="float:left">1.</span>
+                    <div class="row">
+                        {% if req.accom_locat_list %}
+                            {% for accom_locat in req.accom_locat_list %}
+                            <div class="col-xs-3"><div class="red-circle"></div>{{ accom_locat }}</div>
+                            {% endfor %}
+                        {% else %}
+                            없음
+                        {% endif %}
+                    </div>
+
+                    <span style="float:left">2.</span>
+                    <div class="row">
+                        {% if req.accom_type_list %}
+                            {% for accom_type in req.accom_type_list %}
+                            <div class="col-xs-3"><div class="red-circle"></div>{{ accom_type }}</div>
+                            {% endfor %}
+                        {% else %}
+                            없음
+                        {% endif %}
+                    </div>
+                    {% if req.accom_comment %}
+                        <div class="comment">{{ req.accom_comment }}</div>
+                    {% endif %}
+                {% endif %}
+
+                {% if req.guide_guided %}
+                    <div class="request-head">가이드</div>
+                    <hr>
+                    <div class="request-guide">
+                    <div>1. 아침 <span>{{ req.start_time }}시</span> 부터는 일정을 시작해주세요.</div>
+                    <div>2. 저녁 <span>{{ req.end_time }}시</span> 에는 일정을 마쳐주세요.</div>
+                    <div>3. 꼭 가고싶은 여행지는 <span>{{ req.landmark }}</span> 입니다.</div>
+                    <div>4. 여행 테마</div>
+                    <div class="row">
+                        {% if req.theme_list %}
+                            {% for theme in req.theme_list %}
+                            <div class="col-xs-3"><div class="red-circle"></div>{{ theme }}</div>
+                            {% endfor %}
+                        {% else %}
+                            없음
+                        {% endif %}
+                    </div>
+
+                    <div>5. 교통수단</div>
+                    <div class="row">
+                        {% if req.local_trans_list %}
+                            {% for local_trans in req.local_trans_list %}
+                            <div class="col-xs-3"><div class="red-circle"></div>{{ local_trans }}</div>
+                            {% endfor %}
+                        {% else %}
+                            없음
+                        {% endif %}
+                    </div>
+                    <div>6. 이런 성향의 가이드가 좋아요!</div>
+                    <div class="row">
+                        {% if req.guide_type_list %}
+                            {% for guide_type in req.guide_type_list %}
+                            <div class="col-xs-3"><div class="red-circle"></div>{{ guide_type }}</div>
+                            {% endfor %}
+                        {% else %}
+                            없음
+                        {% endif %}
+                    </div>
+                    <div>7. 저에게 가장 중요한 것은</div>
+                    <div class="row">
+                        {% if req.importance_list %}
+                            {% for importance in req.importance_list %}
+                            <div class="col-xs-3"><div class="red-circle"></div>{{ importance }}</div>
+                            {% endfor %}
+                        {% else %}
+                            없음
+                        {% endif %}
+                    </div>
+                    </div>
+                    {% if req.additional_request %}
+                        <div class="comment" style="margin-bottom: 30px;">{{ req.additional_request }}</div>
+                    {% endif %}
+                {% endif %}
+        </div>
+        <div class="button-wrapper">
+            <div class="edit-button">수정하기</div>
+            <div class="ok-button">확인</div>
+        </div>
+    </div>
+{% endblock %}
