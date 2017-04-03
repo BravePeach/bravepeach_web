@@ -1,6 +1,6 @@
 function searchAccomTemp(s_id, val, page) {
     $.ajax({
-        url: "search_accom/",
+        url: "/search_accom/",
         type: "GET",
         data: {
             title: val,
@@ -84,7 +84,7 @@ $(function () {
         $(this).addClass('activated');
         $(this).children('.card-selected').removeClass('display-none');
         $.ajax({
-            url: "load_accom",
+            url: "/load_accom",
             type: "GET",
             data: {accom_id: accom_id, id: s_id},
             success: function (data) {
@@ -112,7 +112,7 @@ $(function () {
         else var f_id = 1;
 
         $.ajax({
-            url: "new_accom_form/",
+            url: "/new_accom_form/",
             type: "GET",
             data: {id: f_id},
             success: function (data) {

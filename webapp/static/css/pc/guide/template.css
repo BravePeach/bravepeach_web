@@ -46,3 +46,69 @@ hr{
 .guide-photo, .guide-content{width: 799px;}
 
 .accom-comment, .guide-comment{margin: 15px 0 15px 0; text-align: left}
+
+.round-border{
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.accom-refresh-button, .accom-preview-button, .accom-save-button,
+.guide-refresh-button, .guide-preview-button, .guide-save-button{
+    width: 266px;
+    height: 75px;
+    border: solid 1px #979797;
+    font-size: 22px;
+    color: white;
+    padding-top: 21px;
+    display: inline-block;
+    margin: 15px 0 0 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.accom-refresh-button, .accom-save-button.inactive,
+.guide-refresh-button, .guide-save-button.inactive{
+    background-color: #606060;
+}
+
+.accom-save-button, .accom-preview-button,
+.guide-save-button, .guide-preview-button{
+    background-color: #e64c47;
+}
+
+.inactive{cursor: default}
+
+.product-form-wrapper{
+  width: 840px;
+  height: 204px;
+  background-color: #ffffff;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 82px;
+    margin-left: 20px;
+}
+
+.search-wrapper{top:232px;}
+
+.load-button, .preview-button{
+    width: 102px !important;
+    margin: 0 5px;
+}
+
+.content{
+    display: none;
+}
+
+.guide-result, .accom-result{
+    display: block !important;
+}
+
+.guide-form-wrapper .overlay{
+    width: 840px;
+    height: 793px;
+}

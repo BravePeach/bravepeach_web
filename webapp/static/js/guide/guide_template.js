@@ -1,12 +1,13 @@
 function searchGuideTemp(s_id, val, page) {
     $.ajax({
-        url: "search_guide/",
+        url: "/search_guide/",
         type: "GET",
         data: {
             title: val,
             page: page,
             guide_id: $('#guide_id').val(),
-            s_id: s_id
+            s_id: s_id,
+            urls: window.location.pathname
         }
         , beforeSend: function () {
             $('.search-wrapper .guide .search-result').html('');
@@ -85,9 +86,14 @@ $(function () {
         $(this).addClass('activated');
         $(this).children('.card-selected').removeClass('display-none');
         $.ajax({
-            url: "load_guide",
+            url: "/load_guide",
             type: "GET",
-            data: {guide_id: guide_id, id: s_id, date: date},
+            data: {
+                guide_id: guide_id,
+                id: s_id,
+                date: date,
+                urls: window.location.pathname
+            },
             success: function (data) {
                 $('#guide_form' + s_id).replaceWith(data);
             }
@@ -113,7 +119,7 @@ $(function () {
         else var f_id = 1;
         var date = $(this).siblings('.guide-date').val();
         $.ajax({
-            url: "new_guide_form/",
+            url: "/new_guide_form/",
             type: "GET",
             data: {id: f_id, date: date},
             success: function (data) {

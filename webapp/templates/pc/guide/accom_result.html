@@ -15,7 +15,13 @@
         </div>
         {% for accom in accom_template_set %}
         <div class="result-card">
-            <div class="card-selected display-none"><span>선택</span></div>
+            <div class="card-selected display-none">
+                {% if url == 'template' %}
+                    <span class="load-button">불러오기</span><span class="preview-button">미리보기</span>
+                {% elif url == 'write_offer' %}
+                    <span>선택</span>
+                {% endif %}
+            </div>
             <input type="hidden" value="{{ accom.id}}">
             <div class="result-title">{{ accom.title }}</div>
             <img class="result-photo" src="{{ accom.photo }}">

@@ -83,7 +83,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 #id_landmark{
     display: inline-block;
-    width: 800px;
+    width: 475px;
     border-width: 0px 0px 1px 0px;
 }
 
@@ -426,4 +426,27 @@ select{
 hr{
     margin: 48px 0px 50px 0px;
     border-bottom: solid 1px #bbbbbb;
+}
+
+.arrow-right{
+    width: 15px;
+    margin-top: 17px;
+}
+
+input[type='checkbox'] {
+    vertical-align: baseline;
+  width: 16px;
+  height: 16px;
+  margin-top: 15px;
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.5px;
+  color: #606060;
+  border-radius: 3px;
+  border: solid 1px #979797;
+    background-color: white;
 }

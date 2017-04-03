@@ -152,7 +152,42 @@ def schedule(request):
 
 @user_passes_test(guide_required)
 def template(request):
-    return flavour_render(request, "guide/template.html", {})
+    urls = request.path.split('/')[2]
+    accom_template_result = AccomTemplate.objects.filter(guide=request.user.guide.all()[0].id, overwritten=False)
+    guide_template_result = GuideTemplate.objects.filter(guide=request.user.guide.all()[0].id, overwritten=False)
+    a_paginator = Paginator(accom_template_result, 5)
+    g_paginator = Paginator(guide_template_result, 5)
+    if accom_template_result:
+        accom_page = request.GET.get('accom_page')
+        try:
+            accom_template_set = a_paginator.page(accom_page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            accom_template_set = a_paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            accom_template_set = a_paginator.page(a_paginator.num_pages)
+
+    else:
+        accom_template_set = ''
+
+    if guide_template_result:
+        guide_page = request.GET.get('guide_page')
+        try:
+            guide_template_set = g_paginator.page(guide_page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            guide_template_set = g_paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            guide_template_set = g_paginator.page(g_paginator.num_pages)
+
+    else:
+        guide_template_set = ''
+
+    return flavour_render(request, "guide/template.html", {"accom_template_set": accom_template_set,
+                                                           "guide_template_set": guide_template_set,
+                                                           "url": urls})
 
 
 @user_passes_test(guide_required)
@@ -357,12 +392,12 @@ def write_offer(request, req_id):
 
 
 @user_passes_test(guide_required)
-def search_accom(request, req_id):
+def search_accom(request):
     if request.is_ajax():
-        guide_id = request.GET.get('guide_id')
         title = request.GET.get('title')
         s_id = 'accom_search' + str(request.GET.get('s_id'))
-        accom_template_result = AccomTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False).order_by('title')
+        urls = request.GET.get('urls').split('/')[2]
+        accom_template_result = AccomTemplate.objects.filter(title__icontains=title, guide_id=request.user.guide.all()[0].id, overwritten=False).order_by('title')
         paginator = Paginator(accom_template_result, 5)
         if accom_template_result:
             page = request.GET.get('page')
@@ -378,17 +413,17 @@ def search_accom(request, req_id):
         else:
             accom_template_set = ''
 
-        html = render_to_string('pc/guide/accom_result.html', {'accom_template_set': accom_template_set, 'id': s_id, 'title': title})
+        html = render_to_string('pc/guide/accom_result.html', {'accom_template_set': accom_template_set, 'url': urls, 'id': s_id, 'title': title})
         return HttpResponse(html)
 
 
 @user_passes_test(guide_required)
-def search_guide(request, req_id):
+def search_guide(request):
     if request.is_ajax():
-        guide_id = request.GET.get('guide_id')
         title = request.GET.get('title')
         s_id = 'guide_search' + str(request.GET.get('s_id'))
-        guide_template_result = GuideTemplate.objects.filter(title__icontains=title, guide_id=guide_id, overwritten=False).order_by('title')
+        urls = request.GET.get('urls').split('/')[2]
+        guide_template_result = GuideTemplate.objects.filter(title__icontains=title, guide_id=request.user.guide.all()[0].id, overwritten=False).order_by('title')
         paginator = Paginator(guide_template_result, 5)
         if guide_template_result:
             page = request.GET.get('page')
@@ -404,13 +439,13 @@ def search_guide(request, req_id):
         else:
             guide_template_set = ''
 
-        html = render_to_string('pc/guide/guide_result.html', {'guide_template_set': guide_template_set, 'id': s_id, 'title': title})
+        html = render_to_string('pc/guide/guide_result.html', {'guide_template_set': guide_template_set, 'url': urls ,'id': s_id, 'title': title})
         return HttpResponse(html)
     return JsonResponse({"ok": False})
 
 
 @user_passes_test(guide_required)
-def new_accom_form(request, req_id):
+def new_accom_form(request):
     if request.is_ajax():
         form_id = 'accom_form' + str(request.GET.get('id'))
         search_id = 'accom_search' + str(request.GET.get('id'))
@@ -430,7 +465,7 @@ def new_cost_form(request, req_id):
 
 
 @user_passes_test(guide_required)
-def new_guide_form(request, req_id):
+def new_guide_form(request):
     if request.is_ajax():
         form_id = 'guide_form' + str(request.GET.get('id'))
         search_id = 'guide_search' + str(request.GET.get('id'))
@@ -442,25 +477,26 @@ def new_guide_form(request, req_id):
 
 
 @user_passes_test(guide_required)
-def load_accom(request, req_id):
+def load_accom(request):
     if request.is_ajax():
+        urls = request.GET.get('urls').split('/')[2]
         accom_id = request.GET.get('accom_id')
         form_id = 'accom_form' + str(request.GET.get('id'))
-
         accom_template = AccomTemplate.objects.get(id=accom_id)
-        html = render_to_string('pc/guide/accom_template_form.html', {'id': form_id, 'accom_template': accom_template})
+        html = render_to_string('pc/guide/accom_template_form.html', {'id': form_id, 'accom_template': accom_template, 'url': urls})
         return HttpResponse(html)
     return JsonResponse({"ok": False})
 
 
 @user_passes_test(guide_required)
-def load_guide(request, req_id):
+def load_guide(request):
     if request.is_ajax():
+        urls = request.GET.get('urls').split('/')[2]
         guide_template_id = request.GET.get('guide_id')
         form_id = 'guide_form' + str(request.GET.get('id'))
         date = request.GET.get('date')
         guide_template = GuideTemplate.objects.get(id=guide_template_id)
-        html = render_to_string('pc/guide/guide_template_form.html', {'id': form_id, 'guide_template': guide_template, 'date':date})
+        html = render_to_string('pc/guide/guide_template_form.html', {'id': form_id, 'guide_template': guide_template, 'date':date, 'url': urls})
         return HttpResponse(html)
     return JsonResponse({"ok": False})
 

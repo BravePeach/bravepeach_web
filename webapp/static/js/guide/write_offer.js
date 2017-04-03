@@ -1,29 +1,3 @@
-function searchGuideTemp(val, page) {
-    $.ajax({
-        url: "search_guide/",
-        type: "GET",
-        data: {
-            title: val,
-            page: page,
-            guide_id: $('#guide_id').val()
-        }
-        , beforeSend: function () {
-            $('.search-wrapper .guide .search-result').html('');
-            $('.loading').removeClass('display-none');
-        }
-        , complete: function () {
-            $('.loading').addClass('display-none');
-        },
-        success: function (data) {
-            $('.search-wrapper .guide .search-result').html(data);
-        }
-    })
-}
-
-function guidePaginate(page) {
-    searchGuideTemp($('.guide .search-form').val(), page)
-}
-
 var rgx1 = /\D/g;  // /[^0-9]/g 와 같은 표현
 var rgx2 = /(\d+)(\d{3})/;
 

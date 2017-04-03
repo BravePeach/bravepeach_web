@@ -65,6 +65,12 @@
 침대 : 2개
 체크인 : 10:00 - 17:00
 체크아웃 : 14:00{% else %}{{ accom_template.content }}{% endif %}</textarea>
-    <div class="accom-comment">불러온 내용을 수정한 뒤 저장하면 최신내용만이 저장됩니다.</div>
-    <div class="accom-save-button">저장</div>
+    {% if url == 'template' %}
+        <div class="accom-comment">※ 불러온 내용을 수정한 뒤 ‘저장하기’ 버튼을 누르시면 최신내용만이 저장됩니다.
+            <br>※ 미리보기 버튼을 통해 저장 전에 여행자에게 어떻게 정보가 보이는지 알 수 있습니다.
+        </div>
+    {% elif url == 'write_offer' %}
+        <div class="accom-comment">불러온 내용을 수정한 뒤 저장하면 최신내용만이 저장됩니다.</div>
+        <div class="accom-save-button">저장</div>
+    {% endif %}
 </div>
