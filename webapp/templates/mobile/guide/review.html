@@ -13,11 +13,10 @@
 
 {% block content %}
         <div class="breadcrumb">
-        <span class="title">요청서/견적서</span> >
-        {% if page_type == "receive" %}받은 요청서{% elif page_type == "write" %}찜한 요청서
-        {% elif page_type == "send" %}보낸 견적서{% elif page_type == "journal" %}여행기{% else %}{% endif %}
+        <span class="title">후기/여행기</span> >
+        {% if page_type == "receive" %}받은 후기{% elif page_type == "write" %}후기 쓰기
+        {% elif page_type == "send" %}보낸 후기{% elif page_type == "journal" %}여행기{% else %}{% endif %}
     </div>
-    <div class="hr"></div>
     {% if page_type == "receive" %}
         {% for review in review_list %}
             <div class="review-box">
@@ -104,7 +103,7 @@
     {% elif page_type == "journal" %}
     <div class="tab-contents journal">
         <div class="journal-write">
-            <div class="contents-header">여행기를 작성해주세요!</div>
+            <div class="contents-header">가이드를 제공한 여행기를 작성해주세요!</div>
             <div class="arrow arrow-left"><img src="{% static 'image/icon/arrow_side_grey.png' %}" alt=""></div>
             <div class="arrow arrow-right"><img src="{% static 'image/icon/arrow_side_grey.png' %}" alt=""></div>
             <div class="journal-list">
@@ -127,7 +126,8 @@
         {% for journal in journal_list%}
             <a href="{% url 'guide_view_journal' jid=journal.id %}" class="journal-box">
                 <div class="journal-box-pic">
-                    picpic
+                    <img src="{% if journal.thumbnail %}{{ journal.thumbnail.url }}{% endif %}"
+                         alt="">
                     {#                        <img src="{% if past.guide.user.profile.photo %}#}
                     {#                                    {{ past.guide.user.profile.photo.url }}{% else %}#}
                     {#                                    {% static 'image/icon/profile_empty.png' %}{% endif %}"#}

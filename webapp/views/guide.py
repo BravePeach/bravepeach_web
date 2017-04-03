@@ -13,7 +13,7 @@ from django.views.generic import View
 from django.utils.dateparse import parse_date
 from django.http import JsonResponse, HttpResponse
 from django.utils import formats
-from django.shortcuts import redirect
+from django.shortcuts import redirect, reverse
 from django.template.loader import render_to_string
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import user_passes_test
@@ -237,7 +237,7 @@ def write_review(request, oid):
             new_review.offer_id = oid
             new_review.receiver = offer.request.user
             new_review.save()
-        return redirect(review)
+        return redirect(reverse('guide_review')+'type=send')
     else:
         form = GuideReviewForm()
         return flavour_render(request, "guide/write_review.html", {"offer": offer, "form": form})
@@ -263,7 +263,7 @@ def write_journal(request, oid):
             new_journal.save()
         else:
             print(form.errors)
-        return redirect(review)
+        return redirect(reverse('guide_review')+"?type=journal")
     else:
         form = JournalForm()
         return flavour_render(request, "guide/write_journal.html", {"offer": offer, "form": form})

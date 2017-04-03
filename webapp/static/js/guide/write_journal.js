@@ -20,4 +20,8 @@ $(function(){
     $(".thumbnail").click(function(){
         $('#id_thumbnail').click();
     });
+
+    $("#thumbnail-img").click(function(){
+        $("#id_thumbnail").click();
+    });
 });
