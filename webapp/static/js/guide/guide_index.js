@@ -77,7 +77,7 @@ function filterTrip(sort) {
                     '<div class="user-name">' + object[i].name + '</div>' + trans + accom + guide +
                     '<div class="travel-date">' + object[i].travel_begin_at + ' - ' + object[i].travel_end_at + '</div>' +
                     '<div class="travel-city">' + object[i].city + '</div>' +
-                    '<div class="traveler-num">' + '성인 ' + object[i].adult_traveler + '명 | 아동' + object[i].child_traveler + '명' + '</div>' +
+                    '<div class="traveler-num">' + '성인 ' + object[i].adult_traveler + '명 | 아동' + object[i].child_traveler + '명 | 유아' + object[i].toddler_traveler + '명</div>' +
                     '<div class="cost">' + '희망 경비 ' + '<span>' + object[i].cost + '</span>' + ' 만원' + '</div>' +
                     '<a class="offer-button" href="/guide/write_offer/' + object[i].id + '">' + '견적서 작성하기' + '</a>' + heart_image +
                     '</div>';

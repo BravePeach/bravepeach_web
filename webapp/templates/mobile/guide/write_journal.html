@@ -42,7 +42,7 @@
                     {% if not forloop.first %} / {% endif %} {{ c }}
                 {% endfor %}
             </div>
-            <div class="age-grp"> {{ offer.request.age_group }} </div>
+            <div class="age-grp"> 성인 {{ offer.request.adult_traveler }} 명 | 아동 {{ offer.request.child_traveler }} 명 | 유아 {{ offer.request.toddler_traveler }} 명</div>
         </div>
         <div class="review-content">{{ form.content }}</div>
         <div class="btn-area">

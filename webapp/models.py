@@ -174,12 +174,16 @@ class UserRequest(Model):
         return sum(self.age_group)
 
     @property
-    def adult_traveler(self):
-        return sum(self.age_group[3:])
+    def toddler_traveler(self):
+        return self.age_group[0]
 
     @property
     def child_traveler(self):
-        return sum(self.age_group[:3])
+        return self.age_group[1]
+
+    @property
+    def adult_traveler(self):
+        return sum(self.age_group[2:])
 
     @property
     def trans_via_list(self):

@@ -364,6 +364,7 @@ class FilterTrip(View):
                     'city': req.city,
                     'adult_traveler': req.adult_traveler,
                     'child_traveler': req.child_traveler,
+                    'toddler_traveler': req.toddler_traveler,
                     'cost': req.cost,
                     'is_liked': GuideLike.objects.filter(guide_id=guide_id,
                                                          request_id=req.id).exists(),

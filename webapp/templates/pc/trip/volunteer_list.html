@@ -37,7 +37,7 @@
                 {% if not forloop.first %} / {% endif %} {{ c }}
                 {% endfor %}
             </div>
-            <div class="age-grp"> {{ user_request.age_group }}</div>
+            <div class="age-grp"> 성인 {{ user_request.request.adult_traveler }} 명 | 아동 {{ user_request.request.child_traveler }} 명 | 유아 {{ user_request.request.toddler_traveler }} 명</div>
             <div class="cost">희망 경비 <span class="money">{{ user_request.cost|intcomma }}</span> 만원</div>
         </div>
         <div class="tab-content-btn">
