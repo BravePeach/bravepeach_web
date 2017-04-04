@@ -44,7 +44,7 @@
                             {% if not forloop.first %} / {% endif %} {{ c }}
                         {% endfor %}
                     </div>
-                    <div class="age-grp"> {{ enroll.age_group }} </div>
+                    <div class="age-grp"> 성인 {{ enroll.request.adult_traveler }} 명 | 아동 {{ enroll.request.child_traveler }} 명 | 유아 {{ enroll.request.toddler_traveler }} 명</div>
                     <div class="cost">희망 경비 <span class="money">{{ enroll.cost|intcomma }}</span> 만원</div>
                 </div><!--
                     --><a href="" class="list-btn {% if offer_cnt == 0 %}disabled-link{% endif %}">
@@ -85,7 +85,7 @@
                             {% if not forloop.first %} / {% endif %} {{ c }}
                         {% endfor %}
                     </div>
-                    <div class="age-grp"> {{ offer.request.age_group }} </div>
+                    <div class="age-grp"> 성인 {{ offer.request.adult_traveler }} 명 | 아동 {{ offer.request.child_traveler }} 명 | 유아 {{ offer.request.toddler_traveler }} 명</div>
                     <div class="cost">총 경비 <span class="money">{{ offer.request.cost|intcomma }}</span> 만원</div>
                 </div><!--
                 --><div class="tab-content-btn"><!--
@@ -117,7 +117,7 @@
                             {% if not forloop.first %} / {% endif %} {{ c }}
                         {% endfor %}
                     </div>
-                    <div class="age-grp"> {{ past.age_group }} </div>
+                    <div class="age-grp"> 성인 {{ past.request.adult_traveler }} 명 | 아동 {{ past.request.child_traveler }} 명 | 유아 {{ past.request.toddler_traveler }} 명</div>
                     <div class="cost">총 경비 <span class="money">{{ past.cost|intcomma }}</span> 만원</div>
                 </div><!--
                 --><div class="tab-content-btn"><!--

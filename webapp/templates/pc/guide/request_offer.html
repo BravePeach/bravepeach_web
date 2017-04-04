@@ -47,8 +47,8 @@
                         {% if not forloop.first %} / {% endif %} {{ c }}
                     {% endfor %}
                 </div>
-                <div class="age-grp"> {{ request.age_group }} </div>
-                <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>
+                <div class="age-grp"> 성인 {{ request.adult_traveler }} 명 | 아동 {{ request.child_traveler }} 명 | 유아 {{ request.toddler_traveler }} 명</div>
+{#                <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>#}
             </div><!--
                 --><div class="tab-content-btn">
                 <div class="like">
@@ -57,7 +57,7 @@
                     {% endif %}
                 </div>
 
-                <a href="{% url 'write_offer' req_id=request.id %}" class="write-btn {% if offer_cnt == 0 %}disabled-link{% endif %}"> 견적서 작성하기</a>
+                <a href="{% url 'write_offer' req_id=request.id %}" class="write-btn {% if not request.published %}disabled-link{% endif %}"> 견적서 작성하기</a>
                 <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>
             </div>
             </div>
@@ -86,7 +86,7 @@
                         {% if not forloop.first %} / {% endif %} {{ c }}
                     {% endfor %}
                 </div>
-                <div class="age-grp"> {{ request.age_group }} </div>
+                <div class="age-grp"> 성인 {{ request.adult_traveler }} 명 | 아동 {{ request.child_traveler }} 명 | 유아 {{ request.toddler_traveler }} 명</div>
                 <div class="cost">희망 경비 <span class="money">{{ request.cost|intcomma }}</span> 만원</div>
             </div><!--
                 --><div class="tab-content-btn">
@@ -108,10 +108,12 @@
         {% for offer in offer_list %}
             <div class="tab-content">
                 <div class="tab-content-pic">
+                <div class="profile">
                     <img src="{% if offer.guide.user.profile.photo %}
                                     {{ offer.guide.user.profile.photo.url }}{% else %}
                                     {% static 'image/icon/profile_empty.png' %}{% endif %}"
                          alt="">
+                </div>
                     <div class="guide-name">{{ offer.guide.full_name }}</div>
                 </div><!--
                 --><div class="tab-content-info">
@@ -129,7 +131,7 @@
                         {% if not forloop.first %} / {% endif %} {{ c }}
                     {% endfor %}
                 </div>
-                <div class="age-grp"> {{ offer.request.age_group }} </div>
+                <div class="age-grp"> 성인 {{ offer.request.adult_traveler }} 명 | 아동 {{ offer.request.child_traveler }} 명 | 유아 {{ offer.request.toddler_traveler }} 명</div>
                 <div class="cost">총 경비 <span class="money">{{ offer.cost|intcomma }}</span> 만원</div>
             </div><!--
                 --><div class="tab-content-btn">
