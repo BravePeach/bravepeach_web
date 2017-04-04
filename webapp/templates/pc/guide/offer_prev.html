@@ -1,0 +1,118 @@
+{% extends "pc/guide/base.html" %}
+{% load humanize %}
+{% load mathfilters %}
+{% load custom_filters %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/pc/offer_detail.css' %}">
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/guide/offer_prev.js' %}"></script>
+{% endblock %}
+{% block title %}{% endblock %}
+
+{% block content %}
+    <div class="main-container contents-wrapper">
+        <section name="top">
+            <h1 class="sup-title-peach">견적서 보기</h1>
+            <h2 class="sub-title">{{ guide_offer.travel_period.0 }} - {{ guide_offer.travel_period|last }}</h2>
+        </section>
+
+        <!--이동수단-->
+        {% if guide_offer.trans_info %}
+        <div class="gradation-bar">이동 수단</div>
+            {% for trans_info in guide_offer.trans_info %}
+        <div class="trans-wrapper">{{ trans_info }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <!--숙소-->
+        {% if a_template_list %}
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&"></script>
+
+            <div class="gradation-bar">숙소</div>
+            {% for accom in a_template_list %}
+                <div style="position:relative; padding-top: 149px;">
+                    <div class="small-circle"></div>
+                    <div class="accom-date">{{ accom.1 }} - {{ accom.2 }}</div>
+                    <div class="accom-city">{{ accom.0.country }}, {{ accom.0.city }}</div>
+                    <div class="accom-type">{{ accom.0.type }}</div>
+                    <div class="accom-title">
+                        {{ accom.0.title }}
+                    </div>
+                    <div class="accom-location">
+                        위치: {{ accom.0.small_city }}, {{ accom.0.city }}
+                    </div>
+                    {% if accom.photo %}
+                        <div class="accom-pic-wrapper">
+                        {% for photo in accom.accom_photos %}
+
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                    <pre class="content">{{ accom.0.content }}</pre>
+                    <div class="map" style="width:790px; height: 467px;">{{ accom.0.lat }} {{ accom.0.lng }}</div>
+                </div>
+                {% if accom != a_template_list|last %}
+                    <hr>
+                {% else %}
+                    <div style="height: 30px;"></div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <!--가이드-->
+        {% if g_template_qlist %}
+            <div class="gradation-bar">가이드</div>
+            {% for g_template_q in g_template_qlist %}
+                <div class="guide-wrapper">
+                    <div>
+                        <div class="big-circle">{{ forloop.counter }}일</div>
+                        <div class="guide-date">{{ guide_offer.travel_period|index:forloop.counter0 }}</div>
+                    </div>
+                    {% for g_template in g_template_q %}
+                        <div style="position: relative;">
+                            <div class="medium-circle"></div>
+                            <div class="guide-title">{{ g_template.title }}</div>
+                        </div>
+                        {% if g_template.photo %}
+                        <div class="guide-pic"></div>
+                        {% endif %}
+                        <pre class="guide-content"> {{ g_template.content }}</pre>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!--견적서-->
+        {% if cost_qlist %}
+        <div class="gradation-bar">견적서</div>
+        {% for cost_q in cost_qlist %}
+        <div class="cost-tilte">{{ cost_q.0.type }}</div>
+        {% for cost in cost_q %}
+        <div class="cost-content-wrapper">
+            {{cost.info}} <span style="float: right;">{{cost.price|intcomma}} 원</span>
+        </div>
+        {% endfor %}
+        <div class="type-total-cost"><span style="color:#dd3537;">{{ type_cost|index:forloop.counter0|intcomma }}</span> 원</div>
+        {% if cost_q == cost_qlist|last %}
+        <hr class="red-hr">
+        {% else %}
+        <hr>
+        {% endif %}
+        {% endfor %}
+        <div class="total-cost-wrapper">총 경비 <span class="total-cost">{{ total_cost|intcomma }}</span> 원</div>
+        <div class="total-cost-note">(가이드 비용의 수수료 12% {{guide_commission|intcomma}}원 포함)</div>
+        {% endif %}
+
+    </div>
+
+        <div class="button-wrapper">
+            <a class="pay-button">확인</a>
+            <a class="back-button" href="/my_trip/{{ guide_offer.request_id }}">리스트로 가기</a>
+        </div>
+
+    </div>
+
+{% endblock %}

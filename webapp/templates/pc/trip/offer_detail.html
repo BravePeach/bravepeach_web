@@ -20,11 +20,11 @@
         </section>
 
         <div class="guide-brief">
-            <div class="brief-image"></div>
+            <img class="brief-image" src="{{ guide.user.profile.photo.url }}">
             <div class="brief-contents">
                 <div class="like">{% if request.user.is_authenticated %}
                     {# TODO: heart sticker from like. Make it to a tag and bind js+ajax function #}
-                    <img src="{% static 'image/icon/heart_white_shadow.png' %}" alt=""> <img src="" alt="">{% endif %}
+                    <img src="{% static 'image/icon/heart_white_shadow.png' %}" alt="">{% endif %}
                 </div>
                 <div class="brief-title">
                     <span class="guide-name">{{ guide.full_name }}</span> 님은 <span class="highlight">스루 가이드
@@ -64,9 +64,7 @@
         <!--이동수단-->
         {% if guide_offer.trans_info %}
         <div class="gradation-bar">이동 수단</div>
-            {% for trans_info in guide_offer.trans_info %}
-        <div class="trans-wrapper">{{ trans_info }}</div>
-            {% endfor %}
+        <div class="trans-wrapper">{{ guide_offer.trans_info }}</div>
         {% endif %}
 
         <!--숙소-->
@@ -77,14 +75,14 @@
             {% for accom in a_template_list %}
                 <div style="position:relative; padding-top: 149px;">
                     <div class="small-circle"></div>
-                    <div class="accom-date">{{ accom.1 }} - {{ accom.2 }}</div>
-                    <div class="accom-city">{{ accom.0.country }}, {{ accom.0.city }}</div>
-                    <div class="accom-type">{{ accom.0.type }}</div>
+                    <div class="accom-date">{{ accom.0 }}</div>
+                    <div class="accom-city">{{ accom.1.country }}, {{ accom.1.city }}</div>
+                    <div class="accom-type">{{ accom.1.type }}</div>
                     <div class="accom-title">
-                        {{ accom.0.title }}
+                        {{ accom.1.title }}
                     </div>
                     <div class="accom-location">
-                        위치: {{ accom.0.small_city }}, {{ accom.0.city }}
+                        위치: {{ accom.1.small_city }}, {{ accom.1.city }}
                     </div>
                     {% if accom.photo %}
                         <div class="accom-pic-wrapper">
@@ -93,8 +91,8 @@
                         {% endfor %}
                         </div>
                     {% endif %}
-                    <pre class="content">{{ accom.0.content }}</pre>
-                    <div class="map" style="width:790px; height: 467px;">{{ accom.0.lat }} {{ accom.0.lng }}</div>
+                    <pre class="content">{{ accom.1.content }}</pre>
+                    <div class="map" style="width:790px; height: 467px;">{{ accom.1.lat }} {{ accom.1.lng }}</div>
                 </div>
                 {% if accom != a_template_list|last %}
                     <hr>
@@ -119,7 +117,7 @@
                             <div class="guide-title">{{ g_template.title }}</div>
                         </div>
                         {% if g_template.photo %}
-                        <div class="guide-pic"></div>
+                        <img class="guide-pic" src="{{ g_template.photo.url }}">
                         {% endif %}
                         <pre class="guide-content"> {{ g_template.content }}</pre>
                     {% endfor %}

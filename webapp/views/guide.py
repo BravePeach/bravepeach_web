@@ -394,6 +394,14 @@ def write_offer(request, req_id):
 
 
 @user_passes_test(guide_required)
+def offer_prev(request):
+    if request.is_ajax():
+        offer_id = request.GET.get('offer_id')
+        guide_offer = GuideOffer.objects.get(id=offer_id, guide=request.user.guide.all()[0].id)
+        return flavour_render(request, 'guide/offer_prev.html', {'guide_offer': guide_offer})
+
+
+@user_passes_test(guide_required)
 def search_accom(request):
     if request.is_ajax():
         title = request.GET.get('title')

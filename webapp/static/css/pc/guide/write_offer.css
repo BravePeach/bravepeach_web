@@ -1324,3 +1324,41 @@ input[type="number"]::-webkit-inner-spin-button {
     object-fit: cover;
     margin-top: 9px;
 }
+
+.wo{text-align: center}
+
+.wo span{
+    text-align: left;
+    font-size: 20px;
+    color: #565656;
+    display: block;
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+.wo-cancel, .wo-prev{
+    display: inline-block;
+      width: 280px;
+  height: 65px;
+  border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px #b5b5b6;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    padding-top: 16px;
+    margin: 30px 15px;
+    cursor: pointer;
+}
+
+.wo-cancel{
+    background-color: #606060;
+}
+
+.wo-prev{
+    background-color: #e64c47;
+}

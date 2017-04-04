@@ -176,4 +176,14 @@ $(function () {
         }
     });
 
+    // 미리보기
+    $('.wo-prev').click(function(){
+        $.ajax({
+            url: "/guide/offer_prev/",
+            type: "GET",
+            data: {
+                offer_id: window.location.pathname.split('/')[3]
+            }
+        })
+    });
 });
