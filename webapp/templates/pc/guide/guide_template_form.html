@@ -16,7 +16,10 @@
         <div class="delete-ok">예</div>
     </div>
     <div class="allover display-none"></div>
-    <div class="guide-photo" style="background-image: ">
+    {% if guide_template.photo %}
+    <img class="guide-photo" src="{{ guide_template.photo.url }}" style="padding: 0; object-fit: cover;">
+    {% else %}
+    <div class="guide-photo">
         <div class="add-photo-button">
             <img class="photo-pic" src="{% static 'image/icon/photo_grey.png' %}">
             <span>사진 추가 하기</span>
@@ -24,6 +27,7 @@
         <input type="file" accept="image/*" style="display: none" required>
         <input type="hidden" class="photo">
     </div>
+    {% endif %}
     <textarea class="guide-content">{% if not guide_template.content %}가이드 일정에 대한 정보를 자세하게 작성해주세요.
 
 예)

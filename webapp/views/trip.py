@@ -207,7 +207,7 @@ def offer_detail(request, offer_id):
 
     a_template_list = guide_offer.accom_template
     for i in a_template_list:
-        i[0] = AccomTemplate.objects.get(id=i[0])
+        i[1] = AccomTemplate.objects.get(id=i[1])
 
     comment_q = Comment.objects.select_related('offer').filter(offer_id=offer_id).order_by('created_at')
     cost_qlist = []
