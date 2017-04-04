@@ -23,9 +23,15 @@
     <div class="tab-contents request active">
         {% for request in request_list %}
             <div class="tab-content">
+            {% if not request.published %}
                 <div class="tab-content-label {% if not request.published %}done{% endif %}">
                     {% if not request.published %}마감{% endif %} </div>
-                <div class="tab-content-pic">picpic</div><!--
+            {% endif %}
+                <div class="tab-content-pic">
+                    <div class="profile"><img src="{% if request.user.profile.photo %}{{ request.user.profile.photo.url }}
+                                                    {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}" alt="profile"></div>
+                <div class="name">{{ request.user.profile.full_name }}</div>
+                </div><!--
                 --><div class="tab-content-info">
                 <div class="guide-options">
                     <div class="guide-option {% if request.trans_guided %}guided{% endif %}"></div>
