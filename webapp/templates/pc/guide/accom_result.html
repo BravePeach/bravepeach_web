@@ -24,7 +24,7 @@
             </div>
             <input type="hidden" value="{{ accom.id}}">
             <div class="result-title">{{ accom.title }}</div>
-            <img class="result-photo" src="{{ accom.photo }}">
+            <img class="result-photo" src="{{ accom.accom_photos.all.0.photo.url }}">
         </div>
         {% endfor %}
 

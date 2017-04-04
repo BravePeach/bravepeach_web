@@ -1,3 +1,5 @@
+img.photo{vertical-align: inherit !important}
+
 .main-container, .head-container {
     width: 880px;
     margin: auto;

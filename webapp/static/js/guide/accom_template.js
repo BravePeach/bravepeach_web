@@ -328,6 +328,7 @@ $(function () {
             }
         }
 
+
         if (accomType == null){
             swal({
                 title: "숙소유형을 선택해주세요.",
@@ -365,7 +366,6 @@ $(function () {
 
         else {
             $(this).removeClass('activated');
-            console.log(templateId, accomType, accomTitle, accomContent, lat, lng, photoList);
 
             var templateIdinput = $(this).siblings('.accom-id');
             $.ajax({
