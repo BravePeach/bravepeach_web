@@ -1,7 +1,7 @@
 body{width: 100%;}
 
 .main-container, .head-container {
-    width: 355px;
+    max-width: 355px;
     margin: auto;
 }
 
@@ -88,7 +88,7 @@ body{width: 100%;}
     border-radius: 3px;
     background-color: #d4d4d4;
     box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-
+    margin: 0;
 }
 
 .find-guide-form2 {

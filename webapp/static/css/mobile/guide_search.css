@@ -1,7 +1,7 @@
 body{width: 100%;}
 
 .main-container, .head-container {
-    width: 355px;
+    max-width: 355px;
     margin: auto;
 }
 
@@ -53,13 +53,13 @@ body{width: 100%;}
 .find-guide-form, .find-guide-form2 {
     position: absolute;
     top: 9px;
-    left: 66px;
+    left: 18%;
     border-style: none;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
     padding-left: 10px;
     background: #ffffff;
     background-color: rgba(255, 255, 255, 0.3) !important;
-    width: 250px;
+    width: 70%;
     height: 30px;
     border-radius: 3px;
     font-family: NanumSquareOTFR;
@@ -74,7 +74,7 @@ body{width: 100%;}
 
 .find-guide-form2 {
     position: absolute;
-    left: 210px;
+    left: 58%;
 }
 
 .arrow-down {
