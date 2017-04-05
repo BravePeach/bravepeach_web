@@ -23,7 +23,7 @@ LOCAL_SETTINGS = json.loads(open(os.path.join(BASE_DIR, "settings.json")).read()
 SECRET_KEY = LOCAL_SETTINGS["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True    # NEVER SET "True" IN SERVICE!!!!
+DEBUG = LOCAL_SETTINGS["DEBUG"]   # NEVER SET "True" IN SERVICE!!!!
 
 ALLOWED_HOSTS = LOCAL_SETTINGS["ALLOWED_HOSTS"]     # add your ip address
 
