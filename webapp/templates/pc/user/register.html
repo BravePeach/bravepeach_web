@@ -8,19 +8,47 @@
 {% endblock %}
 {% block js %}
     <script src="{% static 'js/register.js' %}"></script>
+    <script>
+        function fb_login(){
+            FB.login(function(response){
+                if(response.status === 'connected') {
+                    console.log(response);
+                    $.post("{% url 'login_fb' %}", {"access_token": response.authResponse.accessToken},
+                        function(data){
+                            console.log(data);
+                            if(data['ok'] === true) {
+                                window.location.href = '{% url 'index' %}';
+                            } else{
+                                swal({
+                                    type: "error",
+                                    title: "FB Login Failed",
+                                    text: data["msg"]
+                                });
+                            }
+                        });
+                } else {
+                    console.log("no");
+                }
+            }, {scope: "email"});
+        }
+    </script>
 {% endblock %}
 
 {% block content %}
+    <form method="post" id="login-form">
+    {% csrf_token %}
+        <input type="hidden" name="access_token">
+    </form>
     <div id="user-register">
         <div id="register-title">회원가입</div>
         <div class="register-wrapper">
-            <a href="" class="register-fb">Facebook으로 가입하기</a>
-            <a href="" class="register-naver">Naver로 가입하기</a>
-            <a href="" class="register-google">Google로 가입하기</a>
-            <a href="{% url 'register_bp' %}" class="register-bp">Bravepeach로 가입하기</a>
+            <div class="register-btn register-fb" onclick="fb_login();">Facebook으로 가입하기</div>
+            <div class="register-btn register-naver">Naver로 가입하기</div>
+            <div class="register-btn register-google">Google로 가입하기</div>
+            <a href="{% url 'register_bp' %}" class="register-btn register-bp">Bravepeach로 가입하기</a>
             <div class="line"></div><div class="or">또는</div><div class="line"></div>
             <div class="already-text">Bravepeach 계정이 있으신가요?</div>
-            <a href="{% url "login" %}" class="login">로그인</a>
+            <a href="{% url "login" %}" class="register-btn login">로그인</a>
         </div>
     </div>
 {% endblock %}

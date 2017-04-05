@@ -10,6 +10,24 @@
 
 {% block js %}
     <script src="{% static 'js/login.js' %}"></script>
+    <script>
+    function fb_login(){
+        FB.login(function(response){
+            if(response.status === 'connected') {
+                console.log(response);
+                console.log(response.authResponse.accessToken);
+                FB.api('/me?fields=id,name,last_name,first_name,email,age_range', function (response) {
+                    console.log(response.id);
+                    console.log(response.last_name);
+                    console.log(response.first_name);
+                    console.log(response.age_range);
+                });
+            }else{
+                console.log("no");
+            }
+        }, {scope: 'public_profile,email'});
+    }
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -21,7 +39,7 @@
     {% endfor %}
     <div class="login-wrapper">
         <div class="login-title" {% if request.reset_pw %}style="display: none;" {% endif %}>로그인</div>
-        <div class="login-btn login-fb">Facebook으로 로그인</div>
+        <div class="login-btn login-fb" onclick="fb_login();">Facebook으로 로그인</div>
         <div class="login-btn login-naver">Naver로 로그인</div>
         <div class="login-btn login-google">Google로 로그인</div>
         <div class="line"></div><div class="or">또는</div><div class="line"></div>

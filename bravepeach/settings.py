@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_user_agents',
     'redactor',
     'mathfilters',
+    'social_django',
     'webapp',
 ]
 
@@ -80,6 +81,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -185,3 +188,17 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # browser-length session
 REDACTOR_OPTIONS = {'lang': 'ko'}
 REDACTOR_UPLOAD = 'uploads/'
 REDACTOR_AUTH_DECORATOR = 'django.contrib.auth.decorators.login_required'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+# FB Login
+SOCIAL_AUTH_FACEBOOK_KEY = LOCAL_SETTINGS['FB_KEY']
+SOCIAL_AUTH_FACEBOOK_SECRET = LOCAL_SETTINGS['FB_SECRET']
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': "id, name, first_name, last_name, gender, picture, age_range"
+}
+
+# Google Login
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = LOCAL_SETTINGS['GGL_KEY']
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = LOCAL_SETTINGS['GGL_SECRET']
