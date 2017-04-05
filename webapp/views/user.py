@@ -99,21 +99,61 @@ def login_fb(request):
             new_user = User(username=data['email'], first_name=data['first_name'], last_name=data['last_name'],
                             email=data['email'])
             new_user.save()
-            profile = Profile(user=new_user, gender=0 if data['gender'] == 'male' else 1, fb_id=data['id'])
+            profile = Profile(user=new_user, gender=1 if data['gender'] == 'male' else 2, fb_id=data['id'])
             if not data['picture']['data']['is_silhouette']:
                 url = "https://graph.facebook.com/{}/picture?type=large".format(data['id'])
                 photo = urlopen(url)
-                profile.photo.save("{}.jpg".format(data['id']), ContentFile(photo.read()))
+                profile.photo.save("fb_{}.jpg".format(data['id']), ContentFile(photo.read()))
             profile.save()
             login(request, new_user)
         except Exception as e:
             msg = ""
             if e.args[0] == 1062:
-                msg = "{} 는이미 가입되어있는 메일입니다.".format(data['email'])
+                msg = "{} 는 이미 가입되어있는 메일입니다.".format(data['email'])
             return JsonResponse({"ok": False, "msg": msg})
     else:
         login(request, prev_profile.user)
     return JsonResponse({'ok': True})
+
+
+def login_google(request):
+    access_token = request.POST.get('access_token', "")
+    params = {"key": settings.SOCIAL_AUTH_GOOGLE_API_KEY}
+    headers = {'Authorization': "Bearer "+access_token}
+    resp = requests.get('https://content.googleapis.com/plus/v1/people/me', params=params, headers=headers)
+    if resp.status_code != 200:
+        return JsonResponse({"ok": False, "msg": resp.status_code})
+    data = resp.json()
+    primary_mail = None
+    for email in data['emails']:
+        if email['type'] == "account":
+            primary_mail = email['value']
+            break
+    if not primary_mail:
+        primary_mail = data['emails'][0]['value']
+    uid = data['id']
+    prev_profile = Profile.objects.filter(ggl_id=uid).first()
+    if not prev_profile:
+        try:
+            new_user = User(username=primary_mail, email=primary_mail,
+                            first_name=data['name']['givenName'], last_name=data['name']['familyName'])
+            new_user.save()
+        except Exception as e:
+            msg = ""
+            if e.args[0] == 1062:
+                msg = "{} 는 이미 가입되어있는 메일입니다.".format(primary_mail)
+            return JsonResponse({"ok": False, "msg": msg})
+
+        profile = Profile(user=new_user, gender=1 if data['gender'] == 'male' else 2, ggl_id=data['id'])
+        if data['image']['url']:
+            url = data['image']['url'].split('?')[0] + '?sz=200'
+            photo = urlopen(url)
+            profile.photo.save('ggl_{}.jpg'.format(data['id']), ContentFile(photo.read()))
+        profile.save()
+        login(request, new_user)
+    else:
+        login(request, prev_profile.user)
+    return JsonResponse({"ok": True})
 
 
 def greeting(request):

@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^check_email/$', views.user.check_email, name="check_email"),
     url(r'^login/$', views.user.user_login, name='login'),
     url(r'^login_fb/$', views.user.login_fb, name="login_fb"),
+    url(r'^login_google/$', views.user.login_google, name="login_google"),
     url(r'^logout/$', views.user.user_logout, name='logout'),
     url(r"^mypage/(?P<page_type>\w+)/$", views.user.mypage, name="mypage"),
     url(r'^mypage/$', views.user.mypage, name='mypage_default'),

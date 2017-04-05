@@ -24,7 +24,7 @@
         <div class="login-title" {% if request.reset_pw %}style="display: none;" {% endif %}>로그인</div>
         <div class="login-btn login-fb" onclick="fb_login();">Facebook으로 로그인</div>
         <div class="login-btn login-naver">Naver로 로그인</div>
-        <div class="login-btn login-google">Google로 로그인</div>
+        <div class="login-btn login-google" onclick="ggl_login();">Google로 로그인</div>
         <div class="line"></div><div class="or">또는</div><div class="line"></div>
         <form id="login-form" method="post">
             {% csrf_token %}

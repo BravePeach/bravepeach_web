@@ -35,9 +35,29 @@ function fb_login(){
         } else {
             console.log("no");
         }
-    }, {scope: "email"});
+    }, {scope: "email", auth_type: "reauthenticate"});
 }
 
 function ggl_login(){
-
+    var access_token;
+    gapi.auth.authorize({
+        client_id: $("meta[name=google-signin-client_id]")[0].content,
+        scope: "profile email openid",
+        prompt: "select_account consent",
+        access_type: "online"
+    }, function(authResult){
+        access_token = authResult['access_token'];
+        $.post('/login_google/', {access_token: authResult['access_token']}, function(data){
+            console.log(data);
+            if(data['ok'] === true) {
+                window.location.href = '/';
+            } else {
+                swal({
+                    type: "error",
+                    title: "Google Login Failed",
+                    text: data["msg"]
+                });
+            }
+        });
+    });
 }
