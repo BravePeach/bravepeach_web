@@ -1,6 +1,7 @@
 import datetime
 from io import BytesIO
 from uuid import uuid4
+from urllib.request import urlopen
 
 import boto3
 from PIL import Image
@@ -82,11 +83,44 @@ def register_bravepeach(request):
         return flavour_render(request, 'user/register_bp.html', {'user_form': user_form, 'profile_form': profile_form})
 
 
-def greeting(reauest):
+def login_fb(request):
+    access_token = request.POST.get('access_token')
+    params = {"access_token": access_token, "format": "json",
+              "fields": "id,email,first_name,last_name,gender,picture"}
+    resp = requests.get('https://graph.facebook.com/me', params=params)
+    print(resp.text)
+    if not resp.status_code != '200':
+        return JsonResponse({"ok": False, "msg": "FB Fail: {}".format(resp.status_code)})
+    data = resp.json()
+    uid = data['id']
+    prev_profile = Profile.objects.filter(fb_id=uid).first()
+    if not prev_profile:
+        try:
+            new_user = User(username=data['email'], first_name=data['first_name'], last_name=data['last_name'],
+                            email=data['email'])
+            new_user.save()
+            profile = Profile(user=new_user, gender=0 if data['gender'] == 'male' else 1, fb_id=data['id'])
+            if not data['picture']['data']['is_silhouette']:
+                url = "https://graph.facebook.com/{}/picture?type=large".format(data['id'])
+                photo = urlopen(url)
+                profile.photo.save("{}.jpg".format(data['id']), ContentFile(photo.read()))
+            profile.save()
+            login(request, new_user)
+        except Exception as e:
+            msg = ""
+            if e.args[0] == 1062:
+                msg = "{} 는이미 가입되어있는 메일입니다.".format(data['email'])
+            return JsonResponse({"ok": False, "msg": msg})
+    else:
+        login(request, prev_profile.user)
+    return JsonResponse({'ok': True})
+
+
+def greeting(request):
     """
     NOTE: This is just for test.
     """
-    return flavour_render(reauest, "user/greeting.html")
+    return flavour_render(request, "user/greeting.html")
 
 
 def check_email(request):
@@ -221,6 +255,7 @@ def unsub_bp(request):
 
     request.user.profile.deleted_at = datetime.datetime.now()
     request.user.is_active = False
+    request.user.username += '__'
     unsub_form = UnsubscribeForm(request.POST, instance=request.user.profile)
 
     if unsub_form.is_valid():

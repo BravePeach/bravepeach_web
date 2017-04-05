@@ -14,6 +14,9 @@ from bravepeach.const import GUIDE_THEME, GUIDE_TYPE
 
 class Profile(Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    fb_id = models.CharField(max_length=200, null=True, blank=True)
+    ggl_id = models.CharField(max_length=200, null=True, blank=True)
+    naver_id = models.CharField(max_length=200, null=True, blank=True)
     phone_num = models.CharField(max_length=11, blank=True)
     is_guide = models.BooleanField(default=False)
     delete_reason = models.IntegerField(null=True)
