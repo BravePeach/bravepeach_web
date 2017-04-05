@@ -68,6 +68,8 @@ class Guide(Model):
     is_local = models.BooleanField(default=False, verbose_name="현지 가이드")   # 둘다 비어있으면 안됨
     activated = models.BooleanField(default=False)
     guide_location = JSONField(null=True, blank=True)
+    guide_country = JSONField(null=True, blank=True)
+    guide_city = JSONField(null=True, blank=True)
     off_day = JSONField(null=True, blank=True)
     career = JSONField(null=True, blank=True)
     real_name = models.TextField(null=False, blank=False, default="")
@@ -94,6 +96,10 @@ class Guide(Model):
     def guide_cnt(self):
         return len(self.offers.filter(paid=True, is_canceled=False,
                                       request__travel_end_at__lt=datetime.date.today()))
+
+    @property
+    def review_cnt(self):
+        return UserReview.objects.filter(receiver=self.id).count()
 
     @property
     def theme_list(self):

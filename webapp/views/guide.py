@@ -76,6 +76,9 @@ def volunteer(request):
 
         exp_data = list(zip(exp_link_list, json.loads(request.POST['exp'])))
 
+        country_dic = {i: "" for i in json.loads(request.POST['guide_country'])}
+        city_dict = {i: "" for i in json.loads(request.POST['guide_city'])}
+
         if len(prev_vol) == 0:
             vol = VolunteerForm(request.POST)
         else:
@@ -86,6 +89,8 @@ def volunteer(request):
             new_vol.user = request.user
             new_vol.certificate = cert_link_list
             new_vol.experience = exp_data
+            new_vol.guide_country = country_dic
+            new_vol.guide_city = city_dict
             new_vol.save()
             return JsonResponse({"ok": True, "vid": new_vol.id})
             # return redirect('view_volunteer', gid=new_vol.id)
@@ -187,7 +192,8 @@ def template(request):
 
     return flavour_render(request, "guide/template.html", {"accom_template_set": accom_template_set,
                                                            "guide_template_set": guide_template_set,
-                                                           "url": urls})
+                                                           "url": urls,
+                                                           "tab": "template"})
 
 
 @user_passes_test(guide_required)

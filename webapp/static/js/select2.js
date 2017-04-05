@@ -2923,7 +2923,7 @@ the specific language governing permissions and limitations under the Apache Lic
                     (e.which == KEY.LEFT || e.which == KEY.RIGHT || e.which == KEY.BACKSPACE || e.which == KEY.DELETE || e.which == KEY.ENTER)) {
                     var selectedChoice = selected;
                     if (e.which == KEY.LEFT && prev.length) {
-                        selectedChoice = prev;
+                        // selectedChoice = prev;
                     }
                     else if (e.which == KEY.RIGHT) {
                         selectedChoice = next.length ? next : null;

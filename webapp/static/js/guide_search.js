@@ -1,6 +1,7 @@
-var city_list = localStorage.getItem("city_list").split(',');
-console.log(localStorage.getItem("city_list"));
-console.log(city_list);
+var place_list = [];
+if (localStorage.getItem("place_list")) {
+    country_list = localStorage.getItem("place_list").split(',');
+}
 
 function changeOrder(val) {
     if (val != $('.order-active').id) {
@@ -12,11 +13,11 @@ function changeOrder(val) {
 
 function like(e){
     if ($(e).hasClass("liked")){
-        $(e).removeClass("liked").addClass("unliked")
+        $(e).removeClass("liked").addClass("unliked");
         var url = "/delete_like";
     }
     else {
-        $(e).removeClass("unliked").addClass("liked")
+        $(e).removeClass("unliked").addClass("liked");
         var message = '<div class="like-message">' +
         '<img class="guide-image" src="/static/image/images/jinwoong.jpg" style="width: 64px; height: 64px; left:13px; top:31px">' +
         '<span class="like-message-text"> <strong>' + e.parentElement.childNodes[3].innerHTML + '</strong>가이드를 찜 하셨습니다.<br>\'찜한 가이드\'에서 확인하실 수 있습니다.</span>' +
@@ -37,72 +38,35 @@ function like(e){
 }
 
 function filterGuide(sort) {
-    console.log(city_list);
+    var country_list = [];
+    var city_list = [];
+    for (var i in place_list) {
+        country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
+        if (place_list[i][place_list[i].length - 2]) {
+            city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+        }
+    }
+    country_list = country_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+
+    city_list = city_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
         $.ajax({
             url: "/filtering/",
             type: "GET",
             data: {
-                location: city_list,
+                country: country_list,
+                city: city_list,
                 start_date: $('#start_date_form').val(),
                 end_date: $('#end_date_form').val(),
                 traveler_cnt: $('#traveler_cnt_form').val(),
                 sort: sort,
             },
-            success: function (object) {
-                console.log(object);
-                var user = object[object.length - 1];
-                $('.guide-card-wrapper').html("");
-                $('.search-filter-result').html(object.length - 1);
-                for (var i = 0; i < object.length - 1; i++) {
-                    var ratingFloat = parseFloat(object[i].rating);
-                    console.log(object[i]);
+            success: function (data) {
+                $('.guide-card-wrapper').html(data);
 
-                    if (/^[a-zA-Z]*$/.test(object[i].first_name) == false) {
-                        var name = object[i].last_name + object[i].first_name;
-                    }
-                    else {
-                        var name = object[i].first_name + " " + object[i].last_name;
-                    }
-
-                    if (object[i].is_liked){
-                        var heart_image = '<div class="like-button liked" onclick="like(this)"></div>'
-                    }
-
-                    else {
-                        var heart_image = '<div class="like-button unliked" onclick="like(this)"></div>'
-                    }
-                    var score = '<div class="guide-score-wrapper">\n';
-                    for (var j = 0; j < 5; j++) {
-                        if (ratingFloat >= 1) {
-                            score += '<img class="guide-score" src="/static/image/icon/logo_full.png">\n';
-                            ratingFloat--;
-                        }
-                        else if (ratingFloat >= 0.5) {
-                            score += '<img class="guide-score" src="/static/image/icon/logo_half.png">\n';
-                            ratingFloat--;
-                        }
-                        else {
-                            score += '<img class="guide-score" src="/static/image/icon/logo_empty.png">\n';
-                        }
-                    }
-                    score += '</div>';
-                    var guide_card = '<div class="guide-card">' +
-                        '<input type="hidden" id="user_id" value="' + user + '" name="user_id">' +
-                        '<input type="hidden" id="guide_id" value="' + object[i].id + '" name="guide_id">' +
-                            heart_image +
-                            '<span class="guide-name">' + name +
-                        '</span>' + score +
-                    '<span class="guide-review">' +
-                        '가이드 ' + object[i].pay_cnt + '건 ㅣ 후기 ' + object[i].review_num + '개'+
-                    '</span>' +
-                        '<img class="guide-image" src="/static/image/images/jinwoong.jpg">' +
-                    '<span class="guide-location">' +
-                        '뉴욕 / 워싱턴 D.C / 시카고' +
-                    '</span>' +
-            '</div>';
-
-                    $('.guide-card-wrapper').append(guide_card);
-                }
             },
 
             error: function (xhr, errmsg, err) {
@@ -163,15 +127,13 @@ $(function() {
 
     $("#id_city").on({
         'placecomplete:selected': function (evt, placeResult) {
-            console.log(placeResult);
-            city_list.push(placeResult['name']);
+            place_list.push(placeResult.address_components);
             filterGuide($('.order-active').attr('id'));
         },
-        'placecomplete:cleared': function(evt, placeResult) {
-            console.log(placeResult);
-            city_list.pop();
+        'placecomplete:cleared': function(evt) {
+            place_list.pop();
             filterGuide($('.order-active').attr('id'));
-        }
+        },
     });
 
 

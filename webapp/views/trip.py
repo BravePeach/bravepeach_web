@@ -3,11 +3,12 @@ import datetime
 from collections import OrderedDict, defaultdict
 
 from django.shortcuts import redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.db.models import Count, Case, When, Sum
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.utils import formats
+from django.template.loader import render_to_string
 
 from bravepeach.util import flavour_render
 from ..forms import RequestForm, GuideSearchFrom
@@ -41,14 +42,22 @@ def guide_search(request):
 class FilterGuide(View):
     def get(self, request):
         result = []
-        location = request.GET.getlist('location[]')
-        print(location)
+        country = request.GET.getlist('country[]')
+        city = request.GET.getlist('city[]')
+        print(country, city)
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')
         sort = request.GET.get('sort')
 
         guide_queryset = Guide.objects.all()
+
+        if country:
+            guide_queryset = guide_queryset.filter(guide_country__has_any_keys=country)
+
+        if city:
+            guide_queryset = guide_queryset.filter(guide_city__has_any_keys=city)
+
         if traveler_cnt:
             guide_queryset = guide_queryset.filter(max_traveler_cnt__gte=int(traveler_cnt.split()[1][:-1]))
 
@@ -64,18 +73,19 @@ class FilterGuide(View):
         elif sort == "reviewNum":
             guide_queryset = guide_queryset.annotate(num_reviews=Count('userreview')).order_by('num_reviews')
 
-        for guide in guide_queryset:
-            temp = {'id': guide.id,
-                    'rating': guide.rating,
-                    'pay_cnt': guide.pay_cnt,
-                    'guide_location': guide.guide_location,
-                    'first_name': guide.user.first_name,
-                    'last_name': guide.user.last_name,
-                    'review_num': UserReview.objects.filter(receiver=guide.id).count(),
-                    'is_liked': UserLike.objects.filter(user_id=request.user.id, guide_id=guide.id).exists()}
-            result.append(temp)
-        result += [request.user.id]
-        return JsonResponse(result, safe=False)
+        # for guide in guide_queryset:
+        #     temp = {'id': guide.id,
+        #             'rating': guide.rating,
+        #             'pay_cnt': guide.pay_cnt,
+        #             'guide_location': guide.guide_location,
+        #             'first_name': guide.user.first_name,
+        #             'last_name': guide.user.last_name,
+        #             'review_num': UserReview.objects.filter(receiver=guide.id).count(),
+        #             'is_liked': UserLike.objects.filter(user_id=request.user.id, guide_id=guide.id).exists()}
+        #     result.append(temp)
+        # result += [request.user.id]
+        html = render_to_string('pc/trip/guide_search_result.html', {'guide_queryset': guide_queryset})
+        return HttpResponse(html)
 
 
 @login_required

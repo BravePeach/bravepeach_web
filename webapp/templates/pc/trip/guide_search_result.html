@@ -1,0 +1,24 @@
+{% load static %}
+{% for guide in guide_queryset %}
+<a class="guide-card" href="{% url 'guide_profile' guide.id %}">
+    <input type="hidden" id="user_id" value="" name="user_id">
+    <input type="hidden" id="guide_id" value="{{ guide.id }}" name="guide_id">
+    <span class="guide-name">{{ guide.full_name }}</span>
+    <div class="guide-score-wrapper">
+    {% for i in guide.clean_rating.0 %}
+        <img class="guide-score" src="{% static 'image/icon/logo_full.png' %}" alt="">
+    {% endfor %}
+    {% if guide.clean_rating.1 == 0.5 %}
+        <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="guide-score">
+    {% else %}
+        <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="guide-score">
+    {% endif %}
+    {% for i in guide.clean_rating.2 %}
+        <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="guide-score">
+    {% endfor %}
+    </div>
+    <span class="guide-review">가이드 {{ guide.guide_cnt }}건 ㅣ 후기 {{ guide.review_cnt }}개</span>
+    <img class="guide-image" src="{{ guide.user.profile.photo.url }}">
+    <div class="guide-location">{% for loc in guide.guide_location %}{{ loc }} / {% endfor %}</div>
+</a>
+{% endfor %}

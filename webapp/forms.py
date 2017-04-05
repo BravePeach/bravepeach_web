@@ -188,8 +188,8 @@ class VolunteerForm(forms.ModelForm):
 
     class Meta:
         model = Guide
-        fields = ["real_name", "is_thru", "is_local", "guide_location", "introduction", "career", "certificate",
-                  "appeal", "guide_type", "guide_theme", "essay", "experience"]
+        fields = ["real_name", "is_thru", "is_local", "guide_location", "guide_country", "guide_city", "introduction",
+                  "career", "certificate", "appeal", "guide_type", "guide_theme", "essay", "experience"]
 
 
 class GuideAdjustForm(forms.ModelForm):

@@ -1,4 +1,5 @@
-city_list = [];
+city_name_list = [];
+var place_list = [];
 
 $(function(){
     $("#id_city").placecomplete({
@@ -10,15 +11,12 @@ $(function(){
 
     $("#id_city").on({
         'placecomplete:selected': function (evt, placeResult) {
-            console.log(placeResult);
-            city_list.push(placeResult['name']);
-            console.log(city_list);
-            localStorage.setItem("city_list",city_list);
+            place_list.push(placeResult.address_components);
+            city_name_list.push(placeResult['name']);
         },
         'placecomplete:cleared': function() {
-            city_list.pop();
-            console.log(city_list);
-            localStorage.setItem("city_list",city_list);
+            place_list.pop();
+            city_name_list.pop();
         }
     });
 
@@ -88,7 +86,7 @@ function submit_form(){
     formdata.append("is_thru", is_thru);
     formdata.append("is_local", is_local);
 
-    if(city_list.length === 0) {
+    if(city_name_list.length === 0) {
         swal({
             title: "1개 이상의 도시를 선택해주세요",
             type: "error"
@@ -96,7 +94,26 @@ function submit_form(){
         $("#s2id_id_city").focus();
         return;
     }
-    formdata.append("guide_location", JSON.stringify(city_list));
+
+    var country_list = [];
+    var city_list = [];
+    for (var i in place_list) {
+        country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
+        if (place_list[i][place_list[i].length - 2]) {
+            city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+        }
+    }
+    country_list = country_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+
+    city_list = city_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+
+    formdata.append("guide_location", JSON.stringify(city_name_list));
+    formdata.append("guide_country", JSON.stringify(country_list));
+    formdata.append("guide_city", JSON.stringify(city_list));
 
     var introduction = $("#id_introduction").val();
     if (introduction === "") {
