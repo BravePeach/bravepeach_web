@@ -8,30 +8,7 @@
 {% endblock %}
 {% block js %}
     <script src="{% static 'js/register.js' %}"></script>
-    <script>
-        function fb_login(){
-            FB.login(function(response){
-                if(response.status === 'connected') {
-                    console.log(response);
-                    $.post("{% url 'login_fb' %}", {"access_token": response.authResponse.accessToken},
-                        function(data){
-                            console.log(data);
-                            if(data['ok'] === true) {
-                                window.location.href = '{% url 'index' %}';
-                            } else{
-                                swal({
-                                    type: "error",
-                                    title: "FB Login Failed",
-                                    text: data["msg"]
-                                });
-                            }
-                        });
-                } else {
-                    console.log("no");
-                }
-            }, {scope: "email"});
-        }
-    </script>
+    <script src="{% static 'js/social_login.js' %}"></script>
 {% endblock %}
 
 {% block content %}
