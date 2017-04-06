@@ -1,6 +1,7 @@
 function mobileMenu() {
     if ($('.side_menu_wrapper').css('display') == 'none'){
-        $('body').css('overflow-y', 'hidden');
+        $('body').css('overflow', 'hidden');
+        $('body').css('height', '100vh');
         $('.nav-guide-search-dropdown').hide('slow');
         if($('.nav-bravepeach-logo').css('display') == 'none') {
             $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
@@ -18,7 +19,8 @@ function mobileMenu() {
 
 function mobileSearch() {
     if ($('.search_side_menu_wrapper').css('display') == 'none'){
-        $('body').css('overflow-y', 'hidden');
+        $('body').css('overflow', 'hidden');
+        $('body').css('height', '100vh');
         $('.nav-menubar').hide('slow');
         if($('.nav-bravepeach-logo').css('display') == 'none') {
             $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
