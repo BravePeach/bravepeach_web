@@ -1,4 +1,5 @@
 {% load static %}
+{% if guide_queryset %}
 {% for guide in guide_queryset %}
 <a class="guide-card" href="{% url 'guide_profile' guide.id %}">
     <input type="hidden" id="user_id" value="" name="user_id">
@@ -22,3 +23,6 @@
     <div class="guide-location">{% for loc in guide.guide_location %}{{ loc }} / {% endfor %}</div>
 </a>
 {% endfor %}
+{% else %}
+<div class="no-result">검색 결과가 없습니다.</div>
+{% endif %}

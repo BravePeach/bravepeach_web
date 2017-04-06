@@ -50,6 +50,7 @@ function filterGuide(sort) {
             },
             success: function (data) {
                 $('.guide-card-wrapper').html(data);
+                $('.search-filter-result').html($('.guide-card').length);
             },
         });
     }

@@ -276,3 +276,10 @@ body{width: 100%;}
 .enroll-trip-button{
   display: none !important;
 }
+
+.no-result{
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 35px auto 0 13px;
+}

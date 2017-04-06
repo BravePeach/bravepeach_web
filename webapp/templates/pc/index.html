@@ -44,22 +44,22 @@
                     <div>
                         성인
                         <span class="adult_num">0명</span>
-                        <span class="increase_button">+</span>
-                        <span class="decrease_button">-</span>
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
                     </div>
 
                     <div>
-                        어린이
+                        어린이<div class="hint">2-12세</div>
                         <span class="child_num">0명</span>
-                        <span class="increase_button">+</span>
-                        <span class="decrease_button">-</span>
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
                     </div>
 
                     <div>
-                        유아
+                        유아<div class="hint">2세 미만</div>
                         <span class="toddler_num">0명</span>
-                        <span class="increase_button">+</span>
-                        <span class="decrease_button">-</span>
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
                     </div>
                 </div>
                 {{ form.age_group |add_class:"traveler_cnt_main"|attr:"readonly"|attr:"placeholder:여행자 수"}}

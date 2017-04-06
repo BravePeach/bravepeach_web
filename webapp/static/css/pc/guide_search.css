@@ -76,16 +76,23 @@
 }
 
 .arrow-down {
+    cursor: pointer;
     float: right;
     width: 20px;
     position: absolute;
-    top: 24px;
+    top: 22px;
     right: 3%;
+}
+
+.rotate {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .arrow-right {
     position: absolute;
     right: 48.75%;
+    top: 18px;
 }
 
 .traveler_cntpicker{
@@ -95,31 +102,63 @@
     top:48px;
     left: 10.9%;
     width: 78%;
-    height: 235px;
+    height: 288px;
     border-radius: 8px;
     background-color: #ffffff;
     border: solid 1px #d4d4d4;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .traveler_cntpicker div{
-    margin: 32px 0px 17px 26px;
+    margin: 19px 0px 18px 36px;
 }
 
-.adult_num, .child_num, .toddler_num{margin-right: 46px;}
-.adult_num, .toddler_num{margin-left: 122px;}
-.child_num{margin-left: 103px;}
+.traveler_cntpicker hr{
+    width: 660px;
+    margin: 0 auto;
+    border-bottom: solid 1px #979797;
+}
 
+.cnt-btn{
+      width: 94px;
+  height: 38px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+      border: solid 1.5px #606060;
+ font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 9px;
+    cursor: pointer;
+    margin: 15px 0 0 567px !important;
+}
+
+.adult_num, .child_num, .toddler_num{
+    position: absolute;
+    right: 173px;
+}
 .increase_button, .decrease_button{
-    text-align:center;
-    font-size:25px;
     display:inline-block;
     margin-left: 17px;
     width: 29px;
     height: 29px;
     border:1px solid;
-    border-radius: 14.5px;
     cursor:pointer;
+    position: absolute;
+    border: none;
+}
+
+.increase_button{
+    right: 83px;
+}
+
+.decrease_button{
+    right: 28px;
 }
 
 .search-filter-list-wrapper {
@@ -365,4 +404,30 @@ a.ui-state-default:hover {
 .unliked{
     background: url(../../image/icon/heart_white_shadow.png);
     background-size: cover;
+}
+
+.no-result{
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+.ajx-loader{
+    top: 480px;
+    position: absolute;
+    left: 50%;
+    margin-left: -16px;
+}
+
+.display-none{
+    display: none;
+}
+
+.hint{
+    font-size: 14px;
+    letter-spacing: -0.6px;
+    color: #4d4d4d;
+    margin: 0 0 0 10px !important;
+    display: inline-block;
 }

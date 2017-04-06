@@ -1,9 +1,10 @@
 var place_list = [];
 var city_name_list = [];
-traveler_list = [0, 0, 0, 0, 0, 0];
+traveler_list = [0, 0, 0];
 
 function guide_search_form(){
     sessionStorage.setItem("place_list", JSON.stringify(place_list));
+    sessionStorage.setItem("traveler_list", JSON.stringify(traveler_list));
     $("#guide-search-form #id_city").val(city_name_list);
     $("#guide-search-form").submit();
 }
@@ -70,17 +71,35 @@ $(function() {
     var total_traveler = 0;
 
     $('.increase_button').click(function () {
-        $('span:first-child', $(this).parent('div')).html(function (i, val) {
+        $('span', $(this).parent('div')).html(function (i, val) {
             return parseInt(val.slice(0, -1)) + 1 + '명'
         });
+        if ($(this).siblings('span').hasClass('adult_num')) {
+            traveler_list[0] ++;
+        }
+        else if ($(this).siblings('span').hasClass('child_num')) {
+            traveler_list[1] ++;
+        }
+        else {
+            traveler_list[2] ++;
+        }
         total_traveler++;
         $('#traveler_cnt_main, #traveler_cnt_form, #id_age_group').attr('value', '인원 ' + total_traveler + '명')
     });
 
     $('.decrease_button').click(function () {
-        $('span:first-child', $(this).parent('div')).html(function (i, val) {
+        $('span', $(this).parent('div')).html(function (i, val) {
             if (val[0] == 0) {
                 return
+            }
+            if ($(this).hasClass('adult_num')) {
+                traveler_list[0] --;
+            }
+            else if ($(this).hasClass('child_num')) {
+                traveler_list[1] --;
+            }
+            else {
+                traveler_list[2] --;
             }
             total_traveler--;
             $('#traveler_cnt_main, #traveler_cnt_form, #id_age_group').attr('value', '인원 ' + total_traveler + '명');

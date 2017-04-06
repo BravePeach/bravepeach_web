@@ -1,4 +1,5 @@
 var place_list = JSON.parse(sessionStorage.getItem("place_list"));
+var traveler_list = JSON.parse(sessionStorage.getItem("traveler_list"));
 
 function changeOrder(val) {
     if (val != $('.order-active').id) {
@@ -56,9 +57,6 @@ function filterGuide(sort) {
     city_list = city_list.filter (function (value, index, array) {
         return array.indexOf (value) == index;
     });
-
-    console.log("country: " + country_list);
-    console.log("city: " + city_list);
         $.ajax({
             url: "/filtering/",
             type: "GET",
@@ -72,16 +70,25 @@ function filterGuide(sort) {
             },
             success: function (data) {
                 $('.guide-card-wrapper').html(data);
-
+                $('.search-filter-result').html($('.guide-card').length);
             },
+            beforeSend: function () {
+                $('.guide-card-wrapper').html("");
+                $('.ajx-loader').removeClass('display-none');
+            },
+            complete: function () {
+                $('.ajx-loader').addClass('display-none');
+            }
         });
     }
 
 $(function() {
+
+    $('.adult_num').html(traveler_list[0] + "명");
+    $('.child_num').html(traveler_list[1] + "명");
+    $('.toddler_num').html(traveler_list[2] + "명");
+    var total_traveler = traveler_list[0] + traveler_list[1] + traveler_list[2];
     filterGuide('popularity');
-
-// 가이드 검색
-
 
     $('#start_date_form, #end_date_form').change(function () {
         filterGuide($('.order-active').attr('id'));
@@ -136,11 +143,14 @@ $(function() {
         },
     });
 
+    $('.cnt-btn').click(function(){
+        $(".traveler_cntpicker").slideUp('fast');
+        $('.arrow-down').removeClass('rotate');
+        filterGuide($('.order-active').attr('id'));
+    });
 
-// 인원 증가
-    var total_traveler = 0;
     $('.increase_button').click(function () {
-        $('span:first-child', $(this).parent('div')).html(function (i, val) {
+        $('span', $(this).parent('div')).html(function (i, val) {
             return parseInt(val.slice(0, -1)) + 1 + '명'
         });
         total_traveler++;
@@ -148,7 +158,7 @@ $(function() {
     });
 
     $('.decrease_button').click(function () {
-        $('span:first-child', $(this).parent('div')).html(function (i, val) {
+        $('span', $(this).parent('div')).html(function (i, val) {
             if (val[0] == 0) {
                 return
             }
@@ -161,6 +171,12 @@ $(function() {
     $('#traveler_cnt_form, .arrow-down').click(function(event){
         event.stopPropagation();
          $(".traveler_cntpicker").slideToggle("fast");
+         if ($('.arrow-down').hasClass('rotate')) {
+             $('.arrow-down').removeClass('rotate');
+         }
+         else {
+             $('.arrow-down').addClass('rotate');
+         }
     });
     $(".traveler_cntpicker").on("click", function (event) {
         event.stopPropagation();
@@ -171,5 +187,6 @@ $(function() {
 
 $(document).on("click", function () {
     $(".traveler_cntpicker").slideUp('fast');
+    $('.arrow-down').removeClass('rotate');
 });
 

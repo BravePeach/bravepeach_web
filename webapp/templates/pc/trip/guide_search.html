@@ -29,7 +29,7 @@
     <div class="gradation-bar">
         <img class="icon" src="/static/image/icon/when_white.png" alt="when?">
         <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="{{ travel_begin_at }}" readonly>
-        <img class="arrow-right" src="">
+        <img class="arrow-right" src="{% static 'image/icon/arrow_wh_sm.png' %}">
         <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="{{ travel_end_at }}" readonly>
     </div>
     <div class="gradation-bar">
@@ -40,23 +40,28 @@
             <div>
                 성인
                 <span class="adult_num">0명</span>
-                <span class="increase_button">+</span>
-                <span class="decrease_button">-</span>
+                <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
+                <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
             </div>
+            <hr>
 
             <div>
-                어린이
+                어린이<div class="hint">2-12세</div>
                 <span class="child_num">0명</span>
-                <span class="increase_button">+</span>
-                <span class="decrease_button">-</span>
+                <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
+                <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
             </div>
+            <hr>
 
             <div>
-                유아
+                유아<div class="hint">2세 미만</div>
                 <span class="toddler_num">0명</span>
-                <span class="increase_button">+</span>
-                <span class="decrease_button">-</span>
+                <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
+                <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
             </div>
+            <hr>
+
+            <div class="cnt-btn">확인</div>
         </div>
 
     </div>
@@ -69,7 +74,7 @@
         <span style="float: right;"><span class="search-filter-result"></span>명의 가이드가 있습니다.</span>
 
     </div>
-    <div class=""></div>
+    <img class="ajx-loader display-none" src="{% static 'image/icon/ajax-loader.gif' %}">
 
     <div class="guide-card-wrapper">
 
