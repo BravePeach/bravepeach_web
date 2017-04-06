@@ -71,7 +71,13 @@ class FilterGuide(View):
 
 
 @login_required
-def enroll_trip(request):
+def enroll_trip(request, **kwargs):
+    user_request = ''
+    if kwargs:
+        req_id = kwargs['req_id']
+        user_request = UserRequest.objects.get(id=req_id, user_id=request.user.id)
+    else:
+        req_id = ""
     if request.method == 'POST':
         cities = request.POST["city"].replace(' ', '').split(',')
         age_group = [int(x) for x in request.POST["age_group"].split(',')]
@@ -85,23 +91,37 @@ def enroll_trip(request):
                 new_value = sum([int(i) for i in data.getlist(key)])
                 data.update({key: new_value})
 
-        form = RequestForm(data)
+        if req_id:
+            form = RequestForm(data, instance=user_request)
+
+        else:
+            form = RequestForm(data)
 
         if form.is_valid():
-            form.save()
-            user_request = UserRequest.objects.last()
+            if req_id:
+                form.save()
+            else:
+                form.save()
+                user_request = UserRequest.objects.last()
             return flavour_render(request, 'trip/enroll_trip_detail.html', {'req': user_request})
         else:
             print(form.errors)
             return redirect("enroll_trip")
     else:
-        form = RequestForm()
-        return flavour_render(request, 'trip/enroll_trip.html', {'form': form})
+        if req_id:
+            # user_request.age_group = "인원 " + str(sum(user_request.age_group)) + "명"
+            user_request.travel_begin_at = user_request.travel_begin_at.strftime("%Y.%m.%d")
+            user_request.travel_end_at = user_request.travel_end_at.strftime("%Y.%m.%d")
+            form = RequestForm(instance=user_request)
+        else:
+            form = RequestForm()
+        return flavour_render(request, 'trip/enroll_trip.html', {'form': form, 'req': user_request})
 
 
 @login_required
-def my_trip_detail(request):
-    return
+def my_trip_detail(request, user_request_id):
+    user_request = UserRequest.objects.get(id=user_request_id, user=request.user)
+    return flavour_render(request, 'trip/enroll_trip_detail.html', {'req': user_request})
 
 
 @login_required

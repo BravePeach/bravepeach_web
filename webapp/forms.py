@@ -111,7 +111,6 @@ class PasswordResetCustomForm(PasswordResetForm):
         self.fields['email'].widget.attrs.update({"class": "input-text", "id": "reset-email"})
 
 
-# 요청서 작성
 class RequestForm(forms.ModelForm):
     travel_begin_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
     travel_end_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
@@ -128,7 +127,8 @@ class RequestForm(forms.ModelForm):
         fields = [
             'user', 'city', 'travel_begin_at', 'travel_end_at', 'age_group', 'trans_type', 'trans_via', 'trans_class',
             'trans_comment', 'accom_location', 'accom_location_optional', 'accom_type', 'accom_comment',
-            'start_time', 'end_time', 'landmark', 'theme', 'local_trans', 'guide_type', 'importance', 'cost', 'additional_request'
+            'start_time', 'end_time', 'landmark', 'theme', 'local_trans', 'guide_type', 'importance', 'cost',
+            'additional_request', 'accom_location_optional', 'importance_optional'
         ]
         widgets = {
             'trans_comment': forms.Textarea,
