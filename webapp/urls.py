@@ -88,6 +88,7 @@ urlpatterns = [
     url(r'^my_trip_detail/(?P<user_request_id>\d+)/$', views.trip.my_trip_detail, name="my_trip_detail"),
     url(r'^offer/(?P<offer_id>\d+)/$', views.trip.offer_detail, name="offer_detail"),
     url(r'^enroll_trip/$', views.trip.enroll_trip, name='enroll_trip'),
+    url(r'^edit_trip/(?P<req_id>\d+)/$', views.trip.enroll_trip, name='edit_trip'),
     url(r'^cancel_offer/$', views.trip.cancel_offer, name="cancel_offer"),
     url(r'^payment/(?P<offer_id>\d+)/$', views.trip.payment, name="payment"),
 
