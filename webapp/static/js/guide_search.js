@@ -1,6 +1,6 @@
 var place_list = [];
 if (localStorage.getItem("place_list")) {
-    country_list = localStorage.getItem("place_list").split(',');
+    place_list = localStorage.getItem("place_list").split(',');
 }
 
 function changeOrder(val) {
@@ -68,12 +68,6 @@ function filterGuide(sort) {
                 $('.guide-card-wrapper').html(data);
 
             },
-
-            error: function (xhr, errmsg, err) {
-                $('#results').html("<div class='alert-box alert radius'data-alert>Oops! We have encountered an error: " + errmsg +
-                    " <a href='#'class='close'>&times;</a></div>"); // add the error to the dom
-                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-            }
         });
     }
 
