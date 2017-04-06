@@ -150,7 +150,7 @@ header{
 .find-guide-form {
     padding-top: 23px;
     display: block;
-    padding-left: 83px;
+    padding-left: 23%;
     margin:auto;
     margin-top: 114px;
     width: 95%;
@@ -171,7 +171,7 @@ header{
     opacity: 0.6;
     width: 20px;
     position: absolute;
-    right: 100px;
+    right: 53%;
     top: 136px;
     z-index: 100;
 }

@@ -146,7 +146,7 @@ HASHID_FIELD_SALT = get_random_secret_key()
 # Login info
 
 # LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login'
+LOGIN_URL = '/login/'
 
 # Email backend
 
