@@ -38,9 +38,16 @@ function filterGuide(sort) {
     var country_list = [];
     var city_list = [];
     for (var i in place_list) {
-        country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
-        if (place_list[i][place_list[i].length - 2]) {
-            city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+        if (place_list[i].length < 5) {
+            country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
+            if (place_list[i][place_list[i].length - 2]) {
+                city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+            }
+        }
+
+        else {
+            country_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+            city_list.push(place_list[i][place_list[i].length - 3]['short_name']);
         }
     }
     country_list = country_list.filter (function (value, index, array) {
