@@ -1,9 +1,3 @@
-// if (localStorage.getItem("place_list")) {
-//     place_list = localStorage.getItem("place_list").split(',');
-// }
-
-// console.log(place_list);
-
 function changeOrder(val) {
     if (val != $('.order-active').id) {
         $('.order-active').removeClass('order-active');

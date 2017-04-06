@@ -25,7 +25,7 @@
             <h1>어디로 가시나요?</h1>
         </div>
 
-        <form class="main-form-wrapper" method="get">
+        <form class="main-form-wrapper" method="get" id="guide-search-form">
             <div class="location_form_main_wrapper">
                 <span class="form-name">위치</span>
                 {{ form.city |add_class:"location_form_main"|attr:"placeholder:목적지, 도시명, 주소"}}
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 {{ form.age_group |add_class:"traveler_cnt_main"|attr:"readonly"|attr:"placeholder:여행자 수"}}
-                <button class="main-form-button" onclick="submit_enroll_form()">가이드 검색</button>
+                <button class="main-form-button" onclick="guide_search_form()">가이드 검색</button>
             </div>
         </form>
     </div>

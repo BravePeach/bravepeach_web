@@ -1,9 +1,9 @@
 traveler_list = [0, 0, 0, 0, 0, 0];
-city_list = [];
+place_list = [];
 
-function submit_enroll_form(){
+function guide_search_form(){
     $("#id_city").val(city_list.join());
-    $("#enroll-form").submit();
+    $("#guide-search-form").submit();
 }
 
 $(function() {
@@ -26,13 +26,9 @@ $(function() {
     $("#id_city").on({
         'placecomplete:selected': function (evt, placeResult) {
             console.log(placeResult);
-            city_list.push(placeResult['name']);
-            console.log(city_list);
             localStorage.setItem("city_list",city_list);
         },
         'placecomplete:cleared': function() {
-            city_list.pop();
-            console.log(city_list);
             localStorage.setItem("city_list",city_list);
         }
     });

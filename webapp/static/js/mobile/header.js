@@ -1,8 +1,6 @@
-// 모바일 헤더 에니메이션
-
 function mobileMenu() {
     if ($('.side_menu_wrapper').css('display') == 'none'){
-        $('body').css('overflow', 'hidden');
+        $('body').css('overflow-y', 'hidden');
         $('.nav-guide-search-dropdown').hide('slow');
         if($('.nav-bravepeach-logo').css('display') == 'none') {
             $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
@@ -20,7 +18,7 @@ function mobileMenu() {
 
 function mobileSearch() {
     if ($('.search_side_menu_wrapper').css('display') == 'none'){
-        $('body').css('overflow', 'hidden');
+        $('body').css('overflow-y', 'hidden');
         $('.nav-menubar').hide('slow');
         if($('.nav-bravepeach-logo').css('display') == 'none') {
             $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});

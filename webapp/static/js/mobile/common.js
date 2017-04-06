@@ -2,7 +2,7 @@ var place_list = [];
 var city_name_list = [];
 traveler_list = [0, 0, 0, 0, 0, 0];
 
-function guide_searech_form(){
+function guide_search_form(){
     if ($("#guide_search-form #id_city").val() == ""){
         swal({
             type: "error",
