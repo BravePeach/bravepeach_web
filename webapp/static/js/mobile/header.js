@@ -1,11 +1,12 @@
+var posY;
+
 function mobileMenu() {
     if ($('.side_menu_wrapper').css('display') == 'none'){
+
         $('.nav-menubar').attr("src", "/static/image/icon/cancel.png");
         $('html').addClass('not-scroll');
         $('.nav-guide-search-dropdown').hide();
         if($('.nav-bravepeach-logo').css('display') == 'none') {
-            // $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
-            $('.mobile-header').css({backgroundColor: "rgb(255, 255, 255)"});
         }
         $('.side_menu_wrapper').show();
     }
@@ -14,12 +15,9 @@ function mobileMenu() {
         $('html').removeClass('not-scroll');
         $('.nav-guide-search-dropdown').show();
         if($('.nav-bravepeach-logo').css('display') == 'none') {
-            // $('.mobile-header').animate({backgroundColor: "rgba(255, 255, 255, 0)"});
-            $('.mobile-header').css({backgroundColor: "rgba(255, 255, 255, 0)"});
         }
         $('.side_menu_wrapper').hide();
     }
-    // $('.side_menu_wrapper').toggle("slide", { direction: "right" })
 }
 
 function mobileSearch() {
@@ -28,7 +26,6 @@ function mobileSearch() {
         $('html').addClass('not-scroll');
         $('.nav-menubar').hide();
         if($('.nav-bravepeach-logo').css('display') == 'none') {
-            // $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
             $('.mobile-header').css({backgroundColor: "rgb(255, 255, 255)"});
         }
         $('.search_side_menu_wrapper').show()
@@ -38,12 +35,10 @@ function mobileSearch() {
         $('html').removeClass('not-scroll');
         $('.nav-menubar').show();
         if($('.nav-bravepeach-logo').css('display') == 'none') {
-            // $('.mobile-header').animate({backgroundColor: "rgba(255, 255, 255, 0)"});
             $('.mobile-header').css({backgroundColor: "rgba(255, 255, 255, 0)"});
         }
         $('.search_side_menu_wrapper').hide()
     }
-    // $('.search_side_menu_wrapper').toggle("slide", { direction: "left" })
 }
 
 $(function () {

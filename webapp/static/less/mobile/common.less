@@ -177,6 +177,7 @@ body {
 
 .nav-menubar{
   display: inline;
+  z-index: 1;
   width: 40px;
   position: absolute;
   top: 5px;
@@ -188,8 +189,9 @@ body {
   display: block;
   margin: auto;
   width: 133.7px;
-  height: 24.4px;
-  position: static;
+  height: 35.4px;
+  position: relative;
+  z-index: 1;
 }
 
 .nav-bravepeach-logo{
@@ -199,6 +201,7 @@ body {
 
 .nav-guide-search-dropdown{
   display: inline;
+  z-index: 1;
   width: 40px;
   padding: 12px;
   position: absolute;
@@ -209,10 +212,10 @@ body {
 .side_menu_wrapper{
   overflow: scroll;
   position:relative;
-  z-index: 1000;
   display: none;
   margin: auto;
-  padding-top: 21px;
+  padding-top: 65px;
+  margin-top: -45px;
   height: 100vh;
   background-color: white;
   width: 100%;
@@ -245,7 +248,7 @@ body {
 
 .menu-list{
   padding: 0px;
-  margin: 40px 36px 100px 28px;
+  margin: 40px 36px 50px 28px;
   list-style: none;
   font-size: 20px
 }
@@ -264,10 +267,10 @@ body {
 .search_side_menu_wrapper {
   overflow: scroll;
   position: relative;
-  z-index: 1000;
   display: none;
   margin: auto;
-  padding: 24px 13px 0px 13px;
+  margin-top: -45px;
+  padding: 65px 13px 0px 13px;
   height: 100vh;
   font-size: 15px;
   color: black;
@@ -317,7 +320,7 @@ body {
     border-radius: 12px;
     background-color: #e64c47;
     border: none;
-    margin: 100px;
+    margin: 100px 0 50px 0;
     left: 50%;
     margin-left: -46% !important;
 }
