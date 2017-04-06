@@ -10,10 +10,10 @@
 {% block mypage %}
     <div class="cert-title">이메일로 인증하기</div>
     <div class="cert-body">
-        {% if request.user.mail_certified %}
-            <span>{{ request.user.email }}</span> 로 인증되었습니다.
+        {% if request.user.profile.mail_certified %}
+            <span>{{ request.user.username }}</span> 로 인증되었습니다.
         {% else %}
-            <input type="email" placeholder="이메일을 입력하세요" class="email-input" id="cert-mail">
+            <input type="email" placeholder="이메일을 입력하세요" class="email-input" id="cert-mail" value="{{ request.user.username }}" readonly>
             <div class="cert-notice">해당 이메일로 인증링크가 보내졌습니다.<br>
                 이메일에서 링크를 누르시면 인증이 완료됩니다.</div>
             <button type="button" onclick="cert_mail()" class="m-mail-cert-btn">인증링크 받기</button>
