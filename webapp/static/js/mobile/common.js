@@ -77,11 +77,11 @@ $(function(){
         }
     });
 
-    // fixTripButton();
-    // $('.enroll-trip-button').fadeIn('slow');
-    // $(document).scroll(function() {
-    //     fixTripButton();
-    // });
+    fixTripButton();
+    $('.enroll-trip-button').fadeIn('slow');
+    $(document).scroll(function() {
+        fixTripButton();
+    });
 
     $("#id_city").placecomplete({
         tags: true,
