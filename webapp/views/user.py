@@ -2,12 +2,14 @@ import datetime
 from io import BytesIO
 from uuid import uuid4
 from urllib.request import urlopen
+from hashlib import sha256
 
 import boto3
 from PIL import Image
 import requests
+from django.core.mail import send_mail
 from django.core.files.base import ContentFile
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -17,7 +19,7 @@ from django.contrib.auth.decorators import login_required
 from bravepeach import settings
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm, UserReviewForm
 from ..models import Profile, GuideOffer, UserReview, GuideReview
-from bravepeach.util import flavour_render
+from bravepeach.util import flavour_render, AESCipher
 
 
 def user_login(request):
@@ -177,7 +179,7 @@ def check_email(request):
 
 def password_reset_complete(request):
     messages.add_message(request, messages.INFO, "reset_pw")
-    return redirect("login", reset_pw="true")
+    return redirect("login")    # , reset_pw="true")
 
 
 @login_required
@@ -232,9 +234,29 @@ def mypage(request, page_type="account"):
 
 @login_required
 def cert_mail(request):
-    # TODO: send mail
-    print(request.POST)
+    uid = AESCipher(settings.ENCRYPT_KEY).encrypt(request.user.email)
+    token = sha256(request.user.email.encode()).hexdigest()
+    send_mail("Email Certification request from Bravepeach",
+              """This is Email from Bravepeach to Validate Email.\n
+              Please connect to following link to validate:\n
+              {}://{}/cert-mail/{}_{}
+              """.format(request.is_secure() and "https" or "http", request.get_host(), uid, token),
+              settings.DEFAULT_FROM_EMAIL, [request.user.email]
+              )
     return JsonResponse({"ok": True})
+
+
+def cert_mail_check(request, uid, token):
+    decrypt = AESCipher(settings.ENCRYPT_KEY).decrypt(uid)
+    user = User.objects.filter(username=decrypt).first()
+    print(user.profile.full_name)
+    if not user:
+        return JsonResponse({'ok': False, "msg": "No Such Mail"})
+    if token != sha256(user.email.encode()).hexdigest():
+        return JsonResponse({'ok': False, "msg": "Token Contaminated"})
+    user.profile.mail_certified = True
+    user.profile.save()
+    return redirect(reverse('index'))
 
 
 @login_required

@@ -31,6 +31,7 @@ urlpatterns = [
                                                "post_reset_redirect": "password_reset_complete"}),
     url(r'^password_reset/complete$', views.user.password_reset_complete, name="password_reset_complete"),
     url(r'^cert_mail/$', views.user.cert_mail, name='cert_mail'),
+    url(r'^cert-mail/(?P<uid>[\w+\-/]+)_(?P<token>[\w]+)$', views.user.cert_mail_check, name='cert_mail_check'),
     url(r'^edit_profile/$', views.user.edit_profile, name="edit_profile"),
     url(r'^upload_original/$', views.user.upload_original, name='upload_original'),
     url(r'^upload_profile/$', views.user.upload_profile, name='upload_profile'),
