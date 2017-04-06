@@ -177,7 +177,7 @@ def check_email(request):
 
 def password_reset_complete(request):
     messages.add_message(request, messages.INFO, "reset_pw")
-    return redirect("login", reset_pw="true")
+    return redirect("login")    # , reset_pw="true")
 
 
 @login_required

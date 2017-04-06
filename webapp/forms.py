@@ -148,8 +148,8 @@ class GuideSearchFrom(forms.Form):
 class SetPasswordCustcomForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
         super(SetPasswordCustcomForm, self).__init__(*args, **kwargs)
-        self.fields['new_passowrd1'].widget.attrs.update({"class": "input-text", "id": "new-password1"})
-        self.fields['new_passowrd2'].widget.attrs.update({"class": "input-text", "id": "new-password2"})
+        self.fields['new_password1'].widget.attrs.update({"class": "input-text", "id": "new-password1"})
+        self.fields['new_password2'].widget.attrs.update({"class": "input-text", "id": "new-password2"})
 
 
 class UserReviewForm(forms.ModelForm):
