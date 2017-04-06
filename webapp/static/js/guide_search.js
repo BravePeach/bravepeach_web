@@ -1,7 +1,4 @@
-var place_list = [];
-if (localStorage.getItem("place_list")) {
-    place_list = localStorage.getItem("place_list").split(',');
-}
+var place_list = JSON.parse(sessionStorage.getItem("place_list"));
 
 function changeOrder(val) {
     if (val != $('.order-active').id) {
@@ -49,10 +46,12 @@ function filterGuide(sort) {
     country_list = country_list.filter (function (value, index, array) {
         return array.indexOf (value) == index;
     });
-
     city_list = city_list.filter (function (value, index, array) {
         return array.indexOf (value) == index;
     });
+
+    console.log("country: " + country_list);
+    console.log("city: " + city_list);
         $.ajax({
             url: "/filtering/",
             type: "GET",

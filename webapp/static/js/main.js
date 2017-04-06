@@ -1,8 +1,10 @@
+var place_list = [];
+var city_name_list = [];
 traveler_list = [0, 0, 0, 0, 0, 0];
-place_list = [];
 
 function guide_search_form(){
-    $("#id_city").val(city_list.join());
+    sessionStorage.setItem("place_list", JSON.stringify(place_list));
+    $("#guide-search-form #id_city").val(city_name_list);
     $("#guide-search-form").submit();
 }
 
@@ -25,11 +27,12 @@ $(function() {
 
     $("#id_city").on({
         'placecomplete:selected': function (evt, placeResult) {
-            console.log(placeResult);
-            localStorage.setItem("city_list",city_list);
+            place_list.push(placeResult.address_components);
+            city_name_list.push(placeResult['display_text']);
         },
         'placecomplete:cleared': function() {
-            localStorage.setItem("city_list",city_list);
+            place_list.pop();
+            city_name_list.pop();
         }
     });
 

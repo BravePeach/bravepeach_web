@@ -3,33 +3,24 @@ var city_name_list = [];
 traveler_list = [0, 0, 0, 0, 0, 0];
 
 function guide_search_form(){
-    if ($("#guide_search-form #id_city").val() == ""){
-        swal({
-            type: "error",
-            title: "도시를 적어도 1개 검색해주세요."
-        })
-    }
-    else {
-        var country_list = [];
-        var city_list = [];
-        for (var i in place_list) {
-            country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
-            if (place_list[i][place_list[i].length - 2]) {
-                city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
-            }
+    var country_list = [];
+    var city_list = [];
+    for (var i in place_list) {
+        country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
+        if (place_list[i][place_list[i].length - 2]) {
+            city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
         }
-        country_list = country_list.filter (function (value, index, array) {
-            return array.indexOf (value) == index;
-        });
-
-        city_list = city_list.filter (function (value, index, array) {
-            return array.indexOf (value) == index;
-        });
-        sessionStorage.setItem("country_list", JSON.stringify(country_list));
-        sessionStorage.setItem("city_list", JSON.stringify(city_list));
-        $("#guide_search-form #id_city").val(city_name_list);
-        $("#guide_search-form").submit();
     }
+    country_list = country_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+    city_list = city_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+    sessionStorage.setItem("country_list", JSON.stringify(country_list));
+    sessionStorage.setItem("city_list", JSON.stringify(city_list));
+    $("#guide_search-form #id_city").val(city_name_list);
+    $("#guide_search-form").submit();
 }
 
 function fixTripButton() {
@@ -95,7 +86,7 @@ $(function(){
     $("#id_city").on({
         'placecomplete:selected': function (evt, placeResult) {
             place_list.push(placeResult.address_components);
-            city_name_list.push(placeResult['name'])
+            city_name_list.push(placeResult['display_text'])
         },
         'placecomplete:cleared': function() {
             place_list.pop();

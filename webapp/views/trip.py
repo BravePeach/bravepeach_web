@@ -19,20 +19,15 @@ from django.utils import timezone
 
 def guide_search(request):
     if request.GET:
-        print(request.GET)
         form = GuideSearchFrom(request.GET)
-        if request.GET.__contains__('city'):
-            city = request.GET.__getitem__('city')
-        if request.GET.__contains__('travel_begin_at'):
-            travel_begin_at = request.GET.__getitem__('travel_begin_at')
-        if request.GET.__contains__('travel_end_at'):
-            travel_end_at = request.GET.__getitem__('travel_end_at')
-        if request.GET.__contains__('age_group'):
-            age_group = request.GET.__getitem__('age_group')
+        city = request.GET.get('city')
+        travel_begin_at = request.GET.get('travel_begin_at')
+        travel_end_at = request.GET.get('travel_end_at')
+        age_group = request.GET.get('age_group')
         if form.is_valid():
             return flavour_render(request, "trip/guide_search.html", {'city': city,
                                                                       'travel_begin_at': travel_begin_at,
-                                                                      'travel_end_at':travel_end_at,
+                                                                      'travel_end_at': travel_end_at,
                                                                       'age_group': age_group,
                                                                       })
     else:
@@ -41,10 +36,8 @@ def guide_search(request):
 
 class FilterGuide(View):
     def get(self, request):
-        result = []
         country = request.GET.getlist('country[]')
         city = request.GET.getlist('city[]')
-        print(country, city)
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')
@@ -73,17 +66,6 @@ class FilterGuide(View):
         elif sort == "reviewNum":
             guide_queryset = guide_queryset.annotate(num_reviews=Count('userreview')).order_by('num_reviews')
 
-        # for guide in guide_queryset:
-        #     temp = {'id': guide.id,
-        #             'rating': guide.rating,
-        #             'pay_cnt': guide.pay_cnt,
-        #             'guide_location': guide.guide_location,
-        #             'first_name': guide.user.first_name,
-        #             'last_name': guide.user.last_name,
-        #             'review_num': UserReview.objects.filter(receiver=guide.id).count(),
-        #             'is_liked': UserLike.objects.filter(user_id=request.user.id, guide_id=guide.id).exists()}
-        #     result.append(temp)
-        # result += [request.user.id]
         html = render_to_string('pc/trip/guide_search_result.html', {'guide_queryset': guide_queryset})
         return HttpResponse(html)
 
