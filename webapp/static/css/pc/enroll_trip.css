@@ -257,6 +257,7 @@ a.ui-state-default:hover {
     margin: auto;
     position: relative;
     display: block;
+    cursor: pointer;
 }
 
 .way-of-travel-button img, .lodging-button img, .guide-button img {
@@ -449,4 +450,27 @@ input[type='checkbox'] {
   border-radius: 3px;
   border: solid 1px #979797;
     background-color: white;
+    cursor: pointer;
+}
+
+label{
+    cursor: pointer;
+}
+
+.display-none{
+    display: none;
+}
+
+.location-option, .importance-option{
+    width: 200px;
+    font-size: 12px;
+    border: none;
+    border-bottom: solid 1px #bbbbbb;
+    margin-left: 8px;
+}
+
+.importance-option{
+    width: 523px;
+    font-size: 20px;
+    margin-left: 10px;
 }

@@ -111,7 +111,6 @@ class PasswordResetCustomForm(PasswordResetForm):
         self.fields['email'].widget.attrs.update({"class": "input-text", "id": "reset-email"})
 
 
-# 요청서 작성
 class RequestForm(forms.ModelForm):
     travel_begin_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
     travel_end_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
@@ -128,7 +127,8 @@ class RequestForm(forms.ModelForm):
         fields = [
             'user', 'city', 'travel_begin_at', 'travel_end_at', 'age_group', 'trans_type', 'trans_via', 'trans_class',
             'trans_comment', 'accom_location', 'accom_location_optional', 'accom_type', 'accom_comment',
-            'start_time', 'end_time', 'landmark', 'theme', 'local_trans', 'guide_type', 'importance', 'cost', 'additional_request'
+            'start_time', 'end_time', 'landmark', 'theme', 'local_trans', 'guide_type', 'importance', 'cost',
+            'additional_request', 'accom_location_optional', 'importance_optional'
         ]
         widgets = {
             'trans_comment': forms.Textarea,
@@ -139,7 +139,7 @@ class RequestForm(forms.ModelForm):
 
 
 class GuideSearchFrom(forms.Form):
-    city = forms.CharField(widget=forms.TextInput)
+    city = forms.CharField(widget=forms.TextInput, required=False)
     travel_begin_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
     travel_end_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
     age_group = forms.CharField(widget=forms.TextInput, required=False)
@@ -148,8 +148,8 @@ class GuideSearchFrom(forms.Form):
 class SetPasswordCustcomForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
         super(SetPasswordCustcomForm, self).__init__(*args, **kwargs)
-        self.fields['new_passowrd1'].widget.attrs.update({"class": "input-text", "id": "new-password1"})
-        self.fields['new_passowrd2'].widget.attrs.update({"class": "input-text", "id": "new-password2"})
+        self.fields['new_password1'].widget.attrs.update({"class": "input-text", "id": "new-password1"})
+        self.fields['new_password2'].widget.attrs.update({"class": "input-text", "id": "new-password2"})
 
 
 class UserReviewForm(forms.ModelForm):

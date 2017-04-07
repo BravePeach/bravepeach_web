@@ -1,10 +1,3 @@
-traveler_list = [0, 0, 0, 0, 0, 0];
-city_list = [];
-
-function submit_enroll_form(){
-    $("#id_city").val(city_list.join());
-    $("#enroll-form").submit();
-}
 
 $(function() {
     $( window ).scroll(function() {

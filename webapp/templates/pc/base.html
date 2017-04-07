@@ -4,6 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="google-signin-client_id" content="1045474072914-7lkt1plvlfil2aua7tol7lgr1jbg1fb2.apps.googleusercontent.com">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href='{% static "less/pc/common.less"|compile %}'>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -14,28 +15,16 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="{% static 'js/jquery-ui.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.3/sweetalert2.min.js"></script>
+    <script>
+        window.___gcfg = {
+            lang: "ko"
+        }
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js" async defer></script>
     <script src="{% static 'js/common.js' %}"></script>
     {% block js %}{% endblock %}
 </head>
 <body>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1520837081477959',
-      xfbml      : true,
-      version    : 'v2.8'
-    });
-    FB.AppEvents.logPageView();
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
 <header id="header" class="brave_head">
     <div class="main_logo">
         <a href="/" title="">
@@ -49,12 +38,12 @@
                         {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
                  alt="프로필">
             <span>{{request.user.profile.full_name }} 님</span>
-        <img class="profile-arrow" src="{% static 'image/icon/arrow_down_black.png' %}">
-        <div class="profile-dropdown">
-            <a class="dropdown-menu" href="{% url 'mypage_default' %}">마이페이지</a>
-            <a class="dropdown-menu">도움말</a>
-            <a class="dropdown-menu last" href="{% url 'logout' %}">로그아웃</a>
-        </div>
+            <img class="profile-arrow" src="{% static 'image/icon/arrow_down_black.png' %}">
+            <div class="profile-dropdown">
+                <a class="dropdown-menu" href="{% url 'mypage_default' %}">마이페이지</a>
+                <a class="dropdown-menu">도움말</a>
+                <a class="dropdown-menu last" href="{% url 'logout' %}">로그아웃</a>
+            </div>
         </div>
     {% endif %}
     <div class="gnb">
@@ -74,12 +63,12 @@
         </ul>
     </div>
 </header>
-   <a class="enroll-trip-button" href="{% url 'enroll_trip' %}">
-        <h2>여행 요청서 쓰기</h2>
-        <span>나만의 전문 가이드를 모집해보세요!</span>
-    </a>
+<a class="enroll-trip-button" href="{% url 'enroll_trip' %}">
+    <h2>여행 요청서 쓰기</h2>
+    <span>나만의 전문 가이드를 모집해보세요!</span>
+</a>
 <div class="contents-wrapper">
-{% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 </div>
 <footer>
     <div class="foot_menu">

@@ -9,10 +9,10 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
-from django.core.management.utils import get_random_secret_key
-from django.core.mail import backends
 import os
 import json
+
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -149,8 +149,13 @@ HASHID_FIELD_SALT = get_random_secret_key()
 LOGIN_URL = '/login/'
 
 # Email backend
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = LOCAL_SETTINGS['EMAIL_HOST_USER']
+EMAIL_HOST_USER = LOCAL_SETTINGS['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = LOCAL_SETTINGS['EMAIL_HOST_PASSWORD']
 
 # Media
 # MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
@@ -200,5 +205,9 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 
 # Google Login
+SOCIAL_AUTH_GOOGLE_API_KEY = LOCAL_SETTINGS['GGL_API']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = LOCAL_SETTINGS['GGL_KEY']
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = LOCAL_SETTINGS['GGL_SECRET']
+
+# Cert. email
+ENCRYPT_KEY = LOCAL_SETTINGS["ENCRYPT_KEY"]

@@ -62,7 +62,6 @@ body{width: 100%;}
     width: 70%;
     height: 30px;
     border-radius: 3px;
-    font-family: NanumSquareOTFR;
     font-size: 17px;
     font-weight: normal;
     font-style: normal;
@@ -131,13 +130,14 @@ body{width: 100%;}
 }
 
 .guide-card-wrapper {
-    overflow-y: hidden;
+    width: 100%;
     white-space: nowrap;
     margin: 18px -13px 0px -13px;
 }
 
 .guide-card {
-    width: 355px;
+    width: 100%;
+    max-width: 355px;
     height: 300px;
     border-radius: 8px;
     border: solid 1px #979797;
@@ -217,17 +217,19 @@ body{width: 100%;}
 }
 
 .guide-location {
-    display: block;
-    margin-top: 30px;
-    z-index: -1;
-    font-family: NanumSquareOTFB;
+    display: -webkit-box;
+    width: 231px;
+    line-height: 20px;
+    max-height: 38px;
     font-size: 18px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: center;
+    margin: 20px auto 0 auto;
+    white-space: normal;
+    z-index: -1;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-weight: bold;
+    text-overflow: ellipsis;
 }
 
 .guide-howmany {
@@ -273,4 +275,11 @@ body{width: 100%;}
 
 .enroll-trip-button{
   display: none !important;
+}
+
+.no-result{
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 35px auto 0 13px;
 }

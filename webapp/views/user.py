@@ -2,12 +2,14 @@ import datetime
 from io import BytesIO
 from uuid import uuid4
 from urllib.request import urlopen
+from hashlib import sha256
 
 import boto3
 from PIL import Image
 import requests
+from django.core.mail import send_mail
 from django.core.files.base import ContentFile
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -17,7 +19,7 @@ from django.contrib.auth.decorators import login_required
 from bravepeach import settings
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm, UserReviewForm
 from ..models import Profile, GuideOffer, UserReview, GuideReview
-from bravepeach.util import flavour_render
+from bravepeach.util import flavour_render, AESCipher
 
 
 def user_login(request):
@@ -99,21 +101,61 @@ def login_fb(request):
             new_user = User(username=data['email'], first_name=data['first_name'], last_name=data['last_name'],
                             email=data['email'])
             new_user.save()
-            profile = Profile(user=new_user, gender=0 if data['gender'] == 'male' else 1, fb_id=data['id'])
+            profile = Profile(user=new_user, gender=1 if data['gender'] == 'male' else 2, fb_id=data['id'])
             if not data['picture']['data']['is_silhouette']:
                 url = "https://graph.facebook.com/{}/picture?type=large".format(data['id'])
                 photo = urlopen(url)
-                profile.photo.save("{}.jpg".format(data['id']), ContentFile(photo.read()))
+                profile.photo.save("fb_{}.jpg".format(data['id']), ContentFile(photo.read()))
             profile.save()
             login(request, new_user)
         except Exception as e:
             msg = ""
             if e.args[0] == 1062:
-                msg = "{} 는이미 가입되어있는 메일입니다.".format(data['email'])
+                msg = "{} 는 이미 가입되어있는 메일입니다.".format(data['email'])
             return JsonResponse({"ok": False, "msg": msg})
     else:
         login(request, prev_profile.user)
     return JsonResponse({'ok': True})
+
+
+def login_google(request):
+    access_token = request.POST.get('access_token', "")
+    params = {"key": settings.SOCIAL_AUTH_GOOGLE_API_KEY}
+    headers = {'Authorization': "Bearer "+access_token}
+    resp = requests.get('https://content.googleapis.com/plus/v1/people/me', params=params, headers=headers)
+    if resp.status_code != 200:
+        return JsonResponse({"ok": False, "msg": resp.status_code})
+    data = resp.json()
+    primary_mail = None
+    for email in data['emails']:
+        if email['type'] == "account":
+            primary_mail = email['value']
+            break
+    if not primary_mail:
+        primary_mail = data['emails'][0]['value']
+    uid = data['id']
+    prev_profile = Profile.objects.filter(ggl_id=uid).first()
+    if not prev_profile:
+        try:
+            new_user = User(username=primary_mail, email=primary_mail,
+                            first_name=data['name']['givenName'], last_name=data['name']['familyName'])
+            new_user.save()
+        except Exception as e:
+            msg = ""
+            if e.args[0] == 1062:
+                msg = "{} 는 이미 가입되어있는 메일입니다.".format(primary_mail)
+            return JsonResponse({"ok": False, "msg": msg})
+
+        profile = Profile(user=new_user, gender=1 if data['gender'] == 'male' else 2, ggl_id=data['id'])
+        if data['image']['url']:
+            url = data['image']['url'].split('?')[0] + '?sz=200'
+            photo = urlopen(url)
+            profile.photo.save('ggl_{}.jpg'.format(data['id']), ContentFile(photo.read()))
+        profile.save()
+        login(request, new_user)
+    else:
+        login(request, prev_profile.user)
+    return JsonResponse({"ok": True})
 
 
 def greeting(request):
@@ -137,7 +179,7 @@ def check_email(request):
 
 def password_reset_complete(request):
     messages.add_message(request, messages.INFO, "reset_pw")
-    return redirect("login", reset_pw="true")
+    return redirect("login")    # , reset_pw="true")
 
 
 @login_required
@@ -192,9 +234,29 @@ def mypage(request, page_type="account"):
 
 @login_required
 def cert_mail(request):
-    # TODO: send mail
-    print(request.POST)
+    uid = AESCipher(settings.ENCRYPT_KEY).encrypt(request.user.email)
+    token = sha256(request.user.email.encode()).hexdigest()
+    send_mail("Email Certification request from Bravepeach",
+              """This is Email from Bravepeach to Validate Email.\n
+              Please connect to following link to validate:\n
+              {}://{}/cert-mail/{}_{}
+              """.format(request.is_secure() and "https" or "http", request.get_host(), uid, token),
+              settings.DEFAULT_FROM_EMAIL, [request.user.email]
+              )
     return JsonResponse({"ok": True})
+
+
+def cert_mail_check(request, uid, token):
+    decrypt = AESCipher(settings.ENCRYPT_KEY).decrypt(uid)
+    user = User.objects.filter(username=decrypt).first()
+    print(user.profile.full_name)
+    if not user:
+        return JsonResponse({'ok': False, "msg": "No Such Mail"})
+    if token != sha256(user.email.encode()).hexdigest():
+        return JsonResponse({'ok': False, "msg": "Token Contaminated"})
+    user.profile.mail_certified = True
+    user.profile.save()
+    return redirect(reverse('index'))
 
 
 @login_required

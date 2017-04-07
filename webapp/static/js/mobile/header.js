@@ -1,39 +1,44 @@
-// 모바일 헤더 에니메이션
+var posY;
 
 function mobileMenu() {
     if ($('.side_menu_wrapper').css('display') == 'none'){
-        $('body').css('overflow', 'hidden');
-        $('.nav-guide-search-dropdown').hide('slow');
+
+        $('.nav-menubar').attr("src", "/static/image/icon/cancel.png");
+        $('html').addClass('not-scroll');
+        $('.nav-guide-search-dropdown').hide();
         if($('.nav-bravepeach-logo').css('display') == 'none') {
-            $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
         }
+        $('.side_menu_wrapper').show();
     }
     else {
-        $('body').css('overflow', 'auto');
-        $('.nav-guide-search-dropdown').show('slow');
+        $('.nav-menubar').attr("src", "/static/image/icon/menu_bar.png");
+        $('html').removeClass('not-scroll');
+        $('.nav-guide-search-dropdown').show();
         if($('.nav-bravepeach-logo').css('display') == 'none') {
-            $('.mobile-header').animate({backgroundColor: "rgba(255, 255, 255, 0)"});
         }
+        $('.side_menu_wrapper').hide();
     }
-    $('.side_menu_wrapper').toggle("slide", { direction: "right" })
 }
 
 function mobileSearch() {
     if ($('.search_side_menu_wrapper').css('display') == 'none'){
-        $('body').css('overflow', 'hidden');
-        $('.nav-menubar').hide('slow');
+        $('.nav-guide-search-dropdown').attr("src", "/static/image/icon/cancel.png");
+        $('html').addClass('not-scroll');
+        $('.nav-menubar').hide();
         if($('.nav-bravepeach-logo').css('display') == 'none') {
-            $('.mobile-header').animate({backgroundColor: "rgb(255, 255, 255)"});
+            $('.mobile-header').css({backgroundColor: "rgb(255, 255, 255)"});
         }
+        $('.search_side_menu_wrapper').show()
     }
     else {
-        $('body').css('overflow', 'auto');
-        $('.nav-menubar').show('slow');
+        $('.nav-guide-search-dropdown').attr("src", "/static/image/icon/Search_Icon.png");
+        $('html').removeClass('not-scroll');
+        $('.nav-menubar').show();
         if($('.nav-bravepeach-logo').css('display') == 'none') {
-            $('.mobile-header').animate({backgroundColor: "rgba(255, 255, 255, 0)"});
+            $('.mobile-header').css({backgroundColor: "rgba(255, 255, 255, 0)"});
         }
+        $('.search_side_menu_wrapper').hide()
     }
-    $('.search_side_menu_wrapper').toggle("slide", { direction: "left" })
 }
 
 $(function () {

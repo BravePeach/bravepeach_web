@@ -11,7 +11,7 @@ $(function() {
     $("#id_city").placecomplete({
         tags: true,
         requestParams: {
-            // types: ["(cities)"]
+            types: ["(regions)"]
         }
     });
 
@@ -56,7 +56,6 @@ $(function() {
         }
     });
 
-// 인원 증가
     var total_traveler = 0;
 
     $('.increase_button').click(function () {
@@ -84,7 +83,6 @@ $(function() {
         $('.traveler_cntpicker').slideToggle(200)
     });
 
-// 버튼 클릭시 페이지 펼치기
     $(".btn1").click(function () {
         if ($(".gradation-bar.btn1").hasClass("inactive")) {
             $(".gradation-bar.btn1").removeClass("inactive");
@@ -111,15 +109,12 @@ $(function() {
         $(".scrolling-page2").slideToggle(200);
     });
 
-// 복숭아 버튼 호버시 그림 바꾸고 글자에 그림자 넣기
-// 중복을 줄일수 없을까?
     $(".way-of-travel-button")
         .mousemove(function () {
             $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_full.png");
             $(".enroll-trip-button-name").attr("text-shadow", "0px 1px 1px rgba(0,0,0,0.3)");
         })
         .mouseout(function () {
-            // 클릭을 안했을때만 빈 그림으로 바꾼다.
             if ($(".gradation-bar.btn1").hasClass("inactive")) {
                 $(".way-of-travel-button > img").attr("src", "/static/image/icon/logo_empty.png")
             }
@@ -135,5 +130,28 @@ $(function() {
                 $(".lodging-button > img").attr("src", "/static/image/icon/logo_empty.png")
             }
         });
+
+    $('#theme1').change(function(){
+        $(this).parents('.sellect-wrapper').find('input:checkbox').prop('checked', $(this).prop("checked"));
+    });
+    $('#gt1').change(function(){
+        $(this).parents('.sellect-wrapper').find('input:checkbox').prop('checked', $(this).prop("checked"));
+    });
+    $('#location4').change(function () {
+        if ($('.location-option').hasClass('display-none')) {
+            $('.location-option').removeClass('display-none')
+        }
+        else {
+            $('.location-option').addClass('display-none')
+        }
+    })
+    $('#im6').change(function () {
+        if ($('.importance-option').hasClass('display-none')) {
+            $('.importance-option').removeClass('display-none')
+        }
+        else {
+            $('.importance-option').addClass('display-none')
+        }
+    })
 
 });

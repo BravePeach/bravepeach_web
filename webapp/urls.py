@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^check_email/$', views.user.check_email, name="check_email"),
     url(r'^login/$', views.user.user_login, name='login'),
     url(r'^login_fb/$', views.user.login_fb, name="login_fb"),
+    url(r'^login_google/$', views.user.login_google, name="login_google"),
     url(r'^logout/$', views.user.user_logout, name='logout'),
     url(r"^mypage/(?P<page_type>\w+)/$", views.user.mypage, name="mypage"),
     url(r'^mypage/$', views.user.mypage, name='mypage_default'),
@@ -30,6 +31,7 @@ urlpatterns = [
                                                "post_reset_redirect": "password_reset_complete"}),
     url(r'^password_reset/complete$', views.user.password_reset_complete, name="password_reset_complete"),
     url(r'^cert_mail/$', views.user.cert_mail, name='cert_mail'),
+    url(r'^cert-mail/(?P<uid>[\w+\-/]+)_(?P<token>[\w]+)$', views.user.cert_mail_check, name='cert_mail_check'),
     url(r'^edit_profile/$', views.user.edit_profile, name="edit_profile"),
     url(r'^upload_original/$', views.user.upload_original, name='upload_original'),
     url(r'^upload_profile/$', views.user.upload_profile, name='upload_profile'),
@@ -86,6 +88,7 @@ urlpatterns = [
     url(r'^my_trip_detail/(?P<user_request_id>\d+)/$', views.trip.my_trip_detail, name="my_trip_detail"),
     url(r'^offer/(?P<offer_id>\d+)/$', views.trip.offer_detail, name="offer_detail"),
     url(r'^enroll_trip/$', views.trip.enroll_trip, name='enroll_trip'),
+    url(r'^edit_trip/(?P<req_id>\d+)/$', views.trip.enroll_trip, name='edit_trip'),
     url(r'^cancel_offer/$', views.trip.cancel_offer, name="cancel_offer"),
     url(r'^payment/(?P<offer_id>\d+)/$', views.trip.payment, name="payment"),
 

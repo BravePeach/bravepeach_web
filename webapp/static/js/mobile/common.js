@@ -1,8 +1,33 @@
-city_list = [];
+var place_list = [];
+var city_name_list = [];
+traveler_list = [0, 0, 0, 0, 0, 0];
 
-function submit_enroll_form(){
-    $("#id_city").val(city_list.join());
-    $("#enroll-form").submit();
+function guide_search_form(){
+    var country_list = [];
+    var city_list = [];
+    for (var i in place_list) {
+        if (place_list[i].length < 5) {
+            country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
+            if (place_list[i][place_list[i].length - 2]) {
+                city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+            }
+        }
+
+        else {
+            country_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+            city_list.push(place_list[i][place_list[i].length - 3]['short_name']);
+        }
+    }
+    country_list = country_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+    city_list = city_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+    sessionStorage.setItem("country_list", JSON.stringify(country_list));
+    sessionStorage.setItem("city_list", JSON.stringify(city_list));
+    $("#guide_search-form #id_city").val(city_name_list);
+    $("#guide_search-form").submit();
 }
 
 function fixTripButton() {
@@ -41,6 +66,7 @@ function csrfSafeMethod(method) {
 }
 
 $(function(){
+    $('#id_city').val("");
     var csrftoken = getCookie('csrftoken');
 
     $.ajaxSetup({
@@ -66,15 +92,12 @@ $(function(){
 
     $("#id_city").on({
         'placecomplete:selected': function (evt, placeResult) {
-            console.log(placeResult);
-            city_list.push(placeResult['name']);
-            console.log(city_list);
-            localStorage.setItem("city_list",city_list);
+            place_list.push(placeResult.address_components);
+            city_name_list.push(placeResult['display_text'])
         },
         'placecomplete:cleared': function() {
-            city_list.pop();
-            console.log(city_list)
-            localStorage.setItem("city_list",city_list);
+            place_list.pop();
+            city_name_list.pop();
         }
     });
 
