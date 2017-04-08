@@ -121,9 +121,10 @@ def login_fb(request):
 def login_google(request):
     access_token = request.POST.get('access_token', "")
     params = {"key": settings.SOCIAL_AUTH_GOOGLE_API_KEY}
-    headers = {'Authorization': "Bearer "+access_token}
+    headers = {'Authorization': "Bearer "+access_token, 'referer': request.get_host()}
     resp = requests.get('https://content.googleapis.com/plus/v1/people/me', params=params, headers=headers)
     if resp.status_code != 200:
+        print(resp.text)
         return JsonResponse({"ok": False, "msg": resp.status_code})
     data = resp.json()
     primary_mail = None
@@ -141,6 +142,7 @@ def login_google(request):
                             first_name=data['name']['givenName'], last_name=data['name']['familyName'])
             new_user.save()
         except Exception as e:
+            print(e)
             msg = ""
             if e.args[0] == 1062:
                 msg = "{} 는 이미 가입되어있는 메일입니다.".format(primary_mail)
