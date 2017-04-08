@@ -68,6 +68,9 @@ def register_bravepeach(request):
                                          password=user_form.cleaned_data["password"])
                 if this_user:
                     login(request, this_user)
+                    new_alarm = UserAlarm(receiver=this_user, is_new=False,
+                                          contents="{} 님의 가입을 환영합니다!".format(this_user.profile.full_name),)
+                    new_alarm.save()
                     return flavour_render(request, "user/greeting.html", {"user": new_user})
                 else:
                     print("no auth user")
@@ -107,6 +110,9 @@ def login_fb(request):
                 photo = urlopen(url)
                 profile.photo.save("fb_{}.jpg".format(data['id']), ContentFile(photo.read()))
             profile.save()
+            new_alarm = UserAlarm(receiver=new_user, is_new=False,
+                                  contents="{} 님의 가입을 환영합니다!".format(new_user.profile.full_name),)
+            new_alarm.save()
             login(request, new_user)
         except Exception as e:
             msg = ""
@@ -154,6 +160,9 @@ def login_google(request):
             photo = urlopen(url)
             profile.photo.save('ggl_{}.jpg'.format(data['id']), ContentFile(photo.read()))
         profile.save()
+        new_alarm = UserAlarm(receiver=new_user, is_new=False,
+                              contents="{} 님의 가입을 환영합니다!".format(new_user.profile.full_name),)
+        new_alarm.save()
         login(request, new_user)
     else:
         login(request, prev_profile.user)
