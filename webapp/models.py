@@ -394,7 +394,7 @@ class Journal(Model):
 
 
 class UserAlarm(Model):
-    sender = models.ForeignKey(Guide)
+    # sender = models.ForeignKey(Guide)
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='alarms')
     contents = models.CharField(max_length=200, null=False, blank=False)
     landing = models.CharField(max_length=100, null=True)
@@ -403,7 +403,7 @@ class UserAlarm(Model):
 
 
 class GuideAlarm(Model):
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL)
+    # sender = models.ForeignKey(settings.AUTH_USER_MODEL)
     receiver = models.ForeignKey(Guide, related_name='alarms')
     contents = models.CharField(max_length=200, null=False, blank=False)
     landing = models.CharField(max_length=100, null=True, blank=True)
