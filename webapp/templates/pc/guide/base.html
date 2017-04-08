@@ -23,6 +23,12 @@
     <script src="{% static 'js/common.js' %}"></script>
     <script src="{% static 'js/select2.js' %}"></script>
     <script src="{% static 'js/jquery.placecomplete.js' %}"></script>
+    <script>
+        var alarm_url = '{% url 'get_alarm' %}';
+        $(function(){
+            get_alarm("guide");
+        });
+    </script>
     {% block js %}{% endblock %}
 </head>
 <body>
@@ -76,6 +82,10 @@
     <a href="{% url 'guide_review' %}" class="guide-tab {% if tab == 'review' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">후기/여행기</a>
 </div>
 {% endif %}
+<div id="alarm" class="alarm-msg">
+    <a href="{% url 'guide_dashboard' %}" class="msg"></a>
+    <div class="close" onclick="close_alarm_msg()"><img src="{% static 'image/icon/cancel.png' %}" alt="" width="18" height="18"></div>
+</div>
 <div class="contents-wrapper">
 {% block content %}{% endblock %}
 </div>

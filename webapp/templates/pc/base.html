@@ -22,6 +22,12 @@
     </script>
     <script src="https://apis.google.com/js/client:platform.js" async defer></script>
     <script src="{% static 'js/common.js' %}"></script>
+    <script>
+        var alarm_url = '{% url 'get_alarm' %}';
+        $(function(){
+            get_alarm("user");
+        });
+    </script>
     {% block js %}{% endblock %}
 </head>
 <body>
@@ -67,6 +73,10 @@
     <h2>여행 요청서 쓰기</h2>
     <span>나만의 전문 가이드를 모집해보세요!</span>
 </a>
+<div id="alarm" class="alarm-msg">
+    <a href="{% url 'mypage' page_type='alarm' %}" class="msg"></a>
+    <div class="close" onclick="close_alarm_msg()"><img src="{% static 'image/icon/cancel.png' %}" alt="" width="18" height="18"></div>
+</div>
 <div class="contents-wrapper">
     {% block content %}{% endblock %}
 </div>

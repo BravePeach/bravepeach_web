@@ -41,6 +41,23 @@ function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
+function get_alarm(type) {
+    $.get(alarm_url + '?type='+type, function(data){
+        if(!data['ok']) {
+            console.log("alarm get fail");
+        } else {
+            if(data['alarm_cnt'] > 0) {
+                $("#alarm").find('a.msg').text(data['alarm_cnt'] + "개의 새로운 알림이 있습니다!");
+                $("#alarm").css("display", "block");
+            }
+        }
+    });
+}
+
+function close_alarm_msg() {
+    $("#alarm").css("display", "none");
+}
+
 $(function(){
     var csrftoken = getCookie('csrftoken');
 
@@ -61,7 +78,7 @@ $(function(){
 
     $('.profile_img').click(function(event){
         event.stopPropagation();
-         $(".profile-dropdown").slideToggle("fast");
+        $(".profile-dropdown").slideToggle("fast");
     });
     $(".profile-dropdown").on("click", function (event) {
         event.stopPropagation();
