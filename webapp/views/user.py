@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required
 
 from bravepeach import settings
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm, UserReviewForm
-from ..models import Profile, GuideOffer, UserReview, GuideReview
+from ..models import Profile, GuideOffer, UserReview, GuideReview, UserAlarm
 from bravepeach.util import flavour_render, AESCipher
 
 
@@ -194,9 +194,8 @@ def mypage(request, page_type="account"):
     param_dict = {"page_type": page_type, "type_dict": page_type_dict}
 
     if page_type == "alarm":
-        # TODO: get alarm list
-        # param_dict["alarn_list"] = alarm_list
-        pass
+        alarm_list = UserAlarm.objects.order_by("-id").all()
+        param_dict["alarm_list"] = alarm_list
     elif page_type == "account":
         pass
     elif page_type == "profile":
