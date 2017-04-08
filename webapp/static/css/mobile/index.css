@@ -99,18 +99,18 @@ header{
     text-align: center;
     color: #fefefe;
 }
-/*.red-sunset {*/
-  /*background: url(../../image/images/red_sunset.jpg) center no-repeat;*/
-  /*background-size: cover;*/
-/*}*/
-/*.mountain {*/
-  /*background: url(../../image/images/mountain3.jpg) center no-repeat;*/
-  /*background-size: cover;*/
-/*}*/
-/*.waiting {*/
-  /*background: url(../../image/images/waiting.jpg) center no-repeat;*/
-  /*background-size: cover;*/
-/*}*/
+.red-sunset {
+  background: url(../../image/images/red_sunset.jpg) center no-repeat;
+  background-size: cover;
+}
+.mountain {
+  background: url(../../image/images/mountain3.jpg) center no-repeat;
+  background-size: cover;
+}
+.waiting {
+  background: url(../../image/images/waiting.jpg) center no-repeat;
+  background-size: cover;
+}
 .overlay {
   position: absolute;
   width: 100%;
