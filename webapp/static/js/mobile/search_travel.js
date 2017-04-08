@@ -23,19 +23,13 @@ function filterTrip(sort) {
             $('.req-card-wrapper').html(data);
             $('.search-filter-result').html($('.req-card').length);
         },
-
-        error: function (xhr, errmsg, err) {
-            $('#results').html("<div class='alert-box alert radius'data-alert>Oops! We have encountered an error: " + errmsg +
-                " <a href='#'class='close'>&times;</a></div>"); // add the error to the dom
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
     });
 }
 
 $(function(){
    filterTrip('popularity');
 
-   $('.req-card-wrapper').on('click', $('.offer-button'), function () {
+   $('.req-card-wrapper').on('click', '.offer-button', function () {
       swal({
           type: "error",
           title: "견적서 작성하기는 pc에서만 지원합니다!"
