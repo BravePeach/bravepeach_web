@@ -5,9 +5,12 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/pc/guide/schedule.css' %}">
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.css" rel="stylesheet">
 {% endblock %}
 
 {% block js %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.min.js"></script>
 <script src="{% static 'js/guide/schedule.js' %}"></script>
 {% endblock%}
 
@@ -22,8 +25,18 @@
 <hr>
 
 <div class="wrapper">
-    <div class="calendar">
+    <div class="calendar display-none">
+        <div class="cal-inf">
+            <span>- 예약/확정 현황을 한눈에 캘린더에서 확인하실 수 있습니다.<br>
+- 달력에서 가이드 활동이 불가능한 날짜를 선택해주세요. 설정된 날짜에는 예약을 받을 수 없습니다.</span>
+            <div class="peach"></div>
+            지난여행
+            <div class="red"></div>
+            예약확정
+        </div>
+        <div class="cal">
 
+        </div>
     </div>
 
     <div class="fixed-trip">
