@@ -22,4 +22,14 @@ $(function () {
    $('.delete-yes').click(function () {
 
    });
+
+   $('.cal').fullCalendar({
+       header: {
+           left: 'prev,next today',
+           center: 'title',
+           right: 'month,agendaWeek,agendaDay'
+       },
+       defaultDate: '2014-06-12',
+       defaultView: 'month',
+   })
 });

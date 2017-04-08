@@ -25,7 +25,7 @@
     <script src="{% static 'js/select2.js' %}"></script>
     <script src="{% static 'js/jquery.placecomplete.js' %}"></script>
     <script src="{% static 'js/mobile/header.js' %}"></script>
-    <script src="{% static 'js/common.js' %}"></script>
+    <script src="{% static 'js/mobile/common.js' %}"></script>
     <script>
         var alarm_url = '{% url 'get_alarm' %}';
         $(function(){
@@ -88,18 +88,47 @@
     </div>
 
     <div class="search_side_menu_wrapper">
-        <h1>가이드 찾기</h1>
-        <span>원하는 지역의 가이드를 검색해보세요!</span>
+        <h1>여행자 찾기</h1>
+        <span>당신의 이색여행을 제시할 여행자 고객을 직접 찾아보세요!</span>
 
-        위치
-        {{ form.city |add_class:"location_form_main"|attr:"placeholder:목적지, 도시명, 주소"}}
-        날짜
-        {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"|attr:"placeholder:출국일"}}
-        {{ form.travel_end_at |add_class:"find-guide-form datepicker2"|attr:"readonly"|attr:"placeholder:입국일"}}
-        인원
-        {{ form.age_group |add_class:"traveler_cnt_main"|attr:"readonly"|attr:"placeholder:여행자 수"}}
+        <form id="guide_search-form" method="get" action="{% url 'guide_search' %}">
+            위치
+            <input type="text" name="city" id="id_city" placeholder="목적지, 도시명, 주소" required value="{{ city }}">
+            <hr>
+            날짜
+            <div>
+            <input type="text" name="travel_begin_at" class="datepicker1" readonly placeholder="출국일" value="{{ travel_begin_at }}" style=" margin: 15px 20px 5px 10px">
+            <input type="text" name="travel_end_at" class="datepicker2" readonly placeholder="입국일" value="{{ travel_end_at }}" style=" margin: 15px 20px 5px 10px">
+            </div>
+            <hr>
+            인원
+            <input type="text" name="age_group" class="traveler_cnt_main" id="traveler_cnt_main" readonly placeholder="여행자 수" value="{{ age_group }}">
+            <hr>
+            <div class="traveler_cntpicker">
+                    <div>
+                        성인
+                        <span class="adult_num">0명</span>
+                        <span class="increase_button">+</span>
+                        <span class="decrease_button">-</span>
+                    </div>
 
-        <button>가이드 찾기</button>
+                    <div>
+                        어린이
+                        <span class="child_num">0명</span>
+                        <span class="increase_button">+</span>
+                        <span class="decrease_button">-</span>
+                    </div>
+
+                    <div>
+                        유아
+                        <span class="toddler_num">0명</span>
+                        <span class="increase_button">+</span>
+                        <span class="decrease_button">-</span>
+                    </div>
+                </div>
+
+            <button onclick="guide_search_form()">여행자 찾기</button>
+        </form>
     </div>
 </header>
 <div id="alarm" class="alarm-msg">

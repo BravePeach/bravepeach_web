@@ -320,3 +320,45 @@ footer{
     padding-top: 12px;
     cursor: pointer;
 }
+
+.cal-inf{
+      width: 880px;
+  height: 200px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 #bbbbbb;
+  border: solid 1px #d4d4d4;
+    font-size: 20px;
+}
+
+.cal-inf span{
+    margin: 40px 0 19px 37px;
+    line-height: 1.45;
+    display: block;
+}
+
+.peach, .red{
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    vertical-align: middle;
+}
+
+.peach{
+    margin: 0 18px 0 37px;
+    background-color: #f2ad8a;
+}
+
+.red{
+    margin: 0 18px 0 31px;
+    background-color: #e64c47;
+}
+
+.cal{
+      width: 880px;
+  height: 906px;
+    margin-top: 10px;
+}
+
+.fc-day-number{
+    float: left !important
+}
