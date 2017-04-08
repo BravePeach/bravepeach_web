@@ -141,6 +141,7 @@
 }
 
 .req-card {
+    display: block;
     position: relative;
       width: 880px;
   height: 184px;

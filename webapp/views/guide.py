@@ -338,7 +338,6 @@ class FilterTrip(View):
     def get(self, request):
         guide_id = Guide.objects.get(user_id=request.user.id).id
 
-        result = []
         location = request.GET.getlist('location[]')
         print(location)
         start_date = request.GET.get('start_date')
@@ -361,26 +360,11 @@ class FilterTrip(View):
         # elif sort == "reviewNum":
         #     guide_queryset = guide_queryset.annotate(num_reviews=Count('userreview')).order_by('num_reviews')
 
-        for req in req_queryset:
-            temp = {'id': req.id,
-                    'name': req.user.profile.full_name,
-                    'profile_pic': req.user.profile.photo.url,
-                    'travel_begin_at': formats.date_format(req.travel_begin_at, "Y/m/d"),
-                    'travel_end_at': formats.date_format(req.travel_end_at, "Y/m/d"),
-                    'city': req.city,
-                    'adult_traveler': req.adult_traveler,
-                    'child_traveler': req.child_traveler,
-                    'toddler_traveler': req.toddler_traveler,
-                    'cost': req.cost,
-                    'is_liked': GuideLike.objects.filter(guide_id=guide_id,
-                                                         request_id=req.id).exists(),
-                    'trans_guided': req.trans_guided,
-                    'accom_guided': req.accom_guided,
-                    'guide_guided': req.guide_guided
-                    }
-            result.append(temp)
-        result += [guide_id]
-        return JsonResponse(result, safe=False)
+        if request.user_agent.is_mobile:
+            is_mobile = True
+
+        html = render_to_string('pc/guide/trip_search_result.html', {'req_queryset': req_queryset, 'is_mobile': is_mobile})
+        return HttpResponse(html)
 
 
 @user_passes_test(guide_required)

@@ -1,3 +1,356 @@
-header{
-    background: transparent;
+body{width: 100%;}
+
+.main-container, .head-container {
+    max-width: 355px;
+    margin: auto;
+}
+
+.sup-title-peach {
+    height: 32px;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: -0.5px;
+    color: #000000;
+    margin: 0px;
+}
+
+.sub-title {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.3;
+    letter-spacing: -0.4px;
+    color: #606060;
+    margin-top: 5px;
+}
+
+.gradation-bar {
+    width: 100%;
+    margin-bottom: 8px;
+    position: relative;
+    height: 50px;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, #f2ad8a, #e64c47);
+    border: solid 1px #ddd9d9;
+}
+
+.icon {
+    width: 30px;
+    position: absolute;
+    top: 15px;
+    left: 2%;
+}
+
+.find-guide-form, .find-guide-form2 {
+    position: absolute;
+    top: 9px;
+    left: 18%;
+    border-style: none;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+    padding-left: 10px;
+    background: #ffffff;
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    width: 70%;
+    height: 30px;
+    border-radius: 3px;
+    font-size: 17px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #fafafa;
+    margin: 0;
+}
+
+.find-guide-form2 {
+    position: absolute;
+    left: 58%;
+}
+
+.arrow-down {
+    float: right;
+    width: 15px;
+    position: absolute;
+    top: 20px;
+    right: 13px;
+}
+
+.arrow-right {
+    position: absolute;
+    right: 48.75%;
+}
+
+.search-filter-list-wrapper {
+    font-size: 16px;
+    margin-top: 19px;
+      font-family: NanumSquareOTFR;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+  text-shadow: 0 1px 0 rgba(255, 254, 255, 0.5);
+
+}
+
+.search-filter-list {
+    padding-left: 17px;
+    padding-bottom: 2px;
+    margin-top: -8px;
+    display: inline-block;
+    float: right;
+    width: 118px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: #e64c47;
+    border: solid 1px #ddd9d9;
+    color: white;
+    font-family: NanumSquareOTFR;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+}
+
+.search-filter-list span {
+    margin-left: 34px;
+    cursor: pointer;
+}
+
+.pagination-wrapper {
+    display: inline-block;
+    margin: 53px auto 0px auto;
+    width: 240px;
+    font-size: 16px;
+}
+
+.pagination-wrapper a{
+    float: left;
+    color: black;
+}
+
+.pagination-wrapper a:hover{
+    color: #e65c47;
+}
+
+.pagination-wrapper span{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #979797;
+    padding-top: 3px;
+    margin: 0px 6px;
+}
+
+.icon {
+    width: 30px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+
+.enroll-trip-button{
+  display: none !important;
+}
+
+.no-result{
+ width: 94.7%;
+    max-width: 355px;
+  height: 197px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+  border: solid 1px #979797;
+      font-size: 20px;
+  font-weight: bold;
+    text-align: center;
+    padding-top: 88px;
+    margin: 0 auto 30px auto;
+}
+
+.req-card{
+    display: block;
+      width: 94.7%;
+    max-width: 355px;
+  height: 197px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+  border: solid 1px #979797;
+    margin: 0 auto 5px auto;
+    position: relative;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.display-none{
+    display: none;
+}
+
+.req-card div {
+    position: absolute;
+}
+
+.user-name {
+    width: 90px;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    top: 110px;
+    left: 2%;
+}
+
+.travel-date {
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    top: 38px;
+    left: 30%;
+}
+
+.travel-city {
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    top: 67px;
+    left: 30%;
+}
+
+.traveler-num {
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+    top: 98px;
+    left: 30%;
+}
+
+.user-pic {
+    width: 65.5px;
+    height: 65.5px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    position: absolute;
+    top: 35px;
+    left: 5.6%;
+}
+
+.cost {
+    font-size: 19px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+    bottom: 50px;
+    left: 30%;
+}
+
+.cost span {
+    color: #dd3537;
+}
+
+.trans{
+    top: 15px;
+    left: 30%;
+}
+
+.accom{
+    top: 15px;
+    left: 51.3%;
+}
+
+.guide{
+    top: 15px;
+    left: 67.6%;
+}
+
+.guide-activated {
+    width: 13px;
+    height: 13px;
+    background-image: linear-gradient(to right, #f2ad8a, #e64c47);
+    border-radius: 6px;
+}
+
+.guide-deactivated {
+    width: 13px;
+    height: 13px;
+    background: white;
+    border-radius: 6px;
+}
+
+.guide-deactivated:before {
+    width: 100%;
+    height: 100%;
+    top: -1px;
+    left: -1px;
+    position: absolute;
+    z-index: -1;
+    background: linear-gradient(to right, #f2ad8a, #e64c47);
+    content: '';
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.trans span, .guide span, .accom span {
+    display: block;
+    margin-top: 1px;
+    margin-left: 18px;
+    font-size: 10px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+
+}
+
+.req-card-wrapper{
+    margin-top: 18px;
+}
+
+.offer-button{
+    display: block;
+    position: absolute;
+    top:162px;
+    width: 100%;
+    text-align: center;
+      font-size: 16px;
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    background-color: #e64c47;
+    border-bottom-left-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+    height: 34.5px;
+    padding-top: 7px;
 }

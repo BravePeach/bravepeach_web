@@ -33,59 +33,10 @@ function filterTrip(sort) {
         ,complete: function () {
             $('.loading').addClass('display-none');
         }
-        ,success: function (object) {
-            console.log(object);
-            var user = object[object.length - 1];
-            $('.guide-card-wrapper').html("");
-            $('.search-filter-result').html(object.length - 1);
-            for (var i = 0; i < object.length - 1; i++) {
-
-                if (object[i].is_liked) {
-                    var heart_image = '<div class="like-button liked" onclick="like(this)"></div>'
-                }
-                else {
-                    var heart_image = '<div class="like-button unliked" onclick="like(this)"></div>'
-                }
-
-                if (object[i].trans_guided) {
-                    var trans = '<div class="trans"><div class="guide-activated"></div><span>이동수단</span></div>'
-                }
-                else {
-                    var trans = '<div class="trans"><div class="guide-deactivated"></div><span>이동수단</span></div>'
-                }
-
-                if (object[i].accom_guided) {
-                    var accom = '<div class="accom"><div class="guide-activated"></div><span>숙소</span></div>'
-                }
-                else {
-                    var accom = '<div class="accom"><div class="guide-deactivated"></div><span>숙소</span></div>'
-                }
-
-                if (object[i].guide_guided) {
-                    var guide = '<div class="guide"><div class="guide-activated"></div><span>가이드</span></div>'
-                }
-                else {
-                    var guide = '<div class="guide"><div class="guide-deactivated"></div><span>가이드</span></div>'
-                }
-
-
-                var req_card = '<div class="req-card">' +
-
-                    '<input type="hidden" id="guide_id" value="' + user + '" name="guide_id">' +
-                    '<input type="hidden" id="request_id" value="' + object[i].id + '" name="request_id">' +
-                    '<img class="user-pic" src="' + object[i].profile_pic + '" >' +
-                    '<div class="user-name">' + object[i].name + '</div>' + trans + accom + guide +
-                    '<div class="travel-date">' + object[i].travel_begin_at + ' - ' + object[i].travel_end_at + '</div>' +
-                    '<div class="travel-city">' + object[i].city + '</div>' +
-                    '<div class="traveler-num">' + '성인 ' + object[i].adult_traveler + '명 | 아동' + object[i].child_traveler + '명 | 유아' + object[i].toddler_traveler + '명</div>' +
-                    '<div class="cost">' + '희망 경비 ' + '<span>' + object[i].cost + '</span>' + ' 만원' + '</div>' +
-                    '<a class="offer-button" href="/guide/write_offer/' + object[i].id + '">' + '견적서 작성하기' + '</a>' + heart_image +
-                    '</div>';
-
-                $('.req-card-wrapper').append(req_card);
-            }
-        }
-        ,
+        ,success: function (data) {
+            $('.req-card-wrapper').html(data);
+            $('.search-filter-result').html($('.req-card').length);
+        },
 
         error: function (xhr, errmsg, err) {
             $('#results').html("<div class='alert-box alert radius'data-alert>Oops! We have encountered an error: " + errmsg +

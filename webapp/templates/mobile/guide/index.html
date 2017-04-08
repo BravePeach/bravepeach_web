@@ -1,1 +1,85 @@
 {% extends "mobile/guide/base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mobile/guide/index.css' %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/mobile/search_travel.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="main-container">
+    <section name="top">
+        <h1 class="sup-title-peach">여행자 찾기</h1>
+        <h2 class="sub-title">당신의 이색여행을 제시할 여행자 고객을 직접 찾아보세요!</h2>
+    </section>
+    <div class="gradation-bar" style="z-index: 1">
+        <img class="icon" src="/static/image/icon/where_white.png" alt="where?">
+        <input class="find-guide-form" id="id_city" type="text" name="" value="{{ city }}" style="width: 70%;">
+
+    </div>
+    <div class="gradation-bar">
+        <img class="icon" src="/static/image/icon/when_white.png" alt="when?">
+        <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="{{ travel_begin_at }}" readonly style="width: 30%">
+        <img class="arrow-right" src="">
+        <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="{{ travel_end_at }}" readonly style="width: 30%">
+    </div>
+    <div class="gradation-bar">
+        <img class="icon" src="/static/image/icon/howmany_white.png" alt="how many?">
+        <input class="find-guide-form" id="traveler_cnt_form" type="text" name="" value="{{ age_group }}" readonly style="width: 70%;">
+        <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
+        <div class="traveler_cntpicker">
+            <div>
+                성인
+                <span class="adult_num">0명</span>
+                <span class="increase_button">+</span>
+                <span class="decrease_button">-</span>
+            </div>
+
+            <div>
+                어린이
+                <span class="child_num">0명</span>
+                <span class="increase_button">+</span>
+                <span class="decrease_button">-</span>
+            </div>
+
+            <div>
+                유아
+                <span class="toddler_num">0명</span>
+                <span class="increase_button">+</span>
+                <span class="decrease_button">-</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="search-filter-list-wrapper">
+        <select class="search-filter-list">
+            <option>여행경비순</option>
+            <option>여행임박순</option>
+            <option>최근활동순</option>
+        </select>
+
+        <span><span class="search-filter-result"></span>건의 여행 요청서가 있습니다.</span>
+
+    </div>
+    <img class="loading display-none" src="{% static 'image/icon/ajax-loader.gif' %}">
+    <div class="req-card-wrapper"></div>
+
+    <div class="like-message-wrapper"></div>
+    <div style="width: 100%; text-align: center">
+    <div class="pagination-wrapper">
+            <a href="#"><</a>
+            <a href="#"><span>1</span></a>
+            <a href="#"><span>2</span></a>
+            <a href="#"><span>3</span></a>
+            <a href="#"><span>4</span></a>
+            <a href="#"><span>5</span></a>
+            <a href="#">></a>
+    </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% load static %}
+{% if req_queryset %}
+{% for req in req_queryset %}
+<div class="req-card">
+    <input type="hidden" id="guide_id" value="{{ user.guide.id }}" name="guide_id">
+    <input type="hidden" id="request_id" value="{{ req.id }}" name="request_id">
+    <img class="user-pic" src="{{ req.user.profile.photo.url }}" >
+    <div class="user-name">{{ req.user.profile.full_name}}</div>
+    {% if req.trans_guided %}
+        <div class="trans"><div class="guide-activated"></div><span>이동수단</span></div>
+    {% else %}
+        <div class="trans"><div class="guide-deactivated"></div><span>이동수단</span></div>
+    {% endif %}
+    {% if req.accom_guided %}
+        <div class="accom"><div class="guide-activated"></div><span>숙소</span></div>
+    {% else %}
+        <div class="accom"><div class="guide-deactivated"></div><span>숙소</span></div>
+    {% endif %}
+    {% if req.guide_guided %}
+        <div class="guide"><div class="guide-activated"></div><span>가이드</span></div>
+    {% else %}
+        <div class="guide"><div class="guide-deactivated"></div><span>가이드</span></div>
+    {% endif %}
+    <div class="travel-date">{{ req.travel_begin_at|date:"Y/m/d" }} - {{req.travel_end_at|date:"Y/m/d" }}</div>
+    <div class="travel-city">{% for c in req.city %}{{c}} {% if forloop.last %}{% else %}/{% endif %} {% endfor %}</div>
+    <div class="traveler-num">성인 {{ req.adult_traveler }}명 | 아동 {{ req.child_traveler }}명 | 유아 {{ req.toddler_traveler }}명</div>
+    <div class="cost">희망 경비 <span>{{ req.cost }}</span>만원</div>
+    <a class="offer-button" {% if not is_mobile %}href="{% url 'write_offer' req.id %}"{% endif %}>견적서 작성하기</a>
+</div>
+{% endfor %}
+{% else %}
+<div class="no-result">검색 결과가 없습니다.</div>
+{% endif %}
