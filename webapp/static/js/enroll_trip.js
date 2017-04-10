@@ -132,10 +132,10 @@ $(function() {
         });
 
     $('#theme1').change(function(){
-        $(this).parents('.sellect-wrapper').find('input:checkbox').prop('checked', $(this).prop("checked"));
+        $("input[name$='theme']").prop('checked', $(this).prop("checked"));
     });
     $('#gt1').change(function(){
-        $(this).parents('.sellect-wrapper').find('input:checkbox').prop('checked', $(this).prop("checked"));
+        $("input[name$='guide_type']").prop('checked', $(this).prop("checked"));
     });
     $('#location4').change(function () {
         if ($('.location-option').hasClass('display-none')) {

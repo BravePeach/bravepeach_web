@@ -114,10 +114,11 @@ class PasswordResetCustomForm(PasswordResetForm):
 class RequestForm(forms.ModelForm):
     travel_begin_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
     travel_end_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
-    trans_start_at = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
-    trans_arrive_at = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
-    start_time = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
-    end_time = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
+    time_choices = tuple((i, '오전 ' + str(i) + '시') for i in range(0, 12)) + tuple(((12, '오후 12시'),)) + tuple((i + 12, '오후 ' + str(i) + '시') for i in range(1, 12))
+    trans_start_at = forms.ChoiceField(time_choices)
+    trans_arrive_at = forms.ChoiceField(time_choices)
+    start_time = forms.ChoiceField(time_choices)
+    end_time = forms.ChoiceField(time_choices)
     cost = forms.NumberInput
     city = forms.CharField(initial="")
     age_group = forms.CharField(initial="")

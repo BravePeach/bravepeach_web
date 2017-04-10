@@ -30,9 +30,9 @@
 
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/when_black.png" alt="where?">
-                {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"}}
+                {{ form.travel_begin_at |add_class:"enroll-trip-form datepicker1"|attr:"readonly"}}
                 <img class="arrow-right" src="">
-                {{ form.travel_end_at |add_class:"find-guide-form2 datepicker2"|attr:"readonly"}}
+                {{ form.travel_end_at |add_class:"enroll-trip-form2 datepicker2"|attr:"readonly"}}
             </div>
 
             <div class="white-bar">
@@ -120,31 +120,38 @@
             <div class="scrolling-page1">
 
                 <span style="float: left">1.</span>
-                <div class="row sellect-wrapper">
-                    <div class="col-xs-6 col-sm-3">
+                <div class="row select-wrapper">
+                    <div class="col-xs-6 ">
                         <input class="checkbox" id="via-input1" type="checkbox" name="trans_via" value=1>
-                        <label for="via-input1"></label>직항
+                        <label for="via-input1">직항</label>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
+                    <div class="col-xs-6 ">
                         <input class="checkbox" id="via-input2" type="checkbox" name="trans_via" value=2>
-                        <label for="via-input2"></label>경유 1회
+                        <label for="via-input2">경유 1회</label>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
+                </div>
+                <div class="row select-wrapper" style="margin-bottom: 40px;">
+                    <div class="col-xs-6 ">
                         <input class="checkbox" id="via-input3" type="checkbox" name="trans_via" value=4>
-                        <label for="via-input3"></label>경유 2회
+                        <label for="via-input3">경유 2회</label>
                     </div>
                 </div>
 
                 <span style="float: left">2.</span>
-                <div class="row sellect-wrapper">
-                    <div class="col-xs-6 col-sm-3">
-                        <input class="checkbox" type="checkbox" name="trans_class" value=1>이코노미 석
+                <div class="row select-wrapper">
+                    <div class="col-xs-6 ">
+                        <input class="checkbox" type="checkbox" name="trans_class" value=1 id="tc1">
+                        <label for="tc1">이코노미 석</label>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
-                        <input class="checkbox" type="checkbox" name="trans_class" value=2>비즈니스 석
+                    <div class="col-xs-6 ">
+                        <input class="checkbox" type="checkbox" name="trans_class" value=2 id="tc2">
+                        <label for="tc2">비즈니스 석</label>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
-                        <input class="checkbox" type="checkbox" name="trans_class" value=4>퍼스트 석
+                </div>
+                <div class="row select-wrapper" style="margin-bottom: 40px;">
+                    <div class="col-xs-6 ">
+                        <input class="checkbox" type="checkbox" name="trans_class" value=4 id="tc3">
+                        <label for="tc3">퍼스트 석</label>
                     </div>
                 </div>
                 {{ form.trans_comment |add_class:"additional-request-box"|attr:"placeholder:ex) 국적기로 예약해 주세요. 자리는 창가 쪽을 좋아합니다. 대한항공 마일리지를 모으고 있어요. 가격이 비싸더라도 대한항공으로 예약을 해주세요." }}
@@ -162,37 +169,52 @@
             <div class="scrolling-page2">
 
                 <span style="float: left">1.</span>
-                <div class="row sellect-wrapper">
-                    <div class="col-xs-5 col-sm-fifth">
-                        <input class="checkbox" name="accom_location" type="checkbox" value=1>공항 근처
+                <div class="row select-wrapper">
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="checkbox" name="accom_location" type="checkbox" value=1 id="al1">
+                        <label for="al1">공항 근처</label>
                     </div>
-                    <div class="col-xs-5 col-sm-fifth">
-                        <input class="checkbox" name="accom_location" type="checkbox" value=2>시내
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="checkbox" name="accom_location" type="checkbox" value=2 id="al2">
+                        <label for="al2">시내</label>
                     </div>
-                    <div class="col-xs-5 col-sm-fifth">
-                        <input class="checkbox" name="accom_location" type="checkbox" value=4>여행지 근처
+                </div>
+                <div class="row select-wrapper" style="margin-bottom: 40px;">
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="checkbox" name="accom_location" type="checkbox" value=4 id="al3">
+                        <label for="al3">여행지 근처</label>
                     </div>
-                    <div class="col-xs-5 col-sm-fifth">
-                        <input class="checkbox" name="accom_location" type="checkbox" value=8>기타
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="checkbox" name="accom_location" type="checkbox" value=8 id="al4">
+                        <label for="al4" >기타</label>
                     </div>
                 </div>
 
                 <span style="float: left">2.</span>
-                <div class="row sellect-wrapper">
-                    <div class="col-xs-5 col-sm-fifth">
-                        <input class="checkbox" name="accom_type" type="checkbox" value=1>호텔
+                <div class="row select-wrapper">
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="checkbox" name="accom_type" type="checkbox" value=1 id="at1">
+                        <label for="at1" >호텔</label>
                     </div>
-                    <div class="col-xs-5 col-sm-fifth">
-                        <input class="checkbox" name="accom_type" type="checkbox" value=2>한인 민박
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="checkbox" name="accom_type" type="checkbox" value=2 id="at2">
+                        <label for="at2" >한인 민박</label>
                     </div>
-                    <div class="col-xs-5 col-sm-fifth">
-                        <input class="checkbox" name="accom_type" type="checkbox" value=4>현지인 집
+                </div>
+                <div class="row select-wrapper">
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="checkbox" name="accom_type" type="checkbox" value=4 id="at3">
+                        <label for="at3" >현지인 집</label>
                     </div>
-                    <div class="col-xs-5 col-sm-fifth">
-                        <input class="checkbox" name="accom_type" type="checkbox" value=8>리조트
+                    <div class="col-xs-6 col-sm-fifth">
+                        <input class="checkbox" name="accom_type" type="checkbox" value=8 id="at4">
+                        <label for="at4" >리조트</label>
                     </div>
-                    <div class="col-xs-5 col-sm-fifth">
-                     <input class="checkbox" name="accom_type" type="checkbox" value=16>가이드 집
+                </div>
+                <div class="row select-wrapper" style="margin-bottom: 40px;">
+                    <div class="col-xs-6 col-sm-fifth">
+                     <input class="checkbox" name="accom_type" type="checkbox" value=16 id="at5">
+                        <label for="at5" >가이드 집</label>
                     </div>
                 </div>
                 {{ form.accom_comment |add_class:"additional-request-box"|attr:"placeholder:추가적으로 부탁하고 싶은 점을 적어주세요. ex) 숙소는 현지에서 지불하고 싶어요." }}
@@ -210,117 +232,144 @@
             <div class="scrolling-page3">
 
                 <span style="float: left">1.</span>
-                <div class="sellect-wrapper">아침 {{ form.start_time }}시 부터는 일정을 시작해 주세요.</div>
+                <div class="select-wrapper" style="margin-bottom: 30px;">아침 {{ form.start_time }}시 부터는 일정을 시작해 주세요.</div>
 
                 <span style="float: left">2.</span>
-                <div class="sellect-wrapper">저녁 {{ form.end_time }}시에는 일정을 마쳐주세요.</div>
+                <div class="select-wrapper" style="margin-bottom: 30px;">저녁 {{ form.end_time }}시에는 일정을 마쳐주세요.</div>
 
                 <span style="float: left">3.</span>
-                <div class="sellect-wrapper">꼭 가고 싶은 여행지는 {{ form.landmark }}입니다.</div>
+                <div class="select-wrapper" style="margin-bottom: 30px;">꼭 가고 싶은 여행지는 {{ form.landmark }}입니다.</div>
 
                 <span style="float: left">4.</span>
-                <div class="sellect-wrapper">
                     <div style="margin-bottom: 16px;">여행테마</div>
-                    <div class="row" style="margin-bottom:24px;">
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="theme" type="checkbox" value=1>전체
+                    <div class="row select-wrapper">
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="theme" type="checkbox" value=1 id="theme1">
+                            <label for="theme1" >전체</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="theme" type="checkbox" value=2>현지 꿀팁
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="theme" type="checkbox" value=2 id="theme2">
+                            <label for="theme2" >현지 꿀팁</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="theme" type="checkbox" value=4>액티비티
+                    </div>
+                    <div class="row select-wrapper">
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="theme" type="checkbox" value=4 id="theme3">
+                            <label for="theme3" >액티비티</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="theme" type="checkbox" value=8>문화/예술
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="theme" type="checkbox" value=8 id="theme4">
+                            <label for="theme4" >문화/예술</label>
                         </div>
                     </div>
 
-                <div class="row">
-                    <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" name="theme" type="checkbox" value=16>골목 여행
+                <div class="row select-wrapper">
+                    <div class="col-xs-6 ">
+                     <input class="checkbox" name="theme" type="checkbox" value=16 id="theme5">
+                        <label for="theme5" >골목 여행</label>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" name="theme" type="checkbox" value=32>자연 경관
+                    <div class="col-xs-6 ">
+                     <input class="checkbox" name="theme" type="checkbox" value=32 id="theme6">
+                        <label for="theme6" >자연 경관</label>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" name="theme" type="checkbox" value=64>맛집 기행
+                </div>
+                <div class="row select-wrapper" style="margin-bottom: 40px;">
+                    <div class="col-xs-6 ">
+                     <input class="checkbox" name="theme" type="checkbox" value=64 id="theme7">
+                        <label for="theme7" >맛집 기행</label>
                     </div>
-                    <div class="col-xs-6 col-sm-3">
-                     <input class="checkbox" name="theme" type="checkbox" value=128>역사여행
+                    <div class="col-xs-6 ">
+                     <input class="checkbox" name="theme" type="checkbox" value=128 id="theme8">
+                        <label for="theme8" >역사여행</label>
                     </div>
                 </div>
 
-                </div>
+
                 <span style="float: left">6.</span>
-                <div class="sellect-wrapper">
                     <div style="margin-bottom: 16px;">이런 성향의 가이드가 좋아요!</div>
-                    <div class="row" style="margin-bottom:24px;">
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="guide_type" type="checkbox" value=1>전체
+                <div class="row select-wrapper">
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="guide_type" type="checkbox" value=1 id="gt1">
+                            <label for="gt1" >전체</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="guide_type" type="checkbox" value=2>유쾌한
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="guide_type" type="checkbox" value=2 id="gt2">
+                            <label for="gt2" >유쾌한</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="guide_type" type="checkbox" value=4>차분한
+                </div>
+                <div class="row select-wrapper">
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="guide_type" type="checkbox" value=4 id="gt3">
+                            <label for="gt3" >차분한</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="guide_type" type="checkbox" value=8>지적인
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="guide_type" type="checkbox" value=8 id="gt4">
+                            <label for="gt4" >지적인</label>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="guide_type" type="checkbox" value=16>유머러스한
+                </div>
+                <div class="row select-wrapper">
+                        <div class="col-xs-6 ">
+                         <input class="checkbox" name="guide_type" type="checkbox" value=16 id="gt5">
+                            <label for="gt5" >유머러스한</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="guide_type" type="checkbox" value=32>감성적인
+                        <div class="col-xs-6 ">
+                         <input class="checkbox" name="guide_type" type="checkbox" value=32 id="gt6">
+                            <label for="gt6" >감성적인</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="guide_type" type="checkbox" value=64>설명을 잘하는
+                </div>
+                <div class="row select-wrapper" style="margin-bottom: 40px;">
+                        <div class="col-xs-6 ">
+                         <input class="checkbox" name="guide_type" type="checkbox" value=64 id="gt7">
+                            <label for="gt7" >설명을 잘하는</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="guide_type" type="checkbox" value=128>경제적인
+                        <div class="col-xs-6 ">
+                         <input class="checkbox" name="guide_type" type="checkbox" value=128 id="gt8">
+                            <label for="gt8">경제적인</label>
                         </div>
-                    </div>
                 </div>
 
                 <span style="float: left">7.</span>
-                <div class="sellect-wrapper">
-                    <div style="margin-bottom: 16px;">저에게 가장 중요한 것은</div>
-                    <div class="row" style="margin-bottom:24px;">
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="importance" type="checkbox" value=1>맛집
+                <div class="row select-wrapper">
+                    <div style="margin: 2px 0 16px 0;">저에게 가장 중요한 것은</div>
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="importance" type="checkbox" value=1 id="im1">
+                            <label for="im1" >맛집</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="importance" type="checkbox" value=2>인생 사진
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="importance" type="checkbox" value=2 id="im2">
+                            <label for="im2" >인생 사진</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="importance" type="checkbox" value=4>적절한 휴식
+                </div>
+                <div class="row select-wrapper">
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="importance" type="checkbox" value=4 id="im3">
+                            <label for="im3">적절한 휴식</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <input class="checkbox" name="importance" type="checkbox" value=8>친구같은 가이드
+                        <div class="col-xs-6 ">
+                            <input class="checkbox" name="importance" type="checkbox" value=8 id="im4">
+                            <label for="im4" style="font-size: 18px;">친구같은 가이드</label>
                         </div>
-                    </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="importance" type="checkbox" value=16>역사공부
+                <div class="row select-wrapper" style="margin-bottom: 40px;">
+                        <div class="col-xs-6 ">
+                         <input class="checkbox" name="importance" type="checkbox" value=16 id="im5">
+                            <label for="im5" >역사공부</label>
                         </div>
-                        <div class="col-xs-6 col-sm-3">
-                         <input class="checkbox" name="importance" type="checkbox" value=32>기타
+                        <div class="col-xs-6 ">
+                         <input class="checkbox" name="importance" type="checkbox" value=32 id="im6">
+                            <label for="im6" >기타</label>
                         </div>
-                    </div>
                 </div>
                 {{ form.additional_request |add_class:"additional-request-box"|attr:"placeholder:추가적으로 부탁하고 싶은 점을 적어주세요. ex) 빽빽하지 않은 여행일정이 좋아요. 하루에 2-3군데에서 여유롭게 즐기고 싶어요." }}
 
             </div>
 
+
             <div class="total-amount-wrapper">
-                {{ form.cost }}만 원
+                <span style="font-size: 26px;">희망 경비</span>
+                {{ form.cost }}<span style="position:absolute; right: 0px; top: 38px; font-size: 14px;">만 원</span>
             </div>
-            <span style="font-size: 26px; margin: 75px 14px 0px 0px; display: block; float: right">희망 경비</span>
             <div class="row submit-button-wrapper">
                 <div class="col-xs-12">
                 <div class="find-guide-button" type="submit">가이드 모집</div>

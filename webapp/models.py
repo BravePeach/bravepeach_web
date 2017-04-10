@@ -161,7 +161,7 @@ class UserRequest(Model):
     accom_comment = models.CharField(max_length=100, blank=True)
     start_time = models.IntegerField(default=0, blank=True)
     end_time = models.IntegerField(default=0, blank=True)
-    landmark = models.CharField(max_length=200, blank=True, default="없음")
+    landmark = models.CharField(max_length=200, blank=True, default="")
     theme = models.IntegerField(default=0, blank=True)
     local_trans = models.IntegerField(default=0, blank=True)
     guide_major = models.IntegerField(default=0, blank=True)
