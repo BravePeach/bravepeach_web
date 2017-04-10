@@ -33,14 +33,14 @@
             </div>
 
             <div class="white-bar">
-                <img class="icon" src="{% static 'image/icon/when_black.png' %}" alt="where?">
+                <img class="icon" src="{% static 'image/icon/when_black.png' %}" alt="when?">
                 {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"|attr:"placeholder:시작 날짜" }}
                 <img class="arrow-right" src="{% static 'image/icon/arrow_right_grey.png' %}">
                 {{ form.travel_end_at |add_class:"find-guide-form2 datepicker2"|attr:"readonly"|attr:"placeholder:종료 날짜"}}
             </div>
 
             <div class="white-bar">
-                <img class="icon" src="{% static 'image/icon/howmany_black.png' %}" alt="where?">
+                <img class="icon" src="{% static 'image/icon/howmany_black.png' %}" alt="howmany">
                 {{ form.age_group |add_class:"enroll-trip-form"|attr:"placeholder:인원"|attr:"readonly" }}
                 <img class="arrow-down" src="{% static 'image/icon/arrow_down_black.png' %}" alt="펼치기 버튼">
                 <div class="traveler_cntpicker">

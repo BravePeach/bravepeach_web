@@ -4,11 +4,11 @@
 {% load custom_filters %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/mobile/guide/schedule.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mobile/guide/schedule.css' %}">
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'js/guide/schedule.js' %}"></script>
+    <script src="{% static 'js/guide/schedule.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -20,12 +20,34 @@
 </div>
 
 {% if page_type == "calender" %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.min.js"></script>
+    <script src="{% static 'js/ko.js' %}"></script>
+    <div class="calendar">
+        <div class="cal-inf">
+            <span>- 예약/확정 현황을 한눈에 캘린더에서 확인하실 수 있습니다.<br>
+- 달력에서 가이드 활동이 불가능한 날짜를 선택해주세요. 설정된 날짜에는 예약을 받을 수 없습니다.</span>
+            <div class="peach"></div>
+            지난여행
+            <div class="red"></div>
+            예약확정
+        </div>
+        <div class="cal">
+
+        </div>
+        <div class="cal-save-button deactive">
+            저장
+        </div>
+    </div>
+
 {% endif %}
 
-{% if page_type == "fixed" %}
+{% if page_type == "fixed" or "calendar" %}
+    <div class="fixed-trip">
 {% if fixed_trip_set %}
 {% for fixed_trip in fixed_trip_set %}
-<div class="trip-card-wrapper">
+<div class="trip-card-wrapper" {% if page_type == "calendar" %} style="display: none" {% endif %}>
     <div class="trans-light">
         <div class="{% if fixed_trip.trans_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
         <span>이동수단</span>
@@ -47,7 +69,7 @@
     </div>
     <div class="travel-date">{{ fixed_trip.travel_begin_at|date:"Y/m/d" }} - {{ fixed_trip.travel_end_at|date:"Y/m/d"}}
     </div>
-    <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명</div>
+    <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명| 유아 {{ fixed_trip.toddler_traveler }}명</div>
     <div class="req-cost">총 경비 <span>{{ fixed_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
     <div class="show-request-button">여행 요청서 보기</div>
     <div class="show-offer-button">최종 견적서 보기</div>
@@ -66,12 +88,14 @@
     아직 확정된 여행이 없습니다.
 </div>
 {% endif %}
+    </div>
 {% endif %}
-{% if page_type == "ended" %}
+
+{% if page_type == "ended" or "calendar" %}
 <div class="ended-trip">
     {% if ended_trip_set %}
     {% for ended_trip in ended_trip_set %}
-    <div class="trip-card-wrapper">
+    <div class="trip-card-wrapper" {% if page_type == "calendar" %} style="display: none" {% endif %}>
         <div class="trans-light">
             <div class="{% if ended_trip.trans_guided %} guide-activated {% else %} guide-deactivated {% endif %}"></div>
             <span>이동수단</span>

@@ -360,6 +360,7 @@ class FilterTrip(View):
         # elif sort == "reviewNum":
         #     guide_queryset = guide_queryset.annotate(num_reviews=Count('userreview')).order_by('num_reviews')
 
+        is_mobile = False
         if request.user_agent.is_mobile:
             is_mobile = True
 

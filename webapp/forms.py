@@ -114,10 +114,10 @@ class PasswordResetCustomForm(PasswordResetForm):
 class RequestForm(forms.ModelForm):
     travel_begin_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
     travel_end_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
-    CHOICES1 = ((i, i) for i in range(1, 25))
-    CHOICES2 = ((i, i) for i in range(1, 25))
-    start_time = forms.ChoiceField(choices=CHOICES1)
-    end_time = forms.ChoiceField(choices=CHOICES2)
+    trans_start_at = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
+    trans_end_at = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
+    start_time = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
+    end_time = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
     cost = forms.NumberInput
     city = forms.CharField(initial="")
     age_group = forms.CharField(initial="")
@@ -169,12 +169,6 @@ class WriteOfferForm(forms.ModelForm):
     class Meta:
         model = GuideOffer
         fields = ['trans_info', 'accom_template', 'guide_template']
-
-
-# class AccomTemplateForm(forms.ModelForm):
-#     class Meta:
-#         model = AccomTemplate
-#         # fields =
 
 
 class VolunteerForm(forms.ModelForm):
