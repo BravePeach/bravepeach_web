@@ -71,7 +71,7 @@ class Guide(Model):
     license = models.BooleanField(default=False)
     is_thru = models.BooleanField(default=False, verbose_name="스루 가이드")
     is_local = models.BooleanField(default=False, verbose_name="현지 가이드")   # 둘다 비어있으면 안됨
-    activated = models.BooleanField(default=False)
+    activated = models.BooleanField(default=True)
     guide_location = JSONField(null=True, blank=True)
     guide_country = JSONField(null=True, blank=True)
     guide_city = JSONField(null=True, blank=True)
