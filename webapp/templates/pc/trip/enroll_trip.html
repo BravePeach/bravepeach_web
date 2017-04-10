@@ -125,6 +125,10 @@
             <div class="scrolling-page1">
 
                 <span style="float: left; margin-top: 8px;">1.</span>
+                <div class="sellect-wrapper">{{ form.trans_start_at }}</div>
+                <span style="float: left; margin-top: 8px;">2.</span>
+                <div class="sellect-wrapper">{{ form.trans_arrive_at }}</div>
+                <span style="float: left; margin-top: 8px;">3.</span>
                 <div class="sellect-wrapper">
                     <div class="col-xs-6 col-sm-3">
                         <input class="checkbox" id="via-input1" type="checkbox" name="trans_via" value=1>
@@ -140,7 +144,7 @@
                     </div>
                 </div>
 
-                <span style="float: left; margin-top: 8px;">2.</span>
+                <span style="float: left; margin-top: 8px;">4.</span>
                 <div class="sellect-wrapper">
                     <div class="col-xs-6 col-sm-3">
                         <input class="checkbox" type="checkbox" name="trans_class" value=1 id="class1">
@@ -226,6 +230,8 @@
             </div>
 
             <div class="scrolling-page3">
+
+
 
                 <span style="float: left">1.</span>
                 <div class="sellect-wrapper">아침 {{ form.start_time }}시 부터는 일정을 시작해 주세요.</div>

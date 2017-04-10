@@ -86,7 +86,8 @@ def enroll_trip(request, **kwargs):
         data['age_group'] = json.dumps(age_group)
         data['user'] = request.user.id
 
-        for key in ['trans_via', 'trans_class', 'accom_location', 'accom_type', 'theme', 'local_trans', 'guide_type', 'importance']:
+        for key in ['trans_via', 'trans_class', 'accom_location', 'accom_type', 'theme', 'local_trans', 'guide_type',
+                    'importance', 'guide_major']:
             if key in data:
                 new_value = sum([int(i) for i in data.getlist(key)])
                 data.update({key: new_value})

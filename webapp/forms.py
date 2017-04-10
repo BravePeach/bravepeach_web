@@ -115,7 +115,7 @@ class RequestForm(forms.ModelForm):
     travel_begin_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
     travel_end_at = forms.DateField(input_formats=['%Y.%m.%d'], required=False)
     trans_start_at = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
-    trans_end_at = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
+    trans_arrive_at = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
     start_time = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
     end_time = forms.ChoiceField(choices=((i, i) for i in range(1, 25)))
     cost = forms.NumberInput
@@ -125,10 +125,10 @@ class RequestForm(forms.ModelForm):
     class Meta:
         model = UserRequest
         fields = [
-            'user', 'city', 'travel_begin_at', 'travel_end_at', 'age_group', 'trans_type', 'trans_via', 'trans_class',
+            'user', 'city', 'travel_begin_at', 'travel_end_at', 'trans_start_at', 'trans_arrive_at', 'age_group', 'trans_type', 'trans_via', 'trans_class',
             'trans_comment', 'accom_location', 'accom_location_optional', 'accom_type', 'accom_comment',
             'start_time', 'end_time', 'landmark', 'theme', 'local_trans', 'guide_type', 'importance', 'cost',
-            'additional_request', 'accom_location_optional', 'importance_optional'
+            'additional_request', 'accom_location_optional', 'importance_optional', 'guide_major'
         ]
         widgets = {
             'trans_comment': forms.Textarea,
