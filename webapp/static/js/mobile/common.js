@@ -1,6 +1,7 @@
 var place_list = [];
 var city_name_list = [];
 traveler_list = [0, 0, 0, 0, 0, 0];
+var mail_re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function get_alarm(type) {
     $.get(alarm_url + '?type='+type, function(data){

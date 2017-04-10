@@ -64,6 +64,9 @@ def register_bravepeach(request):
                 new_profile = profile_form.save(commit=False)
                 new_profile.user = new_user
                 new_profile.save()
+                res = requests.get(request.POST.get('profile-url'))
+                filename = str(request.user.id)+"__"+datetime.datetime.now().strftime("%H_%M_%S_%f")+".jpg"
+                new_profile.photo.save(filename, ContentFile(BytesIO(res.content).getvalue()))
                 this_user = authenticate(username=user_form.cleaned_data['email'],
                                          password=user_form.cleaned_data["password"])
                 if this_user:
@@ -304,18 +307,29 @@ def upload_original(request):
     return JsonResponse({"ok": False})
 
 
-@login_required
 def upload_profile(request):
     if request.method == "POST":
         res = requests.get(request.POST.get('img'))
         img = Image.open(BytesIO(res.content))
-        crop_img = img.crop([int(x) for x in request.POST.getlist('coord[]')])
+        coord = [int(x) for x in request.POST.getlist('coord[]')]
+        if request.user_agent.is_mobile:
+            coord = [x*2 for x in coord]
+        crop_img = img.crop(coord)
         resize_img = crop_img.resize((200, 200), Image.ANTIALIAS)
-        byte_img = BytesIO()
-        resize_img.save(byte_img, format="jpeg")
-        filename = str(request.user.id)+"__"+datetime.datetime.now().strftime("%H_%M_%S_%f")+".jpg"
-        request.user.profile.photo.save(filename, ContentFile(byte_img.getvalue()))
-        url = "http://"+settings.AWS_S3_CUSTOM_DOMAIN+"/"+str(request.user.profile.photo)
+        if request.user.is_authenticated:
+            byte_img = BytesIO()
+            resize_img.save(byte_img, format="jpeg")
+            filename = str(request.user.id)+"__"+datetime.datetime.now().strftime("%H_%M_%S_%f")+".jpg"
+            request.user.profile.photo.save(filename, ContentFile(byte_img.getvalue()))
+            url = "http://"+settings.AWS_S3_CUSTOM_DOMAIN+"/"+str(request.user.profile.photo)
+        else:
+            tmp_file = "/tmp/{}.jpg".format(uuid4())
+            resize_img.save(tmp_file, format="jpeg")
+            tmp_name = datetime.datetime.now().strftime("%Y_%m_%d/%H_%M_%S_%f")+".jpg"
+            s3 = boto3.resource("s3", aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+            s3.meta.client.upload_file(tmp_file, settings.AWS_STORAGE_BUCKET_NAME, 'profile/{}'.format(tmp_name))
+            url = "http://" + "/".join([settings.AWS_S3_CUSTOM_DOMAIN, "profile", tmp_name])
         return JsonResponse({"ok": True, "url": url})
     return JsonResponse({"ok": False})
 
