@@ -76,7 +76,7 @@
     <a href="{% url 'guide_find' %}" class="guide-tab {% if tab == 'find' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">여행자 찾기</a>
     <a href="{% url 'guide_dashboard' %}" class="guide-tab {% if tab == 'dashboard' %}activated{% endif %}">알림판</a>
     <a href="{% url 'guide_schedule' %}" class="guide-tab {% if tab == 'schedule' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">일정관리</a>
-    <a href="{% url 'guide_request' %}" class="guide-tab {% if tab == 'request' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">요청서견적서</a>
+    <a href="{% url 'guide_request' %}" class="guide-tab {% if tab == 'request' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">요청서/견적서</a>
     <a href="{% url 'guide_template' %}" class="guide-tab {% if tab == 'template' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">여행 정보</a>
     <a href="{% url 'guide_adjust' %}" class="guide-tab {% if tab == 'adjust' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">정산관리</a>
     <a href="{% url 'guide_review' %}" class="guide-tab {% if tab == 'review' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">후기/여행기</a>
