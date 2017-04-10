@@ -18,7 +18,7 @@ def get_alarm(request):
         alarm_list = UserAlarm.objects.filter(receiver=request.user, immediate=True, is_new=True).all()
         alarm_cnt = len(alarm_list)
     elif req_type == "guide" and request.user.profile.is_guide:
-        alarm_list = GuideAlarm.objects.filter(receiver=request.user.guide, immediate=True, is_new=True).all()
+        alarm_list = GuideAlarm.objects.filter(receiver=request.user.guide.first(), immediate=True, is_new=True).all()
         alarm_cnt = len(alarm_list)
     else:
         return JsonResponse({"ok": False})
