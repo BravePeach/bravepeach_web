@@ -141,6 +141,8 @@ class UserRequest(Model):
     travel_end_at = models.DateField(null=True, blank=True)
     age_group = JSONField(null=True, blank=True)
     trans_type = models.IntegerField(default=0, blank=True)
+    trans_start_at = models.IntegerField(default=0, blank=True)
+    trans_arrive_at = models.IntegerField(default=0, blank=True)
     trans_via = models.IntegerField(default=0, blank=True)
     trans_class = models.IntegerField(default=0, blank=True)
     trans_comment = models.CharField(max_length=200, blank=True)
@@ -153,6 +155,7 @@ class UserRequest(Model):
     landmark = models.CharField(max_length=200, blank=True, default="없음")
     theme = models.IntegerField(default=0, blank=True)
     local_trans = models.IntegerField(default=0, blank=True)
+    guide_major = models.IntegerField(default=0, blank=True)
     guide_type = models.IntegerField(default=0, blank=True)
     importance = models.IntegerField(default=0, blank=True)
     importance_optional = models.CharField(default="", max_length=100, blank=True)
@@ -242,6 +245,12 @@ class UserRequest(Model):
         options = ("맛집", "인생사진", "적절한 휴식", "친구같은 가이드", "역사 공부", "기타")
         importance_list = [options[idx] for idx, v in enumerate(bin(self.importance)[2:]) if v == '1']
         return importance_list
+
+    @property
+    def guide_major_list(self):
+        options = ("스루 가이드", "현지 가이드")
+        guide_major_list = [options[idx] for idx, v in enumerate(bin(self.importance)[2:]) if v == '1']
+        return guide_major_list
 
 
 class GuideOffer(Model):

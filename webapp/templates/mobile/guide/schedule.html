@@ -44,6 +44,7 @@
 {% endif %}
 
 {% if page_type == "fixed" or "calendar" %}
+    <div class="fixed-trip">
 {% if fixed_trip_set %}
 {% for fixed_trip in fixed_trip_set %}
 <div class="trip-card-wrapper" {% if page_type == "calendar" %} style="display: none" {% endif %}>
@@ -68,7 +69,7 @@
     </div>
     <div class="travel-date">{{ fixed_trip.travel_begin_at|date:"Y/m/d" }} - {{ fixed_trip.travel_end_at|date:"Y/m/d"}}
     </div>
-    <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명</div>
+    <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명| 유아 {{ fixed_trip.toddler_traveler }}명</div>
     <div class="req-cost">총 경비 <span>{{ fixed_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
     <div class="show-request-button">여행 요청서 보기</div>
     <div class="show-offer-button">최종 견적서 보기</div>
@@ -87,8 +88,10 @@
     아직 확정된 여행이 없습니다.
 </div>
 {% endif %}
+    </div>
 {% endif %}
-{% if page_type == "ended" or page_type == "calendar" %}
+
+{% if page_type == "ended" or "calendar" %}
 <div class="ended-trip">
     {% if ended_trip_set %}
     {% for ended_trip in ended_trip_set %}
