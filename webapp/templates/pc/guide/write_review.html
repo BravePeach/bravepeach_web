@@ -44,7 +44,7 @@
         <img class="rating-img rating-4" src="{% static 'image/icon/logo_empty.png' %}" alt="">
         <img class="rating-img rating-5" src="{% static 'image/icon/logo_empty.png' %}" alt="">
     </div>
-    <div class="review-content">{{ form.content }}</div>
+    <div class="review-content">{{ form.content }}{{ form.media }}</div>
     <div class="btn-area">
         <a href="{% url 'guide_review' %}" class="cancel-btn">취소</a>
         <button type="submit" class="submit-btn">후기 남기기</button>
