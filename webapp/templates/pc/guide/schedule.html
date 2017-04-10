@@ -4,28 +4,29 @@
 {% load custom_filters %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/pc/guide/schedule.css' %}">
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/pc/guide/schedule.css' %}">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.css" rel="stylesheet">
 {% endblock %}
 
 {% block js %}
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.min.js"></script>
-<script src="{% static 'js/guide/schedule.js' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.min.js"></script>
+    <script src="{% static 'js/ko.js' %}"></script>
+    <script src="{% static 'js/guide/schedule.js' %}"></script>
 {% endblock%}
 
 {% block content %}
 <div class="allover display-none"></div>
 <div class="schedule-top">
-    <span class="calendar">캘린더</span>
-    <span class="fixed-trip clicked">확정된 예약</span>
+    <span class="calendar clicked">캘린더</span>
+    <span class="fixed-trip">확정된 예약</span>
     <span class="ended-trip">지난 여행</span>
     <span class="canceled-trip">취소된 여행</span>
 </div>
 <hr>
 
 <div class="wrapper">
-    <div class="calendar display-none">
+    <div class="calendar">
         <div class="cal-inf">
             <span>- 예약/확정 현황을 한눈에 캘린더에서 확인하실 수 있습니다.<br>
 - 달력에서 가이드 활동이 불가능한 날짜를 선택해주세요. 설정된 날짜에는 예약을 받을 수 없습니다.</span>
@@ -37,9 +38,12 @@
         <div class="cal">
 
         </div>
+        <div class="cal-save-button deactive">
+            저장
+        </div>
     </div>
 
-    <div class="fixed-trip">
+    <div class="fixed-trip  display-none">
         {% if fixed_trip_set %}
         {% for fixed_trip in fixed_trip_set %}
             <div class="trip-card-wrapper">
@@ -63,7 +67,7 @@
                     {% endfor %}
                 </div>
                 <div class="travel-date">{{ fixed_trip.travel_begin_at|date:"Y/m/d" }} - {{ fixed_trip.travel_end_at|date:"Y/m/d" }}</div>
-                <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명</div>
+                <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명 | 유아 {{ fixed_trip.toddler_traveler }}명</div>
                 <div class="req-cost">총 경비 <span>{{ fixed_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
                 <div class="show-request-button">여행 요청서 보기</div>
                 <div class="show-offer-button">최종 견적서 보기</div>
@@ -108,7 +112,7 @@
                     {% endfor %}
                 </div>
                 <div class="travel-date">{{ ended_trip.travel_begin_at|date:"Y/m/d" }} - {{ ended_trip.travel_end_at|date:"Y/m/d" }}</div>
-                <div class="traveler-num">성인 {{ ended_trip.adult_traveler }}명 | 아동 {{ ended_trip.child_traveler }}명</div>
+                <div class="traveler-num">성인 {{ ended_trip.adult_traveler }}명 | 아동 {{ ended_trip.child_traveler }}명 | 유아 {{ ended_trip.toddler_traveler }}명</div>
                 <div class="req-cost">총 경비 <span>{{ ended_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
                 <div class="show-request-button">받은 후기 보기</div>
                 <div class="show-offer-button">여행기 쓰기</div>
@@ -145,7 +149,7 @@
                     {% endfor %}
                 </div>
                 <div class="travel-date">{{ canceled_trip.travel_begin_at|date:"Y/m/d" }} - {{ canceled_trip.travel_end_at|date:"Y/m/d" }}</div>
-                <div class="traveler-num">성인 {{ canceled_trip.adult_traveler }}명 | 아동 {{ canceled_trip.child_traveler }}명</div>
+                <div class="traveler-num">성인 {{ canceled_trip.adult_traveler }}명 | 아동 {{ canceled_trip.child_traveler }}명 | 유아 {{ canceled_trip.toddler_traveler }}명</div>
                 <div class="req-cost">총 경비 <span>{{ canceled_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
                 <div class="show-request-button">제안 견적서 보기</div>
                 <div class="show-offer-button">취소 내용 보기</div>
