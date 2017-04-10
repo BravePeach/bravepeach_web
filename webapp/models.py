@@ -1,5 +1,4 @@
 import math
-from decimal import Decimal
 import datetime
 
 from django.db import models
@@ -20,7 +19,7 @@ class Profile(Model):
     phone_num = models.CharField(max_length=11, blank=True)
     is_guide = models.BooleanField(default=False)
     delete_reason = models.IntegerField(null=True)
-    rating = models.DecimalField(max_digits=2, decimal_places=1, default=Decimal('0.0'))
+    rating = models.FloatField(default=0.0)
     nationality = models.CharField(max_length=40, blank=True)
     birthday = models.DateField(blank=True, null=True)
     gender = models.IntegerField(null=True)
@@ -64,7 +63,7 @@ class Guide(Model):
     pay_cnt = models.IntegerField(default=0)
     total_traveler_cnt = models.IntegerField(default=0)
     total_guide_day = models.IntegerField(default=0)
-    rating = models.DecimalField(max_digits=2, decimal_places=1, default=Decimal('0.0'))
+    rating = models.FloatField(default=0.0)
     guide_type = models.IntegerField(null=True, blank=True)
     guide_theme = models.IntegerField(null=True, blank=True)
     max_traveler_cnt = models.IntegerField(null=True, blank=True)
