@@ -244,11 +244,20 @@ def set_adjust_method(request):
     return redirect(adjust)
 
 
-def request_adjust(request, oid):
+@login_required
+def request_adjust(request):
+    oid = request.POST.get('oid', 0)
     offer = GuideOffer.objects.filter(id=oid).first()
-    offer.adjust_requested_at = datetime.date.today()
-    offer.save()
-    return redirect(adjust)
+    if not offer:
+        return JsonResponse({"ok": False, "msg": "No such offer: {}".format(oid)})
+    try:
+        offer.adjust_requested_at = datetime.date.today()
+        offer.save()
+    except Exception as e:
+        print(e)
+        return JsonResponse({"ok": False, "msg": e.args[0]})
+    else:
+        return JsonResponse({"ok": True, "date": datetime.date.today().strftime("%Y/%m/%d")})
 
 
 @user_passes_test(guide_required)

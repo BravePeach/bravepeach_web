@@ -8,6 +8,9 @@
 {% endblock %}
 
 {% block js %}
+    <script>
+    var adjust_request_url = "{% url 'request_adjust' %}"
+    </script>
     <script src="{% static 'js/guide/adjust.js' %}"></script>
 {% endblock %}
 
@@ -41,7 +44,6 @@
                 {% for revenue in revenue_list %}
                     <tr>
                         <td>{{ revenue.request.user.profile.full_name }}</td>
-                        <td>{{ revenue.request.user.profile.full_name }}</td>
                         <td>{{ revenue.request.travel_begin_at|date:"Y/m/d" }}</td>
                         <td class="ellipsis">{% for c in revenue.request.city %}
                             {% if not forloop.first %}/{% endif %}{{ c }}
@@ -49,9 +51,7 @@
                         <td>{{ revenue.total_cost|intcomma }} 만원</td>
                         <td>{{ revenue.revenue|intcomma }} 원</td>
                     <td>{{ revenue.adjust_done_at|date:"Y/m/d" }}</td>
-                        <td><a href="">바로가기</a></td>
-{#                        <td>{% if revenue.adjust_requested_at %}{{ revenue.adjust_request_at|date:'Y/m/d' }}#}
-{#                            <a href="{% url 'request_adjust' oid=revenue.id %}">신청</a>{% endif %}</td>#}
+                        <td><a href="{% url 'offer_detail' offer_id=revenue.id %}">바로가기</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -81,16 +81,15 @@
                 {% for expect in expect_list %}
                     <tr>
                         <td>{{ expect.request.user.profile.full_name }}</td>
-                        <td>{{ expect.request.user.profile.full_name }}</td>
                         <td>{{ expect.request.travel_begin_at|date:"Y/m/d" }}</td>
                         <td class="ellipsis">{% for c in expect.request.city %}
                             {% if not forloop.first %}/{% endif %}{{ c }}
                         {% endfor %}</td>
                         <td>{{ expect.total_cost|intcomma }} 만원</td>
                         <td>{{ expect.revenue|intcomma }} 원</td>
-                        <td><a href="">바로가기</a></td>
-                        <td>{% if expect.adjust_requested_at %}{{ expect.adjust_request_at|date:'Y/m/d' }}
-                            <a href="">신청</a>{% endif %}</td>
+                        <td><a href="{% url 'offer_detail' offer_id=expect.id %}">바로가기</a></td>
+                        <td id="request">{% if expect.adjust_requested_at %}{{ expect.adjust_request_at|date:'Y/m/d' }}
+                            {% else %}<button onclick="request_adjust({{ expect.id }})">신청</button>{% endif %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
