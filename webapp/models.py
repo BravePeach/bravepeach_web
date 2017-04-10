@@ -54,6 +54,9 @@ class Notice(Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True, null=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Guide(Model):
     # id = HashidAutoField(primary_key=True)
@@ -81,6 +84,9 @@ class Guide(Model):
     essay = models.TextField(null=False, blank=False, default="")
     experience = JSONField(null=True, blank=True)
     is_volunteer = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "Guide: {}".format(self.full_name)
 
     @property
     def full_name(self):
@@ -133,6 +139,9 @@ class GuideAdjust(Model):
     addr = models.TextField(null=False, blank=True, default="", verbose_name="수취인 주소 (해외 계좌일 경우)")
     routing_num = models.TextField(null=False, blank=True, default="", verbose_name="Routing Number (미국 은행일 경우)")
 
+    def __str__(self):
+        return "{}'s Adjust".format(self.guide.full_name)
+
 
 class UserRequest(Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -159,6 +168,9 @@ class UserRequest(Model):
     cost = models.IntegerField(default=0, blank=True)
     published = models.BooleanField(default=True, blank=True)
     additional_request = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return "{}'s request // {} ~ {} to {}".format(self.user.profile.full_name, self.travel_begin_at, self.travel_end_at, self.city)
 
     @property
     def trans_guided(self):
@@ -258,6 +270,9 @@ class GuideOffer(Model):
     adjust_requested_at = models.DateField(null=True)
     adjust_done_at = models.DateField(null=True)
 
+    def __str__(self):
+        return "{}'s offer to req #{}".format(self.guide.full_name, self.request.id)
+
     @property
     def total_cost(self):
         return sum([x.price for x in self.costs.all() if x.type_id != 2]) + self.guide_cost()
@@ -355,6 +370,12 @@ class UserReview(Model):
     receiver = models.ForeignKey(Guide)
     write_date = models.DateField(null=False, default=datetime.date.today())
 
+    def __str__(self):
+        # return "Review from {} to {} for travel(offer) {}".format(self.writer.profile.full_name,
+        #                                                           self.receiver.full_name, self.offer.id)
+        return "Review from {} to {} for travel(offer) #{}".format(self.writer.profile.full_name,
+                                                                   self.receiver.full_name, self.offer.id)
+
     @property
     def clean_rating(self):
         frac_part, int_part = math.modf(self.rating)
@@ -378,6 +399,11 @@ class GuideReview(Model):
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL)
     write_date = models.DateField(null=False, default=datetime.date.today())
 
+    def __str__(self):
+        return "Review from {} to {} for travel #{}".format(self.writer.full_name,
+                                                            self.receiver.profile.full_name,
+                                                            self.offer_id)
+
     @property
     def clean_rating(self):
         frac_part, int_part = math.modf(self.rating)
@@ -392,6 +418,9 @@ class Journal(Model):
     writer = models.ForeignKey(Guide)
     write_date = models.DateField(null=False)
 
+    def __str__(self):
+        return "{}'s Journal for travel #{}".format(self.writer.full_name, self.offer_id)
+
 
 class UserAlarm(Model):
     # sender = models.ForeignKey(Guide)
@@ -401,6 +430,9 @@ class UserAlarm(Model):
     immediate = models.BooleanField(default=False)
     is_new = models.BooleanField(default=True)
 
+    def __str__(self):
+        return "User Alarm to {}".format(self.receiver.profile.full_name)
+
 
 class GuideAlarm(Model):
     # sender = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -409,3 +441,6 @@ class GuideAlarm(Model):
     landing = models.CharField(max_length=100, null=True, blank=True)
     immediate = models.BooleanField(default=False)
     is_new = models.BooleanField(default=True)
+
+    def __str__(self):
+        return "Guide Alarm to {}".format(self.receiver.full_name)
