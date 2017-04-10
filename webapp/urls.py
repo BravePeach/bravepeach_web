@@ -102,6 +102,4 @@ urlpatterns = [
 
     # Comment
     url(r'^add_comment/$', views.trip.AddComment.as_view(), name="add_comment"),
-
-    url(r'^redactor', include('redactor.urls')),
 ]
