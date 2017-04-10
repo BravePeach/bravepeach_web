@@ -20,6 +20,8 @@
         </div>
     </div>
     {% for alarm in alarm_list %}
-        <div class="alarm-content {% if forloop.counter > 6 %}hidden{% endif %}">{{ alarm }}</div>
+        {% if alarm.landing %}<a href="{{ alarm.landing }}">{% endif %}
+        <div class="alarm-content {% if forloop.counter > 6 %}hidden{% endif %}"> {{ alarm.contents }} </div>
+    {% if alarm.landing %}</a>{% endif %}
     {% endfor %}
 {% endblock %}

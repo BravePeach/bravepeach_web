@@ -2,6 +2,23 @@ var place_list = [];
 var city_name_list = [];
 traveler_list = [0, 0, 0, 0, 0, 0];
 
+function get_alarm(type) {
+    $.get(alarm_url + '?type='+type, function(data){
+        if(!data['ok']) {
+            console.log("alarm get fail");
+        } else {
+            if(data['alarm_cnt'] > 0) {
+                $("#alarm").find('a.msg').text(data['alarm_cnt'] + "개의 새로운 알림이 있습니다!");
+                $("#alarm").css("display", "block");
+            }
+        }
+    });
+}
+
+function close_alarm_msg() {
+    $("#alarm").css("display", "none");
+}
+
 function guide_search_form(){
     var country_list = [];
     var city_list = [];
@@ -155,7 +172,7 @@ $(function(){
 
     $('.traveler_cnt_main').click(function(event){
         event.stopPropagation();
-         $(".traveler_cntpicker").slideToggle("fast");
+        $(".traveler_cntpicker").slideToggle("fast");
     });
     $(".traveler_cntpicker").on("click", function (event) {
         event.stopPropagation();

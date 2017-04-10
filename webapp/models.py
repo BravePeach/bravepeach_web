@@ -400,3 +400,21 @@ class Journal(Model):
     content = RedactorField(verbose_name="Content")
     writer = models.ForeignKey(Guide)
     write_date = models.DateField(null=False)
+
+
+class UserAlarm(Model):
+    # sender = models.ForeignKey(Guide)
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='alarms')
+    contents = models.CharField(max_length=200, null=False, blank=False)
+    landing = models.CharField(max_length=100, null=True)
+    immediate = models.BooleanField(default=False)
+    is_new = models.BooleanField(default=True)
+
+
+class GuideAlarm(Model):
+    # sender = models.ForeignKey(settings.AUTH_USER_MODEL)
+    receiver = models.ForeignKey(Guide, related_name='alarms')
+    contents = models.CharField(max_length=200, null=False, blank=False)
+    landing = models.CharField(max_length=100, null=True, blank=True)
+    immediate = models.BooleanField(default=False)
+    is_new = models.BooleanField(default=True)

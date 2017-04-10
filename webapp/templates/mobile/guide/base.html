@@ -26,6 +26,12 @@
     <script src="{% static 'js/jquery.placecomplete.js' %}"></script>
     <script src="{% static 'js/mobile/header.js' %}"></script>
     <script src="{% static 'js/mobile/common.js' %}"></script>
+    <script>
+        var alarm_url = '{% url 'get_alarm' %}';
+        $(function(){
+            get_alarm("guide");
+        });
+    </script>
     {% block js %}{% endblock %}
 </head>
 <body>
@@ -53,8 +59,8 @@
         </div>
         <ul class="menu-list">
             {% if request.user.is_authenticated %}
-                <li><a href="">여행자 찾기</a></li>
-                <li><a href="">알림판</a></li>
+                <li><a href="{% url 'guide_find' %}">여행자 찾기</a></li>
+                <li><a href="{% url 'guide_dashboard' %}">알림판</a></li>
                 <li class="schedule folding">일정관리 <img src="{% static 'image/icon/arrow_down_white.png' %}" alt="V"></li>
                 <li class="schedule folded second"><a href="{% url 'guide_schedule' %}?type=calender">캘린더</a></li>
                 <li class="schedule folded second"><a href="{% url 'guide_schedule' %}?type=fixed">확정된 여행</a></li>
@@ -124,9 +130,11 @@
             <button onclick="guide_search_form()">여행자 찾기</button>
         </form>
     </div>
-
 </header>
-
+<div id="alarm" class="alarm-msg">
+    <a href="{% url 'guide_dashboard' %}" class="msg"></a>
+    <div class="close" onclick="close_alarm_msg()"><img src="{% static 'image/icon/cancel.png' %}" alt="" width="18" height="18"></div>
+</div>
 <div class="body-contents-wrapper">
     {% block content %}{% endblock %}
 </div>

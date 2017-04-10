@@ -7,6 +7,7 @@ from . import views
 urlpatterns = [
     # Common
     url(r'^$', views.common.index, name='index'),
+    url(r'^get_alarm/$', views.common.get_alarm, name="get_alarm"),
 
     # User
     url(r'^register/$', views.user.register, name='register'),

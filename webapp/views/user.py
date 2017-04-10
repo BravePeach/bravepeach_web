@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required
 
 from bravepeach import settings
 from ..forms import UserRegistrationForm, UserEditForm, ProfileEditForm, UnsubscribeForm, UserReviewForm
-from ..models import Profile, GuideOffer, UserReview, GuideReview
+from ..models import Profile, GuideOffer, UserReview, GuideReview, UserAlarm
 from bravepeach.util import flavour_render, AESCipher
 
 
@@ -68,6 +68,9 @@ def register_bravepeach(request):
                                          password=user_form.cleaned_data["password"])
                 if this_user:
                     login(request, this_user)
+                    new_alarm = UserAlarm(receiver=this_user, is_new=False,
+                                          contents="{} 님의 가입을 환영합니다!".format(this_user.profile.full_name),)
+                    new_alarm.save()
                     return flavour_render(request, "user/greeting.html", {"user": new_user})
                 else:
                     print("no auth user")
@@ -107,6 +110,9 @@ def login_fb(request):
                 photo = urlopen(url)
                 profile.photo.save("fb_{}.jpg".format(data['id']), ContentFile(photo.read()))
             profile.save()
+            new_alarm = UserAlarm(receiver=new_user, is_new=False,
+                                  contents="{} 님의 가입을 환영합니다!".format(new_user.profile.full_name),)
+            new_alarm.save()
             login(request, new_user)
         except Exception as e:
             msg = ""
@@ -121,9 +127,10 @@ def login_fb(request):
 def login_google(request):
     access_token = request.POST.get('access_token', "")
     params = {"key": settings.SOCIAL_AUTH_GOOGLE_API_KEY}
-    headers = {'Authorization': "Bearer "+access_token}
+    headers = {'Authorization': "Bearer "+access_token, 'referer': request.get_host()}
     resp = requests.get('https://content.googleapis.com/plus/v1/people/me', params=params, headers=headers)
     if resp.status_code != 200:
+        print(resp.text)
         return JsonResponse({"ok": False, "msg": resp.status_code})
     data = resp.json()
     primary_mail = None
@@ -141,6 +148,7 @@ def login_google(request):
                             first_name=data['name']['givenName'], last_name=data['name']['familyName'])
             new_user.save()
         except Exception as e:
+            print(e)
             msg = ""
             if e.args[0] == 1062:
                 msg = "{} 는 이미 가입되어있는 메일입니다.".format(primary_mail)
@@ -152,6 +160,9 @@ def login_google(request):
             photo = urlopen(url)
             profile.photo.save('ggl_{}.jpg'.format(data['id']), ContentFile(photo.read()))
         profile.save()
+        new_alarm = UserAlarm(receiver=new_user, is_new=False,
+                              contents="{} 님의 가입을 환영합니다!".format(new_user.profile.full_name),)
+        new_alarm.save()
         login(request, new_user)
     else:
         login(request, prev_profile.user)
@@ -192,9 +203,8 @@ def mypage(request, page_type="account"):
     param_dict = {"page_type": page_type, "type_dict": page_type_dict}
 
     if page_type == "alarm":
-        # TODO: get alarm list
-        # param_dict["alarn_list"] = alarm_list
-        pass
+        alarm_list = UserAlarm.objects.order_by("-id").all()
+        param_dict["alarm_list"] = alarm_list
     elif page_type == "account":
         pass
     elif page_type == "profile":
