@@ -8,7 +8,7 @@ function submit_enroll_form(){
 }
 
 $(function() {
-    $("#id_city").placecomplete({
+    $("#id_city.enroll-trip-form").placecomplete({
         tags: true,
         requestParams: {
             types: ["(regions)"]
@@ -25,7 +25,7 @@ $(function() {
         }
     });
 
-    $('.datepicker1, .datepicker2').datepicker({
+    $('.edatepicker1, .edatepicker2').datepicker({
         showAnim: "slideDown",
         minDate: 0,
         dateFormat: 'yy.mm.dd',
@@ -39,19 +39,16 @@ $(function() {
         showMonthAfterYear: true,
         yearSuffix: '년',
         onSelect: function () {
-            var date1 = $('.datepicker1').datepicker('getDate');
+            var date1 = $('.edatepicker1').datepicker('getDate');
             var date = new Date(Date.parse(date1));
             date.setDate(date.getDate() + 1);
             var newDate = date.toDateString();
             newDate = new Date(Date.parse(newDate));
-            $('.datepicker2').datepicker("option", "minDate", newDate);
-            if ($('#start_date_form').val() && $('#end_date_form').val()) {
-                filterGuide($('.order-active').attr('id'));
-            }
+            $('.edatepicker2').datepicker("option", "minDate", newDate);
         },
         onClose: function () {
-            if ($('.datepicker1').val() && !$('.datepicker2').val()) {
-                $('.datepicker2').datepicker("show")
+            if ($('.edatepicker1').val() && !$('.edatepicker2').val()) {
+                $('.edatepicker2').datepicker("show")
             }
         }
     });
@@ -79,7 +76,7 @@ $(function() {
         });
     });
 
-    $('#traveler_cnt_main, .arrow-down, #traveler_cnt_form').click(function () {
+    $('#traveler_cnt_main, .arrow-down, #traveler_cnt_form, .trv-btn').click(function () {
         $('.traveler_cntpicker').slideToggle(200)
     });
 

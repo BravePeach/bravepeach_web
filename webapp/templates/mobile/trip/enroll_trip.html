@@ -30,9 +30,9 @@
 
             <div class="white-bar">
                 <img class="icon" src="/static/image/icon/when_black.png" alt="where?">
-                {{ form.travel_begin_at |add_class:"enroll-trip-form datepicker1"|attr:"readonly"}}
+                {{ form.travel_begin_at |add_class:"enroll-trip-form edatepicker1"|attr:"readonly"}}
                 <img class="arrow-right" src="">
-                {{ form.travel_end_at |add_class:"enroll-trip-form2 datepicker2"|attr:"readonly"}}
+                {{ form.travel_end_at |add_class:"enroll-trip-form2 edatepicker2"|attr:"readonly"}}
             </div>
 
             <div class="white-bar">
@@ -42,42 +42,47 @@
                         <div class="traveler_cntpicker">
                     <div>
                         0-2세
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">0명</span>
                     </div>
-
+                    <hr>
                     <div>
                         2-12세
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">0명</span>
                     </div>
-
+                    <hr>
                     <div>
                         12-19세
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">0명</span>
                     </div>
+                    <hr>
                     <div>
                         20-30대
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">0명</span>
                     </div>
-                    <div>
+                            <hr>
+                            <div>
                         40-50대
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">0명</span>
                     </div>
+                            <hr>
                     <div>
                         60대 이상
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">0명</span>
                     </div>
+                            <hr>
+                            <div class="trv-btn">확인</div>
             </div>
             </div>
 

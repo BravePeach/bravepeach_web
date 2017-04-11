@@ -34,9 +34,9 @@
 
             <div class="white-bar">
                 <img class="icon" src="{% static 'image/icon/when_black.png' %}" alt="when?">
-                {{ form.travel_begin_at |add_class:"find-guide-form datepicker1"|attr:"readonly"|attr:"placeholder:시작 날짜" }}
+                {{ form.travel_begin_at |add_class:"find-guide-form edatepicker1"|attr:"readonly"|attr:"placeholder:시작 날짜" }}
                 <img class="arrow-right" src="{% static 'image/icon/arrow_right_grey.png' %}">
-                {{ form.travel_end_at |add_class:"find-guide-form2 datepicker2"|attr:"readonly"|attr:"placeholder:종료 날짜"}}
+                {{ form.travel_end_at |add_class:"find-guide-form2 edatepicker2"|attr:"readonly"|attr:"placeholder:종료 날짜"}}
             </div>
 
             <div class="white-bar">
@@ -46,40 +46,40 @@
                 <div class="traveler_cntpicker">
                     <div class="0">
                         0-2세
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">{% if req %}{{ req.age_group.0 }}{% else %}0{% endif %}명</span>
                     </div>
 
                     <div class="1">
                         2-12세
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">{% if req %}{{ req.age_group.1 }}{% else %}0{% endif %}명</span>
                     </div>
 
                     <div class="2">
                         12-19세
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">{% if req %}{{ req.age_group.2 }}{% else %}0{% endif %}명</span>
                     </div>
                     <div class="3">
                         20-30대
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">{% if req %}{{ req.age_group.3 }}{% else %}0{% endif %}명</span>
                     </div>
                     <div class="4">
                         40-50대
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">{% if req %}{{ req.age_group.4 }}{% else %}0{% endif %}명</span>
                     </div>
                     <div class="5">
                         60대 이상
-                        <span class="decrease_button">-</span>
-                        <span class="increase_button">+</span>
+                        <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
+                        <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
                         <span class="traveler-num">{% if req %}{{ req.age_group.5 }}{% else %}0{% endif %}명</span>
                     </div>
 

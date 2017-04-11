@@ -138,9 +138,6 @@ $(function(){
             var newDate = date.toDateString();
             newDate = new Date(Date.parse(newDate));
             $('.datepicker2').datepicker("option", "minDate", newDate);
-            if ($('#start_date_form').val() && $('#end_date_form').val()) {
-                filterGuide($('.order-active').attr('id'));
-            }
         },
         onClose: function () {
             if ($('.datepicker1').val() && !$('.datepicker2').val()) {

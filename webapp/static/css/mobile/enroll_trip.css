@@ -48,22 +48,6 @@ body{width: 100%;}
     left: 10px;
 }
 
-.enroll-trip-form {
-    position: absolute;
-    top: 10px;
-    left: 65px;
-    border-style: none;
-    font-size: 20px;
-    color: black;
-    padding-left: 5px;
-    width: 250px;
-    height: 30px;
-    opacity: 0.3;
-    border-radius: 3px;
-    background-color: #d4d4d4;
-    box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
-}
-
 #id_cost{
     border: 0px;
     text-align: right;
@@ -78,8 +62,8 @@ body{width: 100%;}
     border-width: 0px 0px 1px 0px;
 }
 
-#id_city, #id_age_group{
-    width: 70%;
+.select2-container, #id_age_group{
+    width: 70% !important;
 }
 
 .enroll-trip-form, .enroll-trip-form2 {
@@ -91,9 +75,8 @@ body{width: 100%;}
     padding-left: 10px;
     width: 30%;
     height: 30px;
-    opacity: 0.3;
     border-radius: 3px;
-    background-color: #d4d4d4;
+    background-color: rgba(212, 212, 212, 0.3);
     box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.5);
     margin: 0;
 }
@@ -101,50 +84,6 @@ body{width: 100%;}
 .enroll-trip-form2 {
     position: absolute;
     left: 209px;
-}
-
-#ui-datepicker-div {
-    display: none;
-}
-
-.ui-datepicker {
-    position: absolute !important;
-    left: 50% !important;
-    margin-left: -344px; /* approx half the height of the datepicker div - adjust based on your size */
-    width: 689px;
-    height: 430px;
-    border-radius: 8px;
-    border: 1px solid #d4d4d4;
-    text-align: center;
-    background-color: white;
-}
-
-.ui-datepicker a {
-    color: black;
-}
-
-.ui-datepicker-header {
-    width: 235px;
-    margin: auto;
-    margin-top: 30px;
-    font-size: 32px;
-}
-
-.ui-datepicker-prev {
-    float: left;
-    color: #606060 !important;
-}
-
-.ui-datepicker-next {
-    float: right;
-    color: #606060 !important;
-}
-
-.ui-datepicker-calendar {
-    margin-top: 20px;
-    width: 95%;
-    height: 75%;
-    font-size: 24px;
 }
 
 .arrow-down {
@@ -159,38 +98,67 @@ body{width: 100%;}
     right: 48.75%;
 }
 
-.traveler-num{
+.white-bar .traveler-num{
     float:right;
+    margin-right: 160px;
 }
 
-.increase_button, .decrease_button{
+.white-bar .increase_button, .decrease_button{
+    position: absolute;
     float:right;
     text-align:center;
     font-size:25px;
     display:inline-block;
-    margin-left: 17px;
     width: 29px;
     height: 29px;
     border:1px solid;
     border-radius: 14.5px;
     cursor:pointer;
+    bottom: 0px;
 }
-.traveler_cntpicker{
+
+.white-bar .decrease_button{
+    right: 12px;
+}
+
+.white-bar .increase_button{
+    right: 60px;
+}
+
+.white-bar .traveler_cntpicker hr{
+    width: 98%;
+    margin: 0 auto 0 auto;
+}
+
+.white-bar .traveler_cntpicker{
+    font-weight: normal;
     z-index: 100;
     display: none;
     position: absolute;
-    top:48px;
-    left: 10.9%;
-    width: 78%;
-    height: 235px;
+    top:31px;
+    height: auto;
     border-radius: 8px;
     background-color: #ffffff;
     border: solid 1px #d4d4d4;
     font-size: 20px;
 }
 
-.traveler_cntpicker div{
-    margin: 32px 0px 17px 26px;
+.trv-btn{
+      width: 77px;
+  height: 32px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px #606060;
+    font-size: 12px;
+    font-weight: bold;
+    padding-top: 8px;
+    text-align: center;
+    margin: 10px 0 10px 266px !important;
+}
+
+.white-bar .traveler_cntpicker div{
+    margin: 20px 0 8px 10px;
 }
 
 .enroll-trip-help {
@@ -418,3 +386,24 @@ input[type='checkbox'] {
 }
 
 .scrolling-page3 span{ padding: 0 6px 0 0;}
+
+.ui-datepicker{
+    top: 182px !important;
+}
+
+.enroll-trip-form .select2-input{
+    margin: 2px 0 0 0 !important;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice{
+    background-color: transparent !important;
+    border: 1px solid #979797;
+    font-size: 16px;
+    color: black;
+     padding: 3px 22px 2px 6px !important;
+    height: 26px !important;
+}
+
+.select2-container-multi .select2-choices{
+    margin-top: 1px !important;
+}
