@@ -170,7 +170,13 @@ header {
   letter-spacing: normal;
   color: #ffffff;
 padding-top: 18px;
-    position: absolute;
+    position: fixed;
+    bottom: 50px;
     left: 50%;
     margin-left: -177.5px;
+}
+
+.body-contents-wrapper{
+    padding-left: 0;
+    padding-right: 0;
 }

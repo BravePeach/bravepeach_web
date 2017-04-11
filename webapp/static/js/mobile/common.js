@@ -48,16 +48,14 @@ function guide_search_form(){
 }
 
 function fixTripButton() {
-    var container = $('.enroll-trip-button');
-    var maxTop = $('footer').offset().top - container.outerHeight() - 20;
-    var scrollVal = $(document).scrollTop() + $(window).height() - 80;
-
-    if (scrollVal > maxTop) {
-        container.css('top', maxTop);
+    if($('.enroll-trip-button').offset().top + $('.enroll-trip-button').height()
+                                           >= $('footer').offset().top - 70) {
+        $('.enroll-trip-button').css('position', 'absolute');
+        $('.enroll-trip-button').css('bottom', '293px');
     }
-
-    else {
-        container.stop().animate({top: scrollVal},'100');
+    if($(document).scrollTop() + window.innerHeight < $('footer').offset().top) {
+        $('.enroll-trip-button').css('position', 'fixed'); // restore when you scroll up
+        $('.enroll-trip-button').css('bottom', '20px'); // restore when you scroll up
     }
 }
 
