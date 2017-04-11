@@ -85,6 +85,10 @@ def enroll_trip(request, **kwargs):
         data['city'] = json.dumps(cities)
         data['age_group'] = json.dumps(age_group)
         data['user'] = request.user.id
+        country_dic = json.dumps({i: "" for i in json.loads(request.POST['countries'])})
+        city_dict = json.dumps({i: "" for i in json.loads(request.POST['cities'])})
+        data['countries'] = country_dic
+        data['cities'] = city_dict
 
         for key in ['trans_via', 'trans_class', 'accom_location', 'accom_type', 'theme', 'local_trans', 'guide_type',
                     'importance', 'guide_major']:

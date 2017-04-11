@@ -358,32 +358,34 @@ class FilterTrip(View):
     def get(self, request):
         guide_id = Guide.objects.get(user_id=request.user.id).id
 
-        location = request.GET.getlist('location[]')
-        print(location)
+        country = request.GET.getlist('country[]')
+        city = request.GET.getlist('city[]')
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')
         sort = request.GET.get('sort')
 
         req_queryset = UserRequest.objects.select_related('user').all()
-        if traveler_cnt:
-            req_queryset = req_queryset.filter(total_traveler__lte=int(traveler_cnt.split()[1][:-1]))
+
+        if country:
+            req_queryset = req_queryset.filter(countries__has_any_keys=country)
+
+        if city:
+            req_queryset = req_queryset.filter(cities__has_any_keys=city)
 
         if bool(start_date) & bool(end_date):
             start_date = parse_date(start_date.replace('.', '-'))
             end_date = parse_date(end_date.replace('.', '-'))
             req_queryset = req_queryset.filter(travel_begin_at__gte=start_date, travel_end_at__lte=end_date)
 
-        # if sort == "popularity":
-        #     guide_queryset = guide_queryset.order_by('-pay_cnt')
-        #
-        # elif sort == "reviewNum":
-        #     guide_queryset = guide_queryset.annotate(num_reviews=Count('userreview')).order_by('num_reviews')
+        if traveler_cnt:
+            traveler_cnt = int(traveler_cnt.split()[1][:-1])
+            req_queryset = [obj for obj in req_queryset if obj.total_traveler <= traveler_cnt]
 
-        is_mobile = False
         if request.user_agent.is_mobile:
             is_mobile = True
-
+        else:
+            is_mobile = False
         html = render_to_string('pc/guide/trip_search_result.html', {'req_queryset': req_queryset, 'is_mobile': is_mobile})
         return HttpResponse(html)
 

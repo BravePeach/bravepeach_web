@@ -1,8 +1,33 @@
-var city_list = [];
+var place_list = [];
+city_name_list = [];
 var traveler_list = [0, 0, 0, 0, 0, 0];
 
 function submit_enroll_form(){
-    $("#id_city").val(city_list.join());
+    var country_list = [];
+    var city_list = [];
+    for (var i in place_list) {
+        if (place_list[i].length < 5) {
+            country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
+            if (place_list[i][place_list[i].length - 2]) {
+                city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+            }
+        }
+
+        else {
+            country_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+            city_list.push(place_list[i][place_list[i].length - 3]['short_name']);
+        }
+    }
+    country_list = country_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+    city_list = city_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+
+    $("#id_countries").val(JSON.stringify(country_list));
+    $("#id_cities").val(JSON.stringify(city_list));
+    $("#id_city").val(city_name_list.join());
     $("#id_age_group").val(traveler_list);
     $("#enroll-form").submit();
 }
@@ -17,12 +42,14 @@ $(function() {
 
     $("#id_city").on({
         'placecomplete:selected': function (evt, placeResult) {
-            console.log(placeResult);
-            console.log(placeResult.geometry.location.lat());
-            console.log(placeResult.geometry.location.lng());
-            city_list.push(placeResult['name']);
-            console.log(city_list);
-        }
+            place_list.push(placeResult.address_components);
+            city_name_list.push(placeResult['name']);
+        },
+        'placecomplete:cleared': function() {
+            place_list.pop();
+            city_name_list.pop();
+        },
+
     });
 
     $('.edatepicker1, .edatepicker2').datepicker({

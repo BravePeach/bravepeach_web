@@ -1,4 +1,4 @@
-city_list = [];
+var place_list = [];
 
 function fixGuideButton() {
     if($('.guide-button').offset().top + $('.guide-button').height()
@@ -11,12 +11,34 @@ function fixGuideButton() {
 }
 
 function filterTrip(sort) {
-    console.log(city_list);
+    var country_list = [];
+    var city_list = [];
+    for (var i in place_list) {
+        if (place_list[i].length < 5) {
+            country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
+            if (place_list[i][place_list[i].length - 2]) {
+                city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+            }
+        }
+
+        else {
+            country_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+            city_list.push(place_list[i][place_list[i].length - 3]['short_name']);
+        }
+    }
+    country_list = country_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+    city_list = city_list.filter (function (value, index, array) {
+        return array.indexOf (value) == index;
+    });
+
     $.ajax({
         url: "/trip_filtering/",
         type: "GET",
         data: {
-            location: city_list,
+            country: country_list,
+            city: city_list,
             start_date: $('#start_date_form').val(),
             end_date: $('#end_date_form').val(),
             traveler_cnt: $('#traveler_cnt_form').val(),
@@ -117,13 +139,11 @@ $(function () {
 
     $("#id_city").on({
         'placecomplete:selected': function (evt, placeResult) {
-            console.log(placeResult);
-            city_list.push(placeResult['name']);
+            place_list.push(placeResult.address_components);
             filterTrip($('.order-active').attr('id'));
         },
-        'placecomplete:cleared': function (evt, placeResult) {
-            console.log(placeResult);
-            city_list.pop();
+        'placecomplete:cleared': function () {
+            place_list.pop();
             filterTrip($('.order-active').attr('id'));
         }
     });

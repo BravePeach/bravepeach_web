@@ -145,6 +145,10 @@ class GuideAdjust(Model):
 class UserRequest(Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     city = JSONField(null=True)
+    # 도시이름으로 검색할때 city 필드의 정보만으로는 부족하여
+    # 여행자가 입력한 도시의 국가와 최상위 도시를 저장하는 필드들
+    countries = JSONField(null=True, blank=True)
+    cities = JSONField(null=True, blank=True)
     travel_begin_at = models.DateField(null=True, blank=True)
     travel_end_at = models.DateField(null=True, blank=True)
     age_group = JSONField(null=True, blank=True)

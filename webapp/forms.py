@@ -126,7 +126,8 @@ class RequestForm(forms.ModelForm):
     class Meta:
         model = UserRequest
         fields = [
-            'user', 'city', 'travel_begin_at', 'travel_end_at', 'trans_start_at', 'trans_arrive_at', 'age_group', 'trans_type', 'trans_via', 'trans_class',
+            'user', 'city', 'travel_begin_at', 'travel_end_at', 'trans_start_at', 'trans_arrive_at', 'age_group',
+            'trans_type', 'trans_via', 'trans_class', 'countries', 'cities',
             'trans_comment', 'accom_location', 'accom_location_optional', 'accom_type', 'accom_comment',
             'start_time', 'end_time', 'landmark', 'theme', 'local_trans', 'guide_type', 'importance', 'cost',
             'additional_request', 'accom_location_optional', 'importance_optional', 'guide_major'
@@ -136,6 +137,8 @@ class RequestForm(forms.ModelForm):
             'accom_comment': forms.Textarea,
             'additional_request': forms.Textarea,
             'user': forms.HiddenInput,
+            'countries': forms.HiddenInput,
+            'cities': forms.HiddenInput,
         }
 
 
