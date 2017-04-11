@@ -22,7 +22,7 @@
 <div class="counter offer">{{ offer_list|length }}개의 보낸 견적서가 있습니다.</div>
 <div class="tab-contents request active">
     {% for request in request_list %}
-    <div class="tab-content">
+    <div class="tab-content" onclick="reqDetail({{ request.id }})">
         {% if not request.published %}
         <div class="tab-content-label {% if not request.published %}done{% endif %}">
             {% if not request.published %}마감{% endif %}
@@ -73,7 +73,7 @@
 </div>
 <div class="tab-contents zzim">
     {% for request in zzim_list %}
-    <div class="tab-content">
+    <div class="tab-content"  onclick="reqDetail({{ request.id }})">
         <div class="tab-content-label {% if not request.published %}done{% endif %}">
             {% if not request.published %}마감{% endif %}
         </div>
@@ -152,7 +152,7 @@
         </div><!--
                 -->
         <div class="tab-content-btn">
-            <a href="" class="request-detail">여행 요청서 보기</a>
+            <a href="{% url 'request_detail' req_id=offer.request.id %}" class="request-detail">여행 요청서 보기</a>
             <a href="{% url 'offer_detail' offer_id=offer.id %}" class="offer-detail">보낸 견적서 보기</a>
         </div>
     </div>

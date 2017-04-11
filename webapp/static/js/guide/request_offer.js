@@ -9,3 +9,7 @@ $(function(){
         $(".tab-contents."+target_class).addClass("active");
     });
 });
+
+function reqDetail(id){
+    window.location.href = "/guide/req_detail/" + id;
+}

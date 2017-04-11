@@ -77,6 +77,7 @@ urlpatterns = [
     url(r'^save_accom_template/$', views.guide.save_accom_template, name='save_accom_template'),
     url(r'^save_guide_template/$', views.guide.save_guide_template, name='save_guide_template'),
     url(r'^guide/offer_prev/$', views.guide.offer_prev, name="offer_prev"),
+    url(r'^guide/req_detail/(?P<req_id>\d+)/$', views.guide.req_detail, name="request_detail"),
 
     # User2Guide
     url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),

@@ -696,3 +696,8 @@ def save_cost_offer(request, req_id):
 
         return JsonResponse({"ok": True})
     return JsonResponse({"ok": False})
+
+
+def req_detail(request, req_id):
+    req = get_object_or_404(UserRequest.objects.select_related('user'), id=req_id)
+    return flavour_render(request, 'guide/req_detail.html', {'req': req})
