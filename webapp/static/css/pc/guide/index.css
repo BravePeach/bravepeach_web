@@ -83,6 +83,20 @@
 .arrow-right {
     position: absolute;
     right: 48.75%;
+    top: 50%;
+    height:20px;
+    margin-top: -10px;
+    width: 24px;
+}
+
+.del-cal{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 27px;
+    top: 50%;
+    margin-top: -10px;
+    cursor: pointer;
 }
 
 .traveler_cntpicker{
@@ -92,30 +106,56 @@
     top:48px;
     left: 10.9%;
     width: 78%;
-    height: 235px;
     border-radius: 8px;
     background-color: #ffffff;
     border: solid 1px #d4d4d4;
-    font-size: 20px;
+    font-size: 24px;
+}
+
+.traveler_cntpicker hr{
+    width: 660px;
+    margin: 0 auto 0 auto;
+    border: solid 1px #979797;
+}
+
+.cnt-btn{
+    width: 94px;
+    height: 38px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    border: solid 1.5px #606060;
+    -webkit-border-radius:12px;
+    -moz-border-radius:12px;
+    border-radius:12px;
+    font-size: 14px;
+    text-align: center;
+    padding-top: 10px;
+    margin: 15px 0 15px 567px !important;
+    cursor: pointer;
 }
 
 .traveler_cntpicker div{
-    margin: 32px 0px 17px 26px;
+    margin: 22px 0px 21px 36px;
 }
 
-.adult_num, .child_num, .toddler_num{margin-right: 46px;}
-.adult_num, .toddler_num{margin-left: 122px;}
-.child_num{margin-left: 103px;}
+.adult_num{
+    margin-left: 20px;
+    margin-right: 400px;
+}
 
 .increase_button, .decrease_button{
     text-align:center;
     font-size:25px;
     display:inline-block;
     margin-left: 17px;
-    width: 29px;
-    height: 29px;
+    width: 39px;
+    height: 39px;
     border:1px solid;
-    border-radius: 14.5px;
+    border-radius: 19.5px;
+    -webkit-border-radius: 19.5px;
+    -moz-border-radius: 19.6px;
     cursor:pointer;
 }
 
@@ -463,4 +503,11 @@ margin-top: -1px;
 
 header{
     background: white !important;
+}
+
+.no-result{
+    margin: 80px 0 100px 0;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
 }

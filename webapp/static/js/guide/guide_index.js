@@ -10,6 +10,14 @@ function fixGuideButton() {
     }
 }
 
+function changeOrder(val) {
+    if (val != $('.order-active').id) {
+        $('.order-active').removeClass('order-active');
+        document.getElementById(val).className = 'order-active';
+        filterTrip(val);
+    }
+}
+
 function filterTrip(sort) {
     var country_list = [];
     var city_list = [];
@@ -90,13 +98,14 @@ $(function () {
         $(this).addClass('activated');
     });
 
-    filterTrip('popularity');
-
-// 가이드 검색
-
+    filterTrip('cost');
 
     $('#start_date_form, #end_date_form').change(function () {
         filterTrip($('.order-active').attr('id'));
+    });
+
+    $('.cnt-btn').click(function () {
+       filterTrip($('.order-active').attr('id'));
     });
 
     $('.datepicker1, .datepicker2').datepicker({
@@ -129,6 +138,11 @@ $(function () {
             }
         }
     });
+    
+    $('.del-cal').click(function () {
+        $('.datepicker1, .datepicker2').val("");
+        filterTrip($('.order-active').attr('id'));
+    });
 
     $("#id_city").placecomplete({
         tags: true,
@@ -156,7 +170,7 @@ $(function () {
             return parseInt(val.slice(0, -1)) + 1 + '명'
         });
         total_traveler++;
-        $('#traveler_cnt_form').attr('value', '인원 ' + total_traveler + '명')
+        $('#traveler_cnt_form').attr('value', '최대 ' + total_traveler + '명')
     });
 
     $('.decrease_button').click(function () {
@@ -170,7 +184,7 @@ $(function () {
         });
     });
 
-    $('#traveler_cnt_form, .arrow-down').click(function (event) {
+    $('#traveler_cnt_form, .arrow-down, .cnt-btn').click(function (event) {
         console.log("clicked")
         event.stopPropagation();
         $(".traveler_cntpicker").slideToggle("fast");

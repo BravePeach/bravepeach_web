@@ -356,16 +356,14 @@ def activate(request):
 
 class FilterTrip(View):
     def get(self, request):
-        guide_id = Guide.objects.get(user_id=request.user.id).id
-
         country = request.GET.getlist('country[]')
         city = request.GET.getlist('city[]')
         start_date = request.GET.get('start_date')
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')
         sort = request.GET.get('sort')
-
-        req_queryset = UserRequest.objects.select_related('user').all()
+        print(sort)
+        req_queryset = UserRequest.objects.select_related('user').filter(published=True, travel_begin_at__gte=datetime.datetime.now())
 
         if country:
             req_queryset = req_queryset.filter(countries__has_any_keys=country)
@@ -381,6 +379,15 @@ class FilterTrip(View):
         if traveler_cnt:
             traveler_cnt = int(traveler_cnt.split()[1][:-1])
             req_queryset = [obj for obj in req_queryset if obj.total_traveler <= traveler_cnt]
+
+        if sort == "cost":
+            req_queryset = sorted(req_queryset, key=lambda obj: -obj.cost)
+
+        # elif sort == "hurry":
+        #     req_queryset = sorted(req_queryset, key=lambda  obj: )
+
+        elif sort == "recent":
+            req_queryset = sorted(req_queryset, key=lambda obj: -obj.id)
 
         if request.user_agent.is_mobile:
             is_mobile = True

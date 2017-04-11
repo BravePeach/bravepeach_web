@@ -28,8 +28,9 @@
     <div class="gradation-bar">
         <img class="icon" src="/static/image/icon/when_white.png" alt="when?">
         <input class="find-guide-form datepicker1" id="start_date_form" type="text" name="" value="{{ travel_begin_at }}" readonly placeholder="시작 날짜">
-        <img class="arrow-right" src="">
+        <img class="arrow-right" src="{% static 'image/icon/arrow_wh_big.png' %}">
         <input class="find-guide-form2 datepicker2" id="end_date_form" type="text" name="" value="{{ travel_end_at }}" readonly placeholder="종료 날짜">
+        <img class="del-cal" src="{% static 'image/icon/cancel_wh_bg.png'%}">
     </div>
     <div class="gradation-bar">
         <img class="icon" src="/static/image/icon/howmany_white.png" alt="how many?">
@@ -37,33 +38,21 @@
         <img class="arrow-down" src="/static/image/icon/arrow_down_white.png" alt="펼치기 버튼">
         <div class="traveler_cntpicker">
             <div>
-                성인
+                인원
                 <span class="adult_num">0명</span>
-                <span class="increase_button">+</span>
-                <span class="decrease_button">-</span>
+                <img class="increase_button" src="{% static 'image/icon/Contact Add.png' %}">
+                <img class="decrease_button" src="{% static 'image/icon/-.png' %}">
             </div>
-
-            <div>
-                어린이
-                <span class="child_num">0명</span>
-                <span class="increase_button">+</span>
-                <span class="decrease_button">-</span>
-            </div>
-
-            <div>
-                유아
-                <span class="toddler_num">0명</span>
-                <span class="increase_button">+</span>
-                <span class="decrease_button">-</span>
-            </div>
+            <hr>
+            <div class="cnt-btn">확인</div>
         </div>
 
     </div>
     <div class="search-filter-list-wrapper">
         <div class="search-filter-list">
-            <span class="order-active" onclick="changeOrder(this.id)" id="popularity">여행경비순</span>
-            <span onclick="changeOrder(this.id)" id="reviewNum">여행임박순</span>
-            <span onclick="changeOrder(this.id)" id="recentActivity">최근등록순</span>
+            <span class="order-active" onclick="changeOrder(this.id)" id="cost">여행경비순</span>
+            <span onclick="changeOrder(this.id)" id="hurry">여행임박순</span>
+            <span onclick="changeOrder(this.id)" id="recent">최근등록순</span>
         </div>
         <span style="float: right;"><span class="search-filter-result"></span>건의 여행 요청서가 있습니다.</span>
 
@@ -73,15 +62,6 @@
 
     <div class="like-message-wrapper"></div>
     <div style="width: 100%; text-align: center">
-    <div class="pagination-wrapper">
-            <a href="#"><</a>
-            <a href="#"><span>1</span></a>
-            <a href="#"><span>2</span></a>
-            <a href="#"><span>3</span></a>
-            <a href="#"><span>4</span></a>
-            <a href="#"><span>5</span></a>
-            <a href="#">></a>
-    </div>
     </div>
 </div>
 
