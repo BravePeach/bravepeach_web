@@ -45,7 +45,7 @@
             </div>
             <div class="age-grp"> 성인 {{ offer.request.adult_traveler }} 명 | 아동 {{ offer.request.child_traveler }} 명 | 유아 {{ offer.request.toddler_traveler }} 명</div>
         </div>
-        <div class="review-content">{{ form.content }}</div>
+        <div class="review-content">{{ form.content }}{{ form.media }}</div>
         <div class="btn-area">
             <a href="{% url 'guide_review' %}" class="cancel-btn">취소</a>
             <button type="submit" class="submit-btn">여행기 올리기</button>
