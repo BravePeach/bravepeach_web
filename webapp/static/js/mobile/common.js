@@ -49,14 +49,14 @@ function guide_search_form(){
 }
 
 function fixTripButton() {
-    if($('.enroll-trip-button').offset().top + $('.enroll-trip-button').height()
-                                           >= $('footer').offset().top - 70) {
+    if ($('.enroll-trip-button').offset().top + $('.enroll-trip-button').height()
+        >= $('footer').offset().top - 70) {
         $('.enroll-trip-button').css('position', 'absolute');
         $('.enroll-trip-button').css('bottom', '293px');
     }
-    if($(document).scrollTop() + window.innerHeight < $('footer').offset().top) {
-        $('.enroll-trip-button').css('position', 'fixed'); // restore when you scroll up
-        $('.enroll-trip-button').css('bottom', '20px'); // restore when you scroll up
+    if ($(document).scrollTop() + window.innerHeight < $('footer').offset().top) {
+        $('.enroll-trip-button').css('position', 'fixed');
+        $('.enroll-trip-button').css('bottom', '20px');
     }
 }
 
@@ -93,11 +93,13 @@ $(function(){
         }
     });
 
-    fixTripButton();
-    $('.enroll-trip-button').fadeIn('slow');
-    $(document).scroll(function() {
+    if ($('.enroll-trip-button').length) {
         fixTripButton();
-    });
+        $('.enroll-trip-button').fadeIn('slow');
+        $(document).scroll(function () {
+            fixTripButton();
+        });
+    }
 
     $("#id_city").placecomplete({
         tags: true,

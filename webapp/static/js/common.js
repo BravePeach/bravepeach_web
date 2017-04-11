@@ -27,7 +27,7 @@ function fixTripButton() {
                                            >= $('footer').offset().top - 70)
         $('.enroll-trip-button').css('position', 'absolute');
     if($(document).scrollTop() + window.innerHeight < $('footer').offset().top)
-        $('.enroll-trip-button').css('position', 'fixed'); // restore when you scroll up
+        $('.enroll-trip-button').css('position', 'fixed');
 
 }
 
@@ -64,12 +64,14 @@ $(function(){
         }
     });
 
-    fixTripButton();
-    $('.enroll-trip-button').fadeIn('slow');
-    $(document).scroll(function() {
-        $('.enroll-trip-button').stop().fadeIn('slow');
+    if ($('.enroll-trip-button').length) {
         fixTripButton();
-    });
+        $('.enroll-trip-button').fadeIn('slow');
+        $(document).scroll(function () {
+            $('.enroll-trip-button').stop().fadeIn('slow');
+            fixTripButton();
+        });
+    }
 
     $('.profile_img').click(function(event){
         event.stopPropagation();

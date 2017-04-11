@@ -24,11 +24,12 @@ $(function() {
         }
     });
 
-    fixGuideButton();
-    $('.guide-button').fadeIn('slow');
-    $(document).scroll(function() {
-        $('.guide-button').fadeIn('slow');
+    if ($('.guide-button').length) {
         fixGuideButton();
-    });
-
+        $('.guide-button').fadeIn('slow');
+        $(document).scroll(function () {
+            $('.guide-button').fadeIn('slow');
+            fixGuideButton();
+        });
+    }
 });

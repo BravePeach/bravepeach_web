@@ -54,12 +54,14 @@ $(function () {
         }
     });
 
-    fixGuideButton();
-    $('.guide-button').fadeIn('slow');
-    $(document).scroll(function () {
-        $('.guide-button').stop().fadeIn('slow');
+    if ($('.guide-button').length) {
         fixGuideButton();
-    });
+        $('.guide-button').fadeIn('slow');
+        $(document).scroll(function () {
+            $('.guide-button').stop().fadeIn('slow');
+            fixGuideButton();
+        });
+    }
 
     $('.guide-tab').click(function () {
         $(this).siblings().removeClass('activated');
