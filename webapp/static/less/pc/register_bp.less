@@ -27,15 +27,22 @@
       width: 200px;
       height: 645px;
 
-      .profile {
+      .profile-pic {
         height: 200px;
         border-radius: 8px;
         background-color: #bbbbbb;
         border: solid 1px #979797;
 
-        img {
+        #camera {
           margin-top:168px;
           margin-left:160px;
+        }
+
+        #profile-image {
+          display: none;
+          width: 198px;
+          height: 198px;
+          border-radius: 8px;
         }
       }
     }
@@ -109,4 +116,80 @@
 
 .enroll-trip-button{
   display: none !important;
+}
+
+
+.profile_modal {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  display: none;
+  z-index: 100;
+  top: 65px;    // header size
+  background-color: #ffffff;
+
+  &.activated {
+    display: block;
+  }
+
+  .jcrop-centered {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .original-wrapper {
+    width: 600px;
+    height: 600px;
+    margin: 50px auto;
+    border-radius: 16px;
+    text-align: center;
+    background-color: #979797;
+
+    #original_profile {
+      border-radius: 16px;
+      margin: auto;
+      max-width: 600px;
+      max-height: 600px;
+      object-fit: contain;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .btn-area {
+    display: block;
+    width: 600px;
+    margin: 31px auto;
+    font-family: NanumSquare;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+
+    .cancel-btn {
+      color: #ffffff;
+      display: inline-block;
+      margin-left: 50px;
+      width:207px;
+      height: 55px;
+      border-radius: 8px;
+      background-color: #606060;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+      border: solid 1px #b5b5b6;
+    }
+
+    .submit-btn {
+      color: #ffffff;
+      margin-left: 20px;
+      width: 207px;
+      height: 55px;
+      border-radius: 8px;
+      background-color: #e64c47;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+      border: solid 1px #979797;
+    }
+  }
 }

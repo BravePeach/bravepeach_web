@@ -23,17 +23,12 @@ function getCookie(name) {
 }
 
 function fixTripButton() {
-    var container = $('.enroll-trip-button');
-    var maxTop = $('footer').offset().top - container.outerHeight() - 26.5;
-    var scrollVal = $(document).scrollTop() + $(window).height() - 120;
+    if($('.enroll-trip-button').offset().top + $('.enroll-trip-button').height()
+                                           >= $('footer').offset().top - 70)
+        $('.enroll-trip-button').css('position', 'absolute');
+    if($(document).scrollTop() + window.innerHeight < $('footer').offset().top)
+        $('.enroll-trip-button').css('position', 'fixed'); // restore when you scroll up
 
-    if (scrollVal > maxTop) {
-        container.css('top', maxTop);
-    }
-
-    else {
-        container.stop().animate({top: scrollVal},'100');
-    }
 }
 
 function csrfSafeMethod(method) {

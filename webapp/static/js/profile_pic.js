@@ -11,14 +11,17 @@ function cancel_profile(){
 
 function save_profile(){
     cancel_profile();
-    $.post(profile_upload_url,
+    $.post(upload_profile_url,
         {
             img: img_url,
             coord: img_coord
         },function(data){
         if (data['ok'] === true) {
-            alert(data["url"]);
             $("#profile-image").prop("src", data["url"]);
+            $("#profile-image").css("display", "block");
+            $("#header-profile").prop("src", data["url"]);
+            $("input[name=profile-url]").val(data["url"]);
+            $("#camera").css("display", "none");
         }
     });
 }
@@ -38,7 +41,7 @@ $(function(){
         formdata.append("original", $("#profile-input")[0].files[0]);
 
         $.ajax({
-            url: original_upload_url,
+            url: upload_original_url,
             processData: false,
             contentType: false,
             data: formdata,

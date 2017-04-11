@@ -1,16 +1,12 @@
 city_list = [];
 
 function fixGuideButton() {
-    var container = $('.guide-button');
-    var maxTop = $('footer').offset().top - container.outerHeight() - 26.5;
-    var scrollVal = $(document).scrollTop() + $(window).height() - 120;
-
-    if (scrollVal > maxTop) {
-        container.css('top', maxTop);
+    if($('.guide-button').offset().top + $('.guide-button').height()
+                                           >= $('footer').offset().top - 70) {
+        $('.guide-button').css('position', 'absolute');
     }
-
-    else {
-        container.stop().animate({top: scrollVal}, '100');
+    if($(document).scrollTop() + window.innerHeight < $('footer').offset().top) {
+        $('.guide-button').css('position', 'fixed');
     }
 }
 

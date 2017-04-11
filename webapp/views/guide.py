@@ -119,7 +119,8 @@ def enroll_volunteer(request, gid):
     return redirect(dashboard)
 
 
-@user_passes_test(guide_required)
+# @user_passes_test(guide_required)
+@login_required
 def find(request):
     return flavour_render(request, "guide/index.html", {"tab": "find"})
 
@@ -132,7 +133,8 @@ def dashboard(request):
                                                             "stats": stats, "review_cnt": 0})
 
 
-@user_passes_test(guide_required)
+# @user_passes_test(guide_required)
+@login_required
 def schedule(request):
     page_type = request.GET.get("type", '')
     guide = Guide.objects.get(user=request.user)
@@ -155,7 +157,8 @@ def schedule(request):
                                                            })
 
 
-@user_passes_test(guide_required)
+# @user_passes_test(guide_required)
+@login_required
 def template(request):
     urls = 'template'
     accom_template_result = AccomTemplate.objects.filter(guide=request.user.guide.all()[0].id, overwritten=False)
@@ -196,21 +199,23 @@ def template(request):
                                                            "tab": "template"})
 
 
-@user_passes_test(guide_required)
+# @user_passes_test(guide_required)
+@login_required
 def request(request):
     page_type = request.GET.get("type", '')
-    guide = request.user.guide.all()[0]
+    guide = request.user.guide.first()
 
-    request_list = UserRequest.objects.all()
-    zzim_list = GuideLike.objects.filter(guide=guide.id).all()
-    offer_list = GuideOffer.objects.filter(guide=guide.id).all()
+    request_list = UserRequest.objects.order_by('-id').all()
+    zzim_list = GuideLike.objects.filter(guide=guide.id).order_by('-id').all()
+    offer_list = GuideOffer.objects.filter(guide=guide.id).order_by('-id').all()
 
     return flavour_render(request, "guide/request_offer.html", {"tab": "request", "page_type": page_type,
                                                                 "request_list": request_list, "zzim_list": zzim_list,
                                                                 "offer_list": offer_list})
 
 
-@user_passes_test(guide_required)
+# @user_passes_test(guide_required)
+@login_required
 def adjust(request):
     page_type = request.GET.get('type', '')
     prev_form = GuideAdjust.objects.filter(guide=request.user.guide.first()).first()
@@ -244,14 +249,24 @@ def set_adjust_method(request):
     return redirect(adjust)
 
 
-def request_adjust(request, oid):
+@login_required
+def request_adjust(request):
+    oid = request.POST.get('oid', 0)
     offer = GuideOffer.objects.filter(id=oid).first()
-    offer.adjust_requested_at = datetime.date.today()
-    offer.save()
-    return redirect(adjust)
+    if not offer:
+        return JsonResponse({"ok": False, "msg": "No such offer: {}".format(oid)})
+    try:
+        offer.adjust_requested_at = datetime.date.today()
+        offer.save()
+    except Exception as e:
+        print(e)
+        return JsonResponse({"ok": False, "msg": e.args[0]})
+    else:
+        return JsonResponse({"ok": True, "date": datetime.date.today().strftime("%Y/%m/%d")})
 
 
-@user_passes_test(guide_required)
+# @user_passes_test(guide_required)
+@login_required
 def review(request):
     page_type = request.GET.get("type", "")
     guide = Guide.objects.filter(user_id=request.user.id).all()[0]
@@ -266,6 +281,7 @@ def review(request):
                                                          "journal_list": journal_list, "page_type": page_type})
 
 
+@login_required
 def write_review(request, oid):
     offer = get_object_or_404(GuideOffer, id=oid)
 
@@ -289,6 +305,7 @@ def view_review(request, rid):
     return flavour_render(request, "guide/view_review.html", {"review": review})
 
 
+@login_required
 def write_journal(request, oid):
     offer = get_object_or_404(GuideOffer, id=oid)
 
@@ -315,11 +332,13 @@ def view_journal(request, jid):
     return flavour_render(request, "guide/view_journal.html", {"journal": journal})
 
 
-@user_passes_test(guide_required)
+# @user_passes_test(guide_required)
+@login_required
 def message(request):
     return flavour_render(request, "guide/find.html", {"tab": "message"})
 
 
+@login_required
 def inactivate(request):
     guide = request.user.guide.all()[0]
     guide.activated = False
@@ -327,6 +346,7 @@ def inactivate(request):
     return redirect(dashboard)
 
 
+@login_required
 def activate(request):
     guide = request.user.guide.all()[0]
     guide.activated = True

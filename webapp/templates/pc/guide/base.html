@@ -18,7 +18,7 @@
     <script src="{% static 'js/jquery-color.js'%}"></script>
     <script src="{% static 'js/jquery-ui.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApQSB8qcQB_Xda5MAmK18NdbmDIKjUbKM&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnyxfOFStR8i8Anl7WNG_aDMVxzeGhf0E&libraries=places"></script>
     <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.3/sweetalert2.min.js"></script>
     <script src="{% static 'js/common.js' %}"></script>
     <script src="{% static 'js/select2.js' %}"></script>
@@ -73,13 +73,20 @@
 </header>
 {% if request.user.is_authenticated %}
 <div class="guide-header">
-    <a href="{% url 'guide_find' %}" class="guide-tab {% if tab == 'find' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">여행자 찾기</a>
+{#    <a href="{% url 'guide_find' %}" class="guide-tab {% if tab == 'find' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">여행자 찾기</a>#}
+{#    <a href="{% url 'guide_dashboard' %}" class="guide-tab {% if tab == 'dashboard' %}activated{% endif %}">알림판</a>#}
+{#    <a href="{% url 'guide_schedule' %}" class="guide-tab {% if tab == 'schedule' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">일정관리</a>#}
+{#    <a href="{% url 'guide_request' %}" class="guide-tab {% if tab == 'request' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">요청서/견적서</a>#}
+{#    <a href="{% url 'guide_template' %}" class="guide-tab {% if tab == 'template' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">여행 정보</a>#}
+{#    <a href="{% url 'guide_adjust' %}" class="guide-tab {% if tab == 'adjust' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">정산관리</a>#}
+{#    <a href="{% url 'guide_review' %}" class="guide-tab {% if tab == 'review' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">후기/여행기</a>#}
+    <a href="{% url 'guide_find' %}" class="guide-tab {% if tab == 'find' %}activated{% endif %}">여행자 찾기</a>
     <a href="{% url 'guide_dashboard' %}" class="guide-tab {% if tab == 'dashboard' %}activated{% endif %}">알림판</a>
-    <a href="{% url 'guide_schedule' %}" class="guide-tab {% if tab == 'schedule' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">일정관리</a>
-    <a href="{% url 'guide_request' %}" class="guide-tab {% if tab == 'request' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">요청서견적서</a>
-    <a href="{% url 'guide_template' %}" class="guide-tab {% if tab == 'template' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">여행 정보</a>
-    <a href="{% url 'guide_adjust' %}" class="guide-tab {% if tab == 'adjust' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">정산관리</a>
-    <a href="{% url 'guide_review' %}" class="guide-tab {% if tab == 'review' %}activated{% endif %} {% if not request.user.profile.is_guide %}disabled{% endif %}">후기/여행기</a>
+    <a href="{% url 'guide_schedule' %}" class="guide-tab {% if tab == 'schedule' %}activated{% endif %}">일정관리</a>
+    <a href="{% url 'guide_request' %}" class="guide-tab {% if tab == 'request' %}activated{% endif %}">요청서/견적서</a>
+    <a href="{% url 'guide_template' %}" class="guide-tab {% if tab == 'template' %}activated{% endif %}">여행 정보</a>
+    <a href="{% url 'guide_adjust' %}" class="guide-tab {% if tab == 'adjust' %}activated{% endif %}">정산관리</a>
+    <a href="{% url 'guide_review' %}" class="guide-tab {% if tab == 'review' %}activated{% endif %}">후기/여행기</a>
 </div>
 {% endif %}
 <div id="alarm" class="alarm-msg">

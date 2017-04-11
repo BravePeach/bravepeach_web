@@ -52,7 +52,7 @@
                 <img class="rating-img rating-5" src="{% static 'image/icon/logo_empty.png' %}" alt="">
             {% endif %}
         </div>
-        <div class="review-content">{{ review_form.content }}</div>
+        <div class="review-content">{{ review_form.content }}{{ review_form.media }}</div>
         <div class="btn-area">
             <a href="{% url 'my_trip' %}" class="cancel-btn">취소</a>
             <button class="submit-btn" type="submit">후기 남기기</button>

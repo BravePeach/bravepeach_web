@@ -49,7 +49,7 @@ urlpatterns = [
     url(r'^guide/request/$', views.guide.request, name='guide_request'),
     url(r'^guide/adjust/$', views.guide.adjust, name='guide_adjust'),
     url(r'^guide/set-adjust/$', views.guide.set_adjust_method, name="set_adjust"),
-    url(r'^guide/request-adjust/(?P<oid>\d+)/$', views.guide.request_adjust, name='request_adjust'),
+    url(r'^guide/request-adjust/$', views.guide.request_adjust, name='request_adjust'),
     url(r'^guide/review/$', views.guide.review, name='guide_review'),
     url(r'^guide/write_review/(?P<oid>\d+)/$', views.guide.write_review, name="guide_write_review"),
     url(r'^guide/view_review/(?P<oid>\d+)/$', views.guide.view_review, name="guide_view_review"),
@@ -102,6 +102,4 @@ urlpatterns = [
 
     # Comment
     url(r'^add_comment/$', views.trip.AddComment.as_view(), name="add_comment"),
-
-    url(r'^redactor', include('redactor.urls')),
 ]

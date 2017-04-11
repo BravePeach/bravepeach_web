@@ -136,7 +136,7 @@
             </div><!--
                 --><div class="tab-content-btn">
                 <a href="" class="request-detail">여행 요청서 보기</a>
-                <a href="" class="offer-detail">보낸 견적서 보기</a>
+                <a href="{% url 'offer_detail' offer_id=offer.id %}" class="offer-detail">보낸 견적서 보기</a>
             </div>
             </div>
         {% empty %}

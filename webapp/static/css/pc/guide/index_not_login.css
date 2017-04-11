@@ -26,6 +26,7 @@ header{
 }
 
 .contents-wrapper{
+    padding-bottom: 75px;
     width: 100%;
     margin-top: -65px;
 }
@@ -149,7 +150,6 @@ hr{
 }
 
 .guide-button{
-    display: inline-block;
     width: 360px;
     height: 78px;
     border-radius: 5px;
@@ -163,8 +163,8 @@ hr{
     letter-spacing: normal;
     color: #ffffff;
     padding-top: 23px;
-    position: absolute;
-    display: none;
+    position: fixed;
     left: 50%;
     margin-left: -180px;
+    bottom: 40px;
 }

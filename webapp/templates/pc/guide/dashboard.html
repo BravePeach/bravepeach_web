@@ -89,6 +89,7 @@
                 {% endfor %}
             </div><!--
             --><div class="rating">
+        <div>
             {% for i in request.user.guide.all.0.clean_rating.0 %}
                 <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">
             {% endfor %}
@@ -100,6 +101,7 @@
             {% for i in request.user.guide.all.0.clean_rating.2 %}
                 <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
             {% endfor %}
+        </div>
             <div class="stat">
                 <div class="inner-box">
                     <div class="inner-title">후기</div>
