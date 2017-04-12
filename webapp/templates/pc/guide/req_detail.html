@@ -37,7 +37,7 @@
                 {% endfor %}
             </div>
             <div class="travel-date">{{ req.travel_begin_at|date:"Y/m/d" }} - {{ req.travel_end_at|date:"Y/m/d" }}</div>
-            <div class="traveler-num">성인 {{ req.adult_traveler }}명 | 아동 {{ req.child_traveler }}명</div>
+            <div class="traveler-num">성인 {{ req.adult_traveler }}명 | 아동 {{ req.child_traveler }}명 | 유아 {{ req.toddler_traveler }}명</div>
             <div class="req-cost">희망 경비 <span>{{ req.cost|intcomma }}</span> 만원</div>
             <input type="hidden" id="guide_id" value="{{ guide_id }}">
             <div class="like-button {% if is_liked %}liked{% else %}unliked{% endif %}"></div>

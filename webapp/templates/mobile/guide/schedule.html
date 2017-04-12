@@ -69,7 +69,7 @@
     </div>
     <div class="travel-date">{{ fixed_trip.travel_begin_at|date:"Y/m/d" }} - {{ fixed_trip.travel_end_at|date:"Y/m/d"}}
     </div>
-    <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명| 유아 {{ fixed_trip.toddler_traveler }}명</div>
+    <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명 | 유아 {{ fixed_trip.toddler_traveler }}명</div>
     <div class="req-cost">총 경비 <span>{{ fixed_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
     <div class="show-request-button">여행 요청서 보기</div>
     <div class="show-offer-button">최종 견적서 보기</div>
@@ -117,7 +117,7 @@
         </div>
         <div class="travel-date">{{ ended_trip.travel_begin_at|date:"Y/m/d" }} - {{ended_trip.travel_end_at|date:"Y/m/d" }}
         </div>
-        <div class="traveler-num">성인 {{ ended_trip.adult_traveler }}명 | 아동 {{ ended_trip.child_traveler }}명</div>
+        <div class="traveler-num">성인 {{ ended_trip.adult_traveler }}명 | 아동 {{ ended_trip.child_traveler }}명 | 유아 {{ ended_trip.toddler_traveler }}명</div>
         <div class="req-cost">총 경비 <span>{{ ended_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
         <div class="show-request-button">받은 후기 보기</div>
         <div class="show-offer-button">여행기 쓰기</div>
@@ -158,7 +158,7 @@
         </div>
         <div class="travel-date">{{ canceled_trip.travel_begin_at|date:"Y/m/d" }} - {{canceled_trip.travel_end_at|date:"Y/m/d" }}
         </div>
-        <div class="traveler-num">성인 {{ canceled_trip.adult_traveler }}명 | 아동 {{ canceled_trip.child_traveler }}명</div>
+        <div class="traveler-num">성인 {{ canceled_trip.adult_traveler }}명 | 아동 {{ canceled_trip.child_traveler }}명 | 유아 {{ fixed_trip.toddler_traveler }}명</div>
         <div class="req-cost">총 경비 <span>{{ canceled_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
         <div class="show-request-button">제안 견적서 보기</div>
         <div class="show-offer-button">취소 내용 보기</div>
