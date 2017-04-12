@@ -157,6 +157,14 @@ def schedule(request):
                                                            })
 
 
+@login_required
+def save_off_days(request):
+    guide = Guide.objects.get(id=request.user.guide.first().id)
+    guide.off_day = request.POST.get('off_day')
+    guide.save()
+    return JsonResponse({"ok": True})
+
+
 # @user_passes_test(guide_required)
 @login_required
 def template(request):

@@ -28,6 +28,9 @@
 <div class="wrapper">
     <div class="calendar">
         <div class="cal-inf">
+            {% for guide in request.user.guide.all %}
+            <input type="hidden" id="off_day" value="{{ guide.off_day }}">
+            {% endfor %}
             <span>- 예약/확정 현황을 한눈에 캘린더에서 확인하실 수 있습니다.<br>
 - 달력에서 가이드 활동이 불가능한 날짜를 선택해주세요. 설정된 날짜에는 예약을 받을 수 없습니다.</span>
             <div class="peach"></div>
@@ -38,7 +41,7 @@
         <div class="cal">
 
         </div>
-        <div class="cal-save-button deactive">
+        <div class="cal-save-button deactive" onclick="saveOffDays()">
             저장
         </div>
     </div>

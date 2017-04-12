@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^guide/find/$', views.guide.find, name='guide_find'),
     url(r'^guide/dashboard/$', views.guide.dashboard, name='guide_dashboard'),
     url(r'^guide/schedule/$', views.guide.schedule, name='guide_schedule'),
+    url(r'^guide/schedule/save_off_days/$', views.guide.save_off_days, name='save_off_days'),
     url(r'^guide/request/$', views.guide.request, name='guide_request'),
     url(r'^guide/adjust/$', views.guide.adjust, name='guide_adjust'),
     url(r'^guide/set-adjust/$', views.guide.set_adjust_method, name="set_adjust"),

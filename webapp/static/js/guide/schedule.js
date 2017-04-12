@@ -3,13 +3,42 @@ var off_days = [];
 Array.prototype.contains = function(obj) {
     var i = this.length;
     while (i--) {
-        if (this[i] == obj) {
+        if (this[i].diff(obj) == 0) {
             return true;
         }
     }
     return false;
 };
 
+var off_days;
+
+function refreshOffDays() {
+    off_days = [];
+    $(".cal").fullCalendar('clientEvents', 'off_day').forEach(function(element){
+        off_days.push(element.start);
+    });
+    return off_days
+}
+
+function saveOffDays(){
+    var formatedOffDays = {};
+    off_days.forEach(function (off_day) {
+        formatedOffDays[off_day.format('YYYY-MM-DD')] = "";
+    });
+    $.ajax({
+        url: "save_off_days/",
+        type: "POST",
+        data: {
+            off_day: JSON.stringify(formatedOffDays)
+        },
+        success: function () {
+            swal({
+                title: "저장되었습니다!"
+            })
+        },
+    });
+    console.log(formatedOffDays)
+}
 
 $(function () {
    $('span.calendar, span.fixed-trip, span.ended-trip, span.canceled-trip').click(function () {
@@ -37,6 +66,7 @@ $(function () {
    });
 
    var evt_list = [];
+   var oldOffDays = $('#off_day').val().replace(/: ''/g, "").replace('{', '').replace('}', '').replace(/'/g, '').split(', ');
 
    $('.fixed-trip .trip-card-wrapper, .ended-trip .trip-card-wrapper').each(function(){
        var number = 0;
@@ -54,13 +84,25 @@ $(function () {
        else {
            var color = "#f2ad8a";
        }
-	   var temp = {
+	   var evt = {
 	       "title": title,
            "start": start,
            "end": end,
            "color": color
        };
-	   evt_list.push(temp)
+	   evt_list.push(evt)
+   });
+
+   oldOffDays.forEach(function (day) {
+      var evt = {
+          id: 'off_day',
+          title: '',
+          start: day,
+          rendering: 'background',
+          block: true,
+          color: '#d4d4d4'
+      }
+      evt_list.push(evt)
    });
 
    $('.cal').fullCalendar({
@@ -77,14 +119,12 @@ $(function () {
            return event.rendering === 'background';
        },
        select: function (start, end, jsEvent, view) {
-           off_days = [];
-           $(".cal").fullCalendar('clientEvents', 'off_day').forEach(function(element){
-               off_days.push(element.start);
-           });
-
-           console.log(off_days.contains(start));
-           if (event.rendering === 'background') {
-               $(".cal").fullCalendar('removeEvent', event)
+           off_days = refreshOffDays();
+           if (start.diff(end, 'days') == -1 && off_days.contains(start)) {
+               $(".cal").fullCalendar('removeEvents', function (evt) {
+                   return evt.start.diff(start) == 0
+               });
+               $(".cal").fullCalendar("unselect");
            }
 
            else {
@@ -92,6 +132,7 @@ $(function () {
                    if (!off_days.contains(start)) {
                        $(".cal").fullCalendar('addEventSource', [{
                            id: 'off_day',
+                           title: '',
                            start: start,
                            rendering: 'background',
                            block: true,
@@ -102,6 +143,13 @@ $(function () {
                }
 
                $(".cal").fullCalendar("unselect");
+           }
+           off_days = refreshOffDays();
+           if(off_days.length == 0){
+               $('.cal-save-button').addClass('deactive')
+           }
+           else{
+               $('.cal-save-button').removeClass('deactive')
            }
         },
    })
