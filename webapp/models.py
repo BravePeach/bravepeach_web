@@ -8,7 +8,7 @@ from django_mysql.models import JSONField, ListCharField
 from django.conf import settings
 from redactor.fields import RedactorField
 
-from bravepeach.const import GUIDE_THEME, GUIDE_TYPE
+from bravepeach.const import *
 
 
 class Profile(Model):
@@ -215,57 +215,48 @@ class UserRequest(Model):
 
     @property
     def trans_via_list(self):
-        options = ("직항", "경유 1회", "경유 2회")
-        trans_via_list = [options[idx] for idx, v in enumerate(bin(self.trans_via)[2:]) if v == '1']
-        return trans_via_list
+        lst = [v for k, v in TRANS_VIA if self.trans_via & k == k]
+        return lst
 
     @property
     def trans_class_list(self):
-        options = ("이코노미 석", "비즈니스 석", "퍼스트 석")
-        trans_class_list = [options[idx] for idx, v in enumerate(bin(self.trans_class)[2:]) if v == '1']
-        return trans_class_list
+        lst = [v for k, v in TRANS_CLASS if self.trans_class & k == k]
+        return lst
 
     @property
     def accom_locat_list(self):
-        options = ("공항 근처", "시내", "여행지 근처", "기타")
-        accom_locat_list = [options[idx] for idx, v in enumerate(bin(self.accom_location)[2:]) if v == '1']
-        return accom_locat_list
+        lst = [v for k, v in ACCOM_LOCATION if self.accom_location & k == k]
+        return lst
 
     @property
     def accom_type_list(self):
-        options = ("호텔", "한인 민박", "현지인 집", "리조트", "가이드 집")
-        accom_type_list = [options[idx] for idx, v in enumerate(bin(self.accom_type)[2:]) if v == '1']
-        return accom_type_list
+        lst = [v for k, v in ACCOM_TYPE if self.accom_type & k == k]
+        return lst
 
     @property
     def theme_list(self):
-        options = ("현지 꿀팁", "액티비티", "문화/예술", "골목 여행", "자연 경관", "맛집 기행", "역사여행")
-        theme_list = [options[idx] for idx, v in enumerate(bin(self.theme)[2:]) if v == '1']
-        return theme_list
+        lst = [v for k, v in THEME if self.theme & k == k]
+        return lst
 
     @property
     def local_trans_list(self):
-        options = ("자동차", "대중교통", "자전거", "상관없음")
-        local_trans_list = [options[idx] for idx, v in enumerate(bin(self.local_trans)[2:]) if v == '1']
-        return local_trans_list
+        lst = [v for k, v in LOCAL_TRANS if self.local_trans & k == k]
+        return lst
 
     @property
     def guide_type_list(self):
-        options = ("유쾌한", "차분한", "지적인", "유머러스한", "감성적인", "설명을 잘하는", "경제적인")
-        guide_type_list = [options[idx] for idx, v in enumerate(bin(self.guide_type)[2:]) if v == '1']
-        return guide_type_list
+        lst = [v for k, v in GUIDE_TYPE if self.guide_type & k == k]
+        return lst
 
     @property
     def importance_list(self):
-        options = ("맛집", "인생사진", "적절한 휴식", "친구같은 가이드", "역사 공부", "기타")
-        importance_list = [options[idx] for idx, v in enumerate(bin(self.importance)[2:]) if v == '1']
-        return importance_list
+        lst = [v for k, v in IMPORTANCE if self.importance & k == k]
+        return lst
 
     @property
     def guide_major_list(self):
-        options = ("스루 가이드", "현지 가이드")
-        guide_major_list = [options[idx] for idx, v in enumerate(bin(self.importance)[2:]) if v == '1']
-        return guide_major_list
+        lst = [v for k, v in GUIDE_MAJOR if self.guide_major & k == k]
+        return lst
 
 
 class GuideOffer(Model):

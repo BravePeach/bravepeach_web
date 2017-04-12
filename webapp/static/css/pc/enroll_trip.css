@@ -7,6 +7,22 @@
     padding-top: 55px;
 }
 
+.guide-help{
+    font-size: 15px;
+    color: #4a4a4a;
+    line-height: 1.7;
+}
+
+.del-cal{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 28px;
+    cursor: pointer;
+}
+
 .sup-title-peach {
     color: #E64C47;
     margin-top: 0px;

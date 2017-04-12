@@ -131,6 +131,9 @@ $(function () {
             if ($('#start_date_form').val() && $('#end_date_form').val()) {
                 filterTrip($('.order-active').attr('id'));
             }
+            if ($('.del-cal').hasClass('display-none')) {
+                $('.del-cal').removeClass('display-none')
+            }
         },
         onClose: function () {
             if ($('.datepicker1').val() && !$('.datepicker2').val()) {
@@ -142,6 +145,7 @@ $(function () {
     $('.del-cal').click(function () {
         $('.datepicker1, .datepicker2').val("");
         filterTrip($('.order-active').attr('id'));
+        $(this).addClass('display-none')
     });
 
     $("#id_city").placecomplete({

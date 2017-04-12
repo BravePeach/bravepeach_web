@@ -119,7 +119,7 @@ class RequestForm(forms.ModelForm):
     trans_arrive_at = forms.ChoiceField(time_choices)
     start_time = forms.ChoiceField(time_choices)
     end_time = forms.ChoiceField(time_choices)
-    cost = forms.NumberInput
+    cost = forms.NumberInput()
     city = forms.CharField(initial="")
     age_group = forms.CharField(initial="")
 

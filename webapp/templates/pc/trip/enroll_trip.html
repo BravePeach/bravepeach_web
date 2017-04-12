@@ -39,6 +39,7 @@
                 {{ form.travel_begin_at |add_class:"find-guide-form edatepicker1"|attr:"readonly"|attr:"placeholder:시작 날짜" }}
                 <img class="arrow-right" src="{% static 'image/icon/arrow_right_grey.png' %}">
                 {{ form.travel_end_at |add_class:"find-guide-form2 edatepicker2"|attr:"readonly"|attr:"placeholder:종료 날짜"}}
+                <img class="del-cal display-none" src="{% static 'image/icon/cancel.png' %}">
             </div>
 
             <div class="white-bar">
@@ -127,9 +128,9 @@
             <div class="scrolling-page1">
 
                 <span style="float: left; margin-top: 8px;">1.</span>
-                <div class="sellect-wrapper">{{ form.trans_start_at }}</div>
+                <div class="sellect-wrapper">{{ form.trans_start_at }}시 부터 한국 공항에서 출국이 가능합니다.</div>
                 <span style="float: left; margin-top: 8px;">2.</span>
-                <div class="sellect-wrapper">{{ form.trans_arrive_at }}</div>
+                <div class="sellect-wrapper">{{ form.trans_arrive_at }}시까지 한국 공항에 도착해야 합니다.</div>
                 <span style="float: left; margin-top: 8px;">3.</span>
                 <div class="sellect-wrapper">
                     <div class="col-xs-6 col-sm-3">
@@ -235,29 +236,33 @@
 
                 <span style="float: left">1.</span>
                 <div class="sellect-wrapper">
-                    <div style="margin-bottom: 16px;">가이드</div>
+                    <div style="margin-bottom: 16px;">원하는 전문가이드 유형은</div>
                     <div class="row" style="margin-bottom:24px;">
                         <div class="col-sm-3">
                             <input class="checkbox" name="guide_major" type="checkbox" value=1 id="mj1">
-                            <label for="mj1">현지 가이드</label>
+                            <label for="mj1">스루 가이드</label><span style="color: #adadad;">*</span>
                         </div>
                         <div class="col-sm-3">
                             <input class="checkbox" name="guide_major" type="checkbox" value=2 id="mj2">
-                            <label for="mj2">스루 가이드</label>
+                            <label for="mj2">현지 가이드</label><span style="color: #adadad;">**</span>
                         </div>
                     </div>
+                    <div class="guide-help">
+                    *스루 가이드 : 한국 출발부터 현지 여행, 한국 도착까지 모든 투어를 책임지는 가이드.<br>
+                    **현지 가이드 :  현지의 모든 투어를 책임지는 가이드
+                    </div>
+
                 </div>
-
-                <span style="float: left">1.</span>
-                <div class="sellect-wrapper">아침 {{ form.start_time }}시 부터는 일정을 시작해 주세요.</div>
-
                 <span style="float: left">2.</span>
-                <div class="sellect-wrapper">저녁 {{ form.end_time }}시에는 일정을 마쳐주세요.</div>
+                <div class="sellect-wrapper">{{ form.start_time }}시 부터는 일정을 시작해 주세요.</div>
 
                 <span style="float: left">3.</span>
-                <div class="sellect-wrapper">꼭 가고 싶은 여행지는 {{ form.landmark }}입니다.</div>
+                <div class="sellect-wrapper">{{ form.end_time }}시에는 일정을 마쳐주세요.</div>
 
                 <span style="float: left">4.</span>
+                <div class="sellect-wrapper">꼭 가고 싶은 여행지는 {{ form.landmark }}입니다.</div>
+
+                <span style="float: left">5.</span>
                 <div class="sellect-wrapper">
                     <div style="margin-bottom: 16px;">여행테마</div>
                     <div class="row" style="margin-bottom:24px;">
@@ -299,7 +304,7 @@
                     </div>
                 </div>
 
-                <span style="float: left">5.</span>
+                <span style="float: left">6.</span>
                 <div class="sellect-wrapper">
                     <div style="margin-bottom: 16px;">교통수단</div>
                     <div class="row" style="margin-bottom:24px;">
@@ -323,7 +328,7 @@
 
                 </div>
 
-                <span style="float: left">6.</span>
+                <span style="float: left">7.</span>
                 <div class="sellect-wrapper">
                     <div style="margin-bottom: 16px;">이런 성향의 가이드가 좋아요!</div>
                     <div class="row" style="margin-bottom:24px;">
@@ -365,7 +370,7 @@
                     </div>
                 </div>
 
-                <span style="float: left">7.</span>
+                <span style="float: left">8.</span>
                 <div class="sellect-wrapper">
                     <div style="margin-bottom: 16px;">저에게 가장 중요한 것은</div>
                     <div class="row" style="margin-bottom:24px;">
@@ -404,7 +409,7 @@
             </div>
             <hr>
             <div class="total-amount-wrapper">
-                {{ form.cost }}만 원
+                {{ form.cost }}만 원 이내
             </div>
             <span style="font-size: 26px; margin: 0px 14px 0px 0px; display: block; float: right">희망 경비</span>
             <div class="submit-button-wrapper">

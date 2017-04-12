@@ -72,13 +72,22 @@ $(function() {
             var newDate = date.toDateString();
             newDate = new Date(Date.parse(newDate));
             $('.edatepicker2').datepicker("option", "minDate", newDate);
+            if ($('.del-cal').hasClass('display-none')) {
+                $('.del-cal').removeClass('display-none')
+            }
         },
         onClose: function () {
             if ($('.edatepicker1').val() && !$('.edatepicker2').val()) {
-                $('.edatepicker2').datepicker("show")
+                $('.edatepicker2').datepicker("show");
             }
         }
     });
+
+    $('.del-cal').click(function () {
+        $('.edatepicker1, .edatepicker2').val("");
+        $(this).addClass('display-none')
+    });
+
 
     var total_traveler = 0;
 
@@ -103,8 +112,12 @@ $(function() {
         });
     });
 
-    $('#traveler_cnt_main, .arrow-down, #traveler_cnt_form, .trv-btn').click(function () {
-        $('.traveler_cntpicker').slideToggle(200)
+    $('#id_age_group, .arrow-down, .cnt-btn').click(function (event) {
+        event.stopPropagation();
+        $(".traveler_cntpicker").slideToggle("fast");
+    });
+    $(".traveler_cntpicker").on("click", function (event) {
+        event.stopPropagation();
     });
 
     $(".btn1").click(function () {
@@ -178,4 +191,8 @@ $(function() {
         }
     })
 
+});
+
+$(document).on("click", function () {
+    $(".traveler_cntpicker").slideUp('fast');
 });
