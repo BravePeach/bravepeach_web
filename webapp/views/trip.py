@@ -9,8 +9,10 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.utils import formats
 from django.template.loader import render_to_string
+from django.core.mail import send_mail
 
 from bravepeach.util import flavour_render
+from bravepeach import settings
 from ..forms import RequestForm, GuideSearchFrom
 from ..models import (Guide, UserReview, GuideReview, UserRequest, GuideOffer, UserLike, GuideLike, GuideTemplate,
                       AccomTemplate, Comment, Cost)
@@ -104,9 +106,13 @@ def enroll_trip(request, **kwargs):
 
         if form.is_valid():
             if req_id:
+                is_new = False
                 form.save()
+                req_send_email(request, is_new)
             else:
+                is_new = True
                 form.save()
+                req_send_email(request, is_new)
                 user_request = UserRequest.objects.last()
             return flavour_render(request, 'trip/enroll_trip_detail.html', {'req': user_request})
         else:
@@ -121,6 +127,18 @@ def enroll_trip(request, **kwargs):
         else:
             form = RequestForm()
         return flavour_render(request, 'trip/enroll_trip.html', {'form': form, 'req': user_request})
+
+
+def req_send_email(request, is_new):
+    if is_new:
+        title = "요청서가 성공적으로 작성되었습니다!"
+    else:
+        title = "요청서가 성공적으로 수정되었습니다!"
+    send_mail(title, '',
+              settings.DEFAULT_FROM_EMAIL, [request.user.email]
+              )
+    return JsonResponse({"ok": True})
+
 
 
 @login_required
