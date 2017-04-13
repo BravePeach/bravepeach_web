@@ -5,26 +5,31 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/mobile/guide/schedule.css' %}">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.css" rel="stylesheet">
 {% endblock %}
 
 {% block js %}
     <script src="{% static 'js/guide/schedule.js' %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.min.js"></script>
+
 {% endblock %}
 
 {% block content %}
 <div class="allover display-none"></div>
 <div class="breadcrumb">
     <span class="title">일정 관리</span> >
-    {% if page_type == "calender" %}캘린더{% elif page_type == "fixed" %}확정된 여행
+    {% if page_type == "calendar" %}캘린더{% elif page_type == "fixed" %}확정된 여행
     {% elif page_type == "ended" %}지난 여행{% else %}취소된 여행{% endif %}
 </div>
 
-{% if page_type == "calender" %}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.css" rel="stylesheet">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.3.1/fullcalendar.min.js"></script>
+{% if page_type == "calendar" %}
     <script src="{% static 'js/ko.js' %}"></script>
     <div class="calendar">
+        {% for guide in request.user.guide.all %}
+            <input type="hidden" id="off_day" value="{{ guide.off_day }}">
+        {% endfor %}
+
         <div class="cal-inf">
             <span>- 예약/확정 현황을 한눈에 캘린더에서 확인하실 수 있습니다.<br>
 - 달력에서 가이드 활동이 불가능한 날짜를 선택해주세요. 설정된 날짜에는 예약을 받을 수 없습니다.</span>
@@ -36,14 +41,14 @@
         <div class="cal">
 
         </div>
-        <div class="cal-save-button deactive">
+        <div class="cal-save-button deactive" onclick="saveOffDays()">
             저장
         </div>
     </div>
 
 {% endif %}
 
-{% if page_type == "fixed" or "calendar" %}
+{% if page_type in "fixed calendar" %}
     <div class="fixed-trip">
 {% if fixed_trip_set %}
 {% for fixed_trip in fixed_trip_set %}
@@ -67,8 +72,7 @@
         {% if not forloop.first %} / {% endif %} {{ c }}
         {% endfor %}
     </div>
-    <div class="travel-date">{{ fixed_trip.travel_begin_at|date:"Y/m/d" }} - {{ fixed_trip.travel_end_at|date:"Y/m/d"}}
-    </div>
+    <div class="travel-date">{{ fixed_trip.travel_begin_at|date:"Y/m/d" }} - {{ fixed_trip.travel_end_at|date:"Y/m/d"}}</div>
     <div class="traveler-num">성인 {{ fixed_trip.adult_traveler }}명 | 아동 {{ fixed_trip.child_traveler }}명 | 유아 {{ fixed_trip.toddler_traveler }}명</div>
     <div class="req-cost">총 경비 <span>{{ fixed_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
     <div class="show-request-button">여행 요청서 보기</div>
@@ -91,7 +95,7 @@
     </div>
 {% endif %}
 
-{% if page_type == "ended" or "calendar" %}
+{% if page_type in "ended calendar" %}
 <div class="ended-trip">
     {% if ended_trip_set %}
     {% for ended_trip in ended_trip_set %}
@@ -115,8 +119,7 @@
             {% if not forloop.first %} / {% endif %} {{ c }}
             {% endfor %}
         </div>
-        <div class="travel-date">{{ ended_trip.travel_begin_at|date:"Y/m/d" }} - {{ended_trip.travel_end_at|date:"Y/m/d" }}
-        </div>
+        <div class="travel-date">{{ ended_trip.travel_begin_at|date:"Y/m/d" }} - {{ended_trip.travel_end_at|date:"Y/m/d" }}</div>
         <div class="traveler-num">성인 {{ ended_trip.adult_traveler }}명 | 아동 {{ ended_trip.child_traveler }}명 | 유아 {{ ended_trip.toddler_traveler }}명</div>
         <div class="req-cost">총 경비 <span>{{ ended_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
         <div class="show-request-button">받은 후기 보기</div>
@@ -156,8 +159,7 @@
             {% if not forloop.first %} / {% endif %} {{ c }}
             {% endfor %}
         </div>
-        <div class="travel-date">{{ canceled_trip.travel_begin_at|date:"Y/m/d" }} - {{canceled_trip.travel_end_at|date:"Y/m/d" }}
-        </div>
+        <div class="travel-date">{{ canceled_trip.travel_begin_at|date:"Y/m/d" }} - {{canceled_trip.travel_end_at|date:"Y/m/d" }}</div>
         <div class="traveler-num">성인 {{ canceled_trip.adult_traveler }}명 | 아동 {{ canceled_trip.child_traveler }}명 | 유아 {{ fixed_trip.toddler_traveler }}명</div>
         <div class="req-cost">총 경비 <span>{{ canceled_offer_price|index:forloop.counter0|intcomma }}</span> 원</div>
         <div class="show-request-button">제안 견적서 보기</div>
