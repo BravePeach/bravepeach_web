@@ -243,6 +243,9 @@ $(function () {
         });
     });
 
+    // 숙소 이미지 업로드
+    // $('.accom').on("click", )
+
     $('.guide-preview-button').click(function () {
 
     })

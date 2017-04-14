@@ -121,12 +121,12 @@
     <div class="tab-content">
         <div class="tab-content-pic">
             <div class="profile">
-                <img src="{% if offer.guide.user.profile.photo %}
-                                    {{ offer.guide.user.profile.photo.url }}{% else %}
+                <img src="{% if offer.request.user.profile.photo %}
+                                    {{ offer.request.user.profile.photo.url }}{% else %}
                                     {% static 'image/icon/profile_empty.png' %}{% endif %}"
                      alt="">
             </div>
-            <div class="guide-name">{{ offer.guide.full_name }}</div>
+            <div class="guide-name">{{ offer.request.user.profile.full_name }}</div>
         </div><!--
                 -->
         <div class="tab-content-info">
