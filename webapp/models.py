@@ -1,6 +1,7 @@
 import math
 import datetime
 
+from django.utils import timezone
 from django.db import models
 from django_mysql.models import Model
 from django.contrib.auth.models import User
@@ -371,7 +372,7 @@ class UserReview(Model):
     content = RedactorField(verbose_name=u'Content')
     writer = models.ForeignKey(settings.AUTH_USER_MODEL)
     receiver = models.ForeignKey(Guide)
-    write_date = models.DateField(null=False, default=datetime.date.today())
+    write_date = models.DateField(null=False, default=timezone.now)
 
     def __str__(self):
         # return "Review from {} to {} for travel(offer) {}".format(self.writer.profile.full_name,
@@ -400,7 +401,7 @@ class GuideReview(Model):
     content = RedactorField(verbose_name="Content")
     writer = models.ForeignKey(Guide)
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL)
-    write_date = models.DateField(null=False, default=datetime.date.today())
+    write_date = models.DateField(null=False, default=timezone.now)
 
     def __str__(self):
         return "Review from {} to {} for travel #{}".format(self.writer.full_name,
