@@ -128,8 +128,9 @@ input[type=number]::-webkit-outer-spin-button {
 
 .ui-datepicker {
     position: absolute !important;
+    top: 353px !important;
     left: 50% !important;
-    margin-left: -344px; /* approx half the height of the datepicker div - adjust based on your size */
+    margin-left: -344px;
     width: 689px;
     height: 430px;
     border-radius: 8px;

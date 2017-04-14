@@ -1,5 +1,3 @@
-var off_days = [];
-
 Array.prototype.contains = function(obj) {
     var i = this.length;
     while (i--) {
@@ -126,14 +124,14 @@ $(function () {
        },
        select: function (start, end, jsEvent, view) {
            off_days = refreshOffDays();
-           if (start.diff(end, 'days') == -1 && off_days.contains(start)) {
-               $(".cal").fullCalendar('removeEvents', function (evt) {
-                   return evt.start.diff(start) == 0
-               });
-               $(".cal").fullCalendar("unselect");
-           }
+           // if (start.diff(end, 'days') == -1 && off_days.contains(start)) {
+           //     $(".cal").fullCalendar('removeEvents', function (evt) {
+           //         return evt.start.diff(start) == 0
+           //     });
+           //     $(".cal").fullCalendar("unselect");
+           // }
 
-           else {
+
                while(start.diff(end) < 0) {
                    if (!off_days.contains(start)) {
                        $(".cal").fullCalendar('addEventSource', [{
@@ -145,11 +143,17 @@ $(function () {
                            color: '#d4d4d4'
                        },]);
                    }
+                   else{
+                       $(".cal").fullCalendar('removeEvents', function (evt) {
+                           return evt.start.diff(start) == 0
+                        });
+                   }
                    start.add(1, 'days')
                }
 
+
                $(".cal").fullCalendar("unselect");
-           }
+
            off_days = refreshOffDays();
            if(off_days.length == 0){
                $('.cal-save-button').addClass('deactive')
