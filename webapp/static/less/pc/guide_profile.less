@@ -6,7 +6,7 @@
     height: 55px;
     font-family: NanumSquare;
     font-size: 48px;
-    font-weight: normal;
+    font-weight: bold;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
@@ -47,6 +47,13 @@
       width: 134px;
       height: 134px;
       border-radius: 100%;
+
+      img {
+        vertical-align: initial;
+        width: 134px;
+        height: 134px;
+        border-radius: 100%;
+      }
     }
 
     .brief-contents {
@@ -200,9 +207,9 @@
       border: solid 1px #979797;
     }
     .detail-content {
-      margin-top: 10px;
       margin-bottom: 50px;
       padding-top: 22px;
+      padding-left: 20px;
       padding-bottom: 15px;
       width: 830px;
       font-family: NanumSquare;
@@ -213,6 +220,31 @@
       line-height: 1.4;
       letter-spacing: normal;
       color: #000000;
+
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li::before {
+          content: "• ";
+          color: #e64c47;
+        }
+
+        .indent {
+          padding-left: 25px;
+        }
+      }
+
+      .theme, .style {
+        display: inline-block;
+        width: 115px;
+        margin-right: 83px;
+      }
+
+      .theme::before, .style::before {
+        content: "• ";
+        color: #e64c47;
+      }
 
       .trip-info {
         position: relative;

@@ -40,6 +40,12 @@
       width: 27px;
       height: 27px;
       border-radius: 100%;
+
+      img {
+        width: 27px;
+        height: 27px;
+        border-radius: 100%;
+      }
     }
 
     .brief-title {
@@ -55,7 +61,6 @@
       text-align: left;
       color: #000000;
       position: relative;
-      top: -10px;
 
       .guide-name {
         font-weight: bold;
@@ -209,6 +214,31 @@
       line-height: 1.75;
       letter-spacing: normal;
       color: #000000;
+
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li::before {
+          content: "• ";
+          color: #e64c47;
+        }
+
+        .indent {
+          padding-left: 15px;
+        }
+      }
+
+      .theme, .style {
+        display: inline-block;
+        width: 69px;
+        margin-right: 40px;
+      }
+
+      .theme::before, .style::before {
+        content: "• ";
+        color: #e64c47;
+      }
 
       .trip-info {
         margin-left: -10px;

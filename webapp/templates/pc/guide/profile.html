@@ -14,7 +14,10 @@
         <div class="page-title">가이드 프로필</div>
         <div class="subtitle"><span class="name">{{ guide.full_name }}</span> 가이드의 프로필</div>
         <div class="guide-brief">
-            <div class="brief-image"></div>
+            <div class="brief-image">
+                <img src="{% if guide.user.profile.photo %}{{ guide.user.profile.photo.url }}{% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+                     alt="profile">
+            </div>
             <div class="brief-contents">
                 <div class="like">{% if request.user.is_authenticated %}
                     {# TODO: heart sticker from like. Make it to a tag and bind js+ajax function #}
@@ -54,7 +57,13 @@
             <div class="detail-content">{{ guide.introduction }}</div>
             <div class="detail-title">경력</div>
             <div class="hr"></div>
-            <div class="detail-content">{{ guide.career|linebreaks }}</div>
+            <div class="detail-content">
+                <ul>
+                    {% for c in guide.career %}
+                        <li>{{ c.0 }} / {{ c.1 }}<br><span class="indent">{{ c.2 }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
             <div class="detail-title">여행 테마</div>
             <div class="hr"></div>
             <div class="detail-content">{% for theme in guide.theme_list %}
