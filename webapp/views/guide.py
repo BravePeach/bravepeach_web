@@ -136,16 +136,17 @@ def dashboard(request):
 # @user_passes_test(guide_required)
 @login_required
 def schedule(request):
+
     page_type = request.GET.get("type", '')
-    guide = Guide.objects.get(user=request.user)
-    fixed_offer_set = GuideOffer.objects.filter(guide=guide, paid=True, request__travel_end_at__gte=datetime.date.today(), is_canceled=False)
+    guide = Guide.objects.select_related('user').get(user=request.user)
+    fixed_offer_set = GuideOffer.objects.prefetch_related('costs').filter(guide=guide, paid=True, request__travel_end_at__gte=datetime.date.today(), is_canceled=False)
     fixed_offer_price = [o.total_cost for o in fixed_offer_set]
-    fixed_trip_set = UserRequest.objects.filter(id__in=[r.request_id for r in fixed_offer_set])
-    ended_offer_set = GuideOffer.objects.filter(guide=guide, paid=True, request__travel_end_at__lt=datetime.date.today(), is_canceled=False)
+    fixed_trip_set = UserRequest.objects.select_related('user').prefetch_related('user__profile').filter(id__in=[r.request_id for r in fixed_offer_set])
+    ended_offer_set = GuideOffer.objects.prefetch_related('costs').filter(guide=guide, paid=True, request__travel_end_at__lt=datetime.date.today(), is_canceled=False)
     ended_offer_price = [o.total_cost for o in ended_offer_set]
-    ended_trip_set = UserRequest.objects.filter(id__in=[r.request_id for r in ended_offer_set])
-    canceled_offer_set = GuideOffer.objects.filter(guide=guide, is_canceled=True)
-    canceled_trip_set = UserRequest.objects.filter(id__in=[r.request_id for r in canceled_offer_set])
+    ended_trip_set = UserRequest.objects.select_related('user').prefetch_related('user__profile').filter(id__in=[r.request_id for r in ended_offer_set])
+    canceled_offer_set = GuideOffer.objects.prefetch_related('costs').filter(guide=guide, is_canceled=True)
+    canceled_trip_set = UserRequest.objects.select_related('user').prefetch_related('user__profile').filter(id__in=[r.request_id for r in canceled_offer_set])
     canceled_offer_price = [o.total_cost for o in canceled_offer_set]
     return flavour_render(request, "guide/schedule.html", {"tab": "schedule", "page_type": page_type,
                                                            "fixed_trip_set": fixed_trip_set,
@@ -213,9 +214,9 @@ def request(request):
     page_type = request.GET.get("type", '')
     guide = request.user.guide.first()
 
-    request_list = UserRequest.objects.order_by('-id').all()
-    zzim_list = GuideLike.objects.filter(guide=guide.id).order_by('-id').all()
-    offer_list = GuideOffer.objects.filter(guide=guide.id).order_by('-id').all()
+    request_list = UserRequest.objects.select_related('user').prefetch_related('user__profile', 'user__guide').order_by('-id').all()
+    zzim_list = GuideLike.objects.select_related('request').prefetch_related('request__user', 'request__user__profile').filter(guide=guide.id).order_by('-id').all()
+    offer_list = GuideOffer.objects.select_related('request').prefetch_related('request__user', 'request__user__profile').filter(guide=guide.id).order_by('-id').all()
 
     return flavour_render(request, "guide/request_offer.html", {"tab": "request", "page_type": page_type,
                                                                 "request_list": request_list, "zzim_list": zzim_list,
@@ -278,10 +279,10 @@ def request_adjust(request):
 def review(request):
     page_type = request.GET.get("type", "")
     guide = Guide.objects.filter(user_id=request.user.id).all()[0]
-    review_list = UserReview.objects.filter(receiver=guide).order_by('-id').all()
-    write_list = GuideOffer.objects.filter(guide_review__isnull=True).order_by('id').all()
-    send_list = GuideReview.objects.filter(writer=guide).order_by('-id').all()
-    journal_write_list = GuideOffer.objects.filter(journal__isnull=True).order_by('id').all()
+    review_list = UserReview.objects.select_related('writer').prefetch_related('writer__profile').filter(receiver=guide).order_by('-id').all()
+    write_list = GuideOffer.objects.select_related('request').prefetch_related('request__user', 'request__user__profile').filter(guide_review__isnull=True).order_by('id').all()
+    send_list = GuideReview.objects.select_related('receiver').prefetch_related('receiver__profile').filter(writer=guide).order_by('-id').all()
+    journal_write_list = GuideOffer.objects.select_related('request').prefetch_related('request__user', 'request__user__profile').filter(journal__isnull=True).order_by('id').all()
     journal_list = Journal.objects.filter(writer=guide).order_by('-id').all()
     return flavour_render(request, "guide/review.html", {"tab": "review", 'review_list': review_list,
                                                          "write_list": write_list, "send_list": send_list,
@@ -371,7 +372,7 @@ class FilterTrip(View):
         traveler_cnt = request.GET.get('traveler_cnt')
         sort = request.GET.get('sort')
         print(sort)
-        req_queryset = UserRequest.objects.select_related('user').filter(published=True, travel_begin_at__gte=datetime.datetime.now())
+        req_queryset = UserRequest.objects.select_related('user').prefetch_related('user__profile').filter(published=True, travel_begin_at__gte=datetime.datetime.now())
 
         if country:
             req_queryset = req_queryset.filter(countries__has_any_keys=country)
@@ -410,16 +411,20 @@ def write_offer(request, req_id):
     urls = 'write_offer'
     guide_id = Guide.objects.prefetch_related('accom_templates').prefetch_related('guide_templates').get(user_id=request.user.id).id
     req = get_object_or_404(UserRequest.objects.select_related('user'), id=req_id)
-    # offer = GuideOffer.objects.create(guide_id=guide_id, request_id=req_id)
-    is_liked = GuideLike.objects.filter(guide_id=guide_id, request_id=req.id)
 
-    date_list = [i.strftime("%Y/%m/%d") for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+    if GuideOffer.objects.filter(guide_id=guide_id, request_id=req.id):
+        # todo: 수정하기 페이지로 이동할것
+        pass
+    else:
+        is_liked = GuideLike.objects.filter(guide_id=guide_id, request_id=req.id)
 
-    return flavour_render(request, 'guide/write_offer.html', {'req': req,
-                                                              'is_liked': is_liked,
-                                                              'guide_id': guide_id,
-                                                              'date_list': date_list,
-                                                              'url': urls})
+        date_list = [i.strftime("%Y/%m/%d") for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+
+        return flavour_render(request, 'guide/write_offer.html', {'req': req,
+                                                                  'is_liked': is_liked,
+                                                                  'guide_id': guide_id,
+                                                                  'date_list': date_list,
+                                                                  'url': urls})
 
 
 @user_passes_test(guide_required)
@@ -628,7 +633,7 @@ def save_trans_offer(request, req_id):
 
         if not GuideOffer.objects.filter(guide_id=guide_id, request_id=req_id).exists():
             req = UserRequest.objects.get(id=req_id)
-            travel_period = [i for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+            travel_period = [i.strftime("%Y-%m-%d") for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
             GuideOffer.objects.create(guide_id=guide_id, request_id=req_id, trans_info=trans_info, travel_period=travel_period)
 
         else:
@@ -655,7 +660,7 @@ def save_accom_offer(request, req_id):
 
         if not GuideOffer.objects.filter(guide_id=guide_id, request_id=req_id).exists():
             req = UserRequest.objects.get(id=req_id)
-            travel_period = [i for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+            travel_period = [i.strftime("%Y-%m-%d") for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
             GuideOffer.objects.create(guide_id=guide_id, request_id=req_id, accom_template=accom_template, travel_period=travel_period)
 
         else:
@@ -678,7 +683,7 @@ def save_guide_offer(request, req_id):
 
         if not GuideOffer.objects.filter(guide_id=guide_id, request_id=req_id).exists():
             req = UserRequest.objects.get(id=req_id)
-            travel_period = [i for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+            travel_period = [i.strftime("%Y-%m-%d") for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
             GuideOffer.objects.create(guide_id=guide_id, request_id=req_id, guide_template=guide_template, travel_period=travel_period)
 
         else:
