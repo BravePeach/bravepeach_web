@@ -55,7 +55,7 @@
     <div class="gnb">
         <ul>
             {% if request.user.is_authenticated %}
-                <li><a href="#" title="메세지">메세지</a></li>
+                <li><a href="{% url 'chat_index' %}" title="채팅">채팅</a></li>
                 <li><a href="{% url 'my_trip' %}" title="여행">여행</a></li>
                 <li><a href="{% url 'like' %}" title="찜한 가이드">찜한 가이드</a></li>
                 <li><a href="{% url 'guide_index' %}" title="가이드 하기">가이드 하기</a></li>

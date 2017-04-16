@@ -1,0 +1,42 @@
+{% extends "pc/base.html" %}
+{% load static %}
+{% load compile_static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/pc/chat.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "channels/js/websocketbridge.js" %}" type="text/javascript"></script>
+    <script>
+    var make_path = '{% url "make_room" %}';
+    </script>
+    <script src="{% static 'js/chat.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+{#    <h1>{{ request.user.profile.full_name }}</h1>#}
+{#    <h2>{{ request.user.email }}</h2>#}
+    <div class="chat_list">
+        {% for room in rooms %}
+            <div class="room-link" onclick="join_room({{ room.id }})">{{ room }}</div>
+        {% empty %}
+            <p class="empty">아직 채팅이 없습니다. 원하는 상대방과 대화를 나눠보세욧</p>
+        {% endfor %}
+    </div>
+{#    <ul class="rooms">#}
+{#        {% for room in rooms %}#}
+{#            <li class="room-link" data-room-id="{{ room.id }}">{{ room }}</li>#}
+{#        {% empty %}#}
+{#            <p class="empty">No chat rooms defined. Maybe make some in the <a href="{% url 'admin:index' %}">admin</a>?</p>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+    <form>
+        {% csrf_token %}
+        <input type="text" name="opponent">
+        <button type="button" onclick="make_room()">MAKE</button>
+    </form>
+
+    <div id="chats">
+    </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from .forms import PasswordResetCustomForm, SetPasswordCustcomForm
@@ -104,4 +104,8 @@ urlpatterns = [
 
     # Comment
     url(r'^add_comment/$', views.trip.AddComment.as_view(), name="add_comment"),
+
+    # Chat
+    url(r'^chat/$', views.chat.chat_index, name="chat_index"),
+    url(r'^make_chat/$', views.chat.make_room, name="make_room"),
 ]
