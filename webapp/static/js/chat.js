@@ -25,7 +25,6 @@ function join_room(room_id) {
 $(function () {
     // Correctly decide between ws:// and wss://
     // var ws_path = "/chat/stream";
-    var ws_path = "ws://localhost:8001/chat/stream";
     console.log("Connecting to " + ws_path);
     webSocketBridge.connect(ws_path);
     // Handle incoming messages
