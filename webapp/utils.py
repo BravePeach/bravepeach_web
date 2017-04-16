@@ -25,7 +25,7 @@ def get_room_or_error(room_id, user):
     """
     # Check if the user is logged in
     if not user.is_authenticated():
-        raise ClientError("USER_HAS_TO_LOGIN")
+        raise ClientError("USER_HAS_TO_LOGIN: {}".format(user))
     # Find the room they requested (by ID)
     try:
         room = Room.objects.get(pk=room_id)
