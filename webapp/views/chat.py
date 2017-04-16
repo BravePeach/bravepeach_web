@@ -4,12 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from webapp.models import Room
+from bravepeach.settings import CHAT_HOST
 
 
 @login_required
 def chat_index(request):
     rooms = Room.objects.all()
-    return render(request, "pc/chat.html", {"rooms": rooms})
+    return render(request, "pc/chat.html", {"rooms": rooms, "chat_host": CHAT_HOST})
 
 
 @login_required

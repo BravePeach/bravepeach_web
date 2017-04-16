@@ -228,6 +228,8 @@ from django.conf import settings
 
 NOTIFY_USERS_ON_ENTER_OR_LEAVE_ROOMS = getattr(settings, 'NOTIFY_USERS_ON_ENTER_OR_LEAVE_ROOMS', True)
 
+CHAT_HOST = LOCAL_SETTINGS["CHAT_HOST"]
+
 MSG_TYPE_MESSAGE = 0  # For standard messages
 MSG_TYPE_WARNING = 1  # For yellow messages
 MSG_TYPE_ALERT = 2  # For red & dangerous alerts
