@@ -43,11 +43,8 @@
 }
 
 .tab-contents {
-  margin-top: 10px;
-  margin-bottom: 20px;
   display: none;
-  border-radius: 8px;
-  border: solid 1px #ddd9d9;
+
   &.active {
     display: block;
   }
@@ -66,8 +63,13 @@
   }
 
   .tab-content {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: solid 1px #ddd9d9;
     position: relative;
     cursor: pointer;
+    padding-bottom: 17px;
 
     .tab-content-label {
       font-family: NanumSquare;
@@ -88,15 +90,18 @@
       display: inline-block;
       width: 185px;
       text-align: center;
+
       .profile {
-        margin: 33px auto;
+        margin: 33px auto 0 auto;
         text-align: center;
+
         img {
           width: 79px;
           height: 79px;
           border-radius: 100%;
         }
       }
+
       .name, .guide-name, .guide-name {
         margin-top: 14px;
         font-family: NanumSquare;
@@ -152,7 +157,7 @@
           height: 15px;
           font-family: NanumSquare;
           font-size: 13px;
-          font-weight: normal;
+          font-weight: bold;
           font-style: normal;
           font-stretch: normal;
           line-height: 15px;
@@ -167,7 +172,7 @@
         height: 23px;
         font-family: NanumSquare;
         font-size: 20px;
-        font-weight: normal;
+        font-weight: bold;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
@@ -181,7 +186,7 @@
         width: 420px;
         font-family: NanumSquare;
         font-size: 20px;
-        font-weight: normal;
+        font-weight: bold;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
@@ -240,6 +245,8 @@
 
       .cost {
         height: 32px;
+        width: 227px;
+        text-align: right;
         font-family: NanumSquare;
         font-size: 28px;
         font-weight: bold;
