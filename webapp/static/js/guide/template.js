@@ -1,10 +1,12 @@
 function readURL(input) {
-    if (input.files && input.files[0]){
+    if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            $(input).parent().css({'background-image': 'url(' + e.target.result + ')',
-                                'opacity': 1})
+            $(input).parent().css({
+                'background-image': 'url(' + e.target.result + ')',
+                'opacity': 1
+            })
         };
 
         reader.readAsDataURL(input.files[0])
@@ -66,6 +68,11 @@ function searchAccomTemp(s_id, val, page) {
 
 
 $(function () {
+    $('.accom').on("click", ".delete-out, .delete-no, .address-ok", function () {
+        $(this).parent().hide();
+        $(this).parent().next().hide();
+    });
+
     $('span.accom, span.guide, span.product').click(function () {
         $(this).siblings().removeClass('clicked');
         $(this).addClass('clicked');
@@ -105,7 +112,6 @@ $(function () {
         var s_id = $(this).parents('.accom-search')[0].id.replace('accom_search', '');
         searchAccomTemp(s_id, $(this).parent().parent().children('.search-form').val(), page);
     });
-
 
 
     // search guide template: if click button or press enter, submit
@@ -216,12 +222,12 @@ $(function () {
     $('div.guide, div.accom').on("keypress", "input, textarea", function () {
         var formType = $(this).parent().parent().attr('class');
         console.log(formType);
-        $('.' +  formType + '-save-button').removeClass('inactive');
+        $('.' + formType + '-save-button').removeClass('inactive');
     });
 
     // 초기화 버튼
     $('.accom-refresh-button, .guide-refresh-button').click(function () {
-        var formType = $(this).attr('class').slice(0,5);
+        var formType = $(this).attr('class').slice(0, 5);
         var url = "/new_" + formType + "_form";
         $.ajax({
             url: url,
@@ -244,7 +250,110 @@ $(function () {
     });
 
     // 숙소 이미지 업로드
-    // $('.accom').on("click", )
+    $('.accom').on("click", ".add_button", function () {
+        $(this).next().click();
+        $(this).next().change(function () {
+            readURL(this);
+            $(this).prev().addClass('display-none')
+        });
+    });
+
+    $('.accom').on("click", ".accom-address", function () {
+        var modalInput = $(this).next().children('.address-modal-form');
+        var input = $(this);
+        var inputCountry = $(this).siblings('.country');
+        var inputCity = $(this).siblings('.city');
+        var inputSmallCity = $(this).siblings('.small_city');
+        var inputLat = $(this).siblings('.lat');
+        var inputLng = $(this).siblings('.lng');
+
+        $(this).next().show();
+        $(this).next().next().show();
+
+        // google maps 처음 클릭 하는 거면 초기화
+        if (inputLat.val() == "" && inputLng.val() == "") {
+            var map = new google.maps.Map($(this).next().children('.map')[0], {
+                center: {lat: -33.8688, lng: 151.2195},
+                zoom: 17
+            });
+            var marker = new google.maps.Marker({
+                map: map,
+                anchorPoint: new google.maps.Point(0, -29)
+            });
+        }
+
+        // 한번 도시를 선택했던적이 있으면 그 위치로
+        else {
+            var map = new google.maps.Map($(this).next().children('.map')[0], {
+                center: {lat: parseFloat(inputLat.val()), lng: parseFloat(inputLng.val())},
+                zoom: 17
+            });
+            var marker = new google.maps.Marker({
+                position: {lat: parseFloat(inputLat.val()), lng: parseFloat(inputLng.val())},
+                map: map
+            })
+
+        }
+        var options = {
+            types: ['(regions)']
+        };
+
+        autocomplete = new google.maps.places.Autocomplete(modalInput[0], options);
+        autocomplete.bindTo('bounds', map);
+
+        var infowindow = new google.maps.InfoWindow();
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            input.siblings('.accom-save-button').addClass('activated');
+            if (marker && marker.setMap) {
+                marker.setMap(null);
+            }
+            marker = new google.maps.Marker({
+                position: event.latLng,
+                map: map
+            });
+            var geocoder = new google.maps.Geocoder;
+            geocoder.geocode({'location': event.latLng}, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        modalInput.val(results[results.length - 3].formatted_address);
+                        input.val(results[results.length - 3].formatted_address);
+                        var addressLen = results[results.length - 3].address_components.length;
+                        inputCountry.val(results[results.length - 3].address_components[addressLen - 1].long_name);
+                        inputCity.val(results[results.length - 3].address_components[addressLen - 2].long_name);
+                        inputSmallCity.val(results[results.length - 3].address_components[addressLen - 3].long_name);
+                        inputLat.val(event.latLng['lat']);
+                        inputLng.val(event.latLng['lng']);
+
+                        infowindow.setContent(results[1].formatted_address);
+                        infowindow.open(map, marker);
+
+                    } else {
+                        window.alert('No results found');
+                    }
+                } else {
+                    window.alert('Geocoder failed due to: ' + status);
+                }
+            });
+
+        });
+
+        autocomplete.addListener('place_changed', function () {
+            // infowindow.close();
+            // marker.setVisible(false);
+            var place = autocomplete.getPlace();
+            // If the place has a geometry, then present it on a map.
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);  // Why 17? Because it looks good.
+            }
+        });
+
+
+    });
+
 
     $('.guide-preview-button').click(function () {
 

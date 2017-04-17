@@ -112,3 +112,11 @@ hr{
     width: 840px;
     height: 793px;
 }
+
+.accom-date{
+    display: none;
+}
+
+.accom-delete{
+    margin: -6px 0px 10px 780px;
+}

@@ -887,7 +887,6 @@ option {
     opacity: 0.75;
     background-color: #696969;
     margin: 10px 10px 0px 10px;
-    cursor: pointer;
     -webkit-background-size: cover;
     background-size: cover;
 }
@@ -898,6 +897,7 @@ option {
     height: 30px;
     top: 35px;
     left: 70px;
+    cursor: pointer;
 }
 
 .accom-save-button, .guide-save-button {

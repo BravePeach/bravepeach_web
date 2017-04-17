@@ -47,19 +47,23 @@
         {% if accom_template.accom_photos.all.0.photo.url %}
             <img class="photo photo1" src="{{ accom_template.accom_photos.all.0.photo.url }}">
         {% else %}
-            <div class="photo photo1"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
-            <input type="file" accept="image/*" style="display: none" required>
-            <input type="hidden" class="photo1">
+            <div class="photo photo1">
+                <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
+                <input class="photo1" type="file" accept="image/*" style="display: none">
+            </div>
         {% endif %}
-        <div class="photo photo2"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
-        <input type="file" accept="image/*" style="display: none">
-        <input type="hidden" class="photo2">
-        <div class="photo photo3"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
-        <input type="file" accept="image/*" style="display: none">
-        <input type="hidden" class="photo3">
-        <div class="photo photo4"><img class="add_button" src="{% static 'image/icon/add_white.png' %}"></div>
-        <input type="file" accept="image/*" style="display: none">
-        <input type="hidden" class="photo4">
+        <div class="photo photo2">
+            <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
+            <input class="photo2" type="file" accept="image/*" style="display: none">
+        </div>
+        <div class="photo photo3">
+            <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
+            <input class="photo3" type="file" accept="image/*" style="display: none">
+        </div>
+        <div class="photo photo4">
+            <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
+            <input class="photo4" type="file" accept="image/*" style="display: none">
+        </div>
     </div>
     <textarea class="accom-content">{% if not accom_template.content %}숙소 정보를 자세하게 작성해주세요.
 
