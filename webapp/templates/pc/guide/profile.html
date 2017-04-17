@@ -7,6 +7,22 @@
 {% endblock %}
 
 {% block js %}
+    <script>
+    function make_room(gid){
+        $.post({% url 'make_room' %}, {'opponent': gid},
+        function(data){
+            if(data['ok'] === true) {
+                location.href = '/chat/'+gid;
+            } else {
+                swal({
+                    "title": "Oops!",
+                    "text": data["msg"],
+                    "type": "error"
+                });
+            }
+        });
+    }
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -48,6 +64,7 @@
                 <div class="info">
                     <div class="guide-cnt">가이드 {{ guide.guide_cnt }} 건</div> |
                     <div class="review-cnt">후기 {{ reviews|length }} 개</div>
+                    <button class="chat" onclick="make_room({{ guide.user_id }});">1:1 채팅하기</button>
                 </div>
             </div>
         </div>

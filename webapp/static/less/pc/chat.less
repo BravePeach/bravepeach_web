@@ -1,0 +1,49 @@
+.all_wrapper {
+  margin: 40px auto 20px auto;
+  min-height: 400px;
+
+  #chat_join_form {
+    display: none;
+  }
+
+  .chat_list {
+    display: inline-block;
+    border-right: 1px solid #ddd9d9;
+    width: 300px;
+    min-height: 400px;
+    font-size: 20px;
+
+    .room-link {
+      height: 60px;
+      border: 1px solid #ddd9d9;
+      cursor: pointer;
+      text-align: center;
+      line-height: 60px;
+
+      &.active {
+        color: white;
+        background-color: #e64c47;
+      }
+    }
+  }
+
+  #chats {
+    display: inline-block;
+    width: 580px;
+    min-height: 400px;
+    vertical-align: top;
+
+    .message {
+
+      &.mine {
+
+      }
+    }
+  }
+
+  .room {
+    position: relative;
+    bottom: 0;
+  }
+}
+

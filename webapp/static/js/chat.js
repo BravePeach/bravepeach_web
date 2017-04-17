@@ -41,7 +41,7 @@ $(function () {
             console.log("Joining room " + data.join);
             var roomdiv = $(
                 "<div class='room' id='room-" + data.join + "'>" +
-                "<h2>" + data.title + "</h2>" +
+                // "<h2>" + data.title + "</h2>" +
                 "<div class='messages'></div>" +
                 "<form><input><button>Send</button></form>" +
                 "</div>"
@@ -71,9 +71,12 @@ $(function () {
                 case 0:
                     // Message
                     ok_msg = "<div class='message'>" +
-                        "<span class='username'>" + data.username + ": </span>" +
+                        // "<span class='username'>" + data.username + ": </span>" +
                         "<span class='body'>" + data.message + "</span>" +
                         "</div>";
+                    if(data.uid === my_id) {
+                        $(ok_msg).addClass('mine');
+                    }
                     break;
                 case 1:
                     // Warning / Advice messages
@@ -135,8 +138,10 @@ $(function () {
     // Helpful debugging
     webSocketBridge.socket.onopen = function () {
         console.log("Connected to chat socket");
+        $('.room-link.active').click();
     };
     webSocketBridge.socket.onclose = function () {
         console.log("Disconnected from chat socket");
-    }
+    };
+
 });

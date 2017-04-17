@@ -9,35 +9,31 @@
 {% block js %}
     <script src="{% static "channels/js/websocketbridge.js" %}" type="text/javascript"></script>
     <script>
-    var ws_path = '{{ chat_host }}/?session_key={{ request.session.session_key }}';
-    var make_path = '{% url "make_room" %}';
+        var ws_path = '{{ chat_host }}/?session_key={{ request.session.session_key }}';
+        var make_path = '{% url "make_room" %}';
+        var active = '{{ active }}';
+        var my_id = {{ request.user.id }};
     </script>
     <script src="{% static 'js/chat.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-{#    <h1>{{ request.user.profile.full_name }}</h1>#}
-{#    <h2>{{ request.user.email }}</h2>#}
-    <div class="chat_list">
-        {% for room in rooms %}
-            <div class="room-link" onclick="join_room({{ room.id }})">{{ room }}</div>
-        {% empty %}
-            <p class="empty">아직 채팅이 없습니다. 원하는 상대방과 대화를 나눠보세욧</p>
-        {% endfor %}
+    <div class="all_wrapper">
+        <form id="chat_join_form">
+            {% csrf_token %}
+            <input type="text" name="opponent">
+            <button type="button" onclick="make_room()">MAKE</button>
+        </form>
+        <div class="chat_list">
+            {% for room in rooms %}
+                <div class="room-link {% if room.user_1_id == active or room.user_2_id == active %}active{% endif %}"
+                     onclick="join_room({{ room.id }})">{{ room }}</div>
+            {% empty %}
+                <p class="empty">아직 채팅이 없습니다. <br>
+                    원하는 상대방과 대화를 나눠보세요</p>
+            {% endfor %}
+        </div><!--
+    --><div id="chats">
     </div>
-{#    <ul class="rooms">#}
-{#        {% for room in rooms %}#}
-{#            <li class="room-link" data-room-id="{{ room.id }}">{{ room }}</li>#}
-{#        {% empty %}#}
-{#            <p class="empty">No chat rooms defined. Maybe make some in the <a href="{% url 'admin:index' %}">admin</a>?</p>#}
-{#        {% endfor %}#}
-{#    </ul>#}
-    <form>
-        {% csrf_token %}
-        <input type="text" name="opponent">
-        <button type="button" onclick="make_room()">MAKE</button>
-    </form>
-
-    <div id="chats">
     </div>
 {% endblock %}
