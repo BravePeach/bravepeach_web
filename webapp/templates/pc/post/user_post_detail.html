@@ -1,0 +1,7 @@
+{% extends 'pc/base.html' %}
+
+{% block content %}
+    {{ post.title }}
+
+    <div>{{ post.content|safe }}</div>
+{% endblock %}

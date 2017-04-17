@@ -102,8 +102,11 @@ urlpatterns = [
 
     # Guide2User
 
-    # Comment
-    url(r'^add_comment/$', views.trip.AddComment.as_view(), name="add_comment"),
+    # Post
+    url(r'^user_posts/$', views.post.UserPostList.as_view(), name="user_posts"),
+    url(r'^user_posts/(?P<user_post_id>\d+)/$', views.post.user_post_detail, name="user_post_detail"),
+    url(r'^add_user_comment/$', views.post.AddUserComment.as_view(), name="add_user_comment"),
+    url(r'^write_user_post/$', views.post.write_user_post, name="write_user_post"),
 
     # Chat
     url(r'^chat/$', views.chat.chat_index, name="chat_index"),

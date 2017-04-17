@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.forms import extras
 
-from .models import (Profile, UserRequest, UserReview, GuideOffer, AccomTemplate, GuideTemplate, Guide, GuideAdjust,
-                     GuideReview, Journal)
+from .models import (Profile, UserRequest, UserReview, GuideOffer, Guide, GuideAdjust,
+                     GuideReview, Journal, UserPost)
 from redactor.widgets import RedactorEditor
 
 
@@ -157,8 +157,6 @@ class SetPasswordCustcomForm(SetPasswordForm):
 
 
 class UserReviewForm(forms.ModelForm):
-    # content = forms.CharField(widget=RedactorEditor)
-
     class Meta:
         model = UserReview
         fields = ('rating', 'content')
@@ -220,4 +218,11 @@ class JournalForm(forms.ModelForm):
     class Meta:
         model = Journal
         fields = ['thumbnail', 'content']
+        widgets = {'content': RedactorEditor}
+
+
+class UserPostForm(forms.ModelForm):
+    class Meta:
+        model = UserPost
+        fields = ('title', 'content')
         widgets = {'content': RedactorEditor}

@@ -1,0 +1,42 @@
+{% extends 'pc/base.html' %}
+{% load static %}
+{% load mathfilters %}
+{% load custom_filters %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/pc/post_list.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main-container">
+        <section>
+            <div class="sup-title-peach">커뮤니티</div>
+        </section>
+
+        <table class="post-table">
+            <tr><th id="post-id">번호</th><th id="post-title">제목</th><th id="post-writer">글쓴이</th><th id="post-hits">조회수</th></tr>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.id }}</td>
+                    <td><a href="{% url 'user_post_detail' post.id %}">{{ post.title }}</a></td>
+                    <td>{{ post.writer.profile.full_name }}</td><td>{{ post.user_post_hit.count }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <a id="" href="{% url 'write_user_post' %}">글쓰기</a>
+
+    <div class="pagination">
+        {% with page_obj.number|intdiv:5|add:1 as start %}
+            {% with start|add:5 as end %}
+                {% for page in start|range:end %}
+                    {% if page in paginator.num_pages|add:1|to_list %}
+                        <a href="?page={{ page }}">{{ page }}<a/>
+                    {% endif %}
+                {% endfor %}
+            {% endwith %}
+        {% endwith %}
+    </div>
+
+{% endblock %}
