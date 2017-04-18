@@ -44,7 +44,8 @@ class UserPostList(ListView):
     else:
         template = 'mobile/post/post_list.html'
 
-    queryset = UserPost.objects.prefetch_related('user_post_hit').select_related('writer', 'writer__profile').all().order_by('-id')
+    queryset = UserPost.objects.prefetch_related('user_post_hit', 'user_comment').select_related(
+        'writer', 'writer__profile').all().order_by('-id')
     template_name = template
     model = UserPost
     paginate_by = 20
@@ -52,9 +53,7 @@ class UserPostList(ListView):
 
 
 def user_post_detail(request, user_post_id):
-    post = get_object_or_404(
-        UserPost.objects.prefetch_related('comment', 'comment__writer', 'comment__created_at').filter(id=user_post_id)
-    )
+    post = get_object_or_404(UserPost.objects.prefetch_related('user_comment').filter(id=user_post_id))
 
     if not UserPostHit.objects.filter(
             post_id=user_post_id,

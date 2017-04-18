@@ -14,13 +14,38 @@
         </section>
 
         <table class="post-table">
-            <tr><th id="post-id">번호</th><th id="post-title">제목</th><th id="post-writer">글쓴이</th><th id="post-hits">조회수</th></tr>
-            {% for post in posts %}
+            <thead>
                 <tr>
-                    <td>{{ post.id }}</td>
-                    <td><a href="{% url 'user_post_detail' post.id %}">{{ post.title }}</a></td>
-                    <td>{{ post.writer.profile.full_name }}</td><td>{{ post.user_post_hit.count }}</td>
+                    <th id="post-id">번호</th>
+                    <th id="post-writer">글쓴이</th>
+                    <th id="post-title">제목</th>
+                    <th id="post-hits">조회수</th>
+                    <th id="post-date">등록일</th>
                 </tr>
+            </thead>
+            {% for post in posts %}
+                <tbody>
+                <tr>
+                    <td class="pid">{{ post.id }}</td>
+                    <td><div>{{ post.writer.profile.full_name }}</div></td>
+                    <td class="ptle">
+                        <div>
+                            <a href="{% url 'user_post_detail' post.id %}">{{ post.title }}</a>
+                            {% if post.user_comment.count %}
+                                <span>{{ post.user_comment.count }}</span>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td class="pcnt">{{ post.user_post_hit.count }}</td>
+                    <td>
+                        {% if post.written_date|is_today %}
+                            {{ post.written_date|date:'H:i:s' }}
+                        {% else %}
+                            {{ post.written_date|date:'Y/m/d' }}
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
             {% endfor %}
         </table>
     </div>

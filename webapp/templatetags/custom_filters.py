@@ -1,4 +1,5 @@
 from django import template
+from django.utils import timezone
 
 register = template.Library()
 
@@ -34,3 +35,8 @@ def addcls(field, cls):
 @register.filter(name="range")
 def to_range(start, end):
     return range(start, end)
+
+
+@register.filter(name="is_today")
+def is_today(datetime):
+    return timezone.localtime(datetime).date() == timezone.localtime(timezone.now()).date()

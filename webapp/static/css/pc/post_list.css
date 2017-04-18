@@ -23,6 +23,7 @@
 .post-table{
     margin-top: 35px;
     width: 100%;
+    table-layout:fixed
 }
 
 th{
@@ -32,3 +33,65 @@ th{
     padding: 0 0 10px 5px;
 }
 
+#post-id{
+    width: 56px;
+}
+
+.pid{
+    padding-left: 10px;
+    font-size: 12px;
+}
+
+tr{
+    height: 32px;
+    padding: 4px 10px;
+    border-bottom: 1px solid rgb(128, 128, 128);
+}
+
+#post-writer{
+    width: 80px;
+}
+
+td div{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+}
+
+table{
+    table-layout:fixed
+}
+
+td{
+    padding: 0 2px;
+}
+
+#post-title{
+    width: 600px;
+}
+
+.ptle span{
+    color: #E64C47;
+}
+
+.pcnt{
+    text-align: right;
+    padding-right: 18px;
+}
+
+#post-hits{
+    text-align: center;
+}
+
+tbody tr:hover{
+    background-color: rgba(211, 211, 211, 0.2);
+}
+
+#post-date{
+    width: 80px;
+    text-align: center;
+}
+
+.pagination{
+    text-align: center;
+}

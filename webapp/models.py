@@ -484,7 +484,7 @@ class UserPost(Model):
     writer = models.ForeignKey(User, related_name="post")
     title = models.CharField(max_length=50, default="")
     content = RedactorField(verbose_name=u'Content')
-    written_date = models.DateTimeField(auto_now_add=True)
+    written_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return "{}'s post".format(self.writer.profile.full_name)
@@ -494,17 +494,17 @@ class UserPostHit(Model):
     post = models.ForeignKey(UserPost, related_name="user_post_hit")
     ip = models.CharField(max_length=40)
     session = models.CharField(max_length=40)
-    created = models.DateTimeField(default=datetime.datetime.now())
+    created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return "Hit {}'s post with session key: {}".format(self.post.writer.profile.full_name, self.session)
 
 
 class UserComment(Model):
-    post = models.ForeignKey(UserPost, related_name="comment")
+    post = models.ForeignKey(UserPost, related_name="user_comment")
     content = models.CharField(max_length=300, default="")
-    writer = models.ForeignKey(User, related_name="comment")
-    written_date = models.DateTimeField(auto_now_add=True)
+    writer = models.ForeignKey(User, related_name="user_comment")
+    written_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return "{}'s comment to post {}".format(self.writer.profile.full_name, self.post.id)
