@@ -69,29 +69,32 @@ $(function () {
     };
 
    $('.fixed-trip .trip-card-wrapper, .ended-trip .trip-card-wrapper').each(function(){
-       var number = 0;
-       for (var i=1; i<=7; i+=3){
-           number += parseInt($(this).children('.traveler-num').text().split(' ')[i].slice(0,-1));
-       }
-       number += '명';
-       var title = $(this).children('.user-name').text() + ' / ' + number + ' / ' + $(this).children('.travel-city').text().replace(/\s/g, '').replace(/\//g, ',');
-       var start = $(this).children('.travel-date').text().split(' - ')[0].replace(/\//g, '-');
-       var end = $(this).children('.travel-date').text().split(' - ')[1].replace(/\//g, '-') + " 20:00:00";
-       console.log(start, end);
-       if ($(this).parent().hasClass('fixed-trip')) {
-           var color = "#e64c47";
-       }
+       if($(this).children().length) {
+           var number = 0;
+           for (var i = 1; i <= 7; i += 3) {
+               number += parseInt($(this).children('.traveler-num').text().split(' ')[i].slice(0, -1));
+           }
+           number += '명';
+           var title = $(this).children('.user-name').text() + ' / ' + number + ' / ' + $(this).children('.travel-city').text().replace(/\s/g, '').replace(/\//g, ',');
+           var start = $(this).children('.travel-date').text().split(' - ')[0].replace(/\//g, '-');
+           var end = $(this).children('.travel-date').text().split(' - ')[1].replace(/\//g, '-') + " 20:00:00";
+           var color;
+           console.log(start, end);
+           if ($(this).parent().hasClass('fixed-trip')) {
+               color = "#e64c47";
+           }
 
-       else {
-           var color = "#f2ad8a";
+           else {
+               color = "#f2ad8a";
+           }
+           var evt = {
+               "title": title,
+               "start": start,
+               "end": end,
+               "color": color
+           };
+           evt_list.push(evt)
        }
-	   var evt = {
-	       "title": title,
-           "start": start,
-           "end": end,
-           "color": color
-       };
-	   evt_list.push(evt)
    });
 
    if (oldOffDays.length) {
@@ -122,15 +125,8 @@ $(function () {
        selectOverlap: function(event) {
            return event.rendering === 'background';
        },
-       select: function (start, end, jsEvent, view) {
+       select: function (start, end) {
            off_days = refreshOffDays();
-           // if (start.diff(end, 'days') == -1 && off_days.contains(start)) {
-           //     $(".cal").fullCalendar('removeEvents', function (evt) {
-           //         return evt.start.diff(start) == 0
-           //     });
-           //     $(".cal").fullCalendar("unselect");
-           // }
-
 
                while(start.diff(end) < 0) {
                    if (!off_days.contains(start)) {
