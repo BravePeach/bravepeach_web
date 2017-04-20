@@ -6,11 +6,13 @@ from django.views.generic import View, ListView
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
-from ..models import UserPost, UserComment, UserPostHit
+from ..models import UserPost, UserComment
 from ..forms import UserPostForm
 from bravepeach.util import flavour_render
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def write_user_post(request, **kwargs):
     if request.method == "GET":
         form = UserPostForm()
@@ -21,17 +23,18 @@ def write_user_post(request, **kwargs):
             post = form.save(commit=False)
             post.writer = request.user
             post.save()
-        return flavour_render(request, "post/write_post.html", {"form": form})
+        return flavour_render(request, "post/user_post_detail.html", {"post": post})
 
 
 class AddUserComment(View):
     def post(self, request):
-        offer_id = request.POST.get('offer_id')
-        writer = request.POST.get('user_id')
+        # EXAMPLE: 'HTTP_REFERER' = 'bravepeach.com/user_posts/123'
+        post_id = int(request.environ.get('HTTP_REFERER').split('/')[-2])
+        writer = request.user.id
         content = request.POST.get('content')
-        UserComment.objects.create(writer=writer, content=content, offer_id=offer_id)
+        UserComment.objects.create(writer_id=writer, content=content, post_id=post_id)
         c = UserComment.objects.all().last()
-        result = {'content': c.__dict__['content'], 'created_at': formats.date_format(timezone.localtime(c.__dict__['created_at']), "Y.m.d H:i")}
+        result = {'content': c.content, 'written_date': formats.date_format(timezone.localtime(c.written_date), "Y.m.d H:i")}
         return JsonResponse(result)
 
 
@@ -55,16 +58,16 @@ class UserPostList(ListView):
 def user_post_detail(request, user_post_id):
     post = get_object_or_404(UserPost.objects.prefetch_related('user_comment').filter(id=user_post_id))
 
-    if not UserPostHit.objects.filter(
-            post_id=user_post_id,
-            session=request.session.session_key):
-        if not request.session.session_key:
-            request.session.save()
-
-        hit = UserPostHit(
-            post_id=user_post_id,
-            ip=request.META['REMOTE_ADDR'],
-            created=datetime.datetime.now(),
-            session=request.session.session_key)
-        hit.save()
+    # if not UserPostHit.objects.filter(
+    #         post_id=user_post_id,
+    #         session=request.session.session_key):
+    #     if not request.session.session_key:
+    #         request.session.save()
+    #
+    #     hit = UserPostHit(
+    #         post_id=user_post_id,
+    #         ip=request.META['REMOTE_ADDR'],
+    #         created=timezone.now(),
+    #         session=request.session.session_key)
+    #     hit.save()
     return flavour_render(request, "post/user_post_detail.html", {"post": post})

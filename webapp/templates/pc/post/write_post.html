@@ -7,15 +7,16 @@
 
 {% block content %}
     {{ form.media }}
-    <div class="main-container">
     <section>
-            <div class="sup-title-peach">커뮤니티</div>
+        <div class="sup-title-peach">커뮤니티</div>
+        <div class="sub-title">글쓰기</div>
     </section>
         <form method="post" action="/write_user_post/">
-            {% csrf_token %}
-    {{ form.title }}
-    {{ form.content }}
-    <button type="submit"></button>
+            <div id="form-wrapper">
+                {% csrf_token %}
+                {{ form.title }}
+                {{ form.content }}
+            </div>
+            <button type="submit">글쓰기</button>
         </form>
-    </div>
 {% endblock %}

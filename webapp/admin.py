@@ -3,7 +3,7 @@ from django.db import models
 
 from .models import (Profile, Guide, UserRequest, GuideOffer, AccomTemplate, GuideTemplate, CancelledOffer,
                      UserReview, GuideReview, Notice, GuideAdjust, UserAlarm, GuideAlarm, Cost, Journal,
-                     UserPost, UserPostHit)
+                     UserPost)
 
 from redactor.widgets import RedactorEditor
 
@@ -98,4 +98,3 @@ admin.site.register(UserAlarm, UserAlarmAdmin)
 admin.site.register(GuideAlarm, GuideAlarmAdmin)
 admin.site.register(Notice, NoticeAdmin)
 admin.site.register(UserPost, UserPostAdmin)
-admin.site.register(UserPostHit, UserPostHitAdmin)

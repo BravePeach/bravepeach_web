@@ -485,19 +485,10 @@ class UserPost(Model):
     title = models.CharField(max_length=50, default="")
     content = RedactorField(verbose_name=u'Content')
     written_date = models.DateTimeField(default=timezone.now)
+    hit_user_id = JSONField(null=True, blank=True)
 
     def __str__(self):
         return "{}'s post".format(self.writer.profile.full_name)
-
-
-class UserPostHit(Model):
-    post = models.ForeignKey(UserPost, related_name="user_post_hit")
-    ip = models.CharField(max_length=40)
-    session = models.CharField(max_length=40)
-    created = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return "Hit {}'s post with session key: {}".format(self.post.writer.profile.full_name, self.session)
 
 
 class UserComment(Model):

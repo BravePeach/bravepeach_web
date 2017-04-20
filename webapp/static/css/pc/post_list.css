@@ -95,3 +95,35 @@ tbody tr:hover{
 .pagination{
     text-align: center;
 }
+
+.page{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 0 6px 50px 6px;
+    text-align: center;
+    border: solid 1px #979797;
+    padding-top: 5px;
+}
+
+.page:hover, .page.active{
+    color:#E64C47;
+}
+
+.page.active{
+    font-weight: bold;
+}
+
+#write-post{
+    width: 60px;
+    height: 28px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: solid 1px #979797;
+    display: inline-block;
+    text-align: center;
+    margin: 10px 0 30px 810px;
+    font-weight: bold;
+    padding-top: 2px;
+}
