@@ -1,0 +1,129 @@
+.enroll-trip-button{
+    display: none !important;
+}
+
+.sup-title-peach {
+    color: #E64C47;
+    margin: 0px 0px 3px -3px;
+    font-size: 48px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+.main-container{
+    width: 880px;
+    margin: auto;
+    padding-top: 55px;
+}
+
+.post-table{
+    margin-top: 35px;
+    width: 100%;
+    table-layout:fixed
+}
+
+th{
+    text-align: left;
+    font-size: 16px;
+    border-bottom: 1px solid #979797;
+    padding: 0 0 10px 5px;
+}
+
+#post-id{
+    width: 56px;
+}
+
+.pid{
+    padding-left: 10px;
+    font-size: 12px;
+}
+
+tr{
+    height: 32px;
+    padding: 4px 10px;
+    border-bottom: 1px solid rgb(128, 128, 128);
+}
+
+#post-writer{
+    width: 80px;
+}
+
+td div{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+}
+
+table{
+    table-layout:fixed
+}
+
+td{
+    padding: 0 2px;
+}
+
+#post-title{
+    width: 600px;
+}
+
+.ptle span{
+    color: #E64C47;
+}
+
+.pcnt{
+    text-align: right;
+    padding-right: 18px;
+}
+
+#post-hits{
+    text-align: center;
+}
+
+tbody tr:hover{
+    background-color: rgba(211, 211, 211, 0.2);
+}
+
+#post-date{
+    width: 80px;
+    text-align: center;
+}
+
+.pagination{
+    text-align: center;
+}
+
+.page{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 0 6px 50px 6px;
+    text-align: center;
+    border: solid 1px #979797;
+    padding-top: 5px;
+}
+
+.page:hover, .page.active{
+    color:#E64C47;
+}
+
+.page.active{
+    font-weight: bold;
+}
+
+#write-post{
+    width: 60px;
+    height: 28px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: solid 1px #979797;
+    display: inline-block;
+    text-align: center;
+    margin: 10px 0 30px 810px;
+    font-weight: bold;
+    padding-top: 2px;
+}

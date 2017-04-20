@@ -1,0 +1,47 @@
+.enroll-trip-button{
+    display: none !important;
+}
+
+.sup-title-peach {
+    color: #E64C47;
+    margin: 0px 0px 3px -3px;
+    font-size: 48px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+.main-container{
+    width: 880px;
+    margin: auto;
+    padding-top: 55px;
+}
+
+.sub-title {
+    margin-top: 0;
+    margin-bottom: 17px;
+    height: 32px;
+    font-size: 22px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    text-align: left;
+}
+
+#form-wrapper{
+    width: 100%;
+    height: auto;
+}
+
+#id_city{
+
+}
+
+div#redactor-uuid-0.redactor-layer.redactor-styles.redactor-layer-img-edit.redactor-in{
+    height: 530px;
+}

@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.db import models
 
 from .models import (Profile, Guide, UserRequest, GuideOffer, AccomTemplate, GuideTemplate, CancelledOffer,
-                     UserReview, GuideReview, Notice, GuideAdjust, UserAlarm, GuideAlarm, Cost, Journal)
+                     UserReview, GuideReview, Notice, GuideAdjust, UserAlarm, GuideAlarm, Cost, Journal,
+                     UserPost)
 
 from redactor.widgets import RedactorEditor
 
@@ -74,6 +75,14 @@ class GuideAlarmAdmin(admin.ModelAdmin):
     pass
 
 
+class UserPostAdmin(admin.ModelAdmin):
+    pass
+
+
+class UserPostHitAdmin(admin.ModelAdmin):
+    pass
+
+
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Guide, GuideAdmin)
 admin.site.register(UserRequest, UserRequestAdmin)
@@ -88,3 +97,4 @@ admin.site.register(Journal, JournalAdmin)
 admin.site.register(UserAlarm, UserAlarmAdmin)
 admin.site.register(GuideAlarm, GuideAlarmAdmin)
 admin.site.register(Notice, NoticeAdmin)
+admin.site.register(UserPost, UserPostAdmin)

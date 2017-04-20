@@ -4,17 +4,15 @@ from collections import OrderedDict, defaultdict
 
 from django.shortcuts import redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponse
-from django.db.models import Count, Case, When, Sum
+from django.db.models import Count, Sum
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
-from django.utils import formats
 from django.template.loader import render_to_string
 
 from bravepeach.util import flavour_render
 from ..forms import RequestForm, GuideSearchFrom
-from ..models import (Guide, UserReview, GuideReview, UserRequest, GuideOffer, UserLike, GuideLike, GuideTemplate,
-                      AccomTemplate, Comment, Cost)
-from django.utils import timezone
+from ..models import (Guide, UserRequest, GuideOffer, UserLike, GuideTemplate,
+                      AccomTemplate, Cost)
 
 
 def guide_search(request):
@@ -226,7 +224,6 @@ def offer_detail(request, offer_id):
     for i in a_template_list:
         i[1] = AccomTemplate.objects.get(id=i[1])
 
-    comment_q = Comment.objects.select_related('offer').filter(offer_id=offer_id).order_by('created_at')
     cost_qlist = []
     type_cost = []
     guide_commission = 0
@@ -244,7 +241,6 @@ def offer_detail(request, offer_id):
                                                               "guide_offer": guide_offer,
                                                               "g_template_qlist": g_template_qlist,
                                                               "a_template_list": a_template_list,
-                                                              "comment_q": comment_q,
                                                               "cost_qlist": cost_qlist,
                                                               "type_cost": type_cost,
                                                               "total_cost": total_cost,
@@ -276,13 +272,3 @@ def payment(request, offer_id):
     param_dict["payment_deadline"] = datetime.date.today()+datetime.timedelta(days=2)
     return flavour_render(request, "trip/payment.html", param_dict)
 
-
-class AddComment(View):
-    def post(self, request):
-        offer_id = request.POST.get('offer_id')
-        writer = request.POST.get('user_id')
-        content = request.POST.get('content')
-        Comment.objects.create(writer=writer, content=content, offer_id=offer_id)
-        c = Comment.objects.all().last()
-        result = {'content': c.__dict__['content'], 'created_at': formats.date_format(timezone.localtime(c.__dict__['created_at']), "Y.m.d H:i")}
-        return JsonResponse(result)

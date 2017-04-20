@@ -292,13 +292,9 @@ $(function () {
                 position: {lat: parseFloat(inputLat.val()), lng: parseFloat(inputLng.val())},
                 map: map
             })
-
         }
-        var options = {
-            types: ['(regions)']
-        };
 
-        autocomplete = new google.maps.places.Autocomplete(modalInput[0], options);
+        autocomplete = new google.maps.places.Autocomplete(modalInput[0]);
         autocomplete.bindTo('bounds', map);
 
         var infowindow = new google.maps.InfoWindow();

@@ -1,0 +1,22 @@
+{% extends 'pc/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/pc/write_post.css' %}">
+{% endblock %}
+
+{% block content %}
+    {{ form.media }}
+    <section>
+        <div class="sup-title-peach">커뮤니티</div>
+        <div class="sub-title">글쓰기</div>
+    </section>
+        <form method="post" action="/write_user_post/">
+            <div id="form-wrapper">
+                {% csrf_token %}
+                {{ form.title }}
+                {{ form.content }}
+            </div>
+            <button type="submit">글쓰기</button>
+        </form>
+{% endblock %}

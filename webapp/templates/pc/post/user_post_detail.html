@@ -1,0 +1,46 @@
+{% extends 'pc/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/pc/user_post_detail.css' %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/write_user_comment.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="sup-title-peach">커뮤니티</div>
+    </section>
+    <div id="post-head">
+        <div id="post-title-wrapper">
+            <div id="post-title">
+                {{ post.title }}
+            </div>
+        </div>
+        <hr>
+        <div id="post-writer">
+            <img id="writer-picture" src="{{ post.writer.profile.photo.url }}">
+            <div id="writer-name">{{ post.writer.profile.full_name }}</div>
+            <div id="post-date">
+                <span>작성일</span>{{ post.written_date|date:'Y/m/d H:i:s' }}
+            </div>
+            <div id="post-hits">
+                <span>조회수</span>{{ post.user_post_hit.count }}
+            </div>
+            <div id="post-comment-count">
+                <span>댓글</span>{{ post.user_comment.count }}개
+            </div>
+
+        </div>
+    </div>
+
+    <div>{{ post.content|safe }}</div>
+    <div id="comment-wrapper">
+        <div id="comment-form-wrapper">
+            <textarea id="comment-form"></textarea>
+            <div id="comment-button">등록</div>
+        </div>
+    </div>
+{% endblock %}

@@ -390,13 +390,6 @@ class UserReview(Model):
         return range(int(int_part)), frac_part, range(4-int(int_part))
 
 
-class Comment(Model):
-    offer = models.ForeignKey(GuideOffer, related_name="comments")
-    content = models.CharField(max_length=300, default="")
-    writer = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-
 # Guide2User
 class GuideReview(Model):
     offer = models.ForeignKey(GuideOffer, related_name="guide_review")
@@ -485,3 +478,24 @@ class Room(models.Model):
         self.websocket_group.send(
             {"text": json.dumps(final_msg)}
         )
+
+
+class UserPost(Model):
+    writer = models.ForeignKey(User, related_name="post")
+    title = models.CharField(max_length=50, default="")
+    content = RedactorField(verbose_name=u'Content')
+    written_date = models.DateTimeField(default=timezone.now)
+    hit_user_id = JSONField(null=True, blank=True)
+
+    def __str__(self):
+        return "{}'s post".format(self.writer.profile.full_name)
+
+
+class UserComment(Model):
+    post = models.ForeignKey(UserPost, related_name="user_comment")
+    content = models.CharField(max_length=300, default="")
+    writer = models.ForeignKey(User, related_name="user_comment")
+    written_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return "{}'s comment to post {}".format(self.writer.profile.full_name, self.post.id)
