@@ -110,5 +110,6 @@ urlpatterns = [
 
     # Chat
     url(r'^chat/$', views.chat.chat_index, name="chat_index"),
+    url(r'^chat/(?P<uid>\d+)$', views.chat.chat_user, name="chat_user"),
     url(r'^make_chat/$', views.chat.make_room, name="make_room"),
 ]
