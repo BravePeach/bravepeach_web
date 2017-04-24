@@ -47,7 +47,7 @@ class UserPostList(ListView):
     else:
         template = 'mobile/post/post_list.html'
 
-    queryset = UserPost.objects.prefetch_related('user_post_hit', 'user_comment').select_related(
+    queryset = UserPost.objects.prefetch_related('user_comment').select_related(
         'writer', 'writer__profile').all().order_by('-id')
     template_name = template
     model = UserPost

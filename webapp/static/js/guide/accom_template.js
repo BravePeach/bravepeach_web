@@ -229,13 +229,21 @@ $(function () {
               geocoder.geocode({'location': event.latLng}, function(results, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
                   if (results[1]) {
-                      console.log(results);
                       modalInput.val(results[results.length - 3].formatted_address);
                       input.val(results[results.length - 3].formatted_address);
                       var addressLen = results[results.length - 3].address_components.length;
-                      inputCountry.val(results[results.length - 3].address_components[addressLen - 1].long_name);
-                      inputCity.val(results[results.length - 3].address_components[addressLen - 2].long_name);
-                      inputSmallCity.val(results[results.length - 3].address_components[addressLen -3].long_name);
+
+                      if (addressLen < 5) {
+                          inputCountry.val(results[results.length - 3].address_components[addressLen - 1].long_name);
+                          inputCity.val(results[results.length - 3].address_components[addressLen - 2].long_name);
+                          inputSmallCity.val(results[results.length - 3].address_components[addressLen - 3].long_name);
+                      }
+                      else{
+                          inputCountry.val(results[results.length - 3].address_components[addressLen - 2].long_name);
+                          inputCity.val(results[results.length - 3].address_components[addressLen - 3].long_name);
+                          inputSmallCity.val(results[results.length - 3].address_components[addressLen - 4].long_name);
+                      }
+
                       inputLat.val(event.latLng['lat']);
                       inputLng.val(event.latLng['lng']);
 
