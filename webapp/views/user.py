@@ -206,7 +206,7 @@ def mypage(request, page_type="account"):
     param_dict = {"page_type": page_type, "type_dict": page_type_dict}
 
     if page_type == "alarm":
-        alarm_list = UserAlarm.objects.order_by("-id").all()
+        alarm_list = UserAlarm.objects.filter(receiver=request.user).order_by("-id").all()
         param_dict["alarm_list"] = alarm_list
     elif page_type == "account":
         pass
