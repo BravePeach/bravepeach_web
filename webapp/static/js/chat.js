@@ -88,7 +88,7 @@ $(function () {
                     "<div class='room' id='room-" + data.join + "'>" +
                     // "<h2>" + data.title + "</h2>" +
                     "<div class='messages'></div>" +
-                    "<form><textarea></textarea><button>Send</button></form>" +
+                    "<form><input><button>Send</button></form>" +
                     "</div>"
                 );
                 // Hook up send button to send a message
