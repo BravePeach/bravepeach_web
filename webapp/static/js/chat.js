@@ -24,32 +24,42 @@ function join_room(d, room_id) {
 }
 
 function get_recent_chat(room_id){
-    $.post("https://api.bravepeach.com/get-recent-chat",
-        JSON.stringify({"room_id": room_id}),
-        function(data){
-            var last_date = "1970-01-01 00:00:00";
-            data.forEach(function(item, index){
-                console.log(item);
-                // ok_msg = "<div class='message";
-                // if(data.uid === my_id) {
-                //     ok_msg += " mine' align='right'>";
-                // } else {
-                //     ok_msg += "'>";
-                // }
-                //
-                // ok_msg +=
-                //     // "<span class='username'>" + data.username + ": </span>" +
-                //     "<span class='body'>" + data.message + "</span>" +
-                //     "</div>";
-                // if(data.uid === my_id) {
-                //     $(ok_msg).addClass('mine');
-                // }
-            });
+    $.ajax({
+        method: "POST",
+        url: "http://api.bravepeach.com/get-recent-chat",
+        data: JSON.stringify({"room_id": room_id}),
+        crossDomain: true
+    }).done(function(data){
+        data.forEach(function(item, index){
+            console.log(item);
         });
+    });
+    // $.post("http://api.bravepeach.com/get-recent-chat",
+    //     JSON.stringify({"room_id": room_id}),
+    //     function(data){
+    //         var last_date = "1970-01-01 00:00:00";
+    //         data.forEach(function(item, index){
+    //             console.log(item);
+    //             // ok_msg = "<div class='message";
+    //             // if(data.uid === my_id) {
+    //             //     ok_msg += " mine' align='right'>";
+    //             // } else {
+    //             //     ok_msg += "'>";
+    //             // }
+    //             //
+    //             // ok_msg +=
+    //             //     // "<span class='username'>" + data.username + ": </span>" +
+    //             //     "<span class='body'>" + data.message + "</span>" +
+    //             //     "</div>";
+    //             // if(data.uid === my_id) {
+    //             //     $(ok_msg).addClass('mine');
+    //             // }
+    //         });
+    //     });
 }
 
 function save_data(room_id, writer, content) {
-    $.post("https://api.bravepeach.com/save-chat",
+    $.post("http://api.bravepeach.com/save-chat",
         JSON.stringify({"room_id": room_id, "writer": writer, "content": content}),
         function (data) {
             console.log(data);

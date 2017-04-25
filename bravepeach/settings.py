@@ -56,12 +56,14 @@ INSTALLED_APPS = [
     'mathfilters',
     'social_django',
     'channels',
+    'corsheaders',
     'webapp',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -256,3 +258,11 @@ MESSAGE_TYPES_LIST = getattr(settings, 'MESSAGE_TYPES_LIST',
                               MSG_TYPE_ENTER,
                               MSG_TYPE_LEAVE]
                              )
+
+# CORS Issue
+CORS_ORIGIN_WHITELIST = [
+    "bravepeach.com",
+    "api.bravepeach.com",
+    "dev.bravepeach.com",
+    "api.dev.bravepeach.com",
+]
