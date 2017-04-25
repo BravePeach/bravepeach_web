@@ -20,29 +20,37 @@
 
 {% block content %}
     <div class="all_wrapper">
-    <div class="title">메신저</div>
-    <div class="subtitle">가이드 또는 여행자와 대화를 나눠주세요.</div>
+        <div class="title">메신저</div>
+        <div class="subtitle">가이드 또는 여행자와 대화를 나눠주세요.</div>
         <form id="chat_join_form">
             {% csrf_token %}
             <input type="text" name="opponent">
             <button type="button" onclick="make_room()">MAKE</button>
         </form>
         <div class="chat_list">
-            {% for room in rooms %}
-                <div class="room-link {% if room.user_1_id == active or room.user_2_id == active %}active{% endif %}"
-                     onclick="join_room(this, {{ room.id }})">
-                <div class="profile">
-                    <img src="{% if room.opponent.profile.photo %}{{ room.opponent.profile.photo.url }}
+            {% for room_id, room in rooms %}
+                <div class="room-link {% if room.user_1_id == active or room.user_2_id == active %}active{% endif %}">
+                    <div class="profile">
+                        {% if room.opponent.profile.is_guide %}
+                            <a href="{% url 'guide_profile' gid=room.opponent.guide.all.0.id %}">
+                        {% endif %}
+                        <img src="{% if room.opponent.profile.photo %}{{ room.opponent.profile.photo.url }}
                                 {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
-                         alt="profile"></div>
-                <div class="name">{{ room.opponent.profile.full_name }}</div>
-                <div class="timestamp">
-                    {% if room.timestamp|is_today %}
-                    {{ room.timestamp|date:"H:i:s" }}
-                    {% else %}
-                    {{ room.timestamp|date:"Y/m/d" }}
-                    {% endif %}
-                </div>
+                             alt="profile">
+                        {% if room.opponent.profile.is_guide %}
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="content" onclick="join_room(this, {{ room_id }})">
+                        <div class="name">{{ room.opponent.profile.full_name }}</div>
+                        <div class="timestamp">
+                            {% if room.timestamp|is_today %}
+                                {{ room.timestamp|date:"H:i:s" }}
+                            {% else %}
+                                {{ room.timestamp|date:"Y/m/d" }}
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             {% empty %}
                 <p class="empty">아직 채팅이 없습니다. <br>

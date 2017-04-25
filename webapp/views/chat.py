@@ -34,7 +34,6 @@ def chat_user(request, uid):
         else:
             d["opponent"] = room_dict[room].user_1
         last_chat_list.append((r[0], d))
-
     return render(request, "pc/chat.html", {"rooms": last_chat_list, "chat_host": CHAT_HOST, "active": int(uid)})
 
 
