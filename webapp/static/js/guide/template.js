@@ -1,3 +1,7 @@
+function randomRange(n1, n2) {
+  return Math.floor( (Math.random() * (n2 - n1 + 1)) + n1 );
+}
+
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -369,9 +373,37 @@ $(function () {
     });
 
     $('.accom-preview-button').click(function () {
-        $('.ap-title').text($('.accom-title-form').val());
+        var title = $('.accom-title-form').val();
+        var smallCity = $('.small_city').val();
+        if (smallCity != ""){
+            smallCity += ", ";
+        }
+        var city = $('.city').val();
+
+        if(city != ""){
+            city += ", ";
+        }
+        var country = $('.country').val();
+        var content = $('.accom-content').val();
+        var location;
+        if ((smallCity + city + country) == "") {
+            location = "숙소 위치를 선택해주세요."
+        }
+
+        else {
+            location = smallCity + city +country;
+        }
+
+        if (title == "") {
+            $('.ap-title').text("숙소 타이틀을 입력해주세요.")
+        }
+        else {
+            $('.ap-title').text(title);
+        }
+
         $('.ap-type').text($('.accom-type option:selected').text());
-        $('.ap-locat').text($('.small_city').val() + ', ' + $('.city').val() + ', ' + $('.country').val());
+        $('.ap-locat').text(location);
+        $('.ap-content').text(content);
         $('.ap-overlay').removeClass('display-none');
         $('body').css('overflow', 'hidden');
     });
