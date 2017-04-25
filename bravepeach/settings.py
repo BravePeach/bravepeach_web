@@ -29,6 +29,8 @@ ALLOWED_HOSTS = LOCAL_SETTINGS["ALLOWED_HOSTS"]     # add your ip address
 
 INTERNAL_IPS = LOCAL_SETTINGS["INTERNAL_IPS"]   # add "127.0.0.1" when make local
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', "https")
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
