@@ -225,20 +225,6 @@ $(function () {
         $('.' + formType + '-save-button').removeClass('inactive');
     });
 
-    // 초기화 버튼
-    $('.accom-refresh-button, .guide-refresh-button').click(function () {
-        var formType = $(this).attr('class').slice(0, 5);
-        var url = "/new_" + formType + "_form";
-        $.ajax({
-            url: url,
-            type: "GET",
-            data: {id: 1},
-            success: function (data) {
-                $('#' + formType + '_form1').replaceWith(data.split('<!--!>')[0]);
-            }
-        })
-    });
-
     // 가이드 이미지 업로드
     $('.guide').on("click", ".add-photo-button", function () {
         var clickedDiv = $(this);
@@ -315,9 +301,18 @@ $(function () {
                         modalInput.val(results[results.length - 3].formatted_address);
                         input.val(results[results.length - 3].formatted_address);
                         var addressLen = results[results.length - 3].address_components.length;
-                        inputCountry.val(results[results.length - 3].address_components[addressLen - 1].long_name);
-                        inputCity.val(results[results.length - 3].address_components[addressLen - 2].long_name);
-                        inputSmallCity.val(results[results.length - 3].address_components[addressLen - 3].long_name);
+
+                        if (addressLen < 5) {
+                            inputCountry.val(results[results.length - 3].address_components[addressLen - 1].long_name);
+                            inputCity.val(results[results.length - 3].address_components[addressLen - 2].long_name);
+                            inputSmallCity.val(results[results.length - 3].address_components[addressLen - 3].long_name);
+                        }
+                        else{
+                            inputCountry.val(results[results.length - 3].address_components[addressLen - 2].long_name);
+                            inputCity.val(results[results.length - 3].address_components[addressLen - 3].long_name);
+                            inputSmallCity.val(results[results.length - 3].address_components[addressLen - 4].long_name);
+                        }
+
                         inputLat.val(event.latLng['lat']);
                         inputLng.val(event.latLng['lng']);
 
@@ -352,7 +347,38 @@ $(function () {
 
 
     $('.guide-preview-button').click(function () {
+        
+    });
 
+    // 초기화 버튼
+    $('.accom-refresh-button, .guide-refresh-button, .accom-delete, .guide-delete').click(function () {
+        var formType = $(this).attr('class').slice(0, 5);
+        var url = "/new_" + formType + "_form";
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {
+                id: 1,
+                urls: window.location.pathname
+            },
+            success: function (data) {
+                $('#' + formType + '_form1').replaceWith(data.split('<!--!>')[0]);
+                //TODO: 템플릿 불러왔을때는 템플릿 아이디 집어넣기
+            }
+        })
+    });
+
+    $('.accom-preview-button').click(function () {
+        $('.ap-title').text($('.accom-title-form').val());
+        $('.ap-type').text($('.accom-type option:selected').text());
+        $('.ap-locat').text($('.small_city').val() + ', ' + $('.city').val() + ', ' + $('.country').val());
+        $('.ap-overlay').removeClass('display-none');
+        $('body').css('overflow', 'hidden');
+    });
+
+    $('.ap-cancel').click(function () {
+        $('.ap-overlay').addClass('display-none');
+        $('body').css('overflow', 'auto');
     })
 
 });
