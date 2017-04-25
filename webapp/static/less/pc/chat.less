@@ -1,6 +1,25 @@
 .all_wrapper {
-  margin: 40px auto 10px auto;
+  margin: 15px auto 10px auto;
   height: 385px;
+
+  .title {
+    height: 54px;
+    font-family: NanumSquare;
+    font-weight:bold;
+    font-size: 48px;
+    text-align: left;
+    color: #e64c47;
+  }
+
+  .subtitle {
+    height: 32px;
+    font-family: NanumSquare;
+    font-size: 22px;
+    line-height: 1.45;
+    text-align: left;
+    color: #000000;
+    margin-bottom: 22px;
+  }
 
   #chat_join_form {
     display: none;
@@ -8,21 +27,56 @@
 
   .chat_list {
     display: inline-block;
-    border-right: 1px solid #ddd9d9;
-    width: 250px;
-    min-height: 400px;
-    font-size: 20px;
+    border-right: 1px solid #979797;
+    width: 242px;
+    min-height: 666px;
 
     .room-link {
+      padding: 5px;
       height: 60px;
-      border: 1px solid #ddd9d9;
+      border: 1px solid #d9d8d8;
+      border-left: none;
       cursor: pointer;
       text-align: center;
       line-height: 60px;
 
       &.active {
-        color: white;
-        background-color: #e64c47;
+        border-left: 10px solid #e64c47;
+      }
+
+      .profile {
+        display: inline-block;
+        margin: 0 15px 0 5px;
+        border-radius: 100%;
+        width: 64px;
+        height: 64px;
+
+        img {
+          border-radius: 100%;
+          width: 64px;
+          height: 64px;
+        }
+
+      }
+
+      .name {
+        display: inline-block;
+  height: 26px;
+  font-family: NanumSquare;
+        font-weight: bold;
+  font-size: 24px;
+  color: #000000;
+        margin-top: 7px;
+      }
+
+      .timestamp {
+        display: inline-block;
+        margin-top: 3px;
+          height: 21px;
+  font-family: NanumSquare;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #606060;
       }
     }
   }

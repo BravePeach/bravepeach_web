@@ -25,6 +25,39 @@ function join_room(d, room_id) {
     });
 }
 
+function get_recent_chat(room_id){
+    $.post("https://api.bravepeach.com/get-recent-chat",
+    JSON.stringify({"room_id": room_id}),
+    function(data){
+       var last_date = "1970-01-01 00:00:00";
+       data.forEach(function(item, index){
+           console.log(item);
+           // ok_msg = "<div class='message";
+           // if(data.uid === my_id) {
+           //     ok_msg += " mine' align='right'>";
+           // } else {
+           //     ok_msg += "'>";
+           // }
+           //
+           // ok_msg +=
+           //     // "<span class='username'>" + data.username + ": </span>" +
+           //     "<span class='body'>" + data.message + "</span>" +
+           //     "</div>";
+           // if(data.uid === my_id) {
+           //     $(ok_msg).addClass('mine');
+           // }
+       });
+    });
+}
+
+function save_data(room_id, writer, content){
+    $.post("https://api.bravepeach.com/save-chat",
+    JSON.stringify({"room_id": room_id, "writer": writer, "content": content}),
+    function(data){
+        console.log(data);
+    });
+}
+
 $(function () {
     // Correctly decide between ws:// and wss://
     // var ws_path = "/chat/stream";
@@ -51,7 +84,10 @@ $(function () {
                     "</div>"
                 );
                 // Hook up send button to send a message
-                roomdiv.find("form").on("submit", function () {
+                roomdiv.find("form").on("submit", function (e) {
+                    e.preventDefault();
+                    var msg = roomdiv.find("input").val();
+                    save_data(msg);
                     webSocketBridge.send({
                         "command": "send",
                         "room": data.join,
@@ -62,6 +98,7 @@ $(function () {
                 });
                 $("#chats").empty();
                 $("#chats").append(roomdiv);
+                get_recent_chat(data.join);
             }
         } else if (data.leave) {
             console.log("Leaving room " + data.leave);
