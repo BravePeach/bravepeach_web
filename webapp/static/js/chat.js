@@ -63,7 +63,8 @@ function save_data(room_id, writer, content) {
     $.ajax({
         method: "POST",
         url: location.protocol + "//api.bravepeach.com/save-chat",
-        data: JSON.stringify({"room_id": room_id, "writer": writer, "content": content}),
+        data: JSON.stringify({"room_id": room_id, "writer": writer, "content": content,
+            "timestamp": new Date().toISOString().split(".")[0].replace("T", " ")}),
         crossDomain: true,
         dataType: "json",
         contentType: "application/json"
