@@ -44,8 +44,10 @@
 
     <div class="accom-photo-wrapper">
         <div class="photo-title">숙소 사진을 최대 4장까지 추가해주세요.</div>
-        {% if accom_template.accom_photos.all.0.photo.url %}
-            <img class="photo photo1" src="{{ accom_template.accom_photos.all.0.photo.url }}">
+        {% if accom_template.accom_photos.all.0.photo %}
+            <div class="photo photo1" style="background-image: url('{{ accom_template.accom_photos.all.0.photo.url }}')">
+                <input class="photo1" type="file" accept="image/*" style="display: none" value="{{ accom_template.accom_photos.all.0.photo }}">
+            </div>
         {% else %}
             <div class="photo photo1">
                 <img class="add_button" src="{% static 'image/icon/add_white.png' %}">

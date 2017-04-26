@@ -141,7 +141,6 @@ $(function () {
             },
             success: function (data) {
                 $('.accom.template .wrapper').append(data.split('<!--!>')[0]);
-                console.log(data.split('<!--!>')[1]);
                 $('.accom-search').addClass('display-none');
                 $('.search-wrapper .accom').append(data.split('<!--!>')[1]);
             }
@@ -158,9 +157,7 @@ $(function () {
     $('.accom.template').on("click", ".accom-form-wrapper .load", function () {
         $('.search-wrapper').animate({top: $(this).parent().offset().top});
         $(this).parent().hide();
-        console.log($(this).parent().parent()[0].id);
         var s_id = $(this).parent().parent()[0].id.replace('accom_form', '');
-        console.log(s_id);
         $('.accom-search:not(.display-none)').addClass('display-none');
         $('#accom_search' + s_id).removeClass('display-none');
         $('#accom_search' + s_id).children('.content').addClass('display-none');
@@ -361,7 +358,6 @@ $(function () {
                 formdata.append("photo_list", file)
             }
         }
-        console.log(formdata);
         if (accomType == null){
             swal({
                 title: "숙소유형을 선택해주세요.",
@@ -451,7 +447,6 @@ $(function () {
         else {
             var accomIdArray = $("input.accom-id").map(function() { return $(this).val() }).get();
             var accomDateArray = $("input.accom-date").map(function() { return $(this).val() }).get();
-            console.log(accomDateArray, accomIdArray);
             $.ajax({
                 url: "save_accom_offer/",
                 type: "POST",
