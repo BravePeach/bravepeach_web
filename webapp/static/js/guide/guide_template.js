@@ -41,17 +41,6 @@ function searchGuideTemp(s_id, val, page) {
 }
 
 $(function () {
-
-
-    $('.search-bar').click(function () {
-        var act = $(this).siblings('.guide-search:not(.display-none)');
-        act.slideToggle();
-        if ($(this).children('img').hasClass('rotate')) {
-            $(this).children('img').removeClass('rotate')
-        }
-        else $(this).children('img').addClass('rotate');
-    });
-
     // search guide template: if click button or press enter, submit
     $('.search-wrapper .guide').on("click", ".search-button", function () {
         var s_id = $(this).parent().parent()[0].id.replace('guide_search', '');
@@ -89,7 +78,6 @@ $(function () {
         var f_id = $(this).parents('.guide-form-wrapper')[0].id.replace('guide_form', '');
         $('.guide-search:not(.display-none)').addClass('display-none');
         $('#guide_search' + f_id).removeClass('display-none');
-        $('.search-wrapper').animate({top: $(this).parents('.guide-form-wrapper').offset().top});
     });
 
     // 템플릿 클릭하면 내용 로드하기
@@ -152,13 +140,11 @@ $(function () {
 
     // if click "새로작성하기" button
     $('.guide.template').on("click", ".guide-form-wrapper .new", function () {
-        $('.search-wrapper').animate({top: $(this).parent().offset().top});
         $(this).parent().hide();
     });
 
     //if click "불러오기" button
     $('.guide.template').on("click", ".guide-form-wrapper .load", function () {
-        $('.search-wrapper').animate({top: $(this).parent().offset().top});
         $(this).parent().hide();
         var s_id = $(this).parent().parent()[0].id.replace('guide_form', '');
         $('.guide-search:not(.display-none)').addClass('display-none');

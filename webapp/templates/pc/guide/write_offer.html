@@ -4,6 +4,7 @@
 
 {% block css %}
     <link rel="stylesheet" href='{% static "css/pc/guide/write_offer.css" %}'>
+    <link rel="stylesheet" media="all and (min-width: 1500px)" href='{% static "css/pc/guide/write_offer_big.css" %}'>
 {% endblock %}
 
 {% block js %}
@@ -46,7 +47,7 @@
         </div>
 
         <div class="request-wrapper">
-            <div class="request-bar">여행 요청서 <img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+            <div class="request-bar">여행 요청서</div>
             <div class="request-content">
                 {% if req.trans_guided %}
                     <div class="request-head">이동수단</div>
@@ -232,19 +233,19 @@
 
         <div class="search-wrapper">
             <div class="trans">
-                <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+                <div class="search-bar">검색</div>
                 <div class="content">검색이 필요하지 않습니다.</div>
             </div>
             <div class="accom search">
-                <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+                <div class="search-bar">검색</div>
                 {% include "pc/guide/accom_result.html" %}
             </div>
             <div class="guide search">
-                <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+                <div class="search-bar">검색</div>
                 {% include "pc/guide/guide_result.html" %}
             </div>
             <div class="cost search">
-                <div class="search-bar">검색<img class="arrow rotate" src="{% static 'image/icon/arrow_down_white.png' %}"></div>
+                <div class="search-bar">검색</div>
                 <div class="content">검색이 필요하지 않습니다.</div>
             </div>
         </div>
