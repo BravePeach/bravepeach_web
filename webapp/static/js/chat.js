@@ -15,14 +15,55 @@ function make_room(){
 }
 
 function join_room(d, room_id) {
-    // Join room
     $(".room-link").removeClass('active');
-    // $(this).addClass("joined");
-    $(d).addClass("active");
+    $(d).parent().addClass("active");
     webSocketBridge.send({
         "command": "join",
         "room": room_id
     });
+}
+
+function get_recent_chat(room_id){
+    $.ajax({
+        method: "POST",
+        url: "http://api.bravepeach.com/get-recent-chat",
+        data: JSON.stringify({"room_id": room_id}),
+        crossDomain: true
+    }).done(function(data){
+        data.forEach(function(item, index){
+            console.log(item);
+        });
+    });
+    // $.post("http://api.bravepeach.com/get-recent-chat",
+    //     JSON.stringify({"room_id": room_id}),
+    //     function(data){
+    //         var last_date = "1970-01-01 00:00:00";
+    //         data.forEach(function(item, index){
+    //             console.log(item);
+    //             // ok_msg = "<div class='message";
+    //             // if(data.uid === my_id) {
+    //             //     ok_msg += " mine' align='right'>";
+    //             // } else {
+    //             //     ok_msg += "'>";
+    //             // }
+    //             //
+    //             // ok_msg +=
+    //             //     // "<span class='username'>" + data.username + ": </span>" +
+    //             //     "<span class='body'>" + data.message + "</span>" +
+    //             //     "</div>";
+    //             // if(data.uid === my_id) {
+    //             //     $(ok_msg).addClass('mine');
+    //             // }
+    //         });
+    //     });
+}
+
+function save_data(room_id, writer, content) {
+    $.post("http://api.bravepeach.com/save-chat",
+        JSON.stringify({"room_id": room_id, "writer": writer, "content": content}),
+        function (data) {
+            console.log(data);
+        });
 }
 
 $(function () {
@@ -47,21 +88,25 @@ $(function () {
                     "<div class='room' id='room-" + data.join + "'>" +
                     // "<h2>" + data.title + "</h2>" +
                     "<div class='messages'></div>" +
-                    "<form><input><button>Send</button></form>" +
+                    "<form><textarea></textarea><button>Send</button></form>" +
                     "</div>"
                 );
                 // Hook up send button to send a message
-                roomdiv.find("form").on("submit", function () {
+                roomdiv.find("form").on("submit", function (e) {
+                    e.preventDefault();
+                    var msg = roomdiv.find("input").val();
+                    save_data(msg);
                     webSocketBridge.send({
                         "command": "send",
                         "room": data.join,
-                        "message": roomdiv.find("input").val()
+                        "message": msg  // roomdiv.find("input").val()
                     });
                     roomdiv.find("input").val("");
                     return false;
                 });
                 $("#chats").empty();
                 $("#chats").append(roomdiv);
+                get_recent_chat(data.join);
             }
         } else if (data.leave) {
             console.log("Leaving room " + data.leave);

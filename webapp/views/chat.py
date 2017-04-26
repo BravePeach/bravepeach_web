@@ -1,3 +1,7 @@
+import json
+import datetime
+
+import requests
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
@@ -11,14 +15,26 @@ from bravepeach.settings import CHAT_HOST
 @login_required
 def chat_index(request):
     return redirect(chat_user, uid=0)
-    # rooms = Room.objects.filter(Q(user_1=request.user) | Q(user_2=request.user)).all()
-    # return render(request, "pc/chat.html", {"rooms": rooms, "chat_host": CHAT_HOST})
 
 
 @login_required
 def chat_user(request, uid):
     rooms = Room.objects.filter(Q(user_1=request.user) | Q(user_2=request.user)).all()
-    return render(request, "pc/chat.html", {"rooms": rooms, "chat_host": CHAT_HOST, "active": int(uid)})
+    room_dict = {x.id:x for x in rooms}
+    room_id_list = [x.id for x in rooms]
+    resp = requests.post("https://api.bravepeach.com/get_last_chats",
+                         data=json.dumps({"room_list": room_id_list})).json()
+    last_chat_list = []
+    for r in resp:
+        room = r[0]
+        d = r[1]
+        d["timestamp"] = datetime.datetime.strptime(d["timestamp"], "%Y-%m-%d %H:%M:%S")
+        if room_dict[room].user_1 == request.user:
+            d["opponent"] = room_dict[room].user_2
+        else:
+            d["opponent"] = room_dict[room].user_1
+        last_chat_list.append((r[0], d))
+    return render(request, "pc/chat.html", {"rooms": last_chat_list, "chat_host": CHAT_HOST, "active": int(uid)})
 
 
 @login_required
