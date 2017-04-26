@@ -102,7 +102,7 @@ $(function () {
                 roomdiv.find("form").on("submit", function (e) {
                     e.preventDefault();
                     var msg = roomdiv.find("input").val();
-                    save_data(msg);
+                    save_data(data.join, my_id, msg);
                     webSocketBridge.send({
                         "command": "send",
                         "room": data.join,
