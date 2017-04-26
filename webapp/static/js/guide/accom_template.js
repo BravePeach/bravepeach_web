@@ -24,34 +24,8 @@ function searchAccomTemp(s_id, val, page) {
     })
 }
 
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $(input).parent().css({
-                'background-image': 'url(' + e.target.result + ')',
-                'opacity': 1
-            })
-        };
-
-        reader.readAsDataURL(input.files[0])
-
-    }
-}
 
 $(function () {
-
-
-    $('.search-bar').click(function () {
-        var act = $(this).siblings('.accom-search:not(.display-none)');
-        act.slideToggle();
-        if ($(this).children('img').hasClass('rotate')) {
-            $(this).children('img').removeClass('rotate')
-        }
-        else $(this).children('img').addClass('rotate');
-    });
-
     // search accom template: if click button or press enter, submit
     $('.search-wrapper .accom').on("click", ".search-button", function () {
         var s_id = $(this).parent().parent()[0].id.replace('accom_search', '');
@@ -89,7 +63,6 @@ $(function () {
         var f_id = $(this).parents('.accom-form-wrapper')[0].id.replace('accom_form', '');
         $('.accom-search:not(.display-none)').addClass('display-none');
         $('#accom_search' + f_id).removeClass('display-none');
-        $('.search-wrapper').animate({top: $(this).parents('.accom-form-wrapper').offset().top});
     });
 
     // 템플릿 클릭하면 내용 로드하기
@@ -141,7 +114,6 @@ $(function () {
             },
             success: function (data) {
                 $('.accom.template .wrapper').append(data.split('<!--!>')[0]);
-                console.log(data.split('<!--!>')[1]);
                 $('.accom-search').addClass('display-none');
                 $('.search-wrapper .accom').append(data.split('<!--!>')[1]);
             }
@@ -150,17 +122,13 @@ $(function () {
 
     // if click "새로작성하기" button
     $('.accom.template').on("click", ".accom-form-wrapper .new", function () {
-        $('.search-wrapper').animate({top: $(this).parent().offset().top});
         $(this).parent().hide();
     });
 
     //if click "불러오기" button
     $('.accom.template').on("click", ".accom-form-wrapper .load", function () {
-        $('.search-wrapper').animate({top: $(this).parent().offset().top});
         $(this).parent().hide();
-        console.log($(this).parent().parent()[0].id);
         var s_id = $(this).parent().parent()[0].id.replace('accom_form', '');
-        console.log(s_id);
         $('.accom-search:not(.display-none)').addClass('display-none');
         $('#accom_search' + s_id).removeClass('display-none');
         $('#accom_search' + s_id).children('.content').addClass('display-none');
@@ -291,37 +259,6 @@ $(function () {
 
 
     });
-
-    // 숙소 이미지 업로드
-    // $('.accom.template').on("click", ".photo", function () {
-    //     var clickedDiv = $(this);
-    //     $(this).next().click();
-    //     $(this).next().change(function () {
-    //         console.log($(this)[0].files[0]);
-    //
-    //         var formdata = new FormData();
-    //         formdata.append("accom_photo", $(this)[0].files[0]);
-    //
-    //         $.ajax({
-    //             url: "/upload_accom_photo/",
-    //             processData: false,
-    //             contentType: false,
-    //             data: formdata,
-    //             type: "POST",
-    //             success: function (data) {
-    //                 if (data["ok"] === true) {
-    //                     clickedDiv.next().next().val(data['url']);
-    //                     clickedDiv.children().addClass('display-none');
-    //                     clickedDiv.css({
-    //                         "background-image": 'url(' + data['url'] + ')',
-    //                         "opacity": 1
-    //                     });
-    //                 }
-    //             }
-    //         });
-    //     });
-    // });
-
     // 숙소 이미지 업로드
     $('.accom.template').on("click", ".add_button", function () {
         $(this).next().click();
@@ -361,7 +298,6 @@ $(function () {
                 formdata.append("photo_list", file)
             }
         }
-        console.log(formdata);
         if (accomType == null){
             swal({
                 title: "숙소유형을 선택해주세요.",
@@ -451,7 +387,6 @@ $(function () {
         else {
             var accomIdArray = $("input.accom-id").map(function() { return $(this).val() }).get();
             var accomDateArray = $("input.accom-date").map(function() { return $(this).val() }).get();
-            console.log(accomDateArray, accomIdArray);
             $.ajax({
                 url: "save_accom_offer/",
                 type: "POST",

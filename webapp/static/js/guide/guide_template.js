@@ -1,3 +1,19 @@
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(input).parent().css({
+                'background-image': 'url(' + e.target.result + ')',
+                'opacity': 1
+            })
+        };
+
+        reader.readAsDataURL(input.files[0])
+
+    }
+}
+
 function searchGuideTemp(s_id, val, page) {
     $.ajax({
         url: "/search_guide/",
@@ -25,17 +41,6 @@ function searchGuideTemp(s_id, val, page) {
 }
 
 $(function () {
-
-
-    $('.search-bar').click(function () {
-        var act = $(this).siblings('.guide-search:not(.display-none)');
-        act.slideToggle();
-        if ($(this).children('img').hasClass('rotate')) {
-            $(this).children('img').removeClass('rotate')
-        }
-        else $(this).children('img').addClass('rotate');
-    });
-
     // search guide template: if click button or press enter, submit
     $('.search-wrapper .guide').on("click", ".search-button", function () {
         var s_id = $(this).parent().parent()[0].id.replace('guide_search', '');
@@ -73,7 +78,6 @@ $(function () {
         var f_id = $(this).parents('.guide-form-wrapper')[0].id.replace('guide_form', '');
         $('.guide-search:not(.display-none)').addClass('display-none');
         $('#guide_search' + f_id).removeClass('display-none');
-        $('.search-wrapper').animate({top: $(this).parents('.guide-form-wrapper').offset().top});
     });
 
     // 템플릿 클릭하면 내용 로드하기
@@ -128,7 +132,6 @@ $(function () {
             },
             success: function (data) {
                 $('.guide.template .wrapper').append(data.split('<!--!>')[0]);
-                console.log(data.split('<!--!>')[1]);
                 $('.guide-search').addClass('display-none');
                 $('.search-wrapper .guide').append(data.split('<!--!>')[1]);
             }
@@ -137,17 +140,13 @@ $(function () {
 
     // if click "새로작성하기" button
     $('.guide.template').on("click", ".guide-form-wrapper .new", function () {
-        $('.search-wrapper').animate({top: $(this).parent().offset().top});
         $(this).parent().hide();
     });
 
     //if click "불러오기" button
     $('.guide.template').on("click", ".guide-form-wrapper .load", function () {
-        $('.search-wrapper').animate({top: $(this).parent().offset().top});
         $(this).parent().hide();
-        console.log($(this).parent().parent()[0].id);
         var s_id = $(this).parent().parent()[0].id.replace('guide_form', '');
-        console.log(s_id);
         $('.guide-search:not(.display-none)').addClass('display-none');
         $('#guide_search' + s_id).removeClass('display-none');
         $('#guide_search' + s_id).children('.content').addClass('display-none');
@@ -173,33 +172,11 @@ $(function () {
         $('#guide_search' + f_id).remove()
     });
 
-    // 가이드 이미지 업로드
     $('.guide.template').on("click", ".add-photo-button", function () {
-        var clickedDiv = $(this);
         $(this).next().click();
         $(this).next().change(function () {
-            console.log($(this)[0].files[0]);
-
-            var formdata = new FormData();
-            formdata.append("guide_photo", $(this)[0].files[0]);
-
-            $.ajax({
-                url: "/upload_guide_photo/",
-                processData: false,
-                contentType: false,
-                data: formdata,
-                type: "POST",
-                success: function (data) {
-                    if (data["ok"] === true) {
-                        clickedDiv.next().next().val(data['url']);
-                        clickedDiv.addClass('display-none');
-                        clickedDiv.parent().css({
-                            "background-image": 'url(' + data['url'] + ')',
-                            "opacity": 1
-                        });
-                    }
-                }
-            });
+            readURL(this);
+            $(this).prev().addClass('display-none')
         });
     });
 
@@ -219,19 +196,21 @@ $(function () {
 
     // 가이드 템플릿 저장
     $('.guide.template').on("click", ".guide-save-button.activated", function () {
+        var formdata = new FormData();
         var s_id = $(this).parent()[0].id.replace("guide_form", "");
         var guide_id = $('#guide_id').val();
         var templateId = $(this).siblings('.guide-id').val();
         var guideTitle = $(this).siblings('.guide-title-form').val();
         var guideContent = $(this).siblings('.guide-content').val();
 
-        // var photoList = [];
-        // for (var i = 1; i < 5; i++) {
-        //     if ($(this).siblings('.guide-photo-wrapper').children('input.photo' + i.toString()).val() != "") {
-        //         photoList.push($(this).siblings('.guide-photo-wrapper').children('input.photo' + i.toString()).val())
-        //     }
-        // }
-        //
+        var photos = $(this).parent().find('input.photo')[0].files;
+        console.log(photos[0]);
+        if (photos) {
+            console.log("gg");
+            var guidePhoto = photos[0];
+            formdata.append("guide_photo", guidePhoto);
+        }
+
         if (guideTitle == ""){
             swal({
                 title: "일정 타이틀을 입력해주세요.",
@@ -247,18 +226,20 @@ $(function () {
         }
 
         else {
+            formdata.append("guide_id", guide_id);
+            formdata.append("guide_template_id", templateId);
+            formdata.append("title", guideTitle);
+            formdata.append("content", guideContent);
+
             $(this).removeClass('activated');
 
             var templateIdinput = $(this).siblings('.guide-id');
             $.ajax({
                 url: "/save_guide_template/",
                 type: "POST",
-                data: {
-                    guide_id: guide_id,
-                    guide_template_id: templateId,
-                    title: guideTitle,
-                    content: guideContent,
-                },
+                processData: false,
+                contentType: false,
+                data: formdata,
                 success: function (data) {
                     if (data["ok"] == true) {
                         templateIdinput.val(data["new_id"]);
@@ -314,7 +295,6 @@ $(function () {
             for (var i=0; i<$('.guide-date').children().length; i++){
                 result += ($('.guide-form-wrapper.' + i).children('.guide-id').map(function() {return $(this).val()}).get() + 'dumpstring')
             }
-            console.log(result.toString());
             $.ajax({
                 url: "save_guide_offer/",
                 type: "POST",
