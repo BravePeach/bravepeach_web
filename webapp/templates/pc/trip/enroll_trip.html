@@ -27,14 +27,14 @@
         <form method="POST" id="enroll-form">
             {% csrf_token %}
             {{ form.user }}
-            <div class="white-bar">
+            <div class="white-bar where">
                 <img class="icon" src="{% static 'image/icon/where_black.png' %}" alt="where?">
                 {{ form.city |add_class:"enroll-trip-form"|attr:"placeholder:뉴욕, 뉴저지" }}
                 {{ form.countries }}
                 {{ form.cities }}
             </div>
 
-            <div class="white-bar">
+            <div class="white-bar when">
                 <img class="icon" src="{% static 'image/icon/when_black.png' %}" alt="when?">
                 {{ form.travel_begin_at |add_class:"find-guide-form edatepicker1"|attr:"readonly"|attr:"placeholder:시작 날짜" }}
                 <img class="arrow-right" src="{% static 'image/icon/arrow_right_grey.png' %}">
@@ -42,7 +42,7 @@
                 <img class="del-cal display-none" src="{% static 'image/icon/cancel.png' %}">
             </div>
 
-            <div class="white-bar">
+            <div class="white-bar howmany">
                 <img class="icon" src="{% static 'image/icon/howmany_black.png' %}" alt="howmany">
                 {{ form.age_group |add_class:"enroll-trip-form"|attr:"placeholder:인원"|attr:"readonly" }}
                 <img class="arrow-down" src="{% static 'image/icon/arrow_down_black.png' %}" alt="펼치기 버튼">
@@ -248,8 +248,8 @@
                         </div>
                     </div>
                     <div class="guide-help">
-                    *스루 가이드 : 한국 출발부터 현지 여행, 한국 도착까지 모든 투어를 책임지는 가이드.<br>
-                    **현지 가이드 :  현지의 모든 투어를 책임지는 가이드
+                    *스루 가이드 : 한국 출발부터 현지 여행, 한국 도착까지 모든 투어를 책임지는 가이드. 단, 가이드의 여행경비도 포함되므로 가격이 높을 수 있습니다.<br>
+                    **현지 가이드 : 여행 현지에서 만나 현지 투어 가이드를 책임지는 가이드. 이동수단, 숙소예약도 가능하나 여행자와 여행지에서 만납니다.
                     </div>
 
                 </div>

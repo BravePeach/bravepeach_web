@@ -21,7 +21,7 @@ from bravepeach import settings
 
 from bravepeach.util import flavour_render
 from ..models import (Guide, GuideOffer, UserReview, UserRequest, GuideLike, AccomTemplate, GuideTemplate,
-                       Notice, Cost, GuideAdjust, GuideReview, Journal)
+                       Notice, Cost, GuideAdjust, GuideReview, Journal, AccomPhoto)
 from ..forms import (WriteOfferForm, VolunteerForm, GuideAdjustForm, GuideReviewForm, JournalForm)
 from bravepeach.const import GUIDE_TYPE, GUIDE_THEME
 
@@ -595,13 +595,28 @@ def save_accom_template(request):
         lng = request.POST.get('lng')
         type_id = int(request.POST.get('type_id'))
 
+        s3 = boto3.resource("s3", aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+        photo_link_list = []
+        for f in request.FILES.getlist('photo_list'):
+            ext = f.name.split('.')[-1]
+            key = "accom_photos/{}.{}".format(datetime.datetime.now().strftime("%Y_%m_%d/%H_%M_%S_%f"), ext)
+            s3.meta.client.upload_fileobj(f, settings.AWS_STORAGE_BUCKET_NAME, key)
+            photo_link_list.append("http://"+settings.AWS_S3_CUSTOM_DOMAIN+'/'+key)
+
         # 이전 내용 덮어쓰기
         if accom_template_id:
             a = AccomTemplate.objects.get(id=accom_template_id, guide_id=guide_id)
             a.overwritten = True
             a.save()
+            for photo_link in photo_link_list:
+                AccomPhoto.objects.create(accom_template_id=accom_template_id, photo=photo_link)
         # 새로 저장
-        a = AccomTemplate.objects.create(guide_id=guide_id, title=title, content=content, address=address, lat=lat, lng=lng, type_id=type_id)
+        else:
+            a = AccomTemplate.objects.create(guide_id=guide_id, title=title, content=content, address=address, lat=lat, lng=lng, type_id=type_id)
+            accom_template_id = AccomTemplate.objects.filter(guide_id=guide_id).latest('id').id
+            for photo_link in photo_link_list:
+                AccomPhoto.objects.create(accom_template_id=accom_template_id, photo=photo_link)
         return JsonResponse({"ok": True, "new_id": a.id})
     return JsonResponse({"ok": False})
 

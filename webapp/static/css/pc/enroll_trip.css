@@ -358,6 +358,7 @@ select{
     width: 97%;
     margin-bottom: 47px;
     padding-left: 20px;
+    position: relative;
 }
 
 .additional-request-box {
@@ -385,7 +386,7 @@ select{
 
 .submit-button-wrapper {
     margin-top: 196px;
-    margin-bottom: 266px;
+    margin-bottom: 10px;
     height: 65px;
     text-align: center;
 }
@@ -490,4 +491,15 @@ label{
     width: 523px;
     font-size: 20px;
     margin-left: 10px;
+}
+
+.err-triangle{
+    width: 20px;
+    position: absolute;
+}
+
+.err-message{
+    color: #e64c47;
+    font-size: 18px;
+    position: absolute;
 }

@@ -24,6 +24,22 @@ function searchAccomTemp(s_id, val, page) {
     })
 }
 
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $(input).parent().css({
+                'background-image': 'url(' + e.target.result + ')',
+                'opacity': 1
+            })
+        };
+
+        reader.readAsDataURL(input.files[0])
+
+    }
+}
+
 $(function () {
 
 
@@ -277,32 +293,41 @@ $(function () {
     });
 
     // 숙소 이미지 업로드
-    $('.accom.template').on("click", ".photo", function () {
-        var clickedDiv = $(this);
+    // $('.accom.template').on("click", ".photo", function () {
+    //     var clickedDiv = $(this);
+    //     $(this).next().click();
+    //     $(this).next().change(function () {
+    //         console.log($(this)[0].files[0]);
+    //
+    //         var formdata = new FormData();
+    //         formdata.append("accom_photo", $(this)[0].files[0]);
+    //
+    //         $.ajax({
+    //             url: "/upload_accom_photo/",
+    //             processData: false,
+    //             contentType: false,
+    //             data: formdata,
+    //             type: "POST",
+    //             success: function (data) {
+    //                 if (data["ok"] === true) {
+    //                     clickedDiv.next().next().val(data['url']);
+    //                     clickedDiv.children().addClass('display-none');
+    //                     clickedDiv.css({
+    //                         "background-image": 'url(' + data['url'] + ')',
+    //                         "opacity": 1
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //     });
+    // });
+
+    // 숙소 이미지 업로드
+    $('.accom.template').on("click", ".add_button", function () {
         $(this).next().click();
         $(this).next().change(function () {
-            console.log($(this)[0].files[0]);
-
-            var formdata = new FormData();
-            formdata.append("accom_photo", $(this)[0].files[0]);
-
-            $.ajax({
-                url: "/upload_accom_photo/",
-                processData: false,
-                contentType: false,
-                data: formdata,
-                type: "POST",
-                success: function (data) {
-                    if (data["ok"] === true) {
-                        clickedDiv.next().next().val(data['url']);
-                        clickedDiv.children().addClass('display-none');
-                        clickedDiv.css({
-                            "background-image": 'url(' + data['url'] + ')',
-                            "opacity": 1
-                        });
-                    }
-                }
-            });
+            readURL(this);
+            $(this).prev().addClass('display-none')
         });
     });
 
@@ -317,6 +342,7 @@ $(function () {
 
     // 숙소 템플릿 저장
     $('.accom.template').on("click", ".accom-save-button.activated", function () {
+        var formdata = new FormData();
         var s_id = $(this).parent()[0].id.replace("accom_form", "");
         var guide_id = $('#guide_id').val();
         var templateId = $(this).siblings('.accom-id').val();
@@ -329,14 +355,13 @@ $(function () {
         var lat = $(this).siblings('.lat').val();
         var lng = $(this).siblings('.lng').val();
 
-        var photoList = [];
-        for (var i = 1; i < 5; i++) {
-            if ($(this).siblings('.accom-photo-wrapper').children('input.photo' + i.toString()).val() != "") {
-                photoList.push($(this).siblings('.accom-photo-wrapper').children('input.photo' + i.toString()).val())
+        for (var i=1; i<5; i++){
+            var file = $(this).parent().find('input.photo' + i.toString())[0].files[0];
+            if (file) {
+                formdata.append("photo_list", file)
             }
         }
-
-
+        console.log(formdata);
         if (accomType == null){
             swal({
                 title: "숙소유형을 선택해주세요.",
@@ -365,7 +390,7 @@ $(function () {
             })
         }
 
-        else if(photoList == []){
+        else if(formdata['photo_list']){
             swal({
                 title: "숙소사진을 적어도 한장 올려주세요.",
                 type: "error"
@@ -373,25 +398,25 @@ $(function () {
         }
 
         else {
+            formdata.append("guide_id", guide_id);
+            formdata.append("accom_template_id", templateId);
+            formdata.append("type_id", accomType);
+            formdata.append("title", accomTitle);
+            formdata.append("content", accomContent);
+            formdata.append("country", country);
+            formdata.append("city", city);
+            formdata.append("small_city", smallCity);
+            formdata.append("lat", lat);
+            formdata.append("lng", lng);
             $(this).removeClass('activated');
 
             var templateIdinput = $(this).siblings('.accom-id');
             $.ajax({
                 url: "/save_accom_template/",
                 type: "POST",
-                data: {
-                    guide_id: guide_id,
-                    accom_template_id: templateId,
-                    type_id: accomType,
-                    title: accomTitle,
-                    content: accomContent,
-                    country: country,
-                    city: city,
-                    small_city: smallCity,
-                    lat: lat,
-                    lng: lng,
-                    photo_list: photoList
-                },
+                processData: false,
+                contentType: false,
+                data: formdata,
                 success: function (data) {
                     if (data["ok"] == true) {
                         templateIdinput.val(data["new_id"]);
