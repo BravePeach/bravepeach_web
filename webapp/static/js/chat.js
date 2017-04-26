@@ -29,13 +29,10 @@ function get_recent_chat(room_id){
         url: location.protocol + "//api.bravepeach.com/get-recent-chat",
         data: JSON.stringify({"room_id": room_id}),
         crossDomain: true,
-        headers: {
-            "Access-Control-Allow-Origin": "*"
-        }
+        dataType: "json",
+        contentType: "application/json"
     }).done(function(data){
-        data.forEach(function(item, index){
-            console.log(item);
-        });
+        console.log(data)
     });
 
     // $.post("http://api.bravepeach.com/get-recent-chat",
@@ -68,18 +65,11 @@ function save_data(room_id, writer, content) {
         url: location.protocol + "//api.bravepeach.com/save-chat",
         data: JSON.stringify({"room_id": room_id, "writer": writer, "content": content}),
         crossDomain: true,
-        headers: {
-            "Access-Control-Allow-Origin": "*"
-        }
+        dataType: "json",
+        contentType: "application/json"
     }).done(function(data){
         console.log(data)
     });
-
-    // $.post("https://api.bravepeach.com/save-chat",
-    //     JSON.stringify({"room_id": room_id, "writer": writer, "content": content}),
-    //     function (data) {
-    //         console.log(data);
-    //     });
 }
 
 $(function () {
