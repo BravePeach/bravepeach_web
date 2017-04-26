@@ -58,7 +58,7 @@ def make_room(request):
     uid_list = [request.user.id, opponent]
     uid_list.sort()
     room_name = "{} 님과 {} 님의 대화".format(request.user.profile.full_name, opponent_user.profile.full_name)
-    room = Room.objects.filter(Q(user_1_id=uid_list[0]) | Q(user_2_id=uid_list[1])).first()
+    room = Room.objects.filter(Q(user_1_id=uid_list[0]) & Q(user_2_id=uid_list[1])).first()
     if not room:
         room = Room(title=room_name, user_1_id=uid_list[0], user_2_id=uid_list[1])
         room.save()
