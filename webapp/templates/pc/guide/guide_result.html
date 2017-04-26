@@ -23,7 +23,9 @@
             </div>
             <input type="hidden" value="{{ guide.id}}">
             <div class="result-title">{{ guide.title }}</div>
+            {% if guide.photo %}
             <img class="result-photo" src="{{ guide.photo.url }}">
+            {% endif %}
         </div>
         {% endfor %}
 

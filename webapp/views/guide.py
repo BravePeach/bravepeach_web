@@ -596,9 +596,6 @@ def save_accom_template(request):
         lat = request.POST.get('lat')
         lng = request.POST.get('lng')
         type_id = int(request.POST.get('type_id'))
-
-        s3 = boto3.resource("s3", aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
         img_list = []
         for f in request.FILES.getlist('photo_list'):
             img = Image.open(f)
@@ -613,24 +610,14 @@ def save_accom_template(request):
             old_a = AccomTemplate.objects.get(id=accom_template_id, guide_id=guide_id)
             old_a.overwritten = True
             old_a.save()
-            a = AccomTemplate.objects.create(guide_id=guide_id, title=title, content=content, address=address, lat=lat, lng=lng, type_id=type_id)
-            accom_template_id = AccomTemplate.objects.filter(guide_id=guide_id).latest('id').id
-            for photo in img_list:
-                byte_img = BytesIO()
-                photo.save(byte_img, format="jpeg")
-                filename = str(request.user.id) + "__" + datetime.datetime.now().strftime("%H_%M_%S_%f") + ".jpg"
-                AccomPhoto.objects.create(accom_template_id=accom_template_id)
-                AccomPhoto.objects.filter(accom_template_id=accom_template_id).latest('id').photo.save(filename, ContentFile(byte_img.getvalue()))
         # 새로 저장
-        else:
-            a = AccomTemplate.objects.create(guide_id=guide_id, title=title, content=content, address=address, lat=lat, lng=lng, type_id=type_id)
-            accom_template_id = AccomTemplate.objects.filter(guide_id=guide_id).latest('id').id
-            for photo in img_list:
-                byte_img = BytesIO()
-                photo.save(byte_img, format="jpeg")
-                filename = str(request.user.id) + "__" + datetime.datetime.now().strftime("%H_%M_%S_%f") + ".jpg"
-                AccomPhoto.objects.create(accom_template_id=accom_template_id)
-                AccomPhoto.objects.filter(accom_template_id=accom_template_id).latest('id').photo.save(filename, ContentFile(byte_img.getvalue()))
+        a = AccomTemplate.objects.create(guide_id=guide_id, title=title, content=content, address=address, lat=lat, lng=lng, type_id=type_id)
+        for photo in img_list:
+            byte_img = BytesIO()
+            photo.save(byte_img, format="jpeg")
+            filename = str(request.user.id) + "__" + datetime.datetime.now().strftime("%H_%M_%S_%f") + ".jpg"
+            accom_photo = AccomPhoto.objects.create(accom_template_id=a.id)
+            accom_photo.photo.save(filename, ContentFile(byte_img.getvalue()))
         return JsonResponse({"ok": True, "new_id": a.id})
     return JsonResponse({"ok": False})
 
@@ -645,12 +632,22 @@ def save_guide_template(request):
 
         # 이전 내용 덮어쓰기
         if guide_template_id:
-            a = GuideTemplate.objects.get(id=guide_template_id, guide_id=guide_id)
-            a.overwritten = True
-            a.save()
+            old_a = GuideTemplate.objects.get(id=guide_template_id, guide_id=guide_id)
+            old_a.overwritten = True
+            old_a.save()
         # 새로 저장
-        a = GuideTemplate.objects.create(guide_id=guide_id, title=title, content=content, photo="")
-        return JsonResponse({"ok": True, "new_id": a.id})
+        g = GuideTemplate.objects.create(guide_id=guide_id, title=title, content=content, photo="")
+        if request.FILES.get('guide_photo'):
+            photo = Image.open(request.FILES.get('guide_photo'))
+            new_width = 800
+            ratio = (new_width/ float(photo.size[0]))
+            new_height = int((float(photo.size[1])*float(ratio)))
+            photo = photo.resize((new_width, new_height), Image.ANTIALIAS)
+            byte_img = BytesIO()
+            photo.save(byte_img, format="jpeg")
+            filename = str(request.user.id) + "__" + datetime.datetime.now().strftime("%H_%M_%S_%f") + ".jpg"
+            g.photo.save(filename, ContentFile(byte_img.getvalue()))
+        return JsonResponse({"ok": True, "new_id": g.id})
     return JsonResponse({"ok": False})
 
 

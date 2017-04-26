@@ -24,8 +24,7 @@
             <img class="photo-pic" src="{% static 'image/icon/photo_grey.png' %}">
             <span>사진 추가 하기</span>
         </div>
-        <input type="file" accept="image/*" style="display: none" required>
-        <input type="hidden" class="photo">
+        <input type="file" accept="image/*" style="display: none" required class="photo">
     </div>
     {% endif %}
     <textarea class="guide-content">{% if not guide_template.content %}가이드 일정에 대한 정보를 자세하게 작성해주세요.
