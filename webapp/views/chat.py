@@ -20,9 +20,10 @@ def chat_index(request):
 @login_required
 def chat_user(request, uid):
     rooms = Room.objects.filter(Q(user_1=request.user) | Q(user_2=request.user)).all()
-    room_dict = {x.id:x for x in rooms}
+    room_dict = {x.id: x for x in rooms}
     room_id_list = [x.id for x in rooms]
-    resp = requests.post("https://api.bravepeach.com/get_last_chats",
+    scheme = request.is_secure() and "https:" or "http:"
+    resp = requests.post("{}//api.bravepeach.com/get_last_chats".format(scheme),
                          data=json.dumps({"room_list": room_id_list})).json()
     last_chat_list = []
     for r in resp:
@@ -33,8 +34,17 @@ def chat_user(request, uid):
             d["opponent"] = room_dict[room].user_2
         else:
             d["opponent"] = room_dict[room].user_1
-        last_chat_list.append((r[0], d))
-    return render(request, "pc/chat.html", {"rooms": last_chat_list, "chat_host": CHAT_HOST, "active": int(uid)})
+        last_chat_list.append((room, d))
+        del room_dict[room]
+    for room_id, room in room_dict.items():
+        if room.user_1 == request.user:
+            last_chat_list.append({"opponent": room.user_2, "timestamp": datetime.datetime.now(),
+                                   "content": "", "writer": request.user.id})
+        else:
+            last_chat_list.append({"opponent": room.user_1, "timestamp": datetime.datetime.now(),
+                                   "content": "", "writer": request.user.id})
+    scheme = request.is_secure() and "wss:" or "ws:"
+    return render(request, "pc/chat.html", {"rooms": last_chat_list, "chat_host": scheme+CHAT_HOST, "active": int(uid)})
 
 
 @login_required

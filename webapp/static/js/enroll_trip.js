@@ -3,33 +3,84 @@ city_name_list = [];
 var traveler_list = [0, 0, 0, 0, 0, 0];
 
 function submit_enroll_form(){
-    var country_list = [];
-    var city_list = [];
-    for (var i in place_list) {
-        if (place_list[i].length < 5) {
-            country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
-            if (place_list[i][place_list[i].length - 2]) {
-                city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+    if (place_list.length && $('#id_travel_begin_at').val() && $('#id_travel_end_at') && $('#id_age_group').val()) {
+        var country_list = [];
+        var city_list = [];
+        for (var i in place_list) {
+            if (place_list[i].length < 5) {
+                country_list.push(place_list[i][place_list[i].length - 1]['short_name']);
+                if (place_list[i][place_list[i].length - 2]) {
+                    city_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+                }
+            }
+
+            else {
+                country_list.push(place_list[i][place_list[i].length - 2]['short_name']);
+                city_list.push(place_list[i][place_list[i].length - 3]['short_name']);
             }
         }
+        country_list = country_list.filter(function (value, index, array) {
+            return array.indexOf(value) == index;
+        });
+        city_list = city_list.filter(function (value, index, array) {
+            return array.indexOf(value) == index;
+        });
 
-        else {
-            country_list.push(place_list[i][place_list[i].length - 2]['short_name']);
-            city_list.push(place_list[i][place_list[i].length - 3]['short_name']);
-        }
+        $('.scrolling-page3 .sellect-wrapper').each(function () {
+            if (($(this).find('.checkbox:checked').length == 0 && $(this).find('.checkbox').length) || $(this).find('#id_landmark').val() == "") {
+                var target = $(this);
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 70
+                }, 300);
+                $(this).append(
+                    '<img src="../static/image/icon/Triangle.png" class="err-triangle" style="top:0px; left:-42px;">' +
+                    '<span class="err-message" style="top:0px; left:-161px;">작성해주세요!</span>'
+                );
+                $('.err-triangle, .err-message').delay(3000).fadeOut();
+                return false
+            }
+
+            else if (this == $('.scrolling-page3 .sellect-wrapper:last')[0]) {
+                $("#id_countries").val(JSON.stringify(country_list));
+                $("#id_cities").val(JSON.stringify(city_list));
+                $("#id_city").val(city_name_list.join());
+                $("#id_age_group").val(traveler_list);
+                $("#enroll-form").submit();
+            }
+        });
+
     }
-    country_list = country_list.filter (function (value, index, array) {
-        return array.indexOf (value) == index;
-    });
-    city_list = city_list.filter (function (value, index, array) {
-        return array.indexOf (value) == index;
-    });
 
-    $("#id_countries").val(JSON.stringify(country_list));
-    $("#id_cities").val(JSON.stringify(city_list));
-    $("#id_city").val(city_name_list.join());
-    $("#id_age_group").val(traveler_list);
-    $("#enroll-form").submit();
+    else {
+        var target = $('#enroll-form');
+        $('html, body').animate({
+            scrollTop: target.offset().top - 70
+        }, 300, function () {
+            if (!place_list.length) {
+                $('.where').append(
+                    '<img src="../static/image/icon/Triangle.png" class="err-triangle" style="top: 16px; left: -32px;">' +
+                    '<span class="err-message" style="top: 17px; left: -238px;">작성해주세요!</span>'
+                );
+                $('.err-triangle, .err-message').delay(3000).fadeOut();
+            }
+
+            else if (!($('#id_travel_begin_at').val() && $('#id_travel_end_at'))) {
+                $('.when').append(
+                    '<img src="../static/image/icon/Triangle.png" class="err-triangle" style="top: 16px; left: -32px;">' +
+                    '<span class="err-message" style="top: 17px; left: -238px;">작성해주세요!</span>'
+                );
+                $('.err-triangle, .err-message').delay(3000).fadeOut();
+            }
+
+            else if (!$('#id_age_group').val()) {
+                $('.howmany').append(
+                    '<img src="../static/image/icon/Triangle.png" class="err-triangle" style="top: 16px; left: -32px;">' +
+                    '<span class="err-message" style="top: 17px; left: -238px;">작성해주세요!</span>'
+                );
+                $('.err-triangle, .err-message').delay(3000).fadeOut();
+            }
+        })
+    }
 }
 
 $(function() {
@@ -181,7 +232,7 @@ $(function() {
         else {
             $('.location-option').addClass('display-none')
         }
-    })
+    });
     $('#im6').change(function () {
         if ($('.importance-option').hasClass('display-none')) {
             $('.importance-option').removeClass('display-none')
