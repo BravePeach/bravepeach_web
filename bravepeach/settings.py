@@ -71,6 +71,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'bravepeach.middleware.UserAgentMiddleware',
+    'bravepeach.middleware.ActionLogMiddleware',
 ]
 
 ROOT_URLCONF = 'bravepeach.urls'
@@ -266,3 +267,6 @@ CORS_ORIGIN_WHITELIST = [
     "dev.bravepeach.com",
     "api.dev.bravepeach.com",
 ]
+
+# Amazon SNS for celery broker
+SNS_ARN = LOCAL_SETTINGS['SNS_ARN']
