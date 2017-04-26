@@ -26,14 +26,18 @@ function join_room(d, room_id) {
 function get_recent_chat(room_id){
     $.ajax({
         method: "POST",
-        url: "http://api.bravepeach.com/get-recent-chat",
+        url: location.protocol + "//api.bravepeach.com/get-recent-chat",
         data: JSON.stringify({"room_id": room_id}),
-        crossDomain: true
+        crossDomain: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        }
     }).done(function(data){
         data.forEach(function(item, index){
             console.log(item);
         });
     });
+
     // $.post("http://api.bravepeach.com/get-recent-chat",
     //     JSON.stringify({"room_id": room_id}),
     //     function(data){
@@ -59,11 +63,23 @@ function get_recent_chat(room_id){
 }
 
 function save_data(room_id, writer, content) {
-    $.post("http://api.bravepeach.com/save-chat",
-        JSON.stringify({"room_id": room_id, "writer": writer, "content": content}),
-        function (data) {
-            console.log(data);
-        });
+    $.ajax({
+        method: "POST",
+        url: location.protocol + "//api.bravepeach.com/save-chat",
+        data: JSON.stringify({"room_id": room_id, "writer": writer, "content": content}),
+        crossDomain: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        }
+    }).done(function(data){
+        console.log(data)
+    });
+
+    // $.post("https://api.bravepeach.com/save-chat",
+    //     JSON.stringify({"room_id": room_id, "writer": writer, "content": content}),
+    //     function (data) {
+    //         console.log(data);
+    //     });
 }
 
 $(function () {
