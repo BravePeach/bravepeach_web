@@ -131,7 +131,6 @@ def filtering(request):
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')
         sort = request.GET.get('sort')
-        print(sort)
 
         guide_queryset = Guide.objects.all()
         if traveler_cnt:

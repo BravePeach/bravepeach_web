@@ -373,7 +373,6 @@ class FilterTrip(View):
         end_date = request.GET.get('end_date')
         traveler_cnt = request.GET.get('traveler_cnt')
         sort = request.GET.get('sort')
-        print(sort)
         req_queryset = UserRequest.objects.select_related('user').prefetch_related('user__profile').filter(published=True, travel_begin_at__gte=datetime.datetime.now())
 
         if country:
@@ -729,7 +728,6 @@ def save_cost_offer(request, req_id):
         price_list = request.POST.get('price_list').split(',')
         info_list = request.POST.get('info_list').split(',')
         offer_id = GuideOffer.objects.get(guide_id=guide_id, request_id=req_id).id
-        print(type_id_list)
         for i in range(len(type_id_list)):
             Cost.objects.get_or_create(offer_id=offer_id, type_id=type_id_list[i], price=price_list[i], info=info_list[i])
 
