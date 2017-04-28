@@ -137,7 +137,9 @@ $(function () {
         },
         onClose: function () {
             if ($('.datepicker1').val() && !$('.datepicker2').val()) {
-                $('.datepicker2').datepicker("show")
+                window.setTimeout(function(){
+                    $('.datepicker2').datepicker('show');
+                }, 0);
             }
         }
     });

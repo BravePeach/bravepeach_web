@@ -129,7 +129,9 @@ $(function() {
         },
         onClose: function () {
             if ($('.edatepicker1').val() && !$('.edatepicker2').val()) {
-                $('.edatepicker2').datepicker("show");
+                window.setTimeout(function(){
+                    $('.datepicker2').datepicker('show');
+                }, 0);
             }
         }
     });
