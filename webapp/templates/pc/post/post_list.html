@@ -52,18 +52,20 @@
     <a id="write-post" href="{% url 'write_user_post' %}">글쓰기</a>
 
     <div class="pagination">
+        {{ page_obj }}
         {% with page_obj.number|intdiv:5|add:1 as start %}
             {% with start|add:5 as end %}
                 {% for page in start|range:end %}
                     {% if page in paginator.num_pages|add:1|to_list %}
                         {% if page == page_obj.number %}
-                            <a class="page active" href="?page={{ page }}">{{ page }}<a/>
+                            <a class="page active" href="?page={{ page }}">{{ page }}</a>
                         {% else %}
-                            <a class="page" href="?page={{ page }}">{{ page }}<a/>
+                            <a class="page" href="?page={{ page }}">{{ page }}</a>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
             {% endwith %}
         {% endwith %}
+    </div>
 
 {% endblock %}

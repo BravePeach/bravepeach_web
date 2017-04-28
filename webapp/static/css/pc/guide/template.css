@@ -1,5 +1,5 @@
-.contents-wrapper{
-    padding-top: 9px;
+.main-container{
+    width: 880px;
 }
 
 .template-top span{
@@ -92,8 +92,6 @@ hr{
     padding-top: 82px;
     margin-left: 20px;
 }
-
-.search-wrapper{top:232px;}
 
 .load-button, .preview-button{
     width: 102px !important;

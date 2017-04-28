@@ -502,12 +502,17 @@ footer ul {
 
 #ui-datepicker-div {
   display: none;
+  overflow: hidden;
+  width: 96%;
+  height: 40%;
+  height: calc(~"100vh - 310px");
+
 }
 .ui-datepicker {
   position: absolute !important;
   left: 50% !important;
   top: 244px !important;
-  margin-left: -178.5px;
+  margin-left: -48%;
   /* approx half the height of the datepicker div - adjust based on your size */
   text-align: center;
   width: 355px;

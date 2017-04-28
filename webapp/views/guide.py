@@ -172,8 +172,9 @@ def save_off_days(request):
 @login_required
 def template(request):
     urls = 'template'
-    accom_template_result = AccomTemplate.objects.filter(guide=request.user.guide.all()[0].id, overwritten=False)
-    guide_template_result = GuideTemplate.objects.filter(guide=request.user.guide.all()[0].id, overwritten=False)
+    guide_id = request.user.guide.all()[0].id
+    accom_template_result = AccomTemplate.objects.prefetch_related('accom_photos').filter(guide_id=guide_id, overwritten=False)
+    guide_template_result = GuideTemplate.objects.filter(guide_id=guide_id, overwritten=False)
     a_paginator = Paginator(accom_template_result, 5)
     g_paginator = Paginator(guide_template_result, 5)
     if accom_template_result:
@@ -442,7 +443,7 @@ def search_accom(request):
         title = request.GET.get('title')
         s_id = 'accom_search' + str(request.GET.get('s_id'))
         urls = request.GET.get('urls').split('/')[2]
-        accom_template_result = AccomTemplate.objects.filter(title__icontains=title, guide_id=request.user.guide.all()[0].id, overwritten=False).order_by('title')
+        accom_template_result = AccomTemplate.objects.prefetch_related('accom_photos').filter(title__icontains=title, guide_id=request.user.guide.all()[0].id, overwritten=False).order_by('title')
         paginator = Paginator(accom_template_result, 5)
         if accom_template_result:
             page = request.GET.get('page')

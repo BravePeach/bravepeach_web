@@ -1,4 +1,7 @@
 {% load staticfiles %}
+{% load mathfilters %}
+{% load custom_filters %}
+
 
 <div id="{% if id %}{{ id }}{% else %}accom_search1{% endif %}" class="accom-search">
 
@@ -28,21 +31,5 @@
         </div>
         {% endfor %}
 
-        {% if accom_template_set.paginator.num_pages > 1 %}
-        <div class="pagination">
-            {% if accom_template_set.has_previous %}
-            <div class="page-prev"><</div>
-            {% endif %}
-
-            <div class="page inactive">{{ accom_template_set.number }}</div>
-
-            {% if accom_template_set.has_next %}
-            <div class="page active">{{ accom_template_set.next_page_number }}
-            </div>
-
-            <div class="page-next">></div>
-            {% endif %}
-        </div>
-        {% endif %}
     </div>
 </div>
