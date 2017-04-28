@@ -41,7 +41,7 @@ class FilterGuide(View):
         traveler_cnt = request.GET.get('traveler_cnt')
         sort = request.GET.get('sort')
 
-        guide_queryset = Guide.objects.all()
+        guide_queryset = Guide.objects.filter(activated=True)
 
         if country:
             guide_queryset = guide_queryset.filter(guide_country__has_any_keys=country)
