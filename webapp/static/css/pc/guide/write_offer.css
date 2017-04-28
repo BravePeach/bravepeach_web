@@ -205,7 +205,7 @@ img.photo {
     border: none;
 }
 
-.request-wrapper {
+.request-wrapper{
     font-size: 18px;
     width: 365px;
     position: absolute;
@@ -240,24 +240,28 @@ img.photo {
     margin: 17.4px auto 12px auto;
 }
 
-.request-content {
+.request-content, .accom-search, .guide-search {
     background-color: white;
     width: 92.6%;
     max-width: 375px;
     margin: auto;
-    padding-bottom: 10px;
     padding-top: 1px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    height: calc(100% - 240px);
+    height: calc(100% - 220px);
     overflow: scroll;
     overflow-x: hidden;
 }
 
-.accom-result{
-    height: calc(100% - 240px);
-    overflow: scroll;
+.request-content{
+    padding-bottom: 10px;
+}
+
+
+.accom-search, .guide-search{
+    height: auto;
+    max-height: calc(100% - 220px);
 }
 
 .request-head {
@@ -510,7 +514,6 @@ img.photo {
 
 .search-wrapper .trans .content, .search-wrapper .cost .content, .accom-search .content, .guide-search .content {
     height: 129px;
-    width: 92.6%;
     max-width: 375px;
     font-size: 18px;
     font-weight: bold;
@@ -528,8 +531,16 @@ img.photo {
     padding-top: 53px;
 }
 
+.search-wrapper .trans .content, .search-wrapper .cost .content{
+    width: 92.6%;
+}
+
+.accom-search .content, .guide-search .content{
+    width: 100%;
+}
+
 .search-form {
-    width: 282px;
+    width: 244px;
     height: 42px;
     border-radius: 8px;
     background-color: #ffffff;
@@ -579,7 +590,7 @@ img.photo {
 .result-card {
     position: relative;
     width: 90%;
-    height: 245px;
+    height: 232px;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
@@ -1028,7 +1039,7 @@ option {
 }
 
 .allover {
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -1351,8 +1362,8 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .result-photo {
-    width: 317px;
-    height: 187px;
+    width: 281px;
+    height: 172px;
     object-fit: cover;
     margin-top: 9px;
 }
@@ -1413,4 +1424,8 @@ html, body {
 
 * {
     -ms-overflow-style: none;
+}
+
+.search{
+    height: 100%;
 }
