@@ -35,7 +35,7 @@ function get_recent_chat(room_id){
             }
             msg += "<span class='body'>" + d.content + "</span>" + "</div>";
             msg += "<div class='timestamp";
-            if(data.uid === my_id) {
+            if(d.writer === my_id) {
                 msg += " mine' align='right'>";
             } else {
                 msg += "'>";
