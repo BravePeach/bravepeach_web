@@ -101,6 +101,7 @@ $(function () {
                 $("#chats").empty();
                 $("#chats").append(roomdiv);
                 get_recent_chat(data.join);
+                var msgdiv = $("#room-" + data.join + " .messages");
                 msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
             }
         } else if (data.leave) {
