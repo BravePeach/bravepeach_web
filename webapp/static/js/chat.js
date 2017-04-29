@@ -43,6 +43,7 @@ function get_recent_chat(room_id){
             msg += d.timestamp + "</div>";
             msgdiv.append(msg);
         }
+        msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
     });
 }
 
