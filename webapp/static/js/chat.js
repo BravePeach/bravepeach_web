@@ -126,9 +126,9 @@ $(function () {
                         // "<span class='username'>" + data.username + ": </span>" +
                         "<span class='body'>" + data.message + "</span>" +
                         "</div>";
-                    ok_msg += "<div class='timestamp'";
+                    ok_msg += "<div class='timestamp";
                     if(data.uid === my_id) {
-                        ok_msg += "mine' align='right'>";
+                        ok_msg += " mine' align='right'>";
                     } else {
                         ok_msg += "'>";
                     }
