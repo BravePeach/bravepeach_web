@@ -1,19 +1,5 @@
 var webSocketBridge = new channels.WebSocketBridge();
 
-// Actually, not used in real service.
-function make_room(){
-    var opponent = $('input[name=opponent]').val();
-    $.post(make_path, {
-        "opponent": opponent
-    }, function(data){
-        if(data.ok === true) {
-            $('p.empty').remove();
-            var link = '<li class="room-link" data-room-id="'+data['room_id']+'" onclick="join_room()">'+data['room_title']+'</li>';
-            $('ul.rooms').append(link);
-        }
-    });
-}
-
 function join_room(d, room_id) {
     $(".room-link").removeClass('active');
     $(d).parent().addClass("active");
@@ -32,17 +18,29 @@ function get_recent_chat(room_id){
         dataType: "json",
         contentType: "application/json"
     }).done(function(data){
-        var last_timestamp = "1970-01-01 00:00:00";
+        var last_timestamp = "1970-01-01";
         for (var i=0; i<data.length; i++) {
             var d = data[i];
+            var date = d.timestamp.split(" ")[0];
             var msgdiv = $("#room-" + d.room_id + " .messages");
+            if (date !== last_timestamp) {
+                msgdiv.append("<div class='datediv'>"+date+"</div>");
+                last_timestamp = date;
+            }
             var msg = "<div class='message";
             if (d.writer === my_id) {
-                msg += " mine' align='right'";
+                msg += " mine' align='right'>";
             } else {
                 msg += "'>";
             }
             msg += "<span class='body'>" + d.content + "</span>" + "</div>";
+            msg += "<div class='timestamp";
+            if(data.uid === my_id) {
+                msg += " mine' align='right'>";
+            } else {
+                msg += "'>";
+            }
+            msg += d.timestamp + "</div>";
             msgdiv.append(msg);
         }
     });
@@ -103,6 +101,7 @@ $(function () {
                 $("#chats").empty();
                 $("#chats").append(roomdiv);
                 get_recent_chat(data.join);
+                msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
             }
         } else if (data.leave) {
             console.log("Leaving room " + data.leave);
@@ -127,9 +126,13 @@ $(function () {
                         // "<span class='username'>" + data.username + ": </span>" +
                         "<span class='body'>" + data.message + "</span>" +
                         "</div>";
+                    ok_msg += "<div class='timestamp'";
                     if(data.uid === my_id) {
-                        $(ok_msg).addClass('mine');
+                        ok_msg += "mine' align='right'>";
+                    } else {
+                        ok_msg += "'>";
                     }
+                    ok_msg += new Date().toISOString().split(".")[0].replace("T", " ") + "</div>";
                     break;
                 case 1:
                     // Warning / Advice messages
@@ -172,22 +175,6 @@ $(function () {
     inRoom = function (roomId) {
         return $("#room-" + roomId).length > 0;
     };
-    // roomId = $(this).attr("data-room-id");
-    // if (inRoom(roomId)) {
-    //     // Leave room
-    //     $(this).removeClass("joined");
-    //     webSocketBridge.send({
-    //         "command": "leave",
-    //         "room": roomId
-    //     });
-    // } else {
-    //     // Join room#}
-    //     $(this).addClass("joined");
-    //     webSocketBridge.send({
-    //         "command": "join",
-    //         "room": roomId
-    //     });
-    // }
     // Helpful debugging
     webSocketBridge.socket.onopen = function () {
         console.log("Connected to chat socket");

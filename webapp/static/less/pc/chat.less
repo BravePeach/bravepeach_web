@@ -103,6 +103,19 @@
       height: 600px;
       overflow-y: scroll;
 
+      .datediv {
+        height: 32px;
+        border-radius: 100px;
+        background-image: linear-gradient(to right, #f2ad8a, #e64c47);
+        margin: 20px auto 20px auto;
+        font-family: NanumSquare;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 1.56;
+        color: #ffffff;
+        text-align: center;
+      }
+
       .message {
         padding: 18px;
         font-family: NanumSquare;
@@ -110,7 +123,7 @@
         line-height: 1.5;
         color: #000000;
         background: #eeeeee;
-        margin-bottom: 25px;
+        margin-bottom: 10px;
         margin-left: 15px;
         margin-right: 150px;
         border-radius: 25px;
@@ -120,6 +133,20 @@
           border: 1px solid #e64c47;
           margin-left: 150px;
           margin-right: 30px;
+        }
+      }
+
+      .timestamp {
+        height: 28px;
+        font-family: NanumSquare;
+        font-size: 15px;
+        line-height: 1.87;
+        text-align: right;
+        color: #606060;
+        margin: 0 0 25px 15px;
+
+        &.mine {
+          margin: 0 30px 25px 0;
         }
       }
     }

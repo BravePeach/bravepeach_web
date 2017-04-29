@@ -1,4 +1,4 @@
-import datetime
+import pytz
 from django import template
 from django.utils import timezone
 
@@ -40,5 +40,4 @@ def to_range(start, end):
 
 @register.filter(name="is_today")
 def is_today(timestamp):
-    # return timezone.localtime(datetime).date() == timezone.localtime(timezone.now()).date()
-    return timestamp.date() == datetime.datetime.today()
+    return timezone.localtime(pytz.utc.localize(timestamp)).date() == timezone.localtime(timezone.now()).date()
