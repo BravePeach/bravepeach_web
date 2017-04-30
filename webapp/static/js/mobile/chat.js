@@ -43,9 +43,9 @@ function get_recent_chat(room_id){
                 msg += "'>";
             }
             msg += d.timestamp + "</div>";
-            msgdiv.append(msg);
+            msgdiv.prepend(msg);
         }
-        msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
+        msgdiv.scrollTop(0);
     });
 }
 
@@ -91,7 +91,7 @@ $(function () {
                 // Hook up send button to send a message
                 roomdiv.find("form").on("submit", function (e) {
                     e.preventDefault();
-                    var msg = roomdiv.find("input").val();
+                    var msg = roomdiv.find("textarea").val();
                     save_data(data.join, my_id, msg);
                     webSocketBridge.send({
                         "command": "send",
