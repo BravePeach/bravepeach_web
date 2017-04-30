@@ -98,7 +98,7 @@ $(function () {
                         "room": data.join,
                         "message": msg  // roomdiv.find("input").val()
                     });
-                    roomdiv.find("input").val("");
+                    roomdiv.find("textarea").val("");
                     return false;
                 });
                 $("#chats").empty();
