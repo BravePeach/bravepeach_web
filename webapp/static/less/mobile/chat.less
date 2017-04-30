@@ -19,6 +19,7 @@
 }
 
 .room {
+  overflow-y: hidden;
   form {
     input, textarea {
       resize: none;
@@ -43,6 +44,8 @@
     overflow-y: scroll;
 
     .profile {
+      margin-right: 3px;
+      display: inline-block;
       width: 34px;
       height: 34px;
       border-radius: 100%;
@@ -69,6 +72,7 @@
     }
 
     .message {
+      display: inline-block;
       padding: 10px 18px 10px 17px;
       font-family: NanumSquare;
       font-weight: bold;
@@ -78,7 +82,7 @@
       color: #000000;
       border-radius: 8px;
       background-color: #efeff4;
-      width: 295px;
+      width: 350px;
 
       &.mine {
         border-radius: 8px;

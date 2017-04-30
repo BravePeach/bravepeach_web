@@ -83,7 +83,7 @@ $(function () {
                     "<div class='room' id='room-" + data.join + "'>" +
                     // "<h2>" + data.title + "</h2>" +
                     "<div class='messages'></div>" +
-                    "<form><textarea placeholder='개인 연락처를 공개하지 마세요. 예약이 완료된 후 공개됩니다.'></textarea><button>Send</button></form>" +
+                    "<form><input placeholder='개인 연락처를 공개하지 마세요. 예약이 완료된 후 공개됩니다.'><button>Send</button></form>" +
                     "</div>"
                 );
                 // Hook up send button to send a message

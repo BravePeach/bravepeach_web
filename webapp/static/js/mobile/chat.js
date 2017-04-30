@@ -17,12 +17,12 @@ function get_recent_chat(room_id){
         contentType: "application/json"
     }).done(function(data){
         var last_timestamp = "1970-01-01";
-        for (var i=0; i<data.length; i++) {
+        for (var i=data.length-1; i>=0; i--) {
             var d = data[i];
             var date = d.timestamp.split(" ")[0];
             var msgdiv = $("#room-" + d.room_id + " .messages");
             if (date !== last_timestamp) {
-                msgdiv.append("<div class='datediv'>"+date+"</div>");
+                msgdiv.prepend("<div class='datediv'>"+date+"</div>");
                 last_timestamp = date;
             }
             var msg = "";
@@ -82,8 +82,8 @@ $(function () {
             console.log("Joining room " + data.join);
             if($("#room-"+data.join).length === 0) {
                 var roomdiv = $(
-                    "<form><input placeholder='개인 연락처를 공개하지 마세요. 예약이 완료된 후 공개됩니다.'><button>전송</button></form>" +
                     "<div class='room' id='room-" + data.join + "'>" +
+                    "<form><textarea placeholder='개인 연락처를 공개하지 마세요. 예약이 완료된 후 공개됩니다.'></textarea><button>전송</button></form>" +
                     // "<h2>" + data.title + "</h2>" +
                     "<div class='messages'></div>" +
                     "</div>"
@@ -102,10 +102,10 @@ $(function () {
                     return false;
                 });
                 $("#chats").empty();
-                $("#chats").append(roomdiv);
+                $("#chats").prepend(roomdiv);
                 get_recent_chat(data.join);
                 var msgdiv = $("#room-" + data.join + " .messages");
-                msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
+                msgdiv.scrollTop(0);
             }
         } else if (data.leave) {
             console.log("Leaving room " + data.leave);
@@ -170,7 +170,7 @@ $(function () {
                     return;
             }
             msgdiv.append(ok_msg);
-            msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
+            msgdiv.scrollTop(0);
         } else {
             console.log("Cannot handle message!");
         }
