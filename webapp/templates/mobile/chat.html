@@ -14,6 +14,7 @@
         var active = '{{ active }}';
         var my_id = {{ request.user.id }};
         var photo = '{% if opponent.profile.photo %}{{ opponent.profile.photo.url }}{% else %}{% static "image/icon/profile_empty.png" %}{% endif %}';
+        var room_id = {{ room_id }};
     </script>
     <script src="{% static 'js/chat.js' %}"></script>
 {% endblock %}

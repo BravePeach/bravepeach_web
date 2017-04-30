@@ -1,8 +1,6 @@
 var webSocketBridge = new channels.WebSocketBridge();
 
-function join_room(d, room_id) {
-    $(".room-link").removeClass('active');
-    $(d).parent().addClass("active");
+function join_room(room_id) {
     webSocketBridge.send({
         "command": "join",
         "room": room_id
@@ -184,7 +182,7 @@ $(function () {
     // Helpful debugging
     webSocketBridge.socket.onopen = function () {
         console.log("Connected to chat socket");
-        $('.room-link.active').find(".content").click();
+        join_room(room_id);
     };
     webSocketBridge.socket.onclose = function () {
         console.log("Disconnected from chat socket");
