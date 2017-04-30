@@ -17,7 +17,7 @@ function get_recent_chat(room_id){
         contentType: "application/json"
     }).done(function(data){
         var last_timestamp = "1970-01-01";
-        for (var i=data.length; i>0; i--) {
+        for (var i=0; i<data.length; i++) {
             var d = data[i-1];
             var date = d.timestamp.split(" ")[0];
             var msgdiv = $("#room-" + d.room_id + " .messages");
