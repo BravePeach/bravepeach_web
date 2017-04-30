@@ -17,8 +17,8 @@ function get_recent_chat(room_id){
         contentType: "application/json"
     }).done(function(data){
         var last_timestamp = "1970-01-01";
-        for (var i=data.length-1; i>=0; i--) {
-            var d = data[i];
+        for (var i=data.length; i>0; i--) {
+            var d = data[i-1];
             var date = d.timestamp.split(" ")[0];
             var msgdiv = $("#room-" + d.room_id + " .messages");
             if (date !== last_timestamp) {
@@ -102,7 +102,7 @@ $(function () {
                     return false;
                 });
                 $("#chats").empty();
-                $("#chats").prepend(roomdiv);
+                $("#chats").append(roomdiv);
                 get_recent_chat(data.join);
                 var msgdiv = $("#room-" + data.join + " .messages");
                 msgdiv.scrollTop(0);
@@ -169,7 +169,7 @@ $(function () {
                     console.log("Unsupported message type!");
                     return;
             }
-            msgdiv.append(ok_msg);
+            msgdiv.prepend(ok_msg);
             msgdiv.scrollTop(0);
         } else {
             console.log("Cannot handle message!");
