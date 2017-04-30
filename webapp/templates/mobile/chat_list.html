@@ -1,0 +1,44 @@
+{% extends "mobile/base.html" %}
+{% load compile_static %}
+{% load static %}
+{% load custom_filters %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'less/mobile/chat_list.less'|compile %}">
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/mobile/chat.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="title">메신저</div>
+    <div class="hr"></div>
+    <div class="wrapper">
+        {% for room_id, room in rooms %}
+            <div class="chat">
+                <div class="profile">
+                    <a href="{% url 'guide_profile' gid=room.opponent.guide.all.0.id %}"><img src="{% if room.opponent.profile.photo %}{{ room.opponent.profile.photo.url }}
+                                        {% else %}{% static 'image/icon/profile_empty.png' %}{% endif %}"
+                                                                                              alt="profile"></a></div>
+                <a href="{% url 'mobile_chat' room_id=room_id %}">
+                    <div class="content">
+                        <div class="name">{{ room.opponent.profile.full_name }}</div>
+                        <div class="timestamp">
+                            {% if room.timestamp|is_today %}
+                                {{ room.timestamp|date:"H:i:s" }}
+                            {% else %}
+                                {{ room.timestamp|date:"Y/m/d" }}
+                            {% endif %}
+                        </div>
+                        <div class="txt ellipsis">{{ room.content }}</div>
+                    </div>
+                </a>
+            </div>
+            <div class="hr"></div>
+            {% empty %}
+            <p class="empty">아직 채팅이 없습니다. <br>
+                원하는 상대방과 대화를 나눠보세요</p>
+        {% endfor %}
+    </div>
+{% endblock %}

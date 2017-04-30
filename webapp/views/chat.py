@@ -45,7 +45,26 @@ def chat_user(request, uid):
             last_chat_list.append((room_id, {"opponent": room.user_1, "timestamp": datetime.datetime.now(),
                                    "content": "", "writer": request.user.id}))
     scheme = request.is_secure() and "wss:" or "ws:"
-    return render(request, "pc/chat.html", {"rooms": last_chat_list, "chat_host": scheme+CHAT_HOST, "active": int(uid)})
+    if request.user_agent.is_mobile:
+        print(last_chat_list)
+        return render(request, "mobile/chat_list.html", {"rooms": last_chat_list, "chat_host": scheme+CHAT_HOST, "active": int(uid)})
+    else:
+        return render(request, "pc/chat.html", {"rooms": last_chat_list, "chat_host": scheme+CHAT_HOST, "active": int(uid)})
+
+
+@login_required
+def mobile_chat(request, room_id):
+    room = Room.objects.filter(id=room_id).first()
+    if not room:
+        return redirect(chat_index)
+
+    if room.user_1 == request.user:
+        opponent = room.user_2
+    else:
+        opponent = room.user_1
+    scheme = request.is_secure() and "wss:" or "ws:"
+    return render(request, "mobile/chat.html", {"room_id": room_id, "chat_host": scheme+CHAT_HOST,
+                                                "active": int(room_id), "opponent": opponent})
 
 
 @login_required

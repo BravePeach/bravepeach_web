@@ -27,7 +27,11 @@ function get_recent_chat(room_id){
                 msgdiv.append("<div class='datediv'>"+date+"</div>");
                 last_timestamp = date;
             }
-            var msg = "<div class='message";
+            var msg = "";
+            if(d.writer !== my_id) {
+                msg += '<div class="profile"><img src="'+photo+'" alt="profile"></div>';
+            }
+            msg += "<div class='message";
             if (d.writer === my_id) {
                 msg += " mine' align='right'>";
             } else {
@@ -80,10 +84,10 @@ $(function () {
             console.log("Joining room " + data.join);
             if($("#room-"+data.join).length === 0) {
                 var roomdiv = $(
+                    "<form><input placeholder='개인 연락처를 공개하지 마세요. 예약이 완료된 후 공개됩니다.'><button>전송</button></form>" +
                     "<div class='room' id='room-" + data.join + "'>" +
                     // "<h2>" + data.title + "</h2>" +
                     "<div class='messages'></div>" +
-                    "<form><textarea placeholder='개인 연락처를 공개하지 마세요. 예약이 완료된 후 공개됩니다.'></textarea><button>Send</button></form>" +
                     "</div>"
                 );
                 // Hook up send button to send a message
