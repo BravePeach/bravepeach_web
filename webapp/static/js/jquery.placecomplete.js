@@ -16,7 +16,7 @@ if (typeof require === "function") {
 
 var pluginName = "placecomplete";
 var defaults = {
-    placeholderText: "City, State, Country",
+    placeholderText: "도시를 검색해주세요!",
     // Request parameters for the .getPlacePredictions() call
     // See https://developers.google.com/maps/
     // documentation/javascript/reference#AutocompletionRequest
