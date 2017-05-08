@@ -1,0 +1,123 @@
+.title {
+  height: 32px;
+  object-fit: contain;
+  font-family: NanumSquare;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1.6;
+  letter-spacing: -0.5px;
+  color: #000000;
+}
+
+.subtitle {
+  height: 32px;
+  font-family: NanumSquare;
+  font-size: 16px;
+  line-height: 2;
+  letter-spacing: -0.4px;
+  color: #606060;
+}
+
+.room {
+  overflow-y: hidden;
+
+  form {
+    input, textarea {
+      resize: none;
+      width: 100%;
+      height: 104px;
+      margin: auto;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      display: block;
+      height: 24px;
+      font-family: NanumSquare;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 1.2;
+      text-align: right;
+      color: #e64c47;
+      border: none;
+      background: #ffffff;
+    }
+  }
+
+  .messages {
+    margin-top: 17px;
+    overflow-y: scroll;
+    height: 400px;
+
+    .profile {
+      margin-right: 3px;
+      display: inline-block;
+      width: 34px;
+      height: 34px;
+      border-radius: 100%;
+
+      img {
+        width: 34px;
+        height: 34px;
+        border-radius: 100%;
+      }
+    }
+
+    .datediv {
+      height: 32px;
+      width: 150px;
+      border-radius: 100px;
+      background-image: linear-gradient(to right, #f2ad8a, #e64c47);
+      margin: 20px auto 20px auto;
+      font-family: NanumSquare;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 1.56;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .message {
+      display: inline-block;
+      padding: 10px 18px 10px 17px;
+      font-family: NanumSquare;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 1.44;
+      text-align: justify;
+      color: #000000;
+      border-radius: 8px;
+      background-color: #efeff4;
+      width: 350px;
+
+      &.mine {
+        margin-left: 37px;
+        text-align: right;
+        border-radius: 8px;
+        border: solid 1px #e64c47;
+        background: #ffffff;
+      }
+    }
+
+    .timestamp {
+      margin-bottom: 7px;
+      margin-left:37px;
+      height: 28px;
+      object-fit: contain;
+      font-family: NanumSquare;
+      font-size: 14px;
+      line-height: 2;
+      color: #000000;
+      width: 350px;
+      text-align: left;
+
+      &.mine {
+        text-align: right;
+      }
+    }
+  }
+}
+
+.enroll-trip-button {
+  display: none !important;
+}

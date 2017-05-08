@@ -1,8 +1,6 @@
 var webSocketBridge = new channels.WebSocketBridge();
 
-function join_room(d, room_id) {
-    $(".room-link").removeClass('active');
-    $(d).parent().addClass("active");
+function join_room(room_id) {
     webSocketBridge.send({
         "command": "join",
         "room": room_id
@@ -24,10 +22,14 @@ function get_recent_chat(room_id){
             var date = d.timestamp.split(" ")[0];
             var msgdiv = $("#room-" + d.room_id + " .messages");
             if (date !== last_timestamp) {
-                msgdiv.append("<div class='datediv'>"+date+"</div>");
+                msgdiv.prepend("<div class='datediv'>"+date+"</div>");
                 last_timestamp = date;
             }
-            var msg = "<div class='message";
+            var msg = "";
+            if(d.writer !== my_id) {
+                msg += '<div class="profile"><img src="'+photo+'" alt="profile"></div>';
+            }
+            msg += "<div class='message";
             if (d.writer === my_id) {
                 msg += " mine' align='right'>";
             } else {
@@ -41,9 +43,9 @@ function get_recent_chat(room_id){
                 msg += "'>";
             }
             msg += d.timestamp + "</div>";
-            msgdiv.append(msg);
+            msgdiv.prepend(msg);
         }
-        msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
+        msgdiv.scrollTop(0);
     });
 }
 
@@ -81,29 +83,29 @@ $(function () {
             if($("#room-"+data.join).length === 0) {
                 var roomdiv = $(
                     "<div class='room' id='room-" + data.join + "'>" +
+                    "<form><textarea placeholder='개인 연락처를 공개하지 마세요. 예약이 완료된 후 공개됩니다.'></textarea><button>전송</button></form>" +
                     // "<h2>" + data.title + "</h2>" +
                     "<div class='messages'></div>" +
-                    "<form><input placeholder='개인 연락처를 공개하지 마세요. 예약이 완료된 후 공개됩니다.'><button>Send</button></form>" +
                     "</div>"
                 );
                 // Hook up send button to send a message
                 roomdiv.find("form").on("submit", function (e) {
                     e.preventDefault();
-                    var msg = roomdiv.find("input").val();
+                    var msg = roomdiv.find("textarea").val();
                     save_data(data.join, my_id, msg);
                     webSocketBridge.send({
                         "command": "send",
                         "room": data.join,
                         "message": msg  // roomdiv.find("input").val()
                     });
-                    roomdiv.find("input").val("");
+                    roomdiv.find("textarea").val("");
                     return false;
                 });
                 $("#chats").empty();
                 $("#chats").append(roomdiv);
                 get_recent_chat(data.join);
                 var msgdiv = $("#room-" + data.join + " .messages");
-                msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
+                msgdiv.scrollTop(0);
             }
         } else if (data.leave) {
             console.log("Leaving room " + data.leave);
@@ -167,8 +169,8 @@ $(function () {
                     console.log("Unsupported message type!");
                     return;
             }
-            msgdiv.append(ok_msg);
-            msgdiv.scrollTop(msgdiv.prop("scrollHeight"));
+            msgdiv.prepend(ok_msg);
+            msgdiv.scrollTop(0);
         } else {
             console.log("Cannot handle message!");
         }
@@ -180,7 +182,7 @@ $(function () {
     // Helpful debugging
     webSocketBridge.socket.onopen = function () {
         console.log("Connected to chat socket");
-        $('.room-link.active').find(".content").click();
+        join_room(room_id);
     };
     webSocketBridge.socket.onclose = function () {
         console.log("Disconnected from chat socket");
