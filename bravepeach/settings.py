@@ -31,6 +31,11 @@ INTERNAL_IPS = LOCAL_SETTINGS["INTERNAL_IPS"]   # add "127.0.0.1" when make loca
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', "https")
 
+CSRF_COOKIE_SECURE = True
+
+SESSION_COOKIE_SECURE = True
+
+CONN_MAX_AGE = 60
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
