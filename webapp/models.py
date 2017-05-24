@@ -325,6 +325,9 @@ class AccomTemplate(Model):
     type_id = models.IntegerField(default=0)
     overwritten = models.BooleanField(default=False)
 
+    def __str__(self):
+        return "{}/{}, {}".format(self.guide.full_name, self.type, self.title)
+
     @property
     def country(self):
         return self.address[0]
@@ -355,6 +358,8 @@ class GuideTemplate(Model):
     guide = models.ForeignKey(Guide, related_name="guide_templates")
     overwritten = models.BooleanField(default=False)
 
+    def __str__(self):
+        return "{}/{}".format(self.guide.full_name, self.title)
 
 class Cost(Model):
     offer = models.ForeignKey(GuideOffer, related_name="costs")
