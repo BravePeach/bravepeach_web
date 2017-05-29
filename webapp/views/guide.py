@@ -1,4 +1,5 @@
 import datetime
+import requests
 from dateutil.rrule import rrule, DAILY
 
 import json
@@ -597,6 +598,11 @@ def save_accom_template(request):
         lng = request.POST.get('lng')
         type_id = int(request.POST.get('type_id'))
         img_list = []
+        for f_url in request.POST.getlist('photo_url_list'):
+            response = requests.get(f_url)
+            img = Image.open(BytesIO(response.content))
+            img_list.append(img)
+
         for f in request.FILES.getlist('photo_list'):
             img = Image.open(f)
             new_width = 800
@@ -610,6 +616,7 @@ def save_accom_template(request):
             old_a = AccomTemplate.objects.get(id=accom_template_id, guide_id=guide_id)
             old_a.overwritten = True
             old_a.save()
+
         # 새로 저장
         a = AccomTemplate.objects.create(guide_id=guide_id, title=title, content=content, address=address, lat=lat, lng=lng, type_id=type_id)
         for photo in img_list:

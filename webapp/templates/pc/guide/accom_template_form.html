@@ -46,7 +46,7 @@
         <div class="photo-title">숙소 사진을 최대 4장까지 추가해주세요.</div>
         {% if accom_template.accom_photos.all.0.photo %}
             <div class="photo photo1" style="background-image: url('{{ accom_template.accom_photos.all.0.photo.url }}')">
-                <input class="photo1" type="file" accept="image/*" style="display: none" value="{{ accom_template.accom_photos.all.0.photo }}">
+                <input class="photo1" type="file" accept="image/*" style="display: none">
             </div>
         {% else %}
             <div class="photo photo1">
@@ -54,18 +54,37 @@
                 <input class="photo1" type="file" accept="image/*" style="display: none">
             </div>
         {% endif %}
-        <div class="photo photo2">
-            <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
-            <input class="photo2" type="file" accept="image/*" style="display: none">
-        </div>
-        <div class="photo photo3">
-            <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
-            <input class="photo3" type="file" accept="image/*" style="display: none">
-        </div>
-        <div class="photo photo4">
-            <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
-            <input class="photo4" type="file" accept="image/*" style="display: none">
-        </div>
+        {% if accom_template.accom_photos.all.1.photo %}
+            <div class="photo photo2" style="background-image: url('{{ accom_template.accom_photos.all.1.photo.url }}')">
+                <input class="photo2" type="file" accept="image/*" style="display: none">
+            </div>
+        {% else %}
+            <div class="photo photo2">
+                <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
+                <input class="photo2" type="file" accept="image/*" style="display: none">
+            </div>
+        {% endif %}
+            {% if accom_template.accom_photos.all.2.photo %}
+            <div class="photo photo3" style="background-image: url('{{ accom_template.accom_photos.all.2.photo.url }}')">
+                <input class="photo3" type="file" accept="image/*" style="display: none">
+            </div>
+        {% else %}
+            <div class="photo photo3">
+                <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
+                <input class="photo3" type="file" accept="image/*" style="display: none">
+            </div>
+        {% endif %}
+        {% if accom_template.accom_photos.all.3.photo %}
+            <div class="photo photo4" style="background-image: url('{{ accom_template.accom_photos.all.3.photo.url }}')">
+                <input class="photo4" type="file" accept="image/*" style="display: none">
+            </div>
+        {% else %}
+            <div class="photo photo4">
+                <img class="add_button" src="{% static 'image/icon/add_white.png' %}">
+                <input class="photo4" type="file" accept="image/*" style="display: none">
+            </div>
+        {% endif %}
+
     </div>
     <textarea class="accom-content">{% if not accom_template.content %}숙소 정보를 자세하게 작성해주세요.
 

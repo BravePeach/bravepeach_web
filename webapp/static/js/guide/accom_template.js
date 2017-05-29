@@ -294,7 +294,14 @@ $(function () {
 
         for (var i=1; i<5; i++){
             var file = $(this).parent().find('input.photo' + i.toString())[0].files[0];
-            if (file) {
+            var background_img = $(this).parent().find('div.photo' + i.toString()).css('background-image');
+            // 이전에 업로드했던 이미지인 경우
+            if (!file && (background_img != "none")){
+                var file_url = background_img.split("\"")[1];
+                formdata.append("photo_url_list", file_url)
+            }
+            // 이미지 새로 업로드 한 경우
+            else if (file) {
                 formdata.append("photo_list", file)
             }
         }
