@@ -12,12 +12,18 @@ function currentSlide(n) {
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
+  if (slides) {
+      if (n > slides.length) {
+          slideIndex = 1
+      }
+      if (n < 1) {
+          slideIndex = slides.length
+      }
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+      }
+      slides[slideIndex - 1].style.display = "block";
   }
-  slides[slideIndex-1].style.display = "block";
 }
 
 // map
@@ -25,8 +31,42 @@ function randomRange(n1, n2) {
   return Math.floor( (Math.random() * (n2 - n1 + 1)) + n1 );
 }
 
+function fixButton() {
+    var container = $('.button-wrapper');
+    var maxTop = $('footer').offset().top - container.outerHeight() - 222;
+    var scrollVal = $(document).scrollTop() + $(window).height() - 223;
+
+    if (scrollVal > maxTop) {
+        container.css('top', maxTop);
+    }
+
+    else {
+        container.stop().animate({top: scrollVal},'100');
+    }
+}
 
 $(function () {
+    // 제출
+    $('.pay-button').click(function () {
+        var offer_id = window.location.pathname.split('/')[3];
+        $.ajax({
+            url: "/guide/publish_offer/",
+            type: "GET",
+            data: {
+                offer_id: offer_id
+            },
+            success: function () {
+                location.href = "/guide/request/"
+            }
+        });
+    });
+
+    fixButton();
+    $('.button-wrapper').fadeIn('slow');
+    $(document).scroll(function() {
+        fixButton();
+    });
+
     showSlides(slideIndex);
 
         $('.map').each(function (index, Element) {

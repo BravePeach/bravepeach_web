@@ -81,6 +81,7 @@ urlpatterns = [
     url(r'^guide/check_offer_exists/$', views.guide.check_offer_exists, name="check_offer_exists"),
     url(r'^guide/req_detail/(?P<req_id>\d+)/$', views.guide.req_detail, name="request_detail"),
     url(r'^guide/delete_offer/$', views.guide.delete_offer, name="delete_offer"),
+    url(r'^guide/publish_offer/$', view.guide.publish_offer, name="publish_offer"),
 
     # User2Guide
     url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),

@@ -483,6 +483,13 @@ def delete_offer(request):
     return JsonResponse({"ok": True})
 
 
+def publish_offer(request):
+    offer_id = request.GET.get('offer_id')
+    offer = GuideOffer.objects.get(id=offer_id, guide=request.user.guide.all()[0].id)
+    offer.published = True
+    return JsonResponse({"ok": True})
+
+
 @user_passes_test(guide_required)
 def search_accom(request):
     if request.is_ajax():
