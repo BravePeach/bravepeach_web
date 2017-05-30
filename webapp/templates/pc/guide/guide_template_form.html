@@ -17,7 +17,9 @@
     </div>
     <div class="allover display-none"></div>
     {% if guide_template.photo %}
-    <img class="guide-photo" src="{{ guide_template.photo.url }}" style="padding: 0; object-fit: cover;">
+    <div class="guide-photo" style="background-image: url('{{ guide_template.photo.url }}')">
+        <input type="file" accept="image/*" style="display: none" required class="photo">
+    </div>
     {% else %}
     <div class="guide-photo">
         <div class="add-photo-button">

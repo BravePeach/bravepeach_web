@@ -636,7 +636,8 @@ def save_guide_template(request):
         guide_template_id = request.POST.get('guide_template_id')
         title = request.POST.get('title')
         content = request.POST.get('content')
-
+        photo_url = request.POST.get('guide_photo_url')
+        photo = request.FILES.get('guide_photo')
         # 이전 내용 덮어쓰기
         if guide_template_id:
             old_a = GuideTemplate.objects.get(id=guide_template_id, guide_id=guide_id)
@@ -644,14 +645,22 @@ def save_guide_template(request):
             old_a.save()
         # 새로 저장
         g = GuideTemplate.objects.create(guide_id=guide_id, title=title, content=content, photo="")
-        if request.FILES.get('guide_photo'):
-            photo = Image.open(request.FILES.get('guide_photo'))
-            new_width = 800
-            ratio = (new_width/ float(photo.size[0]))
-            new_height = int((float(photo.size[1])*float(ratio)))
-            photo = photo.resize((new_width, new_height), Image.ANTIALIAS)
+        if photo_url:
+            response = requests.get(photo_url)
+            img = Image.open(BytesIO(response.content))
             byte_img = BytesIO()
-            photo.save(byte_img, format="jpeg")
+            img.save(byte_img, format="jpeg")
+            filename = str(request.user.id) + "__" + datetime.datetime.now().strftime("%H_%M_%S_%f") + ".jpg"
+            g.photo.save(filename, ContentFile(byte_img.getvalue()))
+
+        if photo:
+            img = Image.open(photo)
+            new_width = 800
+            ratio = (new_width/ float(img.size[0]))
+            new_height = int((float(img.size[1])*float(ratio)))
+            img = img.resize((new_width, new_height), Image.ANTIALIAS)
+            byte_img = BytesIO()
+            img.save(byte_img, format="jpeg")
             filename = str(request.user.id) + "__" + datetime.datetime.now().strftime("%H_%M_%S_%f") + ".jpg"
             g.photo.save(filename, ContentFile(byte_img.getvalue()))
         return JsonResponse({"ok": True, "new_id": g.id})

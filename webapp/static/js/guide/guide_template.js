@@ -203,12 +203,18 @@ $(function () {
         var guideTitle = $(this).siblings('.guide-title-form').val();
         var guideContent = $(this).siblings('.guide-content').val();
 
-        var photos = $(this).parent().find('input.photo')[0].files;
-        console.log(photos[0]);
-        if (photos) {
-            console.log("gg");
-            var guidePhoto = photos[0];
-            formdata.append("guide_photo", guidePhoto);
+        var photo = $(this).parent().find('input.photo')[0].files[0];
+        var background_img = $(this).parent().find('div.guide-photo').css('background-image');
+
+        // 이전에 업로드했던 이미지인 경우
+        if (!photo && (background_img != "none")){
+            var file_url = background_img.split("\"")[1];
+            formdata.append("guide_photo_url", file_url)
+        }
+
+        // 이미지 새로 업로드 하는경우
+        else if (photo) {
+            formdata.append("guide_photo", photo);
         }
 
         if (guideTitle == ""){
