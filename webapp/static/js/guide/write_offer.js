@@ -174,12 +174,35 @@ $(function () {
 
     // 미리보기
     $('.wo-prev').click(function(){
+        var req_id = window.location.pathname.split('/')[3];
         $.ajax({
-            url: "/guide/offer_prev/",
+            url: "/guide/check_offer_exists/",
             type: "GET",
             data: {
-                offer_id: window.location.pathname.split('/')[3]
+                req_id: req_id
+            },
+            success: function (offer_id) {
+                location.href = "/guide/offer_prev/" + offer_id;
+            },
+            error: function () {
+                swal({
+                    title: "저장하기 버튼을 먼저 눌러주세요",
+                    type: "error"
+                })
             }
         })
     });
+
+    // 취소
+    $('.wo-cancel').click(function () {
+        var req_id = window.location.pathname.split('/')[3];
+        history.go(-1);
+        $.ajax({
+            url: "/guide/delete_offer/",
+            type: "GET",
+            data: {
+                req_id: req_id
+            }
+        });
+    })
 });

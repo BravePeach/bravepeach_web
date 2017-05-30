@@ -9,6 +9,7 @@ import boto3
 from io import BytesIO
 from PIL import Image
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count, Sum
 from django.shortcuts import get_object_or_404
 
 from django.views.generic import View
@@ -431,11 +432,55 @@ def write_offer(request, req_id):
 
 
 @user_passes_test(guide_required)
-def offer_prev(request):
-    if request.is_ajax():
-        offer_id = request.GET.get('offer_id')
-        guide_offer = GuideOffer.objects.get(id=offer_id, guide=request.user.guide.all()[0].id)
-        return flavour_render(request, 'guide/offer_prev.html', {'guide_offer': guide_offer})
+def offer_prev(request, offer_id):
+    guide_offer = get_object_or_404(GuideOffer.objects.select_related('guide').filter(pk=offer_id, guide=request.user.guide.all()[0].id))
+
+    g_template_qlist = []
+    if guide_offer.guide_template:
+        for id_list in guide_offer.guide_template:
+            g_template_qlist += [GuideTemplate.objects.filter(id__in=id_list, guide_id=guide_offer.guide_id)
+                                                      .extra(select={'manual': 'FIELD(id,%s)' % ','.join(map(str, id_list))},
+                                                             order_by=['manual'])]
+
+    a_template_list = guide_offer.accom_template
+    for i in a_template_list:
+        i[1] = AccomTemplate.objects.get(id=i[1])
+
+    cost_qlist = []
+    type_cost = []
+    guide_commission = 0
+    for type_id in range(7):
+        cost_q = Cost.objects.select_related('offer').filter(offer_id=offer_id, type_id=type_id).order_by('id')
+        if cost_q:
+            cost_qlist += [cost_q]
+            type_cost += [cost_q.aggregate(Sum('price'))['price__sum']]
+            if type_id == 2:
+                guide_commission = int(float(type_cost[-1]) * 0.12)
+
+    total_cost = sum(type_cost) + guide_commission
+
+    return flavour_render(request, 'guide/offer_prev.html', {"guide": guide_offer.guide,
+                                                              "guide_offer": guide_offer,
+                                                              "g_template_qlist": g_template_qlist,
+                                                              "a_template_list": a_template_list,
+                                                              "cost_qlist": cost_qlist,
+                                                              "type_cost": type_cost,
+                                                              "total_cost": total_cost,
+                                                              "guide_commission": guide_commission,
+                                                              })
+
+
+def check_offer_exists(request):
+    req_id = request.GET.get('req_id')
+    offer = GuideOffer.objects.get(request_id=req_id, guide=request.user.guide.all()[0].id)
+    return HttpResponse(offer.id)
+
+
+def delete_offer(request):
+    req_id = request.GET.get('req_id')
+    if GuideOffer.objects.filter(request_id=req_id, guide=request.user.guide.all()[0].id).exists():
+        GuideOffer.objects.get(request_id=req_id, guide=request.user.guide.all()[0].id).delete()
+    return JsonResponse({"ok": True})
 
 
 @user_passes_test(guide_required)
@@ -744,6 +789,12 @@ def save_cost_offer(request, req_id):
         type_id_list = request.POST.get('type_id_list').split(',')
         price_list = request.POST.get('price_list').split(',')
         info_list = request.POST.get('info_list').split(',')
+
+        if not GuideOffer.objects.filter(guide_id=guide_id, request_id=req_id).exists():
+            req = UserRequest.objects.get(id=req_id)
+            travel_period = [i.strftime("%Y-%m-%d") for i in rrule(DAILY, dtstart=req.travel_begin_at, until=req.travel_end_at)]
+            GuideOffer.objects.create(guide_id=guide_id, request_id=req_id, travel_period=travel_period)
+
         offer_id = GuideOffer.objects.get(guide_id=guide_id, request_id=req_id).id
         for i in range(len(type_id_list)):
             Cost.objects.get_or_create(offer_id=offer_id, type_id=type_id_list[i], price=price_list[i], info=info_list[i])

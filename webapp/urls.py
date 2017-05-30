@@ -77,8 +77,10 @@ urlpatterns = [
     url(r'^upload_guide_photo/$', views.guide.upload_guide_photo, name='upload_guide_photo'),
     url(r'^save_accom_template/$', views.guide.save_accom_template, name='save_accom_template'),
     url(r'^save_guide_template/$', views.guide.save_guide_template, name='save_guide_template'),
-    url(r'^guide/offer_prev/$', views.guide.offer_prev, name="offer_prev"),
+    url(r'^guide/offer_prev/(?P<offer_id>\d+)$', views.guide.offer_prev, name="offer_prev"),
+    url(r'^guide/check_offer_exists/$', views.guide.check_offer_exists, name="check_offer_exists"),
     url(r'^guide/req_detail/(?P<req_id>\d+)/$', views.guide.req_detail, name="request_detail"),
+    url(r'^guide/delete_offer/$', views.guide.delete_offer, name="delete_offer"),
 
     # User2Guide
     url(r'^guide_search/$', views.trip.guide_search, name='guide_search'),

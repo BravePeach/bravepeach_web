@@ -9,6 +9,7 @@
 {% endblock %}
 {% block js %}
     <script src="{% static 'js/guide/offer_prev.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDe_pFjn0wd3JwOUBr_fphufLg1hlIo_0w&"></script>
 {% endblock %}
 {% block title %}{% endblock %}
 
@@ -19,40 +20,83 @@
             <h2 class="sub-title">{{ guide_offer.travel_period.0 }} - {{ guide_offer.travel_period|last }}</h2>
         </section>
 
+            <div class="guide-brief">
+            <img class="brief-image" src="{{ guide.user.profile.photo.url }}">
+            <div class="brief-contents">
+                <div class="like">{% if request.user.is_authenticated %}
+                    {# TODO: heart sticker from like. Make it to a tag and bind js+ajax function #}
+                    <img src="{% static 'image/icon/heart_white_shadow.png' %}" alt="">{% endif %}
+                </div>
+                <div class="brief-title">
+                    <span class="guide-name">{{ guide.full_name }}</span> 님은 <span class="highlight">스루 가이드
+                    {% if guide.is_local %}, 현지 가이드{% endif %}</span>
+                    입니다.
+                </div>
+                <div class="location">
+                    <div class="location-title">가능 지역</div>
+                    <div class="location-list ellipsis">{% for loc in guide.guide_location %}
+                        {{ loc }} {% endfor %}</div>
+                </div>
+                <div class="rating">
+                    <div class="rating-title">평점</div>
+                    <div class="rating-point">
+                        {% for i in rating %}
+                            <img class="rating-img" src="{% static 'image/icon/logo_full.png' %}" alt="">
+                        {% endfor %}
+                        {% if guide.clean_rating.1 == 0.5 %}
+                            <img src="{% static 'image/icon/logo_half.png' %}" alt="" class="rating-img">
+                        {% else %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endif %}
+                        {% for i in norating %}
+                            <img src="{% static 'image/icon/logo_empty.png' %}" alt="" class="rating-img">
+                        {% endfor %}
+                        {{ guide.clean_rating.0|add:guide.clean_rating.1|floatformat:1 }} / 5.0
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="guide-cnt">가이드 {{ guide.guide_cnt }} 건</div>
+                    |
+                    <div class="review-cnt">후기 {{ reviews|length }} 개</div>
+                </div>
+            </div>
+        </div>
+
         <!--이동수단-->
         {% if guide_offer.trans_info %}
         <div class="gradation-bar">이동 수단</div>
-            {% for trans_info in guide_offer.trans_info %}
-        <div class="trans-wrapper">{{ trans_info }}</div>
-            {% endfor %}
+        <pre class="trans-wrapper">{{ guide_offer.trans_info }}</pre>
         {% endif %}
 
         <!--숙소-->
         {% if a_template_list %}
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDe_pFjn0wd3JwOUBr_fphufLg1hlIo_0w&"></script>
 
             <div class="gradation-bar">숙소</div>
             {% for accom in a_template_list %}
                 <div style="position:relative; padding-top: 149px;">
                     <div class="small-circle"></div>
-                    <div class="accom-date">{{ accom.1 }} - {{ accom.2 }}</div>
-                    <div class="accom-city">{{ accom.0.country }}, {{ accom.0.city }}</div>
-                    <div class="accom-type">{{ accom.0.type }}</div>
+                    <div class="accom-date">{{ accom.0 }}</div>
+                    <div class="accom-city">{{ accom.1.country }}, {{ accom.1.city }}</div>
+                    <div class="accom-type">{{ accom.1.type }}</div>
                     <div class="accom-title">
-                        {{ accom.0.title }}
+                        {{ accom.1.title }}
                     </div>
                     <div class="accom-location">
-                        위치: {{ accom.0.small_city }}, {{ accom.0.city }}
+                        위치: {{ accom.1.small_city }}, {{ accom.1.city }}
                     </div>
-                    {% if accom.photo %}
+                    {% if accom.1.accom_photos %}
                         <div class="accom-pic-wrapper">
-                        {% for photo in accom.accom_photos %}
-
+                        {% for photo in accom.1.accom_photos.all %}
+                            <div class="mySlides fade">
+                                <img src="{{ photo.photo.url }}" style="width:100%">
+                            </div>
                         {% endfor %}
+                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
                         </div>
                     {% endif %}
-                    <pre class="content">{{ accom.0.content }}</pre>
-                    <div class="map" style="width:790px; height: 467px;">{{ accom.0.lat }} {{ accom.0.lng }}</div>
+                    <pre class="content">{{ accom.1.content }}</pre>
+                    <div class="map" style="width:790px; height: 467px;">{{ accom.1.lat }} {{ accom.1.lng }}</div>
                 </div>
                 {% if accom != a_template_list|last %}
                     <hr>
@@ -77,7 +121,7 @@
                             <div class="guide-title">{{ g_template.title }}</div>
                         </div>
                         {% if g_template.photo %}
-                        <div class="guide-pic"></div>
+                        <img class="guide-pic" src="{{ g_template.photo.url }}">
                         {% endif %}
                         <pre class="guide-content"> {{ g_template.content }}</pre>
                     {% endfor %}
@@ -109,8 +153,8 @@
     </div>
 
         <div class="button-wrapper">
-            <a class="pay-button">확인</a>
-            <a class="back-button" href="">리스트로 가기</a>
+            <a class="pay-button">제출하기</a>
+            <a class="back-button" href="">뒤로 가기</a>
         </div>
 
     </div>

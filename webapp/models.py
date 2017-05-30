@@ -361,6 +361,7 @@ class GuideTemplate(Model):
     def __str__(self):
         return "{}/{}".format(self.guide.full_name, self.title)
 
+
 class Cost(Model):
     offer = models.ForeignKey(GuideOffer, related_name="costs")
     type_id = models.IntegerField(default=0)
