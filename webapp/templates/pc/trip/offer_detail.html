@@ -9,6 +9,7 @@
 {% endblock %}
 {% block js %}
     <script src="{% static 'js/offer_detail.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDe_pFjn0wd3JwOUBr_fphufLg1hlIo_0w&"></script>
 {% endblock %}
 {% block title %}{% endblock %}
 
@@ -64,13 +65,11 @@
         <!--이동수단-->
         {% if guide_offer.trans_info %}
         <div class="gradation-bar">이동 수단</div>
-        <div class="trans-wrapper">{{ guide_offer.trans_info }}</div>
+        <pre class="trans-wrapper">{{ guide_offer.trans_info }}</pre>
         {% endif %}
 
         <!--숙소-->
         {% if a_template_list %}
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDe_pFjn0wd3JwOUBr_fphufLg1hlIo_0w&"></script>
-
             <div class="gradation-bar">숙소</div>
             {% for accom in a_template_list %}
                 <div style="position:relative; padding-top: 149px;">
@@ -83,12 +82,15 @@
                     </div>
                     <div class="accom-location">
                         위치: {{ accom.1.small_city }}, {{ accom.1.city }}
-                    </div>
-                    {% if accom.photo %}
+                    {% if accom.1.accom_photos %}
                         <div class="accom-pic-wrapper">
-                        {% for photo in accom.photo %}
-
+                        {% for photo in accom.1.accom_photos.all %}
+                            <div class="mySlides fade">
+                                <img src="{{ photo.photo.url }}" style="width:100%">
+                            </div>
                         {% endfor %}
+                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
                         </div>
                     {% endif %}
                     <pre class="content">{{ accom.1.content }}</pre>
